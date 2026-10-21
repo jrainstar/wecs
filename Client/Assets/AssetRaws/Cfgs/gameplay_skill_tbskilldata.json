@@ -1,0 +1,115 @@
+[
+  {
+    "id": 10001,
+    "name": "线性打印",
+    "desc": "",
+    "icon": "",
+    "type": 1,
+    "cooldown": 3,
+    "duration": 1,
+    "wait_time": 0,
+    "max_time": 0,
+    "learns": [],
+    "forgets": [],
+    "nodes": [
+      {
+        "Time": 0,
+        "Effect": {
+          "$type": "Log",
+          "Type": 0,
+          "Info": "线性0秒"
+        }
+      },
+      {
+        "Time": 0.5,
+        "Effect": {
+          "$type": "Log",
+          "Type": 0,
+          "Info": "线性0.5秒"
+        }
+      },
+      {
+        "Time": 1,
+        "Effect": {
+          "$type": "Log",
+          "Type": 0,
+          "Info": "线性1秒"
+        }
+      }
+    ]
+  },
+  {
+    "id": 100011,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "type": 1,
+    "cooldown": 1,
+    "duration": 0.75,
+    "wait_time": 0.5,
+    "max_time": 0,
+    "learns": [],
+    "forgets": [],
+    "nodes": [
+      {
+        "Time": 0,
+        "Effect": {
+          "$type": "PlayAnimation",
+          "Type": 7,
+          "Loop": false,
+          "Speed": 2
+        }
+      }
+    ],
+    "next_skill": 100012
+  },
+  {
+    "id": 100012,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "type": 1,
+    "cooldown": 1,
+    "duration": 0.75,
+    "wait_time": 0.5,
+    "max_time": 0,
+    "learns": [],
+    "forgets": [],
+    "nodes": [
+      {
+        "Time": 0,
+        "Effect": {
+          "$type": "PlayAnimation",
+          "Type": 7,
+          "Loop": false,
+          "Speed": 2
+        }
+      }
+    ],
+    "next_skill": 100013
+  },
+  {
+    "id": 100013,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "type": 1,
+    "cooldown": 1,
+    "duration": 0.75,
+    "wait_time": 0,
+    "max_time": 0,
+    "learns": [],
+    "forgets": [],
+    "nodes": [
+      {
+        "Time": 0,
+        "Effect": {
+          "$type": "PlayAnimation",
+          "Type": 7,
+          "Loop": false,
+          "Speed": 2
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": 10001,
+    "name": "基础伤害",
+    "desc": "",
+    "visual_data": {
+      "hit_fx": "",
+      "hit_sound": "",
+      "hit_point": ""
+    },
+    "damage_data": {
+      "type": 0,
+      "damage": 0,
+      "atk_rate": 0,
+      "hit_count": 0,
+      "can_crit": false
+    }
+  }
+]

@@ -1,0 +1,27 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:a882960a21cd5e8ad9f98945be804b44:97762e97d5cef10a3d84378d2c7621d9:97f3802f84f3241eae7d5dbf70414f05$
+#
+:format=40300
+:texture=Character.png
+:size=1024x1024
+:pivotpoints=enabled
+:borders=disabled
+:alphahandling=ClearTransparentPixels
+
+CardCharacter_01;1;456;246;298; 0.5;0.5; 0;0;0;0
+CardCharacter_01_Dark;249;456;246;298; 0.5;0.5; 0;0;0;0
+CardCharacter_02;429;756;221;267; 0.5;0.5; 0;0;0;0
+CardCharacter_02_Dark;652;756;221;267; 0.5;0.5; 0;0;0;0
+CardCharacter_03;1;766;212;257; 0.5;0.5; 0;0;0;0
+CardCharacter_03_Dark;215;766;212;257; 0.5;0.5; 0;0;0;0
+CardCharacter_04;497;456;248;298; 0.5;0.5; 0;0;0;0
+CardCharacter_04_Dark;747;456;248;298; 0.5;0.5; 0;0;0;0
+CardCharacter_05;1;148;258;306; 0.5;0.5; 0;0;0;0
+CardCharacter_05_Dark;261;148;258;306; 0.5;0.5; 0;0;0;0
+CardCharacter_06;521;142;225;312; 0.5;0.5; 0;0;0;0
+CardCharacter_06_Dark;748;142;225;312; 0.5;0.5; 0;0;0;0

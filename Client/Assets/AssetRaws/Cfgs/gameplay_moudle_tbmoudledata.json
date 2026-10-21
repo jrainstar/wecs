@@ -1,0 +1,548 @@
+[
+  {
+    "id": 20001,
+    "name": "火焰注入",
+    "desc": "从火焰之中注入攻击燃烧之效果",
+    "icon": "Module/Module_Fire",
+    "weight": 30,
+    "quality": 1,
+    "add_skill_id": 10001,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20002,
+    "name": "冰霜之力",
+    "desc": "霜寒气息化为护盾，减免伤害并减速敌人",
+    "icon": "Module/Module_Ice",
+    "weight": 25,
+    "quality": 2,
+    "add_skill_id": 10002,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20009,
+    "name": "自然庇护",
+    "desc": "自然之祝福，持续恢复生命值",
+    "icon": "Module/Module_Nature",
+    "weight": 30,
+    "quality": 1,
+    "add_skill_id": 10009,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20003,
+    "name": "火焰风暴",
+    "desc": "释放火焰之核，对周围敌人造成灼烧",
+    "icon": "Module/Module_FireStorm",
+    "weight": 15,
+    "quality": 3,
+    "add_skill_id": 10003,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      20001
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20010,
+    "name": "荆棘之盾",
+    "desc": "受伤之时反弹伤害予敌",
+    "icon": "Module/Module_Thorns",
+    "weight": 20,
+    "quality": 2,
+    "add_skill_id": 10010,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      20009
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20004,
+    "name": "暗影步",
+    "desc": "瞬间移动到目标背后发起一次攻击并脱离",
+    "icon": "Module/Module_ShadowStep",
+    "weight": 15,
+    "quality": 3,
+    "add_skill_id": 10004,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [
+      20005
+    ],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20005,
+    "name": "圣光庇护",
+    "desc": "召唤圣光之力对暗影系敌人造成额外伤害",
+    "icon": "Module/Module_Holy",
+    "weight": 8,
+    "quality": 4,
+    "add_skill_id": 10005,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [
+      20004,
+      20006
+    ],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20006,
+    "name": "暗影突袭",
+    "desc": "潜入暗影对残血敌人发起致命一击",
+    "icon": "Module/Module_ShadowStrike",
+    "weight": 8,
+    "quality": 4,
+    "add_skill_id": 10006,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [
+      20005
+    ],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20007,
+    "name": "火体化",
+    "desc": "全身焰火笼罩攻击提升并对周围敌人造成烧伤",
+    "icon": "Module/Module_FireBody",
+    "weight": 3,
+    "quality": 5,
+    "add_skill_id": 10007,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      20003
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": [
+      20002
+    ]
+  },
+  {
+    "id": 20008,
+    "name": "霜冻领域",
+    "desc": "展开寒冰领域，全部敌人持续减速",
+    "icon": "Module/Module_FrostField",
+    "weight": 3,
+    "quality": 5,
+    "add_skill_id": 10008,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      20002
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": [
+      20001,
+      20003
+    ]
+  },
+  {
+    "id": 20011,
+    "name": "自然绽放",
+    "desc": "自然之力到达顶峰，大幅回复并增强攻击力",
+    "icon": "Module/Module_Bloom",
+    "weight": 12,
+    "quality": 3,
+    "add_skill_id": 10011,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      20009
+    ],
+    "exclude_module_ids": [
+      20004,
+      20006
+    ],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 20012,
+    "name": "神圣护盾",
+    "desc": "圣光护体，免疫一切负面效果并吸收伤害",
+    "icon": "Module/Module_Divine",
+    "weight": 2,
+    "quality": 5,
+    "add_skill_id": 10012,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      20005
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": [
+      20004,
+      20006
+    ]
+  },
+  {
+    "id": 30001,
+    "name": "生命强化",
+    "desc": "注入生命力，最大生命值+15%",
+    "icon": "Module/Module_HP",
+    "weight": 50,
+    "quality": 1,
+    "add_skill_id": 10101,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30002,
+    "name": "攻击强化",
+    "desc": "武器附魔，攻击力+10%",
+    "icon": "Module/Module_ATK",
+    "weight": 50,
+    "quality": 1,
+    "add_skill_id": 10102,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30003,
+    "name": "防御强化",
+    "desc": "硬化护甲，防御力+15%",
+    "icon": "Module/Module_DEF",
+    "weight": 50,
+    "quality": 1,
+    "add_skill_id": 10103,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30004,
+    "name": "速度强化",
+    "desc": "轻量化改装，移动速度+12%",
+    "icon": "Module/Module_SPD",
+    "weight": 45,
+    "quality": 1,
+    "add_skill_id": 10104,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30005,
+    "name": "精准打击",
+    "desc": "校准瞄准系统，暴击率+8%",
+    "icon": "Module/Module_Crit",
+    "weight": 25,
+    "quality": 2,
+    "add_skill_id": 10105,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30006,
+    "name": "冷却循环",
+    "desc": "优化能量回路，技能冷却-15%",
+    "icon": "Module/Module_CDR",
+    "weight": 20,
+    "quality": 2,
+    "add_skill_id": 10106,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30002
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30007,
+    "name": "吸血利刃",
+    "desc": "生命虹吸附魔，造成伤害的5%转化为生命",
+    "icon": "Module/Module_Lifesteal",
+    "weight": 18,
+    "quality": 2,
+    "add_skill_id": 10107,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30002
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30008,
+    "name": "经验汲取",
+    "desc": "知识水晶，经验获取+25%",
+    "icon": "Module/Module_EXP",
+    "weight": 18,
+    "quality": 3,
+    "add_skill_id": 10108,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30009,
+    "name": "黄金之手",
+    "desc": "点金之触，金币获取+25%",
+    "icon": "Module/Module_Gold",
+    "weight": 18,
+    "quality": 3,
+    "add_skill_id": 10109,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30010,
+    "name": "钢铁皮肤",
+    "desc": "皮肤钢化，防御+10%，受到暴击伤害-30%",
+    "icon": "Module/Module_SteelSkin",
+    "weight": 15,
+    "quality": 3,
+    "add_skill_id": 10110,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30003
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30011,
+    "name": "致命节奏",
+    "desc": "暴击后攻速+15%，持续3秒，可叠3层",
+    "icon": "Module/Module_LethalTempo",
+    "weight": 10,
+    "quality": 4,
+    "add_skill_id": 10111,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30005
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30012,
+    "name": "生命源泉",
+    "desc": "生命之泉祝福，每秒恢复1%最大生命",
+    "icon": "Module/Module_Regen",
+    "weight": 10,
+    "quality": 4,
+    "add_skill_id": 10112,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30001
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30013,
+    "name": "元素共鸣",
+    "desc": "元素之力共振，技能伤害+25%，冷却-10%",
+    "icon": "Module/Module_ElementResonance",
+    "weight": 5,
+    "quality": 5,
+    "add_skill_id": 10113,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30006
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30014,
+    "name": "不死鸟之心",
+    "desc": "浴火重生，死亡时复活一次恢复30%生命，冷却180秒",
+    "icon": "Module/Module_Rebirth",
+    "weight": 5,
+    "quality": 5,
+    "add_skill_id": 10114,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30015,
+    "name": "天选之人",
+    "desc": "命运眷顾，复活冷却-60%，复活时额外恢复+50%生命",
+    "icon": "Module/Module_Chosen",
+    "weight": 2,
+    "quality": 6,
+    "add_skill_id": 10115,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30014
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30016,
+    "name": "神圣领域",
+    "desc": "展开圣洁领域，领域内队友每秒恢复3%生命",
+    "icon": "Module/Module_HolyField",
+    "weight": 1,
+    "quality": 7,
+    "add_skill_id": 10116,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30101,
+    "name": "怒不可遏",
+    "desc": "怒气获取+50%，怒气上限+30%",
+    "icon": "Module/Module_W_Rage",
+    "weight": 35,
+    "quality": 1,
+    "add_skill_id": 10201,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30102,
+    "name": "近战专精",
+    "desc": "近战攻击伤害+15%，攻击范围+10%",
+    "icon": "Module/Module_W_Melee",
+    "weight": 35,
+    "quality": 1,
+    "add_skill_id": 10202,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30103,
+    "name": "旋风斩强化",
+    "desc": "旋风斩伤害+30%，范围+20%",
+    "icon": "Module/Module_W_Whirlwind",
+    "weight": 20,
+    "quality": 2,
+    "add_skill_id": 10203,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30104,
+    "name": "战意昂扬",
+    "desc": "战斗开始前10秒攻击+25%",
+    "icon": "Module/Module_W_BattleSpirit",
+    "weight": 20,
+    "quality": 2,
+    "add_skill_id": 10204,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30105,
+    "name": "血战到底",
+    "desc": "生命低于30%时攻击+40%，吸血+10%",
+    "icon": "Module/Module_W_LastStand",
+    "weight": 12,
+    "quality": 3,
+    "add_skill_id": 10205,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30106,
+    "name": "横扫千军",
+    "desc": "普通攻击变为扇形范围伤害",
+    "icon": "Module/Module_W_Sweep",
+    "weight": 12,
+    "quality": 3,
+    "add_skill_id": 10206,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30102
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30107,
+    "name": "狂战士之魂",
+    "desc": "每击杀一个敌人，攻击+8%持续整场战斗，最多+40%",
+    "icon": "Module/Module_W_BerserkSoul",
+    "weight": 8,
+    "quality": 4,
+    "add_skill_id": 10207,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30101
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30108,
+    "name": "不屈意志",
+    "desc": "受到致命伤害时保留1点生命，持续3秒不可击杀，冷却120秒",
+    "icon": "Module/Module_W_Will",
+    "weight": 8,
+    "quality": 4,
+    "add_skill_id": 10208,
+    "remove_skill_id": 0,
+    "require_module_ids": [],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30109,
+    "name": "武器大师",
+    "desc": "每装备一件武器模组，攻击额外+12%",
+    "icon": "Module/Module_W_Master",
+    "weight": 4,
+    "quality": 5,
+    "add_skill_id": 10209,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30102
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  },
+  {
+    "id": 30110,
+    "name": "怒焰滔天",
+    "desc": "怒气满时自动释放怒气爆发，全屏火焰伤害",
+    "icon": "Module/Module_W_RageFlame",
+    "weight": 2,
+    "quality": 6,
+    "add_skill_id": 10210,
+    "remove_skill_id": 0,
+    "require_module_ids": [
+      30101
+    ],
+    "exclude_module_ids": [],
+    "dispel_module_ids": []
+  }
+]

@@ -1,0 +1,35 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:fde4688b44b28f4da1e4f518dc5132ad:c60efe3d5bfc72b1869f3906621cf5ef:00a2621ea6d74c37ae256b2beb8f1740$
+#
+:format=40300
+:texture=Status.png
+:size=256x512
+:pivotpoints=enabled
+:borders=disabled
+:alphahandling=ClearTransparentPixels
+
+IconSet_Role_Archer;156;249;79;79; 0.5;0.5; 0;0;0;0
+IconSet_Role_Assassin;76;407;78;68; 0.5;0.5; 0;0;0;0
+IconSet_Role_Darkmage;86;250;68;78; 0.5;0.5; 0;0;0;0
+IconSet_Role_Gladiator;156;405;74;70; 0.5;0.5; 0;0;0;0
+IconSet_Role_Paladin;1;331;95;72; 0.5;0.5; 0;0;0;0
+IconSet_Role_Priest;71;163;71;84; 0.5;0.5; 0;0;0;0
+IconSet_Role_Ranger;1;164;68;83; 0.5;0.5; 0;0;0;0
+IconSet_Role_Sorcerer;144;156;80;91; 0.5;0.5; 0;0;0;0
+IconSet_Role_Warrior;98;330;73;73; 0.5;0.5; 0;0;0;0
+IconSet_Role_Wizard;1;255;83;73; 0.5;0.5; 0;0;0;0
+IconSet_Stat_0;29;484;34;27; 0.5;0.5; 0;0;0;0
+IconSet_Stat_1;38;439;36;36; 0.5;0.5; 0;0;0;0
+IconSet_Stat_2;65;484;38;27; 0.5;0.5; 0;0;0;0
+IconSet_Stat_3;181;478;34;33; 0.5;0.5; 0;0;0;0
+IconSet_Stat_4;217;477;34;34; 0.5;0.5; 0;0;0;0
+IconSet_Stat_5;158;481;21;30; 0.5;0.5; 0;0;0;0
+IconSet_Stat_6;105;483;21;28; 0.5;0.5; 0;0;0;0
+IconSet_Stat_7;128;483;28;28; 0.5;0.5; 0;0;0;0
+IconSet_Stat_8;1;440;35;35; 0.5;0.5; 0;0;0;0
+IconSet_Stat_9;1;485;26;26; 0.5;0.5; 0;0;0;0

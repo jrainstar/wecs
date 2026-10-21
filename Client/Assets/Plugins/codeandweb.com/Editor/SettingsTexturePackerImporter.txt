@@ -1,0 +1,14 @@
+version: 2
+tpsheetFileNames:
+- Assets/AssetArts/UIs/GoodNightWorld/Character/Character.tpsheet
+- Assets/AssetArts/UIs/GoodNightWorld/Status/Status.tpsheet
+- Assets/Plugins/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
+textureFileNames:
+- Assets/AssetArts/UIs/GoodNightWorld/Character/Character.png
+- Assets/AssetArts/UIs/GoodNightWorld/Status/Status.png
+- Assets/Plugins/codeandweb.com/Example/SpriteSheet/sprites.png
+normalmapFileNames:
+- 
+- 
+- Assets/Plugins/codeandweb.com/Example/SpriteSheet/sprites_n.png
+enableDebugOutput: 0

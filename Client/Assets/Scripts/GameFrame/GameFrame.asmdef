@@ -1,0 +1,22 @@
+{
+    "name": "GameFrame",
+    "rootNamespace": "",
+    "references": [
+        "GUID:17b8efa1815f5054999a1ca04bcf0281",
+        "GUID:2b08247e5a0118a438d072a33742180e",
+        "GUID:e34a5702dd353724aa315fb8011f08c3",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:2a81c6962524d424a8ef5072bd3b0fa0",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:f35b9e0b629ff9549abc374060ce8943"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
