@@ -5,9 +5,9 @@ using System.Collections.Generic;
 namespace GameLogic.Gameplay.Logic
 {
     /// <summary>
-    /// 场景状态
+    /// 世界状态
     /// </summary>
-    public enum StageState
+    public enum WorldState
     {
         /// <summary>
         /// 无
@@ -38,12 +38,12 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 场景信息
     /// </summary>
-    public class WorldComponent : Component
+    public class WorldInfo : Component
     {
         /// <summary>
         /// 当前 Stage 状态
         /// </summary>
-        public StageState State { get; set; }
+        public WorldState State { get; set; }
         /// <summary>
         /// 帧号
         /// </summary>
@@ -75,7 +75,7 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnReady()
         {
-            State = StageState.None;
+            State = WorldState.None;
             Frame = 0;
             Elapsed = 0;
             TimeScale = FP.One;
@@ -88,7 +88,7 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnReset()
         {
-            State = StageState.None;
+            State = WorldState.None;
             Frame = 0;
             Elapsed = 0;
             TimeScale = FP.One;
@@ -106,7 +106,7 @@ namespace GameLogic.Gameplay.Logic
 
         protected override Component OnClone()
         {
-            var clone = ObjectCache.Ensure<WorldComponent>();
+            var clone = ObjectCache.Ensure<WorldInfo>();
             clone.Ready(Entity);
             clone.State = State;
             clone.Frame = Frame;

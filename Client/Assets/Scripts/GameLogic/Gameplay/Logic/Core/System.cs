@@ -23,8 +23,8 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 组装
         /// </summary>
-        /// <param name="stage">场景</param>
-        /// <param name="actor">ActorID</param>
+        /// <param name="world">世界</param>
+        /// <param name="entity">EntityID</param>
         public void Assemble(World world, ulong entity)
         {
             this.World = world;
@@ -44,7 +44,7 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
-        /// 添加绑定信息, 在 Behavior 被加载时调用
+        /// 添加绑定信息, 在 System 被加载时调用
         /// </summary>
         public void AddComponent()
         {
@@ -52,7 +52,7 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
-        /// 移除绑定信息, 在 Behavior 被卸载时调用
+        /// 移除绑定信息, 在 System 被卸载时调用
         /// </summary>
         public void RemoveComponent()
         {
@@ -123,7 +123,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 行为系统
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Component 类型</typeparam>
     public abstract class System<T> : System where T : Component, new()
     {
         /// <summary>
@@ -134,14 +134,14 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnAddComponent()
         {
             base.OnAddComponent();
-            // Behavior<T> 实现类, 可以指定 Component 用来快速访问对应的 Component
+            // System<T> 实现类, 可以指定 Component 用来快速访问对应的 Component
             if (false == World.SeekComponent(Entity, out T component)) World.AddComponent<T>(Entity);
         }
 
         protected override void OnRemoveComponent()
         {
             base.OnRemoveComponent();
-            // Behavior<T> 实现类, 绑定的 Component 在卸载时需要被移除
+            // System<T> 实现类, 绑定的 Component 在卸载时需要被移除
             if (World.SeekComponent(Entity, out T component)) World.RemoveComponent(component);
         }
     }

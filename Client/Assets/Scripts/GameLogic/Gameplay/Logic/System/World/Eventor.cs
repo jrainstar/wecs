@@ -13,7 +13,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 事件订阅派发者
     /// </summary>
-    public class EventorSystem : System<EventorComponent>
+    public class Eventor : System<EventorInfo>
     {
         private Dictionary<Type, List<(uint index, System system, Delegate action)>> EventDict { get; set; }
 

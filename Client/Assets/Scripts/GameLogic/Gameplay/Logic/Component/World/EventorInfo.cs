@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 事件订阅派发者信息
     /// </summary>
-    public class EventorComponent : Component
+    public class EventorInfo : Component
     {
         /// <summary>
         /// 事件订阅派发者的增量计数器, 用于生成唯一的事件索引 (用作排序)
@@ -33,7 +33,7 @@ namespace GameLogic.Gameplay.Logic
 
         protected override Component OnClone()
         {
-            var clone = ObjectCache.Ensure<EventorComponent>();
+            var clone = ObjectCache.Ensure<EventorInfo>();
             clone.Ready(Entity);
             clone.Increment = Increment;
             clone.Indexes = ObjectCache.Ensure<Dictionary<(int type, ulong entity), uint>>();
