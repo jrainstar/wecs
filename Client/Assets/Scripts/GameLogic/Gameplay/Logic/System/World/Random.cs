@@ -1,4 +1,4 @@
-using GameLogic.Gameplay.Shared;
+using GameLogic.Gameplay.Common;
 
 namespace GameLogic.Gameplay.Logic
 {

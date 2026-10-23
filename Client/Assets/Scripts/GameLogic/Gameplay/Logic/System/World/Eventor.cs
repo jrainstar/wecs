@@ -1,4 +1,4 @@
-using GameLogic.Gameplay.Shared;
+using GameLogic.Gameplay.Common;
 using System;
 using System.Collections.Generic;
 
