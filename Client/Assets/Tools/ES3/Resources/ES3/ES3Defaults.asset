@@ -36,6 +36,7 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp
+    - Cinemachine
     - DOTween.Modules
     - EasySave3
     - GameConf

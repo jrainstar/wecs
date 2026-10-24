@@ -87,7 +87,7 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// 事件订阅/派发者
         /// </summary>
-        public Eventor eventor { get; set; }
+        public EventBus eventor { get; set; }
 
         /// <summary>
         /// 时间缩放
@@ -97,7 +97,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
-            eventor = AddComp<Eventor>();
+            eventor = AddComp<EventBus>();
             eventor.Create();
         }
 
