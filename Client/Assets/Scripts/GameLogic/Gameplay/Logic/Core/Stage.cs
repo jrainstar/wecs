@@ -1,10 +1,9 @@
+using GameConf.Gameplay.Skill;
 using GameLogic.Gameplay.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
-using UnityEngine;
-
 
 namespace GameLogic.Gameplay.Logic
 {
@@ -31,30 +30,28 @@ namespace GameLogic.Gameplay.Logic
     }
 
     /// <summary>
-    /// Stage, 逻辑层的容器, 负责容纳所有的 Actor, 以及 Actor 的 Behavior & BehaviorInfo
+    /// 场景, 逻辑层的容器, 负责容纳所有的 Actor, 以及 Actor 的行为 & 行为数据
     /// </summary>
     public sealed class Stage
     {
         /// <summary>
+        /// Stage.ActorID, Stage 的数据走的也是 Actor/Behavior/BehaviorInfo 那一套
+        /// 通过包装 Actor 的形式使用
         /// 所以 Stage 也是 Actor, 但它是一个特殊的 Actor, 它的 ID 是 ulong.MaxValue
         /// </summary>
         public ulong sa => ulong.MaxValue;
-
         /// <summary>
         /// Stage 当前的运行状态
         /// </summary>
         public StageState state => info.state;
-
         /// <summary>
         /// Stage 当前的帧号
         /// </summary>
         public uint frame => info.frame;
-
         /// <summary>
         /// 时间流逝
         /// </summary>
         public FP elapsed => info.elapsed;
-
         /// <summary>
         /// 时间缩放
         /// </summary>
@@ -63,77 +60,63 @@ namespace GameLogic.Gameplay.Logic
             get => info.timescale;
             set => info.timescale = value;
         }
-
-        /// <summary>
-        /// 配置
-        /// </summary>
-        public Config cfg => GetBehavior<Config>(sa, true);
-
         /// <summary>
         /// Stage 缓存
         /// </summary>
         public StageCache cache { get; private set; }
-
         /// <summary>
         /// Stage 数据
         /// </summary>
-        public StageInfo info { get; private set; }
-
+        private StageInfo info { get; set; }
         /// <summary>
         /// 快照
         /// </summary>
-        public StageInfo snapshot { get; private set; }
-
+        private StageInfo snapshot { get; set; }
         /// <summary>
         /// 是否有快照
         /// </summary>
         public bool hassnapshot => null != snapshot;
-
         /// <summary>
         /// 快照帧号
         /// </summary>
         public uint snapshotframe => null != snapshot ? snapshot.frame : 0;
-
         /// <summary>
-        /// Stage 初始化的游戏数据
+        /// 初始化 Stage 的游戏数据
         /// </summary>
         public StageData data { get; set; }
-
         /// <summary>
-        /// 预制创建器, 键为预制创建器信息类型
+        /// 配置
         /// </summary>
-        public Dictionary<Type, Prefab> prefabs { get; private set; }
-
-        /// <summary>
-        /// 座位
-        /// </summary>
-        public Seat seat => GetBehavior<Seat>(sa, true);
-
-        /// <summary>
-        /// 渲染指令同步
-        /// </summary>
-        public RILSync rilsync => GetBehavior<RILSync>(sa, true);
-
+        public Config cfg => GetBehavior<Config>(sa, true);
         /// <summary>
         /// 事件订阅派发者
         /// </summary>
         public Eventor eventor => GetBehavior<Eventor>(sa, true);
-
+        /// <summary>
+        /// 座位
+        /// </summary>
+        public Seat seat => GetBehavior<Seat>(sa, true);
         /// <summary>
         /// 随机数
         /// </summary>
         public Random random => GetBehavior<Random>(sa, true);
-
+        
+        /// <summary>
+        /// 渲染指令同步
+        /// </summary>
+        public RILSync rilsync => GetBehavior<RILSync>(sa, true);
+        /// <summary>
+        /// 预制创建器集合
+        /// </summary>
+        public Dictionary<Type, Prefab> prefabs { get; set; }
         /// <summary>
         /// 对外暴露抛出 RIL 的事件
         /// </summary>
         public Action<IRIL> onril { get; set; }
-
         /// <summary>
         /// 对外暴露抛出 RIL_DIFF 的事件
         /// </summary>
         public Action<IRIL_DIFF> ondiff { get; set; }
-
         /// <summary>
         /// 对外暴露抛出 RIL_EVENT 的事件
         /// </summary>
@@ -152,17 +135,17 @@ namespace GameLogic.Gameplay.Logic
             this.data = data;
             // StageCache 初始化
             cache = new StageCache().Initialize();
-            // 构建 StageInfo, 因为 Stage 的数据也是走 Behavior, 无法通过自举的方式走 API 添加
+            // 构建 StageInfo, 因为 Stage 的数据也是走 BehaviorInfo, 无法通过自举的方式走 API 添加
             // 悖论存在, 此处手动添加
             info = ObjectCache.Ensure<StageInfo>();
             info.Ready(sa);
             info.state = StageState.Initialized;
 
             AddActor(sa);
-            // 构建 Stage 的 Behavior
-            InitBehaviors();
-            // 构建 Stage 的 Prefab
-            InitPrefabs();
+            // 操作 Sa Behavior
+            Behaviors();
+            // 添加预制创建器
+            Prefabs();
             // 构建初始化 Stage
             Building();
 
@@ -181,7 +164,7 @@ namespace GameLogic.Gameplay.Logic
             cache.rmvactors.Clear();
             cache.rmvactorset.Clear();
             cache.rmvactors.AddRange(info.actors);
-            foreach (var entity in info.actors) ActorToRecycle(entity);
+            foreach (var actor in info.actors) ActorToRecycle(actor);
             Recycle();
 
             // 卸载 Prefabs
@@ -200,29 +183,31 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 初始化 Stage 的 Behaviors
         /// </summary>
-        private void InitBehaviors()
+        private void Behaviors()
         {
-            GetBehavior<Tag>(sa).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.WORLD);
-
-            AddBehavior<Random>(sa).Initialze(data.seed);
+            GetBehavior<Tag>(sa).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.STAGE);
             AddBehavior<Config>(sa);
             AddBehavior<Eventor>(sa);
-            AddBehavior<RILSync>(sa);
             AddBehavior<Seat>(sa);
+            AddBehavior<Random>(sa).Initialze(data.seed);
 
+            AddBehavior<RILSync>(sa);
         }
 
         /// <summary>
-        /// 初始化 Stage 的 Prefabs
+        /// 添加预制创建器
         /// </summary>
-        private void InitPrefabs()
+        /// <exception cref="Exception">不能重复添加</exception>
+        private void Prefabs()
         {
             void Prefab<T, E>() where T : Prefab, new() where E : PrefabInfo, new()
             {
                 prefabs.Add(typeof(E), ObjectCache.Ensure<T>().Load(this));
             }
             prefabs = ObjectCache.Ensure<Dictionary<Type, Prefab>>();
+
             Prefab<HeroPrefab, HeroPrefabInfo>();
+
         }
 
         /// <summary>
@@ -239,28 +224,14 @@ namespace GameLogic.Gameplay.Logic
                     {
                         position = player.position.ToFPVector3(),
                         euler = player.euler.ToFPVector3(),
-                        scale = (FP)player.scale * cfg.int2fp,
+                        scale = player.scale * cfg.int2fp,
                     }
                 });
                 AddBehavior<Gamepad>(hero);
                 // 入座
                 seat.Sitdown(player.seat, hero);
 
-                // 渲染同步, 不等待下一次帧末翻译
-                rilsync.Translate();
             }
-        }
-
-        /// <summary>
-        /// 注册预制创建器
-        /// </summary>
-        /// <typeparam name="T">预制创建器类型</typeparam>
-        /// <typeparam name="E">预制创建器信息类型</typeparam>
-        public void AddPrefab<T, E>() where T : Prefab, new() where E : PrefabInfo
-        {
-            if (prefabs.ContainsKey(typeof(E))) return;
-
-            prefabs.Add(typeof(E), ObjectCache.Ensure<T>().Load(this));
         }
 
         /// <summary>
@@ -353,12 +324,46 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
+        /// 发送差异渲染指令
+        /// </summary>
+        /// <param name="diff">差异渲染指令</param>
+        public void Diff(IRIL_DIFF diff)
+        {
+            if (0 == info.frame || 1 == frame) return;
+            if (null == rilsync) return;
+            rilsync.Send(diff);
+        }
+
+        /// <summary>
+        /// 输入 Gamepad
+        /// </summary>
+        /// <param name="id">座位 ID</param>
+        /// <param name="type">按键类型</param>
+        /// <param name="press">摁下之后 -> TRUE</param>
+        /// <param name="dire">按键的方向</param>
+        public void SetInput(ulong id, ushort type, bool press, IntVector2 dire)
+        {
+            var actor = seat.GetActor(id);
+            if (false == SeekBehavior(actor, out Gamepad gamepad)) return;
+
+            gamepad.SetInput(type, press, dire.ToFPVector2());
+        }
+
+        /// <summary>
+        /// 输入指令
+        /// </summary>
+        /// <param name="command"></param>
+        public void SetCommand(Command command)
+        {
+            // captain.SetCommand(command.Clone(ObjectCache.Ensure(command.GetType()) as Command));
+        }
+
+        /// <summary>
         /// 驱动
         /// </summary>
         public void Step()
         {
             if (StageState.Ticking != info.state) return;
-
             var tick = info.timescale * GAME_DEFINE.LOGIC_TICK;
             // 帧号递增 & 时间流逝
             info.frame++;
@@ -370,7 +375,6 @@ namespace GameLogic.Gameplay.Logic
                 if (false == SeekBehaviors(type, out var behaviors)) continue;
                 foreach (var behavior in behaviors)
                 {
-                    // 携带 TickerInfo 的 Actor, 使用自身的时间缩放
                     if (SeekBehaviorInfo(behavior.actor, out TickerInfo ticker))
                     {
                         behavior.Tick(ticker.timescale * tick);
@@ -385,17 +389,200 @@ namespace GameLogic.Gameplay.Logic
             foreach (var type in TICK_DEFINE.TICK_TYPE_LIST)
             {
                 if (false == SeekBehaviors(type, out var behaviors)) continue;
-                foreach (var system in behaviors) system.EndTick();
+                foreach (var behavior in behaviors)
+                {
+                    behavior.EndTick();
+                }
             }
 
-            // 回收
             Recycle();
+        }
+
+        /// <summary>
+        /// 回收/销毁 Actor/Behavior/BehaviorInfo
+        /// </summary>
+        private void Recycle()
+        {
+            // 拆解 Behavior
+            foreach (var rmvbehavior in cache.rmvbehaviors)
+            {
+                rmvbehavior.Disassemble();
+            }
+
+            // 回收 Behavior
+            foreach (var rmvbehavior in cache.rmvbehaviors)
+            {
+                if (cache.behaviors.TryGetValue(rmvbehavior.GetType(), out var behaviors))
+                {
+                    behaviors.Remove(rmvbehavior);
+                }
+
+                if (cache.behaviordict.TryGetValue(rmvbehavior.actor, out var behaviordict))
+                {
+                    behaviordict.Remove(rmvbehavior.GetType());
+                }
+
+                if (info.behaviortypes.TryGetValue(rmvbehavior.actor, out var types))
+                {
+                    types.Remove(rmvbehavior.GetType());
+                }
+                ObjectCache.Set(rmvbehavior);
+            }
+
+            // 重置 BehaviorInfo
+            foreach (var rmvbehaviorinfo in cache.rmvbehaviorinfos)
+            {
+                if (cache.behaviorinfodict.TryGetValue(rmvbehaviorinfo.actor, out var behaviorinfodict))
+                {
+                    behaviorinfodict.Remove(rmvbehaviorinfo.GetType());
+                }
+
+                if (info.behaviorinfos.TryGetValue(rmvbehaviorinfo.GetType(), out var behaviorinfos))
+                {
+                    behaviorinfos.Remove(rmvbehaviorinfo);
+                }
+
+                rmvbehaviorinfo.Reset();
+                ObjectCache.Set(rmvbehaviorinfo);
+            }
+
+            // 回收清理
+            foreach (var rmvactor in cache.rmvactors)
+            {
+                if (cache.behaviordict.TryGetValue(rmvactor, out var behaviordict))
+                {
+                    behaviordict.Clear();
+                    ObjectCache.Set(behaviordict);
+                    cache.behaviordict.Remove(rmvactor);
+                }
+
+                if (cache.behaviorinfodict.TryGetValue(rmvactor, out var behaviorinfodict))
+                {
+                    behaviorinfodict.Clear();
+                    ObjectCache.Set(behaviorinfodict);
+                    cache.behaviorinfodict.Remove(rmvactor);
+                }
+
+                info.actors.Remove(rmvactor);
+            }
+
+            cache.rmvactors.Clear();
+            cache.rmvactorset.Clear();
+            cache.rmvbehaviors.Clear();
+            cache.rmvbehaviorinfos.Clear();
+
+            // 回收帧末临时 List
+            foreach (var list in cache.tickendrecyclelist)
+            {
+                list.Clear();
+                ObjectCache.Set(list);
+            }
+            cache.tickendrecyclelist.Clear();
+        }
+
+        /// <summary>
+        /// 将 Actor 回收
+        /// </summary>
+        /// <param name="actor">ActorID</param>
+        /// <returns>YES/NO</returns>
+        private bool ActorToRecycle(ulong actor)
+        {
+            if (false == cache.Valid(actor)) return false;
+            cache.rmvactors.Add(actor);
+            cache.rmvactorset.Add(actor);
+
+            if (SeekBehaviors(actor, out var behaviors)) foreach (var behavior in behaviors) RmvBehavior(behavior);
+            if (SeekBehaviorInfos(actor, out var behaviorinfos)) foreach (var behaviorinfo in behaviorinfos) RmvBehaviorInfo(behaviorinfo);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 根据预制创建器构建一个 Actor
+        /// </summary>
+        /// <param name="prefabinfo">预制构建器数据</param>
+        /// <typeparam name="T">预制构建器类型</typeparam>
+        /// <returns>Actor</returns>
+        /// <exception cref="Exception">预制构建器类型不存在</exception>
+        public ulong Spawn<T>(T prefabinfo) where T : PrefabInfo
+        {
+            if (false == prefabs.TryGetValue(typeof(T), out var prefab)) throw new Exception($"prefab {typeof(T)} is not exist.");
+            var actor = GenActor();
+            prefab.Processing(actor, prefabinfo);
+
+            return actor;
+        }
+
+        /// <summary>
+        /// 移除 Actor
+        /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RmvActors)
+        /// </summary>
+        /// <param name="actor">ActorID</param>
+        public void RmvActor(ulong actor)
+        {
+            if (false == ActorToRecycle(actor)) return;
+
+            eventor.Tell(new ActorRmvEvent { actor = actor });
+            DiffActor(actor, RIL_DEFINE.DIFF_DEL);
+        }
+
+        /// <summary>
+        /// 移除 Behavior
+        /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RmvBehaviors)
+        /// </summary>
+        /// <param name="behavior">Behavior</param>
+        public void RmvBehavior(Behavior behavior)
+        {
+            if (false == behavior.active) return;
+            behavior.active = false;
+            behavior.RmvBehaviorInfo();
+            cache.rmvbehaviors.Add(behavior);
+        }
+
+        /// <summary>
+        /// 移除 BehaviorInfo
+        /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RmvBehaviorInfos)
+        /// </summary>
+        /// <param name="behaviorinfo">BehaviorInfo</param>
+        public void RmvBehaviorInfo(BehaviorInfo behaviorinfo)
+        {
+            if (false == behaviorinfo.active) return;
+            behaviorinfo.active = false;
+            cache.rmvbehaviorinfos.Add(behaviorinfo);
+        }
+
+        /// <summary>
+        /// 生成 Actor
+        /// </summary>
+        /// <returns>Actor</returns>
+        public ulong GenActor()
+        {
+            // 生成一个 Actor
+            var actor = ++info.increment;
+            AddActor(actor);
+            eventor.Tell(new ActorAddEvent { actor = actor });
+            DiffActor(actor, RIL_DEFINE.DIFF_NEW);
+
+            return actor;
+        }
+
+        /// <summary>
+        /// 添加 Actor
+        /// </summary>
+        /// <param name="actor">ActorID</param>
+        /// <returns>Actor</returns>
+        /// <exception cref="Exception">Actor 已存在</exception>
+        private void AddActor(ulong actor)
+        {
+            info.actors.Add(actor);
+            // 默认携带 Tag 行为. 写入 ActorType 为 NONE
+            AddBehavior<Tag>(actor).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.NONE);
         }
 
         /// <summary>
         /// 添加 Behavior
         /// </summary>
-        /// <param name="id">Actor</param>
+        /// <param name="id">ActorID</param>
         /// <typeparam name="T">Behavior 类型</typeparam>
         /// <returns>Behavior</returns>
         /// <exception cref="Exception">Actor 不存在 | Behavior 已存在</exception>
@@ -407,7 +594,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 添加 Behavior
         /// </summary>
-        /// <param name="id">Actor</param>
+        /// <param name="id">ActorID</param>
         /// <param name="type">Behavior 类型</param>
         /// <returns>Behavior</returns>
         /// <exception cref="Exception">Actor 不存在 | Behavior 已存在</exception>
@@ -419,8 +606,6 @@ namespace GameLogic.Gameplay.Logic
             // 检查 Behavior 是否已经存在容器中
             if (dict.ContainsKey(type)) throw new Exception($"behavior {type} is exist.");
             if (false == info.behaviortypes.TryGetValue(id, out var types)) info.behaviortypes.Add(id, types = ObjectCache.Ensure<List<Type>>());
-            // 检查 Actor 是否存在
-            if (false == info.actors.Contains(id)) throw new Exception($"actor {id} is not exist.");
 
             var behavior = ObjectCache.Ensure(type) as Behavior;
             if (false == types.Contains(type)) types.Add(type);
@@ -438,23 +623,34 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
-        /// 移除 Behavior
-        /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RemoveBehaviors)
+        /// 添加 BehaviorInfo
         /// </summary>
-        /// <param name="behavior">Behavior</param>
-        public void RemoveBehavior(Behavior behavior)
+        /// <param name="id">ActorID</param>
+        /// <typeparam name="T">BehaviorInfo 类型</typeparam>
+        /// <returns>BehaviorInfo</returns>
+        /// <exception cref="Exception">Actor 不存在 | BehaviorInfo 已存在</exception>
+        public T AddBehaviorInfo<T>(ulong id) where T : BehaviorInfo, new()
         {
-            if (false == behavior.active) return;
-            behavior.active = false;
-            behavior.RemoveBehaviorInfo();
-            cache.rmvbehaviors.Add(behavior);
+            // 检查 BehaviorInfo 容器是否存在
+            if (false == cache.behaviorinfodict.TryGetValue(id, out var dict)) cache.behaviorinfodict.Add(id, dict = ObjectCache.Ensure<Dictionary<Type, BehaviorInfo>>());
+            // 检查 BehaviorInfo 是否已经存在容器中
+            if (dict.ContainsKey(typeof(T))) throw new Exception($"behaviorinfo {typeof(T)} is exist.");
+            // 初始化 BehaviorInfos
+            if (false == info.behaviorinfos.TryGetValue(typeof(T), out var list)) info.behaviorinfos.Add(typeof(T), list = ObjectCache.Ensure<List<BehaviorInfo>>());
+
+            var behaviorinfo = ObjectCache.Ensure<T>();
+            dict.Add(typeof(T), behaviorinfo);
+            list.Add(behaviorinfo);
+            behaviorinfo.Ready(id);
+
+            return behaviorinfo;
         }
 
         /// <summary>
         /// 获取指定类型的所有 Behavior 列表
         /// </summary>
         /// <param name="behaviors">所有 Behavior 列表</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">Behavior 类型</typeparam>
         /// <returns>YES/NO</returns>
         public bool SeekBehaviors<T>(out List<T> behaviors, bool force = false) where T : Behavior
@@ -467,7 +663,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取指定类型的所有 Behavior 列表
         /// </summary>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">Behavior 类型</typeparam>
         /// <returns>所有 Behavior 列表</returns>
         public List<T> GetBehaviors<T>(bool force = false) where T : Behavior
@@ -497,7 +693,7 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         /// <param name="type">Behavior 类型</param>
         /// <param name="behaviors">所有 Behavior 列表</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <returns>YES/NO</returns>
         public bool SeekBehaviors(Type type, out List<Behavior> behaviors, bool force = false)
         {
@@ -509,7 +705,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取指定类型的所有 Behavior 列表
         /// <param name="type">Behavior 类型</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// </summary>
         /// <returns>所有 Behavior 列表</returns>
         public List<Behavior> GetBehaviors(Type type, bool force = false)
@@ -533,9 +729,9 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取 Actor 所有 Behavior 列表
         /// </summary>
-        /// <param name="id">Actor</param>
+        /// <param name="id">ActorID</param>
         /// <param name="behaviors">Behavior 列表</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <returns>YES/NO</returns>
         public bool SeekBehaviors(ulong id, out List<Behavior> behaviors, bool force = false)
         {
@@ -547,14 +743,14 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取 Actor 所有 Behavior 列表
         /// </summary>
-        /// <param name="id">Actor</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="id">ActorID</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <returns>Behavior 列表</returns>
         public List<Behavior> GetBehaviors(ulong id, bool force = false)
         {
             if (false == info.behaviortypes.TryGetValue(id, out var types)) return default;
 
-            // 根据 Actor 获取所有 Behavior
+            // 根据 ActorID 获取所有 Behavior
             List<Behavior> result = default;
             foreach (var type in types)
             {
@@ -574,9 +770,9 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取 Behavior
         /// </summary>
-        /// <param name="id">Actor</param>
+        /// <param name="id">ActorID</param>
         /// <param name="behavior">Behavior</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">Behavior 类型</typeparam>
         /// <returns>YES/NO</returns>
         public bool SeekBehavior<T>(ulong id, out T behavior, bool force = false) where T : Behavior, new()
@@ -589,10 +785,10 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取 Behavior
         /// </summary>
-        /// <param name="id">Actor</param>
+        /// <param name="id">ActorID</param>
         /// <param name="type">Behavior 类型</param>
         /// <param name="behavior">Behavior</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <returns>YES/NO</returns>
         public bool SeekBehavior(ulong id, Type type, out Behavior behavior, bool force = false)
         {
@@ -604,8 +800,8 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取 Behavior
         /// </summary>
-        /// <param name="id">Actor</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="id">ActorID</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">Behavior 类型</typeparam>
         /// <returns>Behavior</returns>
         /// <exception cref="Exception">Actor 不存在</exception>
@@ -620,9 +816,9 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取 Behavior
         /// </summary>
-        /// <param name="id">Actor</param>
+        /// <param name="id">ActorID</param>
         /// <param name="type">Behavior 类型</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <returns>Behavior</returns>
         public Behavior GetBehavior(ulong id, Type type, bool force = false)
         {
@@ -634,67 +830,31 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
-        /// 移除 BehaviorInfo
-        /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RemoveBehaviorInfos)
-        /// </summary>
-        /// <param name="behaviorinfo">BehaviorInfo</param>
-        public void RemoveBehaviorInfo(BehaviorInfo behaviorinfo)
-        {
-            if (false == behaviorinfo.active) return;
-            behaviorinfo.active = false;
-            cache.rmvbehaviorinfos.Add(behaviorinfo);
-        }
-
-        /// <summary>
-        /// 添加 BehaviorInfo
-        /// </summary>
-        /// <param name="id">Actor</param>
-        /// <typeparam name="T">BehaviorInfo 类型</typeparam>
-        /// <returns>BehaviorInfo</returns>
-        /// <exception cref="Exception">Actor 不存在 | BehaviorInfo 已存在</exception>
-        public T AddBehaviorInfo<T>(ulong id) where T : BehaviorInfo, new()
-        {
-            // 检查 BehaviorInfo 容器是否存在
-            if (false == cache.behaviorinfodict.TryGetValue(id, out var dict)) cache.behaviorinfodict.Add(id, dict = ObjectCache.Ensure<Dictionary<Type, BehaviorInfo>>());
-            // 检查 BehaviorInfo 是否已经存在容器中
-            if (dict.ContainsKey(typeof(T))) throw new Exception($"behaviorinfo {typeof(T)} is exist.");
-            // 初始化 BehaviorInfos
-            if (false == info.behaviorinfos.TryGetValue(typeof(T), out var list)) info.behaviorinfos.Add(typeof(T), list = ObjectCache.Ensure<List<BehaviorInfo>>());
-
-            var behaviorinfo = ObjectCache.Ensure<T>();
-            dict.Add(typeof(T), behaviorinfo);
-            list.Add(behaviorinfo);
-            behaviorinfo.Ready(id);
-
-            return behaviorinfo;
-        }
-
-        /// <summary>
         /// 获取指定类型的所有 BehaviorInfo 列表
         /// </summary>
-        /// <param name="behaviorinfos">BehaviorInfo 列表</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="infos">BehaviorInfo 列表</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">BehaviorInfo 类型</typeparam>
         /// <returns>YES/NO</returns>
-        public bool SeekBehaviorInfos<T>(out List<T> behaviorinfos, bool force = false) where T : BehaviorInfo
+        public bool SeekBehaviorInfos<T>(out List<T> infos, bool force = false) where T : BehaviorInfo
         {
-            behaviorinfos = GetBehaviorInfos<T>(force);
+            infos = GetBehaviorInfos<T>(force);
 
-            return null != behaviorinfos;
+            return null != infos;
         }
 
         /// <summary>
         /// 获取指定类型的所有 BehaviorInfo 列表
         /// </summary>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">BehaviorInfo 类型</typeparam>
         /// <returns>BehaviorInfo 列表</returns>
         /// 
         public List<T> GetBehaviorInfos<T>(bool force = false) where T : BehaviorInfo
         {
-            if (false == info.behaviorinfos.TryGetValue(typeof(T), out var components)) return default;
+            if (false == info.behaviorinfos.TryGetValue(typeof(T), out var infos)) return default;
             List<T> result = default;
-            foreach (var i in components)
+            foreach (var i in infos)
             {
                 if (false == force && false == i.active) continue;
                 if (null == result)
@@ -712,22 +872,22 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 获取 Actor 所有 BehaviorInfo 列表
         /// </summary>
-        /// <param name="id">Actor</param>
-        /// <param name="behaviorinfos">BehaviorInfo 列表</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="id">ActorID</param>
+        /// <param name="infos">BehaviorInfo 列表</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <returns>YES/NO</returns>
-        public bool SeekBehaviorInfos(ulong id, out List<BehaviorInfo> behaviorinfos, bool force = false)
+        public bool SeekBehaviorInfos(ulong id, out List<BehaviorInfo> infos, bool force = false)
         {
-            behaviorinfos = GetBehaviorInfos(id, force);
+            infos = GetBehaviorInfos(id, force);
 
-            return null != behaviorinfos;
+            return null != infos;
         }
 
         /// <summary>
         /// 获取 Actor 所有 BehaviorInfo 列表
         /// </summary>
         /// <param name="id">ActorID</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <returns>BehaviorInfo 列表</returns>
         public List<BehaviorInfo> GetBehaviorInfos(ulong id, bool force = false)
         {
@@ -758,7 +918,7 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         /// <param name="id">ActorID</param>
         /// <param name="info">BehaviorInfo</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">BehaviorInfo 类型</typeparam>
         /// <returns>YES/NO</returns>
         public bool SeekBehaviorInfo<T>(ulong id, out T info, bool force = false) where T : BehaviorInfo
@@ -772,7 +932,7 @@ namespace GameLogic.Gameplay.Logic
         /// 获取 BehaviorInfo
         /// </summary>
         /// <param name="id">ActorID</param>
-        /// <param name="force">强制, 包含 Remove</param>
+        /// <param name="force">强制, 包含 Rmv</param>
         /// <typeparam name="T">BehaviorInfo 类型</typeparam>
         /// <returns>BehaviorInfo</returns>
         public T GetBehaviorInfo<T>(ulong id, bool force = false) where T : BehaviorInfo
@@ -785,257 +945,129 @@ namespace GameLogic.Gameplay.Logic
             return (T)behaviorinfo;
         }
 
-        // ======================================================================
-        // Actor 补充 API
-        // ======================================================================
-
         /// <summary>
-        /// 生成 Actor
-        /// </summary>
-        /// <returns>Actor</returns>
-        public ulong GenActor()
-        {
-            var entity = ++info.increment;
-            AddActor(entity);
-
-            return entity;
-        }
-
-        /// <summary>
-        /// 添加 Actor
-        /// 会自动携带 Tag, 并把 ActorType 写入 NONE
-        /// </summary>
-        /// <param name="actor">Actor</param>
-        public void AddActor(ulong actor)
-        {
-            if (info.actors.Contains(actor)) return;
-            info.actors.Add(actor);
-            // 默认携带 Tag 系统, 写入 ActorType 为 NONE
-            AddBehavior<Tag>(actor).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.NONE);
-        }
-
-        /// <summary>
-        /// 回收 Actor
-        /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RemoveActors)
+        /// Actor 差异
         /// </summary>
         /// <param name="actor">ActorID</param>
-        /// <returns>YES/NO</returns>
-        private bool ActorToRecycle(ulong actor)
+        /// <param name="token">RIL 差异标记</param>
+        private void DiffActor(ulong actor, byte token)
         {
-            if (false == cache.Valid(actor)) return false;
-            cache.rmvactors.Add(actor);
-            cache.rmvactorset.Add(actor);
-
-            if (SeekBehaviors(actor, out var systems)) foreach (var system in systems) RemoveBehavior(system);
-            if (SeekBehaviorInfos(actor, out var components)) foreach (var component in components) RemoveBehaviorInfo(component);
-
-            return true;
+            var diff = ObjectCache.Ensure<RIL_DIFF_ACTOR>();
+            diff.Ready(sa, token);
+            diff.target = actor;
+            Diff(diff);
         }
 
         /// <summary>
-        /// 移除 Actor
-        /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RemoveActors)
+        /// Stage 缓存
         /// </summary>
-        /// <param name="actor">Actor</param>
-        public void RemoveActor(ulong actor)
+        public sealed class StageCache
         {
-            if (false == ActorToRecycle(actor)) return;
+            /// <summary>
+            /// 行为列表, 键为 ActorID, 值为该 Actor 上的所有行为
+            /// </summary>
+            public Dictionary<ulong, Dictionary<Type, Behavior>> behaviordict { get; set; }
+            /// <summary>
+            /// 行为列表, 键为行为类型, 值为该行为类型的所有 Behavior 列表
+            /// </summary>
+            public Dictionary<Type, List<Behavior>> behaviors { get; set; }
+            /// <summary>
+            /// 行为信息列表, 键为 ActorID, 值为该 Actor 上的所有行为信息
+            /// </summary>
+            public Dictionary<ulong, Dictionary<Type, BehaviorInfo>> behaviorinfodict { get; set; }
+            /// <summary>
+            /// Rmv Actor 列表
+            /// </summary>
+            public List<ulong> rmvactors { get; set; }
+            /// <summary>
+            /// Rmv Actor 集合, 用于快速验证 Actor 是否有效
+            /// </summary>
+            public HashSet<ulong> rmvactorset { get; set; }
+            /// <summary>
+            /// Rmv Behavior列表
+            /// </summary>
+            public List<Behavior> rmvbehaviors { get; set; }
+            /// <summary>
+            /// Rmv BehaviorInfo 列表
+            /// </summary>
+            public List<BehaviorInfo> rmvbehaviorinfos { get; set; }
+            /// <summary>
+            /// TickEnd 自动回收 List 列表
+            /// </summary>
+            public List<IList> tickendrecyclelist { get; set; }
 
-            eventor.Tell(new ActorRmvEvent { actor = actor });
-        }
-
-        /// <summary>
-        /// 根据预制创建器构建一个 Actor
-        /// </summary>
-        /// <param name="info">预制信息</param>
-        /// <typeparam name="T">预制信息类型</typeparam>
-        /// <returns>Actor</returns>
-        /// <exception cref="Exception">预制创建器不存在</exception>
-        public ulong Spawn<T>(T info) where T : PrefabInfo
-        {
-            if (false == prefabs.TryGetValue(typeof(T), out var prefab)) throw new Exception($"prefab {typeof(T)} is not exist.");
-
-            var actor = GenActor();
-            prefab.Processing(actor, info);
-
-            eventor.Tell(new ActorAddEvent { actor = actor });
-
-            return actor;
-        }
-
-        /// <summary>
-        /// 回收/销毁 Actor/Behavior/BehaviorInfo
-        /// </summary>
-        private void Recycle()
-        {
-            // 拆解 Behavior
-            foreach (var remove in cache.rmvbehaviors) remove.Disassemble();
-
-            // 回收 Behavior
-            foreach (var remove in cache.rmvbehaviors)
+            /// <summary>
+            /// 初始化 StageCache
+            /// </summary>
+            /// <returns>StageCache</returns>
+            public StageCache Initialize()
             {
-                if (cache.behaviors.TryGetValue(remove.GetType(), out var systems)) systems.Remove(remove);
-                if (cache.behaviordict.TryGetValue(remove.actor, out var dict)) dict.Remove(remove.GetType());
-                if (info.behaviortypes.TryGetValue(remove.actor, out var types)) types.Remove(remove.GetType());
+                behaviordict = ObjectCache.Ensure<Dictionary<ulong, Dictionary<Type, Behavior>>>();
+                behaviors = ObjectCache.Ensure<Dictionary<Type, List<Behavior>>>();
+                behaviorinfodict = ObjectCache.Ensure<Dictionary<ulong, Dictionary<Type, BehaviorInfo>>>();
+                rmvactors = ObjectCache.Ensure<List<ulong>>();
+                rmvactorset = ObjectCache.Ensure<HashSet<ulong>>();
+                rmvbehaviors = ObjectCache.Ensure<List<Behavior>>();
+                rmvbehaviorinfos = ObjectCache.Ensure<List<BehaviorInfo>>();
+                tickendrecyclelist = ObjectCache.Ensure<List<IList>>();
 
-                ObjectCache.Set(remove);
+                return this;
             }
 
-            // 重置 BehaviorInfo
-            foreach (var remove in cache.rmvbehaviorinfos)
+            /// <summary>
+            /// 验证 Actor 是否有效
+            /// </summary>
+            /// <param name="actor">ActorID</param>
+            /// <returns>YES/NO</returns>
+            public bool Valid(ulong actor)
             {
-                if (cache.behaviorinfodict.TryGetValue(remove.actor, out var dict)) dict.Remove(remove.GetType());
-                if (info.behaviorinfos.TryGetValue(remove.GetType(), out var components)) components.Remove(remove);
-
-                remove.Reset();
-                ObjectCache.Set(remove);
+                return false == rmvactorset.Contains(actor);
             }
 
-            // 回收清理
-            foreach (var remove in cache.rmvactors)
+            /// <summary>
+            /// 添加 TickEnd 自动回收 List 列表
+            /// </summary>
+            /// <param name="list">List 列表</param>
+            public void AutoRecycle(IList list)
             {
-                if (cache.behaviordict.TryGetValue(remove, out var systems))
+                if (tickendrecyclelist.Contains(list)) return;
+                tickendrecyclelist.Add(list);
+            }
+
+            /// <summary>
+            /// 销毁 StageCache
+            /// </summary>
+            public void Dispose()
+            {
+                behaviordict.Clear();
+                ObjectCache.Set(behaviordict);
+
+                behaviors.Clear();
+                ObjectCache.Set(behaviors);
+
+                behaviorinfodict.Clear();
+                ObjectCache.Set(behaviorinfodict);
+
+                rmvactors.Clear();
+                ObjectCache.Set(rmvactors);
+
+                rmvactorset.Clear();
+                ObjectCache.Set(rmvactorset);
+
+                rmvbehaviors.Clear();
+                ObjectCache.Set(rmvbehaviors);
+
+                rmvbehaviorinfos.Clear();
+                ObjectCache.Set(rmvbehaviorinfos);
+
+                tickendrecyclelist.Clear();
+                foreach (var list in tickendrecyclelist)
                 {
-                    systems.Clear();
-                    ObjectCache.Set(systems);
-                    cache.behaviordict.Remove(remove);
+                    list.Clear();
+                    ObjectCache.Set(list);
                 }
-
-                if (cache.behaviorinfodict.TryGetValue(remove, out var components))
-                {
-                    components.Clear();
-                    ObjectCache.Set(components);
-                    cache.behaviorinfodict.Remove(remove);
-                }
-
-                info.actors.Remove(remove);
+                ObjectCache.Set(tickendrecyclelist);
             }
-
-            cache.rmvactors.Clear();
-            cache.rmvactorset.Clear();
-            cache.rmvbehaviors.Clear();
-            cache.rmvbehaviorinfos.Clear();
-
-            // 回收帧末临时 List
-            foreach (var list in cache.tickendrecyclelist)
-            {
-                list.Clear();
-                ObjectCache.Set(list);
-            }
-            cache.tickendrecyclelist.Clear();
-        }
-    }
-
-
-    /// <summary>
-    /// Stage 缓存
-    /// </summary>
-    public sealed class StageCache
-    {
-        /// <summary>
-        /// 行为列表, 键为 ActorId, 值为该 Actor 上的所有行为
-        /// </summary>
-        public Dictionary<ulong, Dictionary<Type, Behavior>> behaviordict { get; set; }
-        /// <summary>
-        /// 行为列表, 键为行为类型, 值为该行为类型的所有 Behavior 列表
-        /// </summary>
-        public Dictionary<Type, List<Behavior>> behaviors { get; set; }
-        /// <summary>
-        /// 行为信息列表, 键为 Actor, 值为该 Actor 上的所有行为信息
-        /// </summary>
-        public Dictionary<ulong, Dictionary<Type, BehaviorInfo>> behaviorinfodict { get; set; }
-        /// <summary>
-        /// Remove Actor 列表
-        /// </summary>
-        public List<ulong> rmvactors { get; set; }
-        /// <summary>
-        /// Remove Actor 集合, 用于快速验证 Actor 是否有效
-        /// </summary>
-        public HashSet<ulong> rmvactorset { get; set; }
-        /// <summary>
-        /// Remove Behavior 列表
-        /// </summary>
-        public List<Behavior> rmvbehaviors { get; set; }
-        /// <summary>
-        /// Remove BehaviorInfo 列表
-        /// </summary>
-        public List<BehaviorInfo> rmvbehaviorinfos { get; set; }
-        /// <summary>
-        /// TickEnd 自动回收 List 列表
-        /// </summary>
-        public List<IList> tickendrecyclelist { get; set; }
-
-        /// <summary>
-        /// 初始化 StageCache
-        /// </summary>
-        /// <returns>StageCache</returns>
-        public StageCache Initialize()
-        {
-            behaviordict = ObjectCache.Ensure<Dictionary<ulong, Dictionary<Type, Behavior>>>();
-            behaviors = ObjectCache.Ensure<Dictionary<Type, List<Behavior>>>();
-            behaviorinfodict = ObjectCache.Ensure<Dictionary<ulong, Dictionary<Type, BehaviorInfo>>>();
-            rmvactors = ObjectCache.Ensure<List<ulong>>();
-            rmvactorset = ObjectCache.Ensure<HashSet<ulong>>();
-            rmvbehaviors = ObjectCache.Ensure<List<Behavior>>();
-            rmvbehaviorinfos = ObjectCache.Ensure<List<BehaviorInfo>>();
-            tickendrecyclelist = ObjectCache.Ensure<List<IList>>();
-
-            return this;
-        }
-
-        /// <summary>
-        /// 验证 Actor 是否有效
-        /// </summary>
-        /// <param name="entity">ActorID</param>
-        /// <returns>YES/NO</returns>
-        public bool Valid(ulong entity)
-        {
-            return false == rmvactorset.Contains(entity);
-        }
-
-        /// <summary>
-        /// 添加 TickEnd 自动回收 List 列表
-        /// </summary>
-        /// <param name="list">List 列表</param>
-        public void AutoRecycle(IList list)
-        {
-            if (tickendrecyclelist.Contains(list)) return;
-            tickendrecyclelist.Add(list);
-        }
-
-        /// <summary>
-        /// 销毁 StageCache
-        /// </summary>
-        public void Dispose()
-        {
-            behaviordict.Clear();
-            ObjectCache.Set(behaviordict);
-
-            behaviors.Clear();
-            ObjectCache.Set(behaviors);
-
-            behaviorinfodict.Clear();
-            ObjectCache.Set(behaviorinfodict);
-
-            rmvactors.Clear();
-            ObjectCache.Set(rmvactors);
-
-            rmvactorset.Clear();
-            ObjectCache.Set(rmvactorset);
-
-            rmvbehaviors.Clear();
-            ObjectCache.Set(rmvbehaviors);
-
-            rmvbehaviorinfos.Clear();
-            ObjectCache.Set(rmvbehaviorinfos);
-
-            tickendrecyclelist.Clear();
-            foreach (var list in tickendrecyclelist)
-            {
-                list.Clear();
-                ObjectCache.Set(list);
-            }
-            ObjectCache.Set(tickendrecyclelist);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 移除绑定信息, 在 BehaviorInfo 被卸载时调用
         /// </summary>
-        public void RemoveBehaviorInfo()
+        public void RmvBehaviorInfo()
         {
             OnRemoveBehaviorInfo();
         }
@@ -142,7 +142,7 @@ namespace GameLogic.Gameplay.Logic
         {
             base.OnRemoveBehaviorInfo();
             // System<T> 实现类, 绑定的 BehaviorInfo 在卸载时需要被移除
-            if (stage.SeekBehaviorInfo(actor, out T behaviorinfo)) stage.RemoveBehaviorInfo(behaviorinfo);
+            if (stage.SeekBehaviorInfo(actor, out T behaviorinfo)) stage.RmvBehaviorInfo(behaviorinfo);
         }
     }
 }

@@ -70,6 +70,9 @@ namespace GameLogic.Gameplay.View
             ticker = AddComp<TickerComp>();
             ticker.Create();
 
+            rilbucket = AddComp<RILBucket>().Initialize(this);
+            rilbucket.Create();
+
             Batches();
 
             agentdict = ObjectPool.Ensure<Dictionary<ulong, Dictionary<Type, Agent>>>();

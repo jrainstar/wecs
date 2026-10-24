@@ -12,7 +12,7 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// 世界
         /// </summary>
-        public const byte WORLD = 1;
+        public const byte STAGE = 1;
         /// <summary>
         /// 管线
         /// </summary>
