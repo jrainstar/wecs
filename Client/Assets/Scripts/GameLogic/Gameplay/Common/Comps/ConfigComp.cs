@@ -9,7 +9,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// 游戏配置
     /// </summary>
-    public class Config : Comp
+    public class ConfigComp : Comp
     {
         /// <summary>
         /// 配置表定位器

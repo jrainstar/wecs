@@ -46,16 +46,13 @@ namespace GameLogic.Gameplay.Logic
 
         private void ManualTranslators()
         {
-            //Translator<StageTranslator, StageInfo>();
-            //Translator<TickerTranslator, TickerInfo>();
-            //Translator<SeatTranslator, SeatInfo>();
-            //Translator<AttributeTranslator, AttributeInfo>();
-            //Translator<SpatialTranslator, SpatialInfo>();
-            //Translator<StateMachineTranslator, StateMachineInfo>();
-            //Translator<ActorTranslator, StageInfo>();
-            //Translator<FacadeModelTranslator, FacadeInfo>();
-            //Translator<FacadeAnimationTranslator, FacadeInfo>();
-            //Translator<FacadeEffectTranslator, FacadeInfo>();
+            Translator<StageTranslator, StageInfo>();
+            Translator<TickerTranslator, TickerInfo>();
+            Translator<SeatTranslator, SeatInfo>();
+            Translator<SpatialTranslator, SpatialInfo>();
+            Translator<ActorTranslator, StageInfo>();
+            Translator<FacadeModelTranslator, FacadeInfo>();
+            Translator<FacadeAnimationTranslator, FacadeInfo>();
         }
         private void Translator<T, E>() where T : Translator, new() where E : BehaviorInfo
         {

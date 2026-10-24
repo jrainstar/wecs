@@ -64,6 +64,11 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
+        /// 配置
+        /// </summary>
+        public Config cfg => GetBehavior<Config>(sa, true);
+
+        /// <summary>
         /// Stage 缓存
         /// </summary>
         public StageCache cache { get; private set; }

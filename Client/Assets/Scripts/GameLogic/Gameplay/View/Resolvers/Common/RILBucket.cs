@@ -17,7 +17,7 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 事件订阅派发者
         /// </summary>
-        public EventBus eventor { get; private set; }
+        public EventorComp eventor { get; private set; }
         /// <summary>
         /// 渲染状态集合
         /// </summary>
@@ -42,7 +42,7 @@ namespace GameLogic.Gameplay.View
         protected override void OnCreate()
         {
             base.OnCreate();
-            eventor = AddComp<EventBus>();
+            eventor = AddComp<EventorComp>();
             eventor.Create();
             
             rildict = ObjectPool.Ensure<Dictionary<ulong, Dictionary<Type, IRIL>>>();

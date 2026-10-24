@@ -40,12 +40,12 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 事件订阅派发者
         /// </summary>
-        public EventBus eventor { get; private set; }
+        public EventorComp eventor { get; private set; }
 
         /// <summary>
         /// Ticker/时间驱动器
         /// </summary>
-        public Ticker ticker { get; private set; }
+        public TickerComp ticker { get; private set; }
 
         /// <summary>
         /// 桶
@@ -64,10 +64,10 @@ namespace GameLogic.Gameplay.View
         protected override void OnCreate()
         {
             base.OnCreate();
-            eventor = AddComp<EventBus>();
+            eventor = AddComp<EventorComp>();
             eventor.Create();
 
-            ticker = AddComp<Ticker>();
+            ticker = AddComp<TickerComp>();
             ticker.Create();
 
             Batches();
@@ -266,7 +266,7 @@ namespace GameLogic.Gameplay.View
             foreach (var kv in agentdict)
             {
                 float timescale = 1f;
-                if (rilbucket.SeekRIL<RIL_TICKER>(kv.Key, out var ril)) timescale = ril.timescale * Config.Int2Float;
+                if (rilbucket.SeekRIL<RIL_TICKER>(kv.Key, out var ril)) timescale = ril.timescale * ConfigComp.Int2Float;
                 foreach (var agent in kv.Value.Values)
                 {
                     if (ChaseStatus.Arrived == agent.status) continue;

@@ -9,27 +9,27 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// 事件
         /// </summary>
-        public EventBus eventor { get; private set; }
+        public EventorComp eventor { get; private set; }
         /// <summary>
         /// 随机器
         /// </summary>
-        public Random random { get; private set; }
+        public RandomComp random { get; private set; }
         /// <summary>
         /// 引擎 Tick
         /// </summary>
-        public Ticker ticker { get; private set; }
+        public TickerComp ticker { get; private set; }
 
         protected override void OnCreate()
         {
             base.OnCreate();
-            eventor = AddComp<EventBus>();
+            eventor = AddComp<EventorComp>();
             eventor.Create();
 
-            random = AddComp<Random>();
+            random = AddComp<RandomComp>();
             random.Initial(19491001);
             random.Create();
 
-            ticker = AddComp<Ticker>();
+            ticker = AddComp<TickerComp>();
             ticker.Create();
 
         }

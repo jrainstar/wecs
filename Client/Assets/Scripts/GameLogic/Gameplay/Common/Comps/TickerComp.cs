@@ -82,12 +82,12 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// Ticker, 逻辑层 Tick 驱动组件
     /// </summary>
-    public class Ticker : Comp
+    public class TickerComp : Comp
     {
         /// <summary>
         /// 事件订阅/派发者
         /// </summary>
-        public EventBus eventor { get; set; }
+        public EventorComp eventor { get; set; }
 
         /// <summary>
         /// 时间缩放
@@ -97,7 +97,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
-            eventor = AddComp<EventBus>();
+            eventor = AddComp<EventorComp>();
             eventor.Create();
         }
 
