@@ -222,6 +222,59 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
+        /// 快照
+        /// </summary>
+        public void Snapshot()
+        {
+            if (null != snapshot)
+            {
+                snapshot.Reset();
+                ObjectCache.Set(snapshot);
+            }
+
+            snapshot = info.Clone() as StageInfo;
+        }
+
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        public void Restore()
+        {
+            if (null == snapshot) return;
+            if (snapshot.frame == info.frame) return;
+            cache.rmvactors.Clear();
+            cache.rmvactorset.Clear();
+            cache.rmvactors.AddRange(info.actors);
+            foreach (var actor in info.actors) ActorToRecycle(actor);
+            Recycle();
+
+            info.Reset();
+            ObjectCache.Set(info);
+            info = snapshot.Clone() as StageInfo;
+
+            foreach (var behaviorinfos in info.behaviorinfos.Values)
+            {
+                foreach (var behaviorinfo in behaviorinfos)
+                {
+                    if (false == cache.behaviorinfodict.TryGetValue(behaviorinfo.actor, out var dict)) cache.behaviorinfodict.Add(behaviorinfo.actor, dict = ObjectCache.Ensure<Dictionary<Type, BehaviorInfo>>());
+                    dict.Add(behaviorinfo.GetType(), behaviorinfo);
+                }
+            }
+
+            foreach (var actor in info.actors)
+            {
+                if (false == info.behaviortypes.TryGetValue(actor, out var types)) continue;
+                foreach (var type in types)
+                {
+                    if (SeekBehavior(actor, type, out _)) continue;
+                    AddBehavior(actor, type);
+                }
+            }
+
+            rilsync.Translate();
+        }
+
+        /// <summary>
         /// 开始
         /// </summary>
         public void Start()

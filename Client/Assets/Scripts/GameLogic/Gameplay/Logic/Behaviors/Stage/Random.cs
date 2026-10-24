@@ -13,8 +13,8 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="s">种子</param>
         public void Initialze(int s)
         {
-            behaviorinfo.seed = s;
-            behaviorinfo.current = behaviorinfo.seed;
+            info.seed = s;
+            info.current = info.seed;
         }
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>结果</returns>
         public int Range(int min, int max)
         {
-            behaviorinfo.current = (behaviorinfo.a * behaviorinfo.current + behaviorinfo.c) % behaviorinfo.m;
+            info.current = (info.a * info.current + info.c) % info.m;
 
-            return (int)(min + (behaviorinfo.current % (max - min)));
+            return (int)(min + (info.current % (max - min)));
         }
 
         /// <summary>

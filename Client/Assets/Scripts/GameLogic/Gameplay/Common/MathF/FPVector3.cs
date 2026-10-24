@@ -45,18 +45,18 @@ namespace GameLogic.Gameplay.Common
         public static readonly FPVector3 MaxValue = new FPVector3(FP.MaxValue);
         #endregion
 
-        //#region public Static Properties
-        //public static FPVector3 Zero => zero;
-        //public static FPVector3 One => one;
-        //public static FPVector3 Left => left;
-        //public static FPVector3 Right => right;
-        //public static FPVector3 Up => up;
-        //public static FPVector3 Down => down;
-        //public static FPVector3 Back => back;
-        //public static FPVector3 Forward => forward;
-        //public static FPVector3 MinValue => minValue;
-        //public static FPVector3 MaxValue => maxValue;
-        //#endregion
+        #region public Static Properties
+        public static FPVector3 zero => Zero;
+        public static FPVector3 one => One;
+        public static FPVector3 left => Left;
+        public static FPVector3 right => Right;
+        public static FPVector3 up => Up;
+        public static FPVector3 down => Down;
+        public static FPVector3 back => Back;
+        public static FPVector3 forward => Forward;
+        public static FPVector3 minvalue => MinValue;
+        public static FPVector3 maxvalue => MaxValue;
+        #endregion
 
         #region Public Fields
         /// <summary>The X component of the vector.</summary>
@@ -65,6 +65,24 @@ namespace GameLogic.Gameplay.Common
         public FP Y;
         /// <summary>The Z component of the vector.</summary>
         public FP Z;
+
+        public FP x
+        {
+            get => X;
+            set => X = value;
+        }
+
+        public FP y
+        {
+            get => Y;
+            set => Y = value;
+        }
+
+        public FP z
+        {
+            get => Z;
+            set => Z = value;
+        }
         #endregion
 
         public FP this[int index]
@@ -107,7 +125,7 @@ namespace GameLogic.Gameplay.Common
         /// Gets the squared length of the vector.
         /// </summary>
         /// <returns>Returns the squared length of the vector.</returns>
-        public FP SqrMagnitude
+        public FP sqrmagnitude
         {
             get
             {
@@ -119,7 +137,7 @@ namespace GameLogic.Gameplay.Common
         /// Gets the length of the vector.
         /// </summary>
         /// <returns>Returns the length of the vector.</returns>
-        public FP Magnitude
+        public FP magnitude
         {
             get
             {
@@ -364,7 +382,7 @@ namespace GameLogic.Gameplay.Common
         #region public bool IsZero()
         public bool IsZero()
         {
-            return (SqrMagnitude == FP.Zero);
+            return (sqrmagnitude == FP.Zero);
         }
 
         /// <summary>
@@ -373,7 +391,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Returns true if the vector is nearly zero, otherwise false.</returns>
         public bool IsNearlyZero()
         {
-            return (SqrMagnitude < ZeroEpsilonSq);
+            return (sqrmagnitude < ZeroEpsilonSq);
         }
         #endregion
 

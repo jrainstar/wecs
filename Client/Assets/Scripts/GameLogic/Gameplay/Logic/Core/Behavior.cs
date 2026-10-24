@@ -129,7 +129,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// BehaviorInfo 快捷访问
         /// </summary>
-        public T behaviorinfo => stage.GetBehaviorInfo<T>(actor, true);
+        public T info => stage.GetBehaviorInfo<T>(actor, true);
 
         protected override void OnAddBehaviorInfo()
         {

@@ -45,9 +45,9 @@ namespace GameLogic.Gameplay.Logic
         {
             if (false == EventDict.TryGetValue(typeof(T), out var funcs)) return;
             var systemHash = system.GetHashCode();
-            if (false == behaviorinfo.indexes.TryGetValue((systemHash, system.actor), out var index)) return;
+            if (false == info.indexes.TryGetValue((systemHash, system.actor), out var index)) return;
             funcs.Remove((index, system, func));
-            behaviorinfo.indexes.Remove((systemHash, system.actor));
+            info.indexes.Remove((systemHash, system.actor));
         }
 
         /// <summary>
@@ -65,11 +65,11 @@ namespace GameLogic.Gameplay.Logic
 
             var systemHash = system.GetHashCode();
             bool notsort = false;
-            if (false == behaviorinfo.indexes.TryGetValue((systemHash, system.actor), out var index))
+            if (false == info.indexes.TryGetValue((systemHash, system.actor), out var index))
             {
-                behaviorinfo.increment = behaviorinfo.increment + 1;
-                index = behaviorinfo.increment;
-                behaviorinfo.indexes.Add((systemHash, system.actor), index);
+                info.increment = info.increment + 1;
+                index = info.increment;
+                info.indexes.Add((systemHash, system.actor), index);
                 notsort = true;
             }
 

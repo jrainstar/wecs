@@ -49,12 +49,32 @@ namespace GameLogic.Gameplay.Common
         public static FPVector2 MinValue = new FPVector2(FP.MinValue);
         public static FPVector2 MaxValue = new FPVector2(FP.MaxValue);
 
+        public static FPVector2 zero => Zero;
+        public static FPVector2 one => One;
+        public static FPVector2 right => Right;
+        public static FPVector2 left => Left;
+        public static FPVector2 up => Up;
+        public static FPVector2 down => Down;
+        public static FPVector2 minvalue => MinValue;
+        public static FPVector2 maxvalue => MaxValue;
         #endregion
 
         #region Public Fields
 
         public FP X;
         public FP Y;
+
+        public FP x
+        {
+            get => X;
+            set => X = value;
+        }
+
+        public FP y
+        {
+            get => Y;
+            set => Y = value;
+        }
 
         #endregion
 

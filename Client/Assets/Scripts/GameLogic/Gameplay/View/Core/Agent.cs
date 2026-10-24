@@ -68,7 +68,7 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 世界
         /// </summary>
-        public Stage world { get; private set; }
+        public World world { get; private set; }
         /// <summary>
         /// 追逐类型
         /// </summary>
@@ -83,7 +83,7 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         /// <param name="id">ActorID</param>
         /// <param name="world">世界</param>
-        public void Ready(ulong id, Stage world)
+        public void Ready(ulong id, World world)
         {
             actor = id;
             this.world = world;

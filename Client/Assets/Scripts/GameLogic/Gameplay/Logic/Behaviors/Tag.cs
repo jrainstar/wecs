@@ -12,7 +12,7 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>YES/NO</returns>
         public bool Has(ushort key)
         {
-            return behaviorinfo.tags.ContainsKey(key);
+            return info.tags.ContainsKey(key);
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>YES/NO</returns>
         public bool Get(ushort key, out long tag)
         {
-            return behaviorinfo.tags.TryGetValue(key, out tag);
+            return info.tags.TryGetValue(key, out tag);
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="key">标签 KEY</param>
         public void Rmv(ushort key)
         {
-            if (false == behaviorinfo.tags.ContainsKey(key)) return;
+            if (false == info.tags.ContainsKey(key)) return;
 
-            behaviorinfo.tags.Remove(key);
+            info.tags.Remove(key);
         }
 
         /// <summary>
@@ -44,8 +44,8 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="tag">标签值</param>
         public void Set(ushort key, long tag)
         {
-            if (behaviorinfo.tags.ContainsKey(key)) behaviorinfo.tags.Remove(key);
-            behaviorinfo.tags.Add(key, tag);
+            if (info.tags.ContainsKey(key)) info.tags.Remove(key);
+            info.tags.Add(key, tag);
         }
     }
 }

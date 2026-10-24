@@ -38,37 +38,92 @@ namespace GameLogic.Gameplay.Common
         /// <summary>The Z component of the vector.</summary>
         public FP Z;
         /// <summary>The W component of the vector.</summary>
-        public FP w;
+        public FP W;
+
+        public FP x
+        {
+            get => X;
+            set => X = value;
+        }
+
+        public FP y
+        {
+            get => Y;
+            set => Y = value;
+        }
+
+        public FP z
+        {
+            get => Z;
+            set => Z = value;
+        }
+
+        public FP w
+        {
+            get => W;
+            set => W = value;
+        }
 
         #region Static readonly variables
         /// <summary>
         /// A vector with components (0,0,0,0);
         /// </summary>
-        public static readonly FPVector4 zero;
+        public static readonly FPVector4 Zero = new FPVector4(0, 0, 0, 0);
         /// <summary>
         /// A vector with components (1,1,1,1);
         /// </summary>
-        public static readonly FPVector4 one;
+        public static readonly FPVector4 One = new FPVector4(1, 1, 1, 1);
         /// <summary>
-        /// A vector with components 
-        /// (FP.MinValue,FP.MinValue,FP.MinValue);
+        /// A vector with components (1,0,0,0);
         /// </summary>
-        public static readonly FPVector4 MinValue;
+        public static readonly FPVector4 Right = new FPVector4(1, 0, 0, 0);
         /// <summary>
-        /// A vector with components 
-        /// (FP.MaxValue,FP.MaxValue,FP.MaxValue);
+        /// A vector with components (-1,0,0,0);
         /// </summary>
-        public static readonly FPVector4 MaxValue;
+        public static readonly FPVector4 Left = new FPVector4(-1, 0, 0, 0);
+        /// <summary>
+        /// A vector with components (0,1,0,0);
+        /// </summary>
+        public static readonly FPVector4 Up = new FPVector4(0, 1, 0, 0);
+        /// <summary>
+        /// A vector with components (0,-1,0,0);
+        /// </summary>
+        public static readonly FPVector4 Down = new FPVector4(0, -1, 0, 0);
+        /// <summary>
+        /// A vector with components (0,0,-1,0);
+        /// </summary>
+        public static readonly FPVector4 Back = new FPVector4(0, 0, -1, 0);
+        /// <summary>
+        /// A vector with components (0,0,1,0);
+        /// </summary>
+        public static readonly FPVector4 Forward = new FPVector4(0, 0, 1, 0);
+        /// <summary>
+        /// A vector with components (FP.MinValue,FP.MinValue,FP.MinValue,FP.MinValue);
+        /// </summary>
+        public static readonly FPVector4 MinValue = new FPVector4(FP.MinValue);
+        /// <summary>
+        /// A vector with components (FP.MaxValue,FP.MaxValue,FP.MaxValue,FP.MaxValue);
+        /// </summary>
+        public static readonly FPVector4 MaxValue = new FPVector4(FP.MaxValue);
+        #endregion
+
+        #region public Static Properties
+        public static FPVector4 zero => Zero;
+        public static FPVector4 one => One;
+        public static FPVector4 right => Right;
+        public static FPVector4 left => Left;
+        public static FPVector4 up => Up;
+        public static FPVector4 down => Down;
+        public static FPVector4 back => Back;
+        public static FPVector4 forward => Forward;
+        public static FPVector4 minvalue => MinValue;
+        public static FPVector4 maxvalue => MaxValue;
         #endregion
 
         #region Private static constructor
         static FPVector4()
         {
-            one = new FPVector4(1, 1, 1, 1);
-            zero = new FPVector4(0, 0, 0, 0);
-            MinValue = new FPVector4(FP.MinValue);
-            MaxValue = new FPVector4(FP.MaxValue);
-            InternalZero = zero;
+            InternalZero = Zero;
         }
         #endregion
 
@@ -81,11 +136,11 @@ namespace GameLogic.Gameplay.Common
         /// Gets the squared length of the vector.
         /// </summary>
         /// <returns>Returns the squared length of the vector.</returns>
-        public FP sqrMagnitude
+        public FP sqrmagnitude
         {
             get
             {
-                return (((X * X) + (Y * Y)) + (Z * Z) + (w * w));
+                return (((X * X) + (Y * Y)) + (Z * Z) + (W * W));
             }
         }
 
@@ -97,7 +152,7 @@ namespace GameLogic.Gameplay.Common
         {
             get
             {
-                FP num = sqrMagnitude;
+                FP num = sqrmagnitude;
                 return FP.Sqrt(num);
             }
         }
@@ -115,7 +170,7 @@ namespace GameLogic.Gameplay.Common
         {
             get
             {
-                FPVector4 result = new FPVector4(X, Y, Z, w);
+                FPVector4 result = new FPVector4(X, Y, Z, W);
                 result.Normalize();
 
                 return result;
@@ -134,7 +189,7 @@ namespace GameLogic.Gameplay.Common
             this.X = x;
             this.Y = y;
             this.Z = z;
-            this.w = w;
+            this.W = w;
         }
 
         public FPVector4(FP x, FP y, FP z, FP w)
@@ -142,7 +197,7 @@ namespace GameLogic.Gameplay.Common
             this.X = x;
             this.Y = y;
             this.Z = z;
-            this.w = w;
+            this.W = w;
         }
 
         /// <summary>
@@ -153,7 +208,7 @@ namespace GameLogic.Gameplay.Common
             X = X * other.X;
             Y = Y * other.Y;
             Z = Z * other.Z;
-            w = w * other.w;
+            W = W * other.W;
         }
 
         /// <summary>
@@ -168,7 +223,7 @@ namespace GameLogic.Gameplay.Common
             this.X = x;
             this.Y = y;
             this.Z = z;
-            this.w = w;
+            this.W = w;
         }
 
         /// <summary>
@@ -180,7 +235,7 @@ namespace GameLogic.Gameplay.Common
             X = xyzw;
             Y = xyzw;
             Z = xyzw;
-            w = xyzw;
+            W = xyzw;
         }
 
         public static FPVector4 Lerp(FPVector4 from, FPVector4 to, FP percent)
@@ -195,7 +250,7 @@ namespace GameLogic.Gameplay.Common
         #region public override string ToString()
         public override string ToString()
         {
-            return string.Format("({0:f5}, {1:f5}, {2:f5}, {3:f5})", X.AsFloat(), Y.AsFloat(), Z.AsFloat(), w.AsFloat());
+            return string.Format("({0:f5}, {1:f5}, {2:f5}, {3:f5})", X.AsFloat(), Y.AsFloat(), Z.AsFloat(), W.AsFloat());
         }
         #endregion
 
@@ -210,7 +265,7 @@ namespace GameLogic.Gameplay.Common
             if (!(obj is FPVector4)) return false;
             FPVector4 other = (FPVector4)obj;
 
-            return (((X == other.X) && (Y == other.Y)) && (Z == other.Z) && (w == other.w));
+            return (((X == other.X) && (Y == other.Y)) && (Z == other.Z) && (W == other.W));
         }
         #endregion
 
@@ -223,7 +278,7 @@ namespace GameLogic.Gameplay.Common
             result.X = vecA.X * vecB.X;
             result.Y = vecA.Y * vecB.Y;
             result.Z = vecA.Z * vecB.Z;
-            result.w = vecA.w * vecB.w;
+            result.W = vecA.W * vecB.W;
 
             return result;
         }
@@ -233,7 +288,7 @@ namespace GameLogic.Gameplay.Common
             value.X = -value.X;
             value.Y = -value.Y;
             value.Z = -value.Z;
-            value.w = -value.w;
+            value.W = -value.W;
 
             return value;
         }
@@ -247,7 +302,7 @@ namespace GameLogic.Gameplay.Common
         #region public static bool operator ==(JVector value1, JVector value2)
         public static bool operator ==(FPVector4 value1, FPVector4 value2)
         {
-            return (((value1.X == value2.X) && (value1.Y == value2.Y)) && (value1.Z == value2.Z) && (value1.w == value2.w));
+            return (((value1.X == value2.X) && (value1.Y == value2.Y)) && (value1.Z == value2.Z) && (value1.W == value2.W));
         }
         #endregion
 
@@ -262,7 +317,7 @@ namespace GameLogic.Gameplay.Common
         {
             if ((value1.X == value2.X) && (value1.Y == value2.Y) && (value1.Z == value2.Z))
             {
-                return (value1.w != value2.w);
+                return (value1.W != value2.W);
             }
             return true;
         }
@@ -294,7 +349,7 @@ namespace GameLogic.Gameplay.Common
             result.X = (value1.X < value2.X) ? value1.X : value2.X;
             result.Y = (value1.Y < value2.Y) ? value1.Y : value2.Y;
             result.Z = (value1.Z < value2.Z) ? value1.Z : value2.Z;
-            result.w = (value1.w < value2.w) ? value1.w : value2.w;
+            result.W = (value1.W < value2.W) ? value1.W : value2.W;
         }
         #endregion
 
@@ -314,7 +369,7 @@ namespace GameLogic.Gameplay.Common
 
         public static FP Distance(FPVector4 v1, FPVector4 v2)
         {
-            return FP.Sqrt((v1.X - v2.X) * (v1.X - v2.X) + (v1.Y - v2.Y) * (v1.Y - v2.Y) + (v1.Z - v2.Z) * (v1.Z - v2.Z) + (v1.w - v2.w) * (v1.w - v2.w));
+            return FP.Sqrt((v1.X - v2.X) * (v1.X - v2.X) + (v1.Y - v2.Y) * (v1.Y - v2.Y) + (v1.Z - v2.Z) * (v1.Z - v2.Z) + (v1.W - v2.W) * (v1.W - v2.W));
         }
 
         /// <summary>
@@ -328,7 +383,7 @@ namespace GameLogic.Gameplay.Common
             result.X = (value1.X > value2.X) ? value1.X : value2.X;
             result.Y = (value1.Y > value2.Y) ? value1.Y : value2.Y;
             result.Z = (value1.Z > value2.Z) ? value1.Z : value2.Z;
-            result.w = (value1.w > value2.w) ? value1.w : value2.w;
+            result.W = (value1.W > value2.W) ? value1.W : value2.W;
         }
         #endregion
 
@@ -341,7 +396,7 @@ namespace GameLogic.Gameplay.Common
             X = FP.Zero;
             Y = FP.Zero;
             Z = FP.Zero;
-            w = FP.Zero;
+            W = FP.Zero;
         }
         #endregion
 
@@ -352,7 +407,7 @@ namespace GameLogic.Gameplay.Common
         #region public bool IsZero()
         public bool IsZero()
         {
-            return (sqrMagnitude == FP.Zero);
+            return (sqrmagnitude == FP.Zero);
         }
 
         /// <summary>
@@ -361,7 +416,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Returns true if the vector is nearly zero, otherwise false.</returns>
         public bool IsNearlyZero()
         {
-            return (sqrMagnitude < ZeroEpsilonSq);
+            return (sqrmagnitude < ZeroEpsilonSq);
         }
         #endregion
 
@@ -397,15 +452,15 @@ namespace GameLogic.Gameplay.Common
             result.X = vector3.X * matrix.M11 + vector3.Y * matrix.M12 + vector3.Z * matrix.M13 + matrix.M14;
             result.Y = vector3.X * matrix.M21 + vector3.Y * matrix.M22 + vector3.Z * matrix.M23 + matrix.M24;
             result.Z = vector3.X * matrix.M31 + vector3.Y * matrix.M32 + vector3.Z * matrix.M33 + matrix.M34;
-            result.w = vector3.X * matrix.M41 + vector3.Y * matrix.M42 + vector3.Z * matrix.M43 + matrix.M44;
+            result.W = vector3.X * matrix.M41 + vector3.Y * matrix.M42 + vector3.Z * matrix.M43 + matrix.M44;
         }
 
         public static void Transform(ref FPVector4 vector, ref FPMatrix4x4 matrix, out FPVector4 result)
         {
-            result.X = vector.X * matrix.M11 + vector.Y * matrix.M12 + vector.Z * matrix.M13 + vector.w * matrix.M14;
-            result.Y = vector.X * matrix.M21 + vector.Y * matrix.M22 + vector.Z * matrix.M23 + vector.w * matrix.M24;
-            result.Z = vector.X * matrix.M31 + vector.Y * matrix.M32 + vector.Z * matrix.M33 + vector.w * matrix.M34;
-            result.w = vector.X * matrix.M41 + vector.Y * matrix.M42 + vector.Z * matrix.M43 + vector.w * matrix.M44;
+            result.X = vector.X * matrix.M11 + vector.Y * matrix.M12 + vector.Z * matrix.M13 + vector.W * matrix.M14;
+            result.Y = vector.X * matrix.M21 + vector.Y * matrix.M22 + vector.Z * matrix.M23 + vector.W * matrix.M24;
+            result.Z = vector.X * matrix.M31 + vector.Y * matrix.M32 + vector.Z * matrix.M33 + vector.W * matrix.M34;
+            result.W = vector.X * matrix.M41 + vector.Y * matrix.M42 + vector.Z * matrix.M43 + vector.W * matrix.M44;
         }
         #endregion
 
@@ -430,7 +485,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Returns the dot product of both vectors.</returns>
         public static FP Dot(ref FPVector4 vector1, ref FPVector4 FPVector2)
         {
-            return ((vector1.X * FPVector2.X) + (vector1.Y * FPVector2.Y)) + (vector1.Z * FPVector2.Z) + (vector1.w * FPVector2.w);
+            return ((vector1.X * FPVector2.X) + (vector1.Y * FPVector2.Y)) + (vector1.Z * FPVector2.Z) + (vector1.W * FPVector2.W);
         }
         #endregion
 
@@ -459,7 +514,7 @@ namespace GameLogic.Gameplay.Common
             result.X = value1.X + value2.X;
             result.Y = value1.Y + value2.Y;
             result.Z = value1.Z + value2.Z;
-            result.w = value1.w + value2.w;
+            result.W = value1.W + value2.W;
         }
         #endregion
 
@@ -487,7 +542,7 @@ namespace GameLogic.Gameplay.Common
             result.X = value1.X / scaleFactor;
             result.Y = value1.Y / scaleFactor;
             result.Z = value1.Z / scaleFactor;
-            result.w = value1.w / scaleFactor;
+            result.W = value1.W / scaleFactor;
         }
 
         /// <summary>
@@ -515,7 +570,7 @@ namespace GameLogic.Gameplay.Common
             result.X = value1.X - value2.X;
             result.Y = value1.Y - value2.Y;
             result.Z = value1.Z - value2.Z;
-            result.w = value1.w - value2.w;
+            result.W = value1.W - value2.W;
         }
         #endregion
 
@@ -526,7 +581,7 @@ namespace GameLogic.Gameplay.Common
         #region public override int GetHashCode()
         public override int GetHashCode()
         {
-            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode() ^ w.GetHashCode();
+            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode() ^ W.GetHashCode();
         }
         #endregion
 
@@ -539,7 +594,7 @@ namespace GameLogic.Gameplay.Common
             X = -X;
             Y = -Y;
             Z = -Z;
-            w = -w;
+            W = -W;
         }
 
         /// <summary>
@@ -564,7 +619,7 @@ namespace GameLogic.Gameplay.Common
             result.X = -value.X;
             result.Y = -value.Y;
             result.Z = -value.Z;
-            result.w = -value.w;
+            result.W = -value.W;
         }
         #endregion
 
@@ -586,12 +641,12 @@ namespace GameLogic.Gameplay.Common
         /// </summary>
         public void Normalize()
         {
-            FP num2 = ((X * X) + (Y * Y)) + (Z * Z) + (w * w);
+            FP num2 = ((X * X) + (Y * Y)) + (Z * Z) + (W * W);
             FP num = FP.One / FP.Sqrt(num2);
             X *= num;
             Y *= num;
             Z *= num;
-            w *= num;
+            W *= num;
         }
 
         /// <summary>
@@ -601,12 +656,12 @@ namespace GameLogic.Gameplay.Common
         /// <param name="result">A normalized vector.</param>
         public static void Normalize(ref FPVector4 value, out FPVector4 result)
         {
-            FP num2 = ((value.X * value.X) + (value.Y * value.Y)) + (value.Z * value.Z) + (value.w * value.w);
+            FP num2 = ((value.X * value.X) + (value.Y * value.Y)) + (value.Z * value.Z) + (value.W * value.W);
             FP num = FP.One / FP.Sqrt(num2);
             result.X = value.X * num;
             result.Y = value.Y * num;
             result.Z = value.Z * num;
-            result.w = value.w * num;
+            result.W = value.W * num;
         }
         #endregion
 
@@ -633,9 +688,9 @@ namespace GameLogic.Gameplay.Common
             vector1.Z = FPVector2.Z;
             FPVector2.Z = temp;
 
-            temp = vector1.w;
-            vector1.w = FPVector2.w;
-            FPVector2.w = temp;
+            temp = vector1.W;
+            vector1.W = FPVector2.W;
+            FPVector2.W = temp;
         }
         #endregion
 
@@ -664,7 +719,7 @@ namespace GameLogic.Gameplay.Common
             result.X = value1.X * scaleFactor;
             result.Y = value1.Y * scaleFactor;
             result.Z = value1.Z * scaleFactor;
-            result.w = value1.w * scaleFactor;
+            result.W = value1.W * scaleFactor;
         }
         #endregion
 

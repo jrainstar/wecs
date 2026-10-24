@@ -1,0 +1,34 @@
+using GameLogic.Gameplay.Logic;
+
+namespace GameLogic.Gameplay.Logic
+{
+    /// <summary>
+    /// 空间信息翻译器
+    /// </summary>
+    public class SpatialTranslator : Translator<SpatialInfo, RIL_SPATIAL>
+    {
+        public override ushort id => RIL_DEFINE.SPATIAL;
+
+        protected override int OnCalcHashCode(SpatialInfo info)
+        {
+            int hash = 17;
+            hash = hash * 31 + info.actor.GetHashCode();
+            hash = hash * 31 + info.position.x.GetHashCode();
+            hash = hash * 31 + info.position.y.GetHashCode();
+            hash = hash * 31 + info.position.z.GetHashCode();
+            hash = hash * 31 + info.euler.x.GetHashCode();
+            hash = hash * 31 + info.euler.y.GetHashCode();
+            hash = hash * 31 + info.euler.z.GetHashCode();
+            hash = hash * 31 + info.scale.GetHashCode();
+
+            return hash;
+        }
+
+        protected override void OnRIL(SpatialInfo info, RIL_SPATIAL ril)
+        {
+            ril.position = info.position;
+            ril.euler = info.euler;
+            ril.scale = info.scale;
+        }
+    }
+}

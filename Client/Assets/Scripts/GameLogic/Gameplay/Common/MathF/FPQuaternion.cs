@@ -286,7 +286,7 @@ namespace GameLogic.Gameplay.Common
         {
             FPVector3 w = FPVector3.Cross(fromVector3, toVector3);
             FPQuaternion q = new FPQuaternion(w.X, w.Y, w.Z, FPVector3.Dot(fromVector3, toVector3));
-            q.w += FP.Sqrt(fromVector3.SqrMagnitude * toVector3.SqrMagnitude);
+            q.w += FP.Sqrt(fromVector3.sqrmagnitude * toVector3.sqrmagnitude);
             q.Normalize();
 
             return q;
