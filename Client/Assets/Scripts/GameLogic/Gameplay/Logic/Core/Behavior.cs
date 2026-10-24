@@ -5,32 +5,32 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 行为系统
     /// </summary>
-    public abstract class System
+    public abstract class Behavior
     {
         /// <summary>
         /// 世界
         /// </summary>
-        protected World World { get; private set; }
+        protected Stage stage { get; private set; }
         /// <summary>
         /// Entity
         /// </summary>
-        public ulong Entity { get; private set; }
+        public ulong actor { get; private set; }
         /// <summary>
         /// 是否激活
         /// </summary>
-        public bool Enable { get; set; }
+        public bool active { get; set; }
 
         /// <summary>
         /// 组装
         /// </summary>
         /// <param name="world">世界</param>
-        /// <param name="entity">EntityID</param>
-        public void Assemble(World world, ulong entity)
+        /// <param name="entity">Actor</param>
+        public void Assemble(Stage world, ulong entity)
         {
-            this.World = world;
-            this.Entity = entity;
-            this.Enable = true;
-            AddComponent();
+            this.stage = world;
+            this.actor = entity;
+            this.active = true;
+            AddBehaviorInfo();
             OnAssemble();
         }
 
@@ -39,24 +39,24 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public void Disassemble()
         {
-            this.Enable = false;
+            this.active = false;
             OnDisassemble();
         }
 
         /// <summary>
-        /// 添加绑定信息, 在 System 被加载时调用
+        /// 添加绑定信息, 在 BehaviorInfo 被加载时调用
         /// </summary>
-        public void AddComponent()
+        public void AddBehaviorInfo()
         {
-            OnAddComponent();
+            OnAddBehaviorInfo();
         }
 
         /// <summary>
-        /// 移除绑定信息, 在 System 被卸载时调用
+        /// 移除绑定信息, 在 BehaviorInfo 被卸载时调用
         /// </summary>
-        public void RemoveComponent()
+        public void RemoveBehaviorInfo()
         {
-            OnRemoveComponent();
+            OnRemoveBehaviorInfo();
         }
 
         /// <summary>
@@ -93,14 +93,14 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 添加绑定信息, 子类重写
         /// </summary>
-        protected virtual void OnAddComponent()
+        protected virtual void OnAddBehaviorInfo()
         {
         }
 
         /// <summary>
         /// 移除绑定信息, 子类重写
         /// </summary>
-        protected virtual void OnRemoveComponent()
+        protected virtual void OnRemoveBehaviorInfo()
         {
         }
 
@@ -123,26 +123,26 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 行为系统
     /// </summary>
-    /// <typeparam name="T">Component 类型</typeparam>
-    public abstract class System<T> : System where T : Component, new()
+    /// <typeparam name="T">BehaviorInfo 类型</typeparam>
+    public abstract class Behavior<T> : Behavior where T : BehaviorInfo, new()
     {
         /// <summary>
-        /// Component 快捷访问
+        /// BehaviorInfo 快捷访问
         /// </summary>
-        public T Component => World.GetComponent<T>(Entity, true);
+        public T behaviorinfo => stage.GetBehaviorInfo<T>(actor, true);
 
-        protected override void OnAddComponent()
+        protected override void OnAddBehaviorInfo()
         {
-            base.OnAddComponent();
-            // System<T> 实现类, 可以指定 Component 用来快速访问对应的 Component
-            if (false == World.SeekComponent(Entity, out T component)) World.AddComponent<T>(Entity);
+            base.OnAddBehaviorInfo();
+            // System<T> 实现类, 可以指定 BehaviorInfo 用来快速访问对应的 BehaviorInfo
+            if (false == stage.SeekBehaviorInfo(actor, out T behaviorinfo)) stage.AddBehaviorInfo<T>(actor);
         }
 
-        protected override void OnRemoveComponent()
+        protected override void OnRemoveBehaviorInfo()
         {
-            base.OnRemoveComponent();
-            // System<T> 实现类, 绑定的 Component 在卸载时需要被移除
-            if (World.SeekComponent(Entity, out T component)) World.RemoveComponent(component);
+            base.OnRemoveBehaviorInfo();
+            // System<T> 实现类, 绑定的 BehaviorInfo 在卸载时需要被移除
+            if (stage.SeekBehaviorInfo(actor, out T behaviorinfo)) stage.RemoveBehaviorInfo(behaviorinfo);
         }
     }
 }

@@ -13,27 +13,27 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// 销毁了
         /// </summary>
-        public bool Destroyed { get; private set; } = false;
+        public bool destroyed { get; private set; } = false;
 
         /// <summary>
         /// 引擎
         /// </summary>
-        public Engine Engine { get; set; }
+        public Engine engine { get; set; }
 
         /// <summary>
         /// 父组件
         /// </summary>
-        public Comp Parent { get; set; }
+        public Comp parent { get; set; }
 
         /// <summary>
         /// 组件列表
         /// </summary>
-        private List<Comp> Comps { get; set; }
+        private List<Comp> comps { get; set; }
 
         /// <summary>
         /// 组件字典，根据组件类型分类
         /// </summary>
-        private Dictionary<Type, List<Comp>> CompDict { get; set; }
+        private Dictionary<Type, List<Comp>> compdict { get; set; }
 
         /// <summary>
         /// 创建一个 Goblin 对象
@@ -48,20 +48,20 @@ namespace GameLogic.Gameplay.Common
         /// </summary>
         public void Destroy()
         {
-            if (Destroyed) return;
-            Destroyed = true;
+            if (destroyed) return;
+            destroyed = true;
 
             OnDestroy();
-            Parent.RmvComp(this);
+            parent.RmvComp(this);
 
-            if (null != Comps)
+            if (null != comps)
             {
-                for (int i = Comps.Count - 1; i >= 0; i--)
+                for (int i = comps.Count - 1; i >= 0; i--)
                 {
-                    Comps[i].Destroy();
+                    comps[i].Destroy();
                 }
-                Comps.Clear();
-                CompDict.Clear();
+                comps.Clear();
+                compdict.Clear();
             }
         }
 
@@ -81,7 +81,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>组件</returns>
         public T GetComp<T>(bool force = false) where T : Comp
         {
-            if (false == CompDict.TryGetValue(typeof(T), out var comps)) return null;
+            if (false == compdict.TryGetValue(typeof(T), out var comps)) return null;
 
             return comps.Last() as T;
         }
@@ -93,19 +93,19 @@ namespace GameLogic.Gameplay.Common
         /// <returns>组件</returns>
         public T AddComp<T>() where T : Comp, new()
         {
-            if (null == Comps) Comps = new();
-            if (null == CompDict) CompDict = new();
+            if (null == comps) comps = new();
+            if (null == compdict) compdict = new();
 
             T comp = new();
-            comp.Engine = Engine;
-            comp.Parent = this;
-            if (false == CompDict.TryGetValue(typeof(T), out var list))
+            comp.engine = engine;
+            comp.parent = this;
+            if (false == compdict.TryGetValue(typeof(T), out var list))
             {
                 list = new();
-                CompDict.Add(typeof(T), list);
+                compdict.Add(typeof(T), list);
             }
             list.Add(comp);
-            Comps.Add(comp);
+            comps.Add(comp);
 
             return comp;
         }
@@ -116,10 +116,10 @@ namespace GameLogic.Gameplay.Common
         /// <param name="comp">组件</param>
         public void RmvComp(Comp comp)
         {
-            if (false == Comps.Contains(comp)) return;
+            if (false == comps.Contains(comp)) return;
 
-            if (CompDict.TryGetValue(comp.GetType(), out var list)) list.Remove(comp);
-            Comps.Remove(comp);
+            if (compdict.TryGetValue(comp.GetType(), out var list)) list.Remove(comp);
+            comps.Remove(comp);
         }
     }
 }

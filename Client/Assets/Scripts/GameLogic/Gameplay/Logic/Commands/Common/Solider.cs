@@ -9,14 +9,14 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 场景
         /// </summary>
-        protected World stage { get; private set; }
+        protected Stage stage { get; private set; }
 
         /// <summary>
         /// 加载
         /// </summary>
         /// <param name="stage">场景</param>
         /// <returns>指令执行器</returns>
-        public Solider Load(World stage)
+        public Solider Load(Stage stage)
         {
             this.stage = stage;
 

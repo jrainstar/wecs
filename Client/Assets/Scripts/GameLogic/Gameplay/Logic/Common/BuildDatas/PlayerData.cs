@@ -8,10 +8,10 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 座位 ID
         /// </summary>
-        public ulong Seat { get; set; }
+        public ulong seat { get; set; }
         /// <summary>
         /// 英雄 ID
         /// </summary>
-        public int Hero { get; set; }
+        public int hero { get; set; }
     }
 }

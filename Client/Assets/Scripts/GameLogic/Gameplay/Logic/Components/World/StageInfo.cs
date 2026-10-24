@@ -7,7 +7,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 世界状态
     /// </summary>
-    public enum WorldState
+    public enum StageState
     {
         /// <summary>
         /// 无
@@ -38,102 +38,102 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 场景信息
     /// </summary>
-    public class WorldInfo : Component
+    public class StageInfo : BehaviorInfo
     {
         /// <summary>
         /// 当前 Stage 状态
         /// </summary>
-        public WorldState State { get; set; }
+        public StageState state { get; set; }
         /// <summary>
         /// 帧号
         /// </summary>
-        public uint Frame { get; set; }
+        public uint frame { get; set; }
         /// <summary>
         /// 流逝时间
         /// </summary>
-        public FP Elapsed { get; set; }
+        public FP elapsed { get; set; }
         /// <summary>
         /// 时间缩放
         /// </summary>
-        public FP TimeScale { get; set; }
+        public FP timescale { get; set; }
         /// <summary>
         /// Entity 自增 ID
         /// </summary>
-        public ulong Increment { get; set; }
+        public ulong increment { get; set; }
         /// <summary>
         /// Entity 列表
         /// </summary>
-        public List<ulong> Entities { get; set; }
+        public List<ulong> actors { get; set; }
         /// <summary>
         /// 行为类型列表, 键为 EntityID, 值为该 Entity 上的所有行为类型
         /// </summary>
-        public Dictionary<ulong, List<Type>> SystemTypes { get; set; }
+        public Dictionary<ulong, List<Type>> behaviortypes { get; set; }
         /// <summary>
         /// 行为信息列表, 键为行为类型, 值为该行为类型的所有 组件 列表
         /// </summary>
-        public Dictionary<Type, List<Component>> ComponentDict { get; set; }
+        public Dictionary<Type, List<BehaviorInfo>> behaviorinfos { get; set; }
 
         protected override void OnReady()
         {
-            State = WorldState.None;
-            Frame = 0;
-            Elapsed = 0;
-            TimeScale = FP.One;
-            Increment = 0;
+            state = StageState.None;
+            frame = 0;
+            elapsed = 0;
+            timescale = FP.One;
+            increment = 0;
 
-            Entities = ObjectCache.Ensure<List<ulong>>();
-            SystemTypes = ObjectCache.Ensure<Dictionary<ulong, List<Type>>>();
-            ComponentDict = ObjectCache.Ensure<Dictionary<Type, List<Component>>>();
+            actors = ObjectCache.Ensure<List<ulong>>();
+            behaviortypes = ObjectCache.Ensure<Dictionary<ulong, List<Type>>>();
+            behaviorinfos = ObjectCache.Ensure<Dictionary<Type, List<BehaviorInfo>>>();
         }
 
         protected override void OnReset()
         {
-            State = WorldState.None;
-            Frame = 0;
-            Elapsed = 0;
-            TimeScale = FP.One;
-            Increment = 0;
+            state = StageState.None;
+            frame = 0;
+            elapsed = 0;
+            timescale = FP.One;
+            increment = 0;
 
-            Entities.Clear();
-            ObjectCache.Set(Entities);
+            actors.Clear();
+            ObjectCache.Set(actors);
 
-            SystemTypes.Clear();
-            ObjectCache.Set(SystemTypes);
+            behaviortypes.Clear();
+            ObjectCache.Set(behaviortypes);
 
-            ComponentDict.Clear();
-            ObjectCache.Set(ComponentDict);
+            behaviorinfos.Clear();
+            ObjectCache.Set(behaviorinfos);
         }
 
-        protected override Component OnClone()
+        protected override BehaviorInfo OnClone()
         {
-            var clone = ObjectCache.Ensure<WorldInfo>();
-            clone.Ready(Entity);
-            clone.State = State;
-            clone.Frame = Frame;
-            clone.Elapsed = Elapsed;
-            clone.TimeScale = TimeScale;
-            clone.Increment = Increment;
+            var clone = ObjectCache.Ensure<StageInfo>();
+            clone.Ready(actor);
+            clone.state = state;
+            clone.frame = frame;
+            clone.elapsed = elapsed;
+            clone.timescale = timescale;
+            clone.increment = increment;
 
-            clone.Entities.AddRange(Entities);
+            clone.actors.AddRange(actors);
 
-            foreach (var kv in SystemTypes)
+            foreach (var kv in behaviortypes)
             {
                 var list = ObjectCache.Ensure<List<Type>>();
                 foreach (var type in kv.Value)
                 {
                     list.Add(type);
                 }
-                clone.SystemTypes.Add(kv.Key, list);
+                clone.behaviortypes.Add(kv.Key, list);
             }
 
-            foreach (var kv in ComponentDict)
+            foreach (var kv in behaviorinfos)
             {
-                var list = ObjectCache.Ensure<List<Component>>();
+                var list = ObjectCache.Ensure<List<BehaviorInfo>>();
                 foreach (var info in kv.Value)
                 {
                     list.Add(info.Clone());
                 }
-                clone.ComponentDict.Add(kv.Key, list);
+                clone.behaviorinfos.Add(kv.Key, list);
             }
 
             return clone;

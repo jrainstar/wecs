@@ -10,16 +10,16 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 世界
         /// </summary>
-        protected World World { get; private set; }
+        protected Stage stage { get; private set; }
 
         /// <summary>
         /// 加载
         /// </summary>
         /// <param name="world">世界</param>
         /// <returns>预制创建器</returns>
-        public Prefab Load(World world)
+        public Prefab Load(Stage world)
         {
-            this.World = world;
+            this.stage = world;
 
             return this;
         }
@@ -29,7 +29,7 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public void Unload()
         {
-            World = null;
+            stage = null;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnProcessing(ulong entity, PrefabInfo info)
         {
-            if (World.SeekSystem(entity, out Tag tag)) tag.Set(TAG_DEFINE.ENTITY_TYPE, Type);
+            if (stage.SeekBehavior(entity, out Tag tag)) tag.Set(TAG_DEFINE.ACTOR_TYPE, Type);
 
             OnProcessing(entity, info as T);
         }

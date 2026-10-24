@@ -13,14 +13,14 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 事件订阅派发者
     /// </summary>
-    public class Eventor : System<EventorInfo>
+    public class Eventor : Behavior<EventorInfo>
     {
-        private Dictionary<Type, List<(uint index, System system, Delegate action)>> EventDict { get; set; }
+        private Dictionary<Type, List<(uint index, Behavior behavior, Delegate action)>> EventDict { get; set; }
 
         protected override void OnAssemble()
         {
             base.OnAssemble();
-            EventDict = ObjectCache.Ensure<Dictionary<Type, List<(uint index, System system, Delegate)>>>();
+            EventDict = ObjectCache.Ensure<Dictionary<Type, List<(uint index, Behavior system, Delegate)>>>();
         }
 
         protected override void OnDisassemble()
@@ -41,13 +41,13 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         /// <typeparam name="T">事件的结构体</typeparam>
         /// <param name="func">事件的回调</param>
-        public void UnListen<T>(System system, Action<T> func) where T : IEvent
+        public void UnListen<T>(Behavior system, Action<T> func) where T : IEvent
         {
             if (false == EventDict.TryGetValue(typeof(T), out var funcs)) return;
             var systemHash = system.GetHashCode();
-            if (false == Component.Indexes.TryGetValue((systemHash, system.Entity), out var index)) return;
+            if (false == behaviorinfo.indexes.TryGetValue((systemHash, system.actor), out var index)) return;
             funcs.Remove((index, system, func));
-            Component.Indexes.Remove((systemHash, system.Entity));
+            behaviorinfo.indexes.Remove((systemHash, system.actor));
         }
 
         /// <summary>
@@ -55,21 +55,21 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         /// <typeparam name="T">事件的结构体</typeparam>
         /// <param name="func">事件的回调</param>
-        public void Listen<T>(System system, Action<T> func) where T : IEvent
+        public void Listen<T>(Behavior system, Action<T> func) where T : IEvent
         {
             if (false == EventDict.TryGetValue(typeof(T), out var funcs))
             {
-                funcs = ObjectCache.Ensure<List<(uint index, System system, Delegate)>>();
+                funcs = ObjectCache.Ensure<List<(uint index, Behavior system, Delegate)>>();
                 EventDict.Add(typeof(T), funcs);
             }
 
             var systemHash = system.GetHashCode();
             bool notsort = false;
-            if (false == Component.Indexes.TryGetValue((systemHash, system.Entity), out var index))
+            if (false == behaviorinfo.indexes.TryGetValue((systemHash, system.actor), out var index))
             {
-                Component.Increment = Component.Increment + 1;
-                index = Component.Increment;
-                Component.Indexes.Add((systemHash, system.Entity), index);
+                behaviorinfo.increment = behaviorinfo.increment + 1;
+                index = behaviorinfo.increment;
+                behaviorinfo.indexes.Add((systemHash, system.actor), index);
                 notsort = true;
             }
 
@@ -92,7 +92,7 @@ namespace GameLogic.Gameplay.Logic
             for (int i = funcs.Count - 1; i >= 0; i--)
             {
                 var func = funcs[i];
-                if (false == func.system.Enable) continue;
+                if (false == func.behavior.active) continue;
 
                 (func.action as Action<T>).Invoke(e);
             }

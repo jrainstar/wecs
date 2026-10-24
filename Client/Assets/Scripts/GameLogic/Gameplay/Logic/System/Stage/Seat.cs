@@ -3,18 +3,18 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 座位系统
     /// </summary>
-    public class Seat : System<SeatInfo>
+    public class Seat : Behavior<SeatInfo>
     {
         protected override void OnAssemble()
         {
             base.OnAssemble();
-            World.Eventor.Listen<EntityRemoveEvent>(this, OnEntityRmv);
+            stage.eventor.Listen<ActorRmvEvent>(this, OnEntityRmv);
         }
 
         protected override void OnDisassemble()
         {
             base.OnDisassemble();
-            World.Eventor.UnListen<EntityRemoveEvent>(this, OnEntityRmv);
+            stage.eventor.UnListen<ActorRmvEvent>(this, OnEntityRmv);
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>EntityID</returns>
         public ulong GetEntity(ulong seat)
         {
-            if (Component.SeatDict.TryGetValue(seat, out var entity)) return entity;
+            if (behaviorinfo.seatdict.TryGetValue(seat, out var entity)) return entity;
 
             return 0;
         }
@@ -36,7 +36,7 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>座位 ID</returns>
         public ulong GetSeat(ulong entity)
         {
-            if (Component.EntityDict.TryGetValue(entity, out var seat)) return seat;
+            if (behaviorinfo.actordict.TryGetValue(entity, out var seat)) return seat;
 
             return 0;
         }
@@ -48,11 +48,11 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="entity">EntityID</param>
         public void Sitdown(ulong seat, ulong entity)
         {
-            if (Component.SeatDict.ContainsKey(seat)) Component.SeatDict.Remove(seat);
-            if (Component.EntityDict.ContainsKey(entity)) Component.EntityDict.Remove(entity);
+            if (behaviorinfo.seatdict.ContainsKey(seat)) behaviorinfo.seatdict.Remove(seat);
+            if (behaviorinfo.actordict.ContainsKey(entity)) behaviorinfo.actordict.Remove(entity);
 
-            Component.SeatDict.Add(seat, entity);
-            Component.EntityDict.Add(entity, seat);
+            behaviorinfo.seatdict.Add(seat, entity);
+            behaviorinfo.actordict.Add(entity, seat);
         }
 
         /// <summary>
@@ -61,16 +61,16 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="entity">EntityID</param>
         public void Standup(ulong entity)
         {
-            if (false == Component.EntityDict.TryGetValue(entity, out var seat)) return;
+            if (false == behaviorinfo.actordict.TryGetValue(entity, out var seat)) return;
 
-            Component.EntityDict.Remove(entity);
-            Component.SeatDict.Remove(seat);
+            behaviorinfo.actordict.Remove(entity);
+            behaviorinfo.seatdict.Remove(seat);
         }
 
-        private void OnEntityRmv(EntityRemoveEvent e)
+        private void OnEntityRmv(ActorRmvEvent e)
         {
             // 站起
-            Standup(e.Entity);
+            Standup(e.actor);
         }
     }
 }

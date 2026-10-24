@@ -5,13 +5,13 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 驱动信息, 用于单个 Entity 的独立时间缩放
     /// </summary>
-    public class TickerInfo : Component
+    public class TickerInfo : BehaviorInfo
     {
         private FP mTimeScale = FP.One;
         /// <summary>
         /// 时间缩放
         /// </summary>
-        public FP TimeScale
+        public FP timescale
         {
             get => mTimeScale;
             set => mTimeScale = FPMath.Clamp(value, 0, FP.MaxValue);
@@ -24,14 +24,14 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnReset()
         {
-            TimeScale = FP.One;
+            timescale = FP.One;
         }
 
-        protected override Component OnClone()
+        protected override BehaviorInfo OnClone()
         {
             var clone = ObjectCache.Ensure<TickerInfo>();
-            clone.Ready(Entity);
-            clone.TimeScale = TimeScale;
+            clone.Ready(actor);
+            clone.timescale = timescale;
 
             return clone;
         }

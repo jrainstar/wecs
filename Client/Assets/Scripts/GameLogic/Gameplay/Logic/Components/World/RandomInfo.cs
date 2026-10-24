@@ -5,28 +5,28 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 随机信息
     /// </summary>
-    public class RandomInfo : Component
+    public class RandomInfo : BehaviorInfo
     {
         /// <summary>
         /// 乘数
         /// </summary>
-        public long A { get; private set; }
+        public long a { get; private set; }
         /// <summary>
         /// 增量
         /// </summary>
-        public long C { get; private set; }
+        public long c { get; private set; }
         /// <summary>
         /// 模数
         /// </summary>
-        public long M { get; private set; }
+        public long m { get; private set; }
         /// <summary>
         /// 随机种子
         /// </summary>
-        public long Seed { get; set; }
+        public long seed { get; set; }
         /// <summary>
         /// 最新随机数
         /// </summary>
-        public long Current { get; set; }
+        public long current { get; set; }
 
         protected override void OnReady()
         {
@@ -35,19 +35,19 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnReset()
         {
-            A = 1664525;
-            C = 1013904223;
-            M = int.MaxValue;
-            Seed = 0;
-            Current = 0;
+            a = 1664525;
+            c = 1013904223;
+            m = int.MaxValue;
+            seed = 0;
+            current = 0;
         }
 
-        protected override Component OnClone()
+        protected override BehaviorInfo OnClone()
         {
             var clone = ObjectCache.Ensure<RandomInfo>();
-            clone.Ready(Entity);
-            clone.Seed = Seed;
-            clone.Current = Current;
+            clone.Ready(actor);
+            clone.seed = seed;
+            clone.current = current;
 
             return clone;
         }

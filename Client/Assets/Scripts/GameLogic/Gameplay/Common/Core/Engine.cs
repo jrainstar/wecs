@@ -9,28 +9,28 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// 事件
         /// </summary>
-        public EventBus Eventor { get; private set; }
+        public EventBus eventor { get; private set; }
         /// <summary>
         /// 随机器
         /// </summary>
-        public Random Random { get; private set; }
+        public Random random { get; private set; }
         /// <summary>
         /// 引擎 Tick
         /// </summary>
-        public Ticker Ticker { get; private set; }
+        public Ticker ticker { get; private set; }
 
         protected override void OnCreate()
         {
             base.OnCreate();
-            Eventor = AddComp<EventBus>();
-            Eventor.Create();
+            eventor = AddComp<EventBus>();
+            eventor.Create();
 
-            Random = AddComp<Random>();
-            Random.Initial(19491001);
-            Random.Create();
+            random = AddComp<Random>();
+            random.Initial(19491001);
+            random.Create();
 
-            Ticker = AddComp<Ticker>();
-            Ticker.Create();
+            ticker = AddComp<Ticker>();
+            ticker.Create();
 
         }
 
@@ -41,8 +41,8 @@ namespace GameLogic.Gameplay.Common
         public static Engine CreateEngine()
         {
             Engine engine = new();
-            engine.Engine = engine;
-            engine.Parent = engine;
+            engine.engine = engine;
+            engine.parent = engine;
             engine.Create();
 
             return engine;

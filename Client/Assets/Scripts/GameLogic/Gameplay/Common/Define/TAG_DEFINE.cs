@@ -8,6 +8,6 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// Entity 类型
         /// </summary>
-        public const ushort ENTITY_TYPE = 1;
+        public const ushort ACTOR_TYPE = 1;
     }
 }

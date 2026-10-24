@@ -13,6 +13,6 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// Stage 数据
         /// </summary>
-        public WorldData sdata { get; set; }
+        public StageData sdata { get; set; }
     }
 }

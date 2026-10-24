@@ -5,7 +5,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 确定性, 随机器
     /// </summary>
-    public class Random : System<RandomInfo>
+    public class Random : Behavior<RandomInfo>
     {
         /// <summary>
         /// 初始化
@@ -13,8 +13,8 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="s">种子</param>
         public void Initialze(int s)
         {
-            Component.Seed = s;
-            Component.Current = Component.Seed;
+            behaviorinfo.seed = s;
+            behaviorinfo.current = behaviorinfo.seed;
         }
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>结果</returns>
         public int Range(int min, int max)
         {
-            Component.Current = (Component.A * Component.Current + Component.C) % Component.M;
+            behaviorinfo.current = (behaviorinfo.a * behaviorinfo.current + behaviorinfo.c) % behaviorinfo.m;
 
-            return (int)(min + (Component.Current % (max - min)));
+            return (int)(min + (behaviorinfo.current % (max - min)));
         }
 
         /// <summary>

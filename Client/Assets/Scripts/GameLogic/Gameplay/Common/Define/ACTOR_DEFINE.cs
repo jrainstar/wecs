@@ -3,7 +3,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// Entity 定义
     /// </summary>
-    public class ENTITY_DEFINE
+    public class ACTOR_DEFINE
     {
         /// <summary>
         /// 无

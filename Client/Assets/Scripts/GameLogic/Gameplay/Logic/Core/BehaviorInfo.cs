@@ -3,25 +3,25 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 数据组件
     /// </summary>
-    public abstract class Component
+    public abstract class BehaviorInfo
     {
         /// <summary>
         /// Entity
         /// </summary>
-        public ulong Entity { get; private set; }
+        public ulong actor { get; private set; }
         /// <summary>
         /// 是否激活
         /// </summary>
-        public bool Enable { get; set; }
+        public bool active { get; set; }
 
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="actor">ActorID</param>
-        public void Ready(ulong entity)
+        /// <param name="actor">Actor</param>
+        public void Ready(ulong actor)
         {
-            this.Entity = entity;
-            this.Enable = true;
+            this.actor = actor;
+            this.active = true;
             OnReady();
         }
 
@@ -31,31 +31,33 @@ namespace GameLogic.Gameplay.Logic
         public void Reset()
         {
             OnReset();
-            this.Entity = default;
-            this.Enable = false;
+            this.actor = default;
+            this.active = false;
         }
 
         /// <summary>
         /// 克隆
         /// </summary>
-        /// <returns>Component</returns>
-        public Component Clone()
+        /// <returns>BehaviorInfo</returns>
+        public BehaviorInfo Clone()
         {
             return OnClone();
         }
 
         /// <summary>
-        /// 初始化, 当 Component 从对象池中取出, 在这个回调中初始化数据
+        /// 初始化, 当 BehaviorInfo 从对象池中取出, 在这个回调中初始化数据
         /// </summary>
         protected abstract void OnReady();
+
         /// <summary>
-        /// 重置, 当 Component 回收, 重新回到对象池, 在这个回调中清理数据
+        /// 重置, 当 BehaviorInfo 回收, 重新回到对象池, 在这个回调中清理数据
         /// </summary>
         protected abstract void OnReset();
+
         /// <summary>
-        /// 克隆, 克隆一个新的 Component
+        /// 克隆, 克隆一个新的 BehaviorInfo
         /// </summary>
-        /// <returns>Component</returns>
-        protected abstract Component OnClone();
+        /// <returns>BehaviorInfo</returns>
+        protected abstract BehaviorInfo OnClone();
     }
 }
