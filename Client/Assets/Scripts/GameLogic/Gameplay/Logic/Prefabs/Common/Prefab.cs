@@ -15,11 +15,11 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 加载
         /// </summary>
-        /// <param name="world">世界</param>
+        /// <param name="stage">世界</param>
         /// <returns>预制创建器</returns>
-        public Prefab Load(Stage world)
+        public Prefab Load(Stage stage)
         {
-            this.stage = world;
+            this.stage = stage;
 
             return this;
         }
@@ -35,37 +35,37 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 处理预制创建器逻辑
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="actor">Entity</param>
         /// <param name="info">预制信息</param>
-        public void Processing(ulong entity, PrefabInfo info)
+        public void Processing(ulong actor, PrefabInfo info)
         {
-            OnProcessing(entity, info);
+            OnProcessing(actor, info);
         }
 
         /// <summary>
         /// 处理预制创建器逻辑
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="actor">Actor</param>
         /// <param name="info">预制信息</param>
-        protected virtual void OnProcessing(ulong entity, PrefabInfo info)
+        protected virtual void OnProcessing(ulong actor, PrefabInfo info)
         {
         }
     }
 
     /// <summary>
-    /// 预制创建器, 创建设定好的 Entity
+    /// 预制创建器, 创建设定好的 Actor
     /// </summary>
     /// <typeparam name="T">预制信息类型</typeparam>
     public abstract class Prefab<T> : Prefab where T : PrefabInfo
     {
         /// <summary>
-        /// Entity 类型
+        /// Actor 类型
         /// </summary>
-        public abstract byte Type { get; }
+        public abstract byte type { get; }
 
         protected override void OnProcessing(ulong entity, PrefabInfo info)
         {
-            if (stage.SeekBehavior(entity, out Tag tag)) tag.Set(TAG_DEFINE.ACTOR_TYPE, Type);
+            if (stage.SeekBehavior(entity, out Tag tag)) tag.Set(TAG_DEFINE.ACTOR_TYPE, type);
 
             OnProcessing(entity, info as T);
         }
@@ -73,8 +73,8 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 处理预制创建器逻辑
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="actor">Actor</param>
         /// <param name="info">预制信息</param>
-        protected abstract void OnProcessing(ulong entity, T info);
+        protected abstract void OnProcessing(ulong actor, T info);
     }
 }

@@ -2,6 +2,7 @@ using GameLogic.Gameplay.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 
@@ -162,6 +163,8 @@ namespace GameLogic.Gameplay.Logic
             InitBehaviors();
             // 构建 Stage 的 Prefab
             InitPrefabs();
+            // 构建初始化 Stage
+            Building();
 
             return this;
         }
@@ -200,9 +203,13 @@ namespace GameLogic.Gameplay.Logic
         private void InitBehaviors()
         {
             GetBehavior<Tag>(sa).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.WORLD);
+
             AddBehavior<Random>(sa).Initialze(data.seed);
+            AddBehavior<Config>(sa);
             AddBehavior<Eventor>(sa);
+            AddBehavior<RILSync>(sa);
             AddBehavior<Seat>(sa);
+
         }
 
         /// <summary>
@@ -210,8 +217,38 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         private void InitPrefabs()
         {
+            void Prefab<T, E>() where T : Prefab, new() where E : PrefabInfo, new()
+            {
+                prefabs.Add(typeof(E), ObjectCache.Ensure<T>().Load(this));
+            }
             prefabs = ObjectCache.Ensure<Dictionary<Type, Prefab>>();
-            // 注册预制创建器: Prefab<具体预制创建器, 预制创建器信息>()
+            Prefab<HeroPrefab, HeroPrefabInfo>();
+        }
+
+        /// <summary>
+        /// 构建初始化 Stage
+        /// </summary>
+        public void Building()
+        {
+            foreach (var player in data.players)
+            {
+                var hero = Spawn(new HeroPrefabInfo
+                {
+                    hero = player.hero,
+                    spatial = new()
+                    {
+                        position = player.position.ToFPVector3(),
+                        euler = player.euler.ToFPVector3(),
+                        scale = (FP)player.scale * cfg.int2fp,
+                    }
+                });
+                AddBehavior<Gamepad>(hero);
+                // 入座
+                seat.Sitdown(player.seat, hero);
+
+                // 渲染同步, 不等待下一次帧末翻译
+                rilsync.Translate();
+            }
         }
 
         /// <summary>
@@ -330,25 +367,25 @@ namespace GameLogic.Gameplay.Logic
             // Tick 驱动
             foreach (var type in TICK_DEFINE.TICK_TYPE_LIST)
             {
-                if (false == SeekBehaviors(type, out var systems)) continue;
-                foreach (var system in systems)
+                if (false == SeekBehaviors(type, out var behaviors)) continue;
+                foreach (var behavior in behaviors)
                 {
                     // 携带 TickerInfo 的 Actor, 使用自身的时间缩放
-                    if (SeekBehaviorInfo(system.actor, out TickerInfo ticker))
+                    if (SeekBehaviorInfo(behavior.actor, out TickerInfo ticker))
                     {
-                        system.Tick(ticker.timescale * tick);
+                        behavior.Tick(ticker.timescale * tick);
                         continue;
                     }
 
-                    system.Tick(tick);
+                    behavior.Tick(tick);
                 }
             }
 
             // 帧末调度
             foreach (var type in TICK_DEFINE.TICK_TYPE_LIST)
             {
-                if (false == SeekBehaviors(type, out var systems)) continue;
-                foreach (var system in systems) system.EndTick();
+                if (false == SeekBehaviors(type, out var behaviors)) continue;
+                foreach (var system in behaviors) system.EndTick();
             }
 
             // 回收
@@ -768,29 +805,29 @@ namespace GameLogic.Gameplay.Logic
         /// 添加 Actor
         /// 会自动携带 Tag, 并把 ActorType 写入 NONE
         /// </summary>
-        /// <param name="entity">ActorID</param>
-        public void AddActor(ulong entity)
+        /// <param name="actor">Actor</param>
+        public void AddActor(ulong actor)
         {
-            if (info.actors.Contains(entity)) return;
-            info.actors.Add(entity);
+            if (info.actors.Contains(actor)) return;
+            info.actors.Add(actor);
             // 默认携带 Tag 系统, 写入 ActorType 为 NONE
-            AddBehavior<Tag>(entity).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.NONE);
+            AddBehavior<Tag>(actor).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.NONE);
         }
 
         /// <summary>
         /// 回收 Actor
         /// 不是立即执行, 而是添加入移除列表, 等待帧末执行回收 (Cache.RemoveActors)
         /// </summary>
-        /// <param name="entity">ActorID</param>
+        /// <param name="actor">ActorID</param>
         /// <returns>YES/NO</returns>
-        private bool ActorToRecycle(ulong entity)
+        private bool ActorToRecycle(ulong actor)
         {
-            if (false == cache.Valid(entity)) return false;
-            cache.rmvactors.Add(entity);
-            cache.rmvactorset.Add(entity);
+            if (false == cache.Valid(actor)) return false;
+            cache.rmvactors.Add(actor);
+            cache.rmvactorset.Add(actor);
 
-            if (SeekBehaviors(entity, out var systems)) foreach (var system in systems) RemoveBehavior(system);
-            if (SeekBehaviorInfos(entity, out var components)) foreach (var component in components) RemoveBehaviorInfo(component);
+            if (SeekBehaviors(actor, out var systems)) foreach (var system in systems) RemoveBehavior(system);
+            if (SeekBehaviorInfos(actor, out var components)) foreach (var component in components) RemoveBehaviorInfo(component);
 
             return true;
         }
@@ -818,12 +855,12 @@ namespace GameLogic.Gameplay.Logic
         {
             if (false == prefabs.TryGetValue(typeof(T), out var prefab)) throw new Exception($"prefab {typeof(T)} is not exist.");
 
-            var entity = GenActor();
-            prefab.Processing(entity, info);
+            var actor = GenActor();
+            prefab.Processing(actor, info);
 
-            eventor.Tell(new ActorAddEvent { actor = entity });
+            eventor.Tell(new ActorAddEvent { actor = actor });
 
-            return entity;
+            return actor;
         }
 
         /// <summary>

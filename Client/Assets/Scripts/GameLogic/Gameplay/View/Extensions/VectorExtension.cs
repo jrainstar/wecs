@@ -1,4 +1,5 @@
 using GameLogic.Gameplay.Common;
+using GameLogic.Gameplay.Logic;
 using UnityEngine;
 
 namespace GameLogic.Gameplay.View
@@ -32,7 +33,7 @@ namespace GameLogic.Gameplay.View
         /// <returns>Vector4</returns>
         public static Vector4 ToVector4(this FPVector4 fpvector4)
         {
-            return new Vector4(fpvector4.x.AsFloat(), fpvector4.y.AsFloat(), fpvector4.z.AsFloat(), fpvector4.W.AsFloat());
+            return new Vector4(fpvector4.x.AsFloat(), fpvector4.y.AsFloat(), fpvector4.z.AsFloat(), fpvector4.w.AsFloat());
         }
 
         /// <summary>
@@ -45,24 +46,24 @@ namespace GameLogic.Gameplay.View
             return new Quaternion(fpquaternion.x.AsFloat(), fpquaternion.y.AsFloat(), fpquaternion.z.AsFloat(), fpquaternion.w.AsFloat());
         }
 
-        ///// <summary>
-        ///// 将 IntVector3 转换为 Vector3
-        ///// </summary>
-        ///// <param name="vector">IntVector3</param>
-        ///// <returns>Vector3</returns>
-        //public static Vector3 ToVector3(this IntVector3 vector)
-        //{
-        //    return new Vector3(vector.x * Config.Int2Float, vector.y * Config.Int2Float, vector.z * Config.Int2Float);
-        //}
+        /// <summary>
+        /// 将 IntVector3 转换为 Vector3
+        /// </summary>
+        /// <param name="vector">IntVector3</param>
+        /// <returns>Vector3</returns>
+        public static Vector3 ToVector3(this IntVector3 vector)
+        {
+            return new Vector3(vector.x * ConfigComp.Int2Float, vector.y * ConfigComp.Int2Float, vector.z * ConfigComp.Int2Float);
+        }
 
-        ///// <summary>
-        ///// 将 IntVector2 转换为 Vector2
-        ///// </summary>
-        ///// <param name="vector">IntVector2</param>
-        ///// <returns>Vector2</returns>
-        //public static Vector2 ToVector2(this IntVector2 vector)
-        //{
-        //    return new Vector2(vector.x * Config.Int2Float, vector.y * Config.Int2Float);
-        //}
+        /// <summary>
+        /// 将 IntVector2 转换为 Vector2
+        /// </summary>
+        /// <param name="vector">IntVector2</param>
+        /// <returns>Vector2</returns>
+        public static Vector2 ToVector2(this IntVector2 vector)
+        {
+            return new Vector2(vector.x * ConfigComp.Int2Float, vector.y * ConfigComp.Int2Float);
+        }
     }
 }
