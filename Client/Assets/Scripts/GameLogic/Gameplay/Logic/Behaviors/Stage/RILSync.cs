@@ -2,7 +2,6 @@ using Codice.CM.Common;
 using GameLogic.Gameplay.Common;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GameLogic.Gameplay.Logic
 {
@@ -223,14 +222,15 @@ namespace GameLogic.Gameplay.Logic
         {
             var info = stage.GetBehaviorInfo<StageInfo>(stage.sa);
             // 先处理StageInfo（通常需要在其他翻译之前完成）
-            if (translatordict.TryGetValue(typeof(StageInfo), out var translators))
+            if (translatordict.TryGetValue(typeof(StageInfo), out var stagetranslators))
             {
-                foreach (var translator in translators) translator.Translate(info);
+                foreach (var translator in stagetranslators) translator.Translate(info);
             }
 
             SendLossRIL();
-            // 并行处理各种类型的行为信息
-            Parallel.ForEach(info.behaviorinfos, kv =>
+
+            // 逐类型、逐行为信息处理
+            foreach (var kv in info.behaviorinfos)
             {
                 if (translatordict.TryGetValue(kv.Key, out var translators))
                 {
@@ -250,7 +250,7 @@ namespace GameLogic.Gameplay.Logic
                         }
                     }
                 }
-            });
+            }
 
             // 处理渲染指令差异
             while (diffqueue.TryDequeue(out var diff))
@@ -276,6 +276,7 @@ namespace GameLogic.Gameplay.Logic
         {
             Translate();
         }
+
         private void OnActorRmv(ActorRmvEvent e)
         {
 

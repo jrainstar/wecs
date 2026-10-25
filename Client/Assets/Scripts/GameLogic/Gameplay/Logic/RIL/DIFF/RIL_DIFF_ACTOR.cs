@@ -9,7 +9,7 @@ namespace GameLogic.Gameplay.Logic
         public override ushort id => RIL_DEFINE.ACTOR;
         
         /// <summary>
-        /// ActorID
+        /// Actor
         /// </summary>
         public ulong target { get; set; }
         

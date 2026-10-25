@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gameplay 架构文档 · WECS-BATTLE</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --bg-soft:#161a21;
+    --bg-code:#1b2028;
+    --border:#262c37;
+    --border-soft:#1f252e;
+    --text:#d7dce4;
+    --text-dim:#8c96a5;
+    --text-bright:#f0f3f8;
+    --accent:#4ea1ff;
+    --accent-soft:rgba(78,161,255,.12);
+    --green:#3ecf8e;
+    --amber:#e5b567;
+    --red:#ef6b73;
+    --purple:#b28dff;
+    --mono:"JetBrains Mono","Cascadia Code",Consolas,"Courier New",monospace;
+    --sans:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--sans);font-size:15px;line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- 布局 ---------- */
+  .layout{display:flex;min-height:100vh;}
+  nav{
+    position:sticky;top:0;height:100vh;width:270px;flex:0 0 270px;
+    overflow-y:auto;padding:28px 18px 60px;
+    background:var(--bg-soft);border-right:1px solid var(--border);
+  }
+  nav .brand{font-weight:700;font-size:15px;color:var(--text-bright);letter-spacing:.5px;}
+  nav .brand small{display:block;font-weight:400;font-size:11px;color:var(--text-dim);letter-spacing:1.4px;margin-top:4px;}
+  nav ol{list-style:none;margin:22px 0 0;padding:0;counter-reset:sec;}
+  nav ol li{margin:0;}
+  nav ol > li > a{display:block;padding:6px 10px;color:var(--text-dim);text-decoration:none;border-radius:6px;font-size:13.5px;border-left:2px solid transparent;}
+  nav ol > li > a:hover{color:var(--text-bright);background:rgba(255,255,255,.04);}
+  nav ol > li > a.active{color:var(--accent);background:var(--accent-soft);border-left-color:var(--accent);}
+  nav ul{list-style:none;margin:2px 0 8px;padding:0 0 0 10px;}
+  nav ul a{display:block;padding:4px 10px;color:#6f7887;text-decoration:none;font-size:12.5px;border-radius:6px;}
+  nav ul a:hover{color:var(--text);}
+  nav ul a.active{color:var(--accent);}
+  main{flex:1;min-width:0;padding:48px 56px 120px;max-width:1080px;}
+  /* ---------- 排版 ---------- */
+  h1{font-size:30px;line-height:1.3;color:var(--text-bright);margin:0 0 10px;letter-spacing:.3px;}
+  .subtitle{color:var(--text-dim);font-size:13.5px;margin-bottom:34px;}
+  h2{
+    font-size:21px;color:var(--text-bright);margin:56px 0 18px;padding-bottom:10px;
+    border-bottom:1px solid var(--border);scroll-margin-top:20px;
+  }
+  h2 .num{color:var(--accent);font-family:var(--mono);font-size:17px;margin-right:10px;}
+  h3{font-size:16px;color:var(--text-bright);margin:34px 0 12px;scroll-margin-top:20px;}
+  h3::before{content:"▍";color:var(--accent);margin-right:6px;font-size:13px;}
+  h4{font-size:14px;color:var(--amber);margin:22px 0 8px;font-family:var(--mono);}
+  p{margin:10px 0;}
+  a{color:var(--accent);}
+  strong{color:var(--text-bright);font-weight:600;}
+  code{
+    font-family:var(--mono);font-size:12.8px;background:var(--bg-code);
+    padding:1.5px 5px;border-radius:4px;color:#9ecbff;border:1px solid var(--border-soft);
+  }
+  pre{
+    background:var(--bg-code);border:1px solid var(--border);border-radius:8px;
+    padding:0;margin:14px 0;overflow:hidden;
+  }
+  pre .fname{
+    display:block;font-family:var(--mono);font-size:11.5px;color:var(--text-dim);
+    padding:7px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);
+  }
+  pre code{display:block;overflow-x:auto;padding:14px 16px;background:none;border:none;color:#c8d3e0;font-size:12.8px;line-height:1.65;}
+  .k{color:#cf8de0;} .t{color:#7fd6c0;} .s{color:#c3e88d;} .c{color:#5c6675;font-style:italic;} .n{color:#f2b880;} .f{color:#82aaff;}
+  /* ---------- 表格 ---------- */
+  .table-wrap{overflow-x:auto;margin:16px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.3px;}
+  th,td{border:1px solid var(--border);padding:8px 12px;text-align:left;vertical-align:top;}
+  th{background:rgba(255,255,255,.035);color:var(--text-bright);font-weight:600;white-space:nowrap;}
+  tbody tr:hover{background:rgba(255,255,255,.02);}
+  td code{white-space:nowrap;}
+  /* ---------- 卡片/提示 ---------- */
+  .card{background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin:18px 0;}
+  .note,.warn,.tip{
+    border-radius:8px;padding:12px 16px;margin:16px 0;font-size:13.5px;
+    border-left:3px solid var(--accent);background:var(--accent-soft);
+  }
+  .warn{border-left-color:var(--red);background:rgba(239,107,115,.1);}
+  .tip{border-left-color:var(--green);background:rgba(62,207,142,.1);}
+  .note b,.warn b,.tip b{color:var(--text-bright);}
+  /* ---------- 流程图 ---------- */
+  .diagram{
+    font-family:var(--mono);font-size:12.5px;line-height:1.55;white-space:pre;overflow-x:auto;
+    background:var(--bg-code);border:1px solid var(--border);border-radius:8px;
+    padding:18px;color:#9fb4cc;margin:16px 0;
+  }
+  .diagram .hl{color:var(--accent);}
+  .diagram .hl2{color:var(--green);}
+  .diagram .hl3{color:var(--amber);}
+  .diagram .dim{color:#5c6675;}
+  /* ---------- 链路步骤 ---------- */
+  .steps{counter-reset:step;margin:20px 0;padding:0;list-style:none;}
+  .steps > li{
+    position:relative;padding:2px 0 2px 46px;margin:0 0 20px;
+    border-left:1px solid var(--border);padding-bottom:4px;
+  }
+  .steps > li:last-child{border-left-color:transparent;}
+  .steps > li::before{
+    counter-increment:step;content:counter(step);
+    position:absolute;left:-14px;top:0;width:28px;height:28px;border-radius:50%;
+    background:var(--bg);border:1px solid var(--accent);color:var(--accent);
+    font-family:var(--mono);font-size:13px;line-height:26px;text-align:center;
+  }
+  .steps > li .title{color:var(--text-bright);font-weight:600;display:block;margin-bottom:2px;}
+  .steps > li .meta{color:var(--text-dim);font-size:12.5px;font-family:var(--mono);}
+  /* ---------- 徽章 ---------- */
+  .badge{
+    display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 7px;border-radius:999px;
+    border:1px solid var(--border);color:var(--text-dim);margin-right:6px;vertical-align:1px;
+  }
+  .badge.blue{border-color:#2f5c8f;color:#7cb8ff;background:rgba(78,161,255,.1);}
+  .badge.green{border-color:#2a6b52;color:#6fdba9;background:rgba(62,207,142,.1);}
+  .badge.amber{border-color:#7a5c24;color:#e5b567;background:rgba(229,181,103,.1);}
+  .badge.red{border-color:#7d3a3e;color:#ef888e;background:rgba(239,107,115,.1);}
+  .badge.purple{border-color:#5b4392;color:#c3a6ff;background:rgba(178,141,255,.1);}
+  /* ---------- 移动端 ---------- */
+  @media (max-width:980px){
+    .layout{display:block;}
+    nav{position:static;height:auto;width:auto;flex:none;border-right:none;border-bottom:1px solid var(--border);padding:18px;}
+    main{padding:28px 20px 80px;}
+    h1{font-size:24px;}
+  }
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-thumb{background:#2c333e;border-radius:5px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav>
+  <div class="brand">Gameplay 架构文档<small>WECS-BATTLE / Client</small></div>
+  <ol>
+    <li><a href="#s1">总览</a></li>
+    <li><a href="#s2">逻辑层（Logic）</a>
+      <ul>
+        <li><a href="#s2-1">Stage 逻辑世界</a></li>
+        <li><a href="#s2-2">Behavior / BehaviorInfo</a></li>
+        <li><a href="#s2-3">快照与回滚</a></li>
+      </ul>
+    </li>
+    <li><a href="#s3">渲染管道（RIL）</a>
+      <ul>
+        <li><a href="#s3-1">Translator &amp; 哈希机制</a></li>
+        <li><a href="#s3-2">RILSync 出口</a></li>
+        <li><a href="#s3-3">三种 RIL 形态</a></li>
+        <li><a href="#s3-4">SendLossRIL</a></li>
+      </ul>
+    </li>
+    <li><a href="#s4">渲染层（View）</a>
+      <ul>
+        <li><a href="#s4-1">World</a></li>
+        <li><a href="#s4-2">RILBucket</a></li>
+        <li><a href="#s4-3">Enchant / Cross / Salute</a></li>
+        <li><a href="#s4-4">Agent</a></li>
+      </ul>
+    </li>
+    <li><a href="#s5">角色创建全链路</a></li>
+    <li><a href="#s6">排查清单 &amp; 扩展步骤</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<h1>Gameplay 架构文档</h1>
+<div class="subtitle">
+  适用范围 <code>Assets/Scripts/GameLogic/Gameplay</code>（Logic / View / Director / Common）　·　
+  以当前工作区代码为准，文中 <code>文件:行号</code> 可直接定位
+</div>
+
+<!-- ============ 1 ============ -->
+<h2 id="s1"><span class="num">01</span>总览</h2>
+
+<div class="diagram">                 <span class="dim">Unity MonoBehaviour (WECS_0)</span>
+                          │  Update()
+                          ▼
+   ┌──────────────────────────────────────────────────┐
+   │ <span class="hl">Engine</span> (Comp)                                    │
+   │   eventor / random / ticker(TickerComp)          │
+   └──────────────────────────────────────────────────┘
+        │ <span class="hl2">TickEvent</span>              │ <span class="hl3">FixedTickEvent</span>
+        ▼                        ▼
+   ┌──────────────────────────────────────────────────┐
+   │ <span class="hl">BaseDirector</span> (Comp) / LocalDirector              │
+   │   CreateGame / StartGame / Snapshot / Restore    │
+   └──────────────────────────────────────────────────┘
+        │ 持有                    │ 持有
+        ▼                        ▼
+   ┌────────────────┐      ┌──────────────────────────┐
+   │ <span class="hl">World (View)</span>   │ ◄─── │ <span class="hl">Stage (Logic)</span>            │
+   │  rilbucket     │ <span class="hl2">RIL</span>  │  Actor / Behavior / Info │
+   │  agentdict     │      │  RILSync → Translator    │
+   │  ticker        │      └──────────────────────────┘
+   └────────────────┘
+        │ TickEvent
+        ▼
+   <span class="hl3">Agent (NodeAgent / ModelAgent) → GameObject</span></div>
+
+<p>三条关键约定：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>概念</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><code>Comp</code></td><td>通用组件树（<code>AddComp&lt;T&gt;()</code> + <code>Create()</code> + <code>OnCreate</code>），Director / World / RILBucket / AgentEnchant 都是 Comp</td></tr>
+<tr><td><code>Actor + Behavior + BehaviorInfo</code></td><td>逻辑层的实体体系。<strong>Behavior = 逻辑（无状态），BehaviorInfo = 数据</strong>（可空、可克隆、可快照）</td></tr>
+<tr><td><code>RIL</code></td><td>Render Instruction Language，逻辑层单向输出给渲染层的<strong>状态快照 + 变更指令流</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">
+<b>为什么这样切：</b>逻辑层要能在子线程跑、要能快照 / 回滚，所以逻辑层<strong>不允许直接引用 UnityEngine</strong>；渲染层只吃 RIL，不反向修改逻辑。
+</div>
+
+<!-- ============ 2 ============ -->
+<h2 id="s2"><span class="num">02</span>逻辑层（Logic）</h2>
+
+<h3 id="s2-1">Stage —— 逻辑世界</h3>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Core/Stage.cs</span><code><span class="k">public</span> <span class="t">ulong</span> sa =&gt; <span class="t">ulong</span>.MaxValue;   <span class="c">// Stage 自己也是一个 Actor，ID 固定为 ulong.MaxValue</span></code></pre>
+
+<p><code>Stage.Initialize(StageData)</code> 的执行顺序（<code>Stage.cs:131</code>）：</p>
+
+<ol>
+  <li><code>cache = new StageCache().Initialize()</code> —— 三张核心表：<code>behaviors</code>(按类型) / <code>behaviordict</code>(按 Actor) / <code>behaviorinfodict</code>(按 Actor) + 各类移除队列</li>
+  <li>手工构建 <code>StageInfo</code>（自举悖论：Stage 的数据也走 BehaviorInfo，但容器还没建好）</li>
+  <li><code>AddActor(sa)</code> → 给 Stage 挂上默认 <code>Tag</code></li>
+  <li><code>Behaviors()</code> → 挂 Stage 级 Behavior</li>
+  <li><code>Prefabs()</code> → 注册 <code>HeroPrefab</code></li>
+  <li><code>Building()</code> → 按 <code>StageData.players</code> 逐个 <code>Spawn</code></li>
+</ol>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Core/Stage.cs : 189</span><code>AddBehavior&lt;Config&gt;(sa);
+AddBehavior&lt;Eventor&gt;(sa);
+AddBehavior&lt;Seat&gt;(sa);
+AddBehavior&lt;Random&gt;(sa).Initialze(data.seed);
+AddBehavior&lt;RILSync&gt;(sa);</code></pre>
+
+<div class="warn">
+<b>注意：</b><code>Stage.cfg / eventor / seat / random / rilsync</code> 全是 <code>GetBehavior&lt;T&gt;(sa, true)</code> 的快捷属性。<strong>只要 <code>Behaviors()</code> 里少挂一个，第一次访问就是 NullReferenceException</strong>（这就是之前 <code>Building()</code> 里 <code>cfg.int2fp</code> 崩溃的原因）。
+</div>
+
+<p><code>Step()</code>（<code>Stage.cs:364</code>）是逻辑帧核心：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Core/Stage.cs : 364</span><code><span class="k">public</span> <span class="k">void</span> <span class="f">Step</span>()
+{
+    <span class="k">if</span> (StageState.Ticking != info.state) <span class="k">return</span>;
+    <span class="k">var</span> tick = info.timescale * GAME_DEFINE.LOGIC_TICK;
+    info.frame++;
+    info.elapsed += tick;
+
+    <span class="c">// Tick 驱动</span>
+    <span class="k">foreach</span> (<span class="k">var</span> type <span class="k">in</span> TICK_DEFINE.TICK_TYPE_LIST) { ... behavior.Tick(时间) ... }
+
+    <span class="c">// 帧末调度</span>
+    <span class="k">foreach</span> (<span class="k">var</span> type <span class="k">in</span> TICK_DEFINE.TICK_TYPE_LIST) { ... behavior.EndTick() ... }
+
+    Recycle();
+}</code></pre>
+
+<ul>
+  <li><code>TICK_TYPE_LIST</code> 是<strong>显式登记的执行顺序</strong>（<code>TICK_DEFINE.cs</code>：<code>Gamepad → Facade → RILSync</code>），新加 Behavior 必须登记，否则不会被 Tick。</li>
+  <li><code>Recycle()</code> 统一回收：Behavior 先 <code>Disassemble()</code>，再出表、回对象池。</li>
+</ul>
+
+<h4>diff 的门槛：<code>frame &lt;= 1</code> 直接丢弃</h4>
+
+<p><code>Stage.Diff()</code> 开头有一道拦截：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Core/Stage.cs — Diff</span><code><span class="c">// 初始化阶段的增量一律丢弃，等首次 Translate() 的全量同步覆盖</span>
+<span class="k">if</span> (<span class="n">0</span> == info.frame || <span class="n">1</span> == info.frame) <span class="k">return</span>;</code></pre>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>条件</th><th>拦截的内容</th><th>原因</th></tr></thead>
+<tbody>
+<tr><td><code>0 == info.frame</code></td><td><code>Building()</code> 里 18 个英雄的 <code>DIFF_NEW</code></td><td><code>Initialize()</code> 期间 <code>frame</code> 仍是 0。这批增量会被首次 <code>Translate()</code> 的全量 IRIL 完全覆盖，提前发给渲染层只会让 diff 找不到可合并的已有 RIL</td></tr>
+<tr><td><code>1 == frame</code></td><td>第一个逻辑帧 <code>Tick</code> 内产生的 diff</td><td><code>Step()</code> 的 <code>frame++</code> 在 Tick <strong>之前</strong>，所以首帧内部看到的是 1；此时仍早于 <code>EndTick</code> 的全量翻译，同样没有意义</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">
+<b>可读性问题：</b><code>info.frame</code> 与 <code>frame</code> 是同一个属性，写法不统一，建议合并为 <code>info.frame &lt;= 1</code>。更稳的语义是加一个 <code>private bool synced;</code>，首次 <code>Translate()</code> 后置位，<code>Diff()</code> 判断 <code>if (false == synced) return;</code>，这样恢复/重连场景也能复用同一套语义。
+</div>
+
+<h3 id="s2-2">Behavior / BehaviorInfo 配对</h3>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Core/Behavior.cs : 127</span><code><span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="t">Behavior</span>&lt;T&gt; : Behavior <span class="k">where</span> T : BehaviorInfo, <span class="k">new</span>()
+{
+    <span class="k">public</span> T info =&gt; stage.GetBehaviorInfo&lt;T&gt;(actor, <span class="k">true</span>);   <span class="c">// 唯一数据入口</span>
+    <span class="k">protected override</span> <span class="k">void</span> <span class="f">OnAddBehaviorInfo</span>()
+    {
+        <span class="k">if</span> (<span class="k">false</span> == stage.SeekBehaviorInfo(actor, <span class="k">out</span> T behaviorinfo)) stage.AddBehaviorInfo&lt;T&gt;(actor);
+    }
+}</code></pre>
+
+<ul>
+  <li><code>Assemble()</code> 时自动 <code>AddBehaviorInfo</code>，<code>RmvBehaviorInfo()</code> 时自动移除对应的 Info，<strong>不用手动成对管理</strong>。</li>
+  <li><code>BehaviorInfo</code> 必须实现 <code>OnReady / OnReset / OnClone</code> 三个抽象：<code>OnClone</code> 是快照的基础，<strong>所有引用类型成员必须在里面深拷贝</strong>。</li>
+</ul>
+
+<p>现有业务 Behavior 一览：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Behavior</th><th>Info</th><th>职责</th></tr></thead>
+<tbody>
+<tr><td><code>Tag</code></td><td><code>TagInfo</code></td><td><code>ACTOR_TYPE</code> 等标签，<code>ACTOR_DEFINE.HERO / BULLET / ...</code></td></tr>
+<tr><td><code>Facade</code></td><td><code>FacadeInfo</code></td><td>外观：模型 ID、动画状态、特效</td></tr>
+<tr><td><code>Gamepad</code></td><td><code>GamepadInfo</code></td><td>摇杆 / 按键输入，<code>EndTick</code> 清 release</td></tr>
+<tr><td><code>Ticker</code>(Info)</td><td><code>TickerInfo</code></td><td>单个 Actor 的时间缩放</td></tr>
+<tr><td><code>Config</code></td><td>—</td><td>配置表定位器 + <code>int2fp / fp2int</code> 系数</td></tr>
+<tr><td><code>Seat</code></td><td><code>SeatInfo</code></td><td>座位 ↔ Actor 双向字典</td></tr>
+<tr><td><code>Random</code></td><td><code>RandomInfo</code></td><td>确定性随机</td></tr>
+<tr><td><code>Eventor</code></td><td><code>EventorInfo</code></td><td>Stage 内事件总线（带 index 排序）</td></tr>
+<tr><td><code>RILSync</code></td><td>—</td><td>逻辑 → 渲染的出口</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 id="s2-3">快照与回滚</h3>
+
+<p><code>Stage.Snapshot()</code> = <code>info.Clone()</code>；<code>Stage.Restore()</code> 把当前 Actor 全回收，用快照重建。<code>LocalDirector</code> 里 <code>restoreing</code> 期间禁止 <code>rendering</code>，<code>OnStep</code> 只做 <code>stage.Restore()</code>，避免回滚中途产生脏 RIL。</p>
+
+<!-- ============ 3 ============ -->
+<h2 id="s3"><span class="num">03</span>渲染管道（RIL）</h2>
+
+<div class="diagram">BehaviorInfo ──<span class="hl">Translator</span>──► IRIL ──► Stage.onril ──► <span class="hl3">LocalDirector.rilqueue</span>
+                                     └► <span class="hl2">RIL_DIFF</span>   ──► diffqueue
+                                     └► <span class="hl2">RIL_EVENT</span>  ──► eventqueue
+                                                          │ OnTick (Unity 帧)
+                                                          ▼
+                                              <span class="hl">RILBucket</span>.SetRIL / SetDiff / SetEvent
+                                                          ▼
+                                           RILDispatch → Enchant / Agent</div>
+
+<h3 id="s3-1">Translator：Info → RIL</h3>
+
+<p><code>Translator&lt;T, E&gt;.OnRIL(info)</code> 的执行流程：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Translators/Common/Translator.cs : 131</span><code><span class="k">protected override</span> <span class="k">void</span> <span class="f">OnRIL</span>(BehaviorInfo info)
+{
+    <span class="c">// 1. once 短路：只处理一次的 Translator 直接跳过</span>
+    <span class="k">if</span> (once &amp;&amp; rileds.Contains(info.actor)) <span class="k">return</span>;
+    <span class="c">// 2. 哈希去重</span>
+    <span class="k">var</span> result = CacheHashCode(info);
+    <span class="k">if</span> (<span class="k">false</span> == result.diffed) <span class="k">return</span>;
+    <span class="c">// 3. 记录已处理（仅 once）</span>
+    <span class="k">if</span> (once) rileds.Add(info.actor);
+
+    <span class="k">var</span> ril = RILCache.Ensure&lt;E&gt;();
+    ril.Ready(info.actor, result.hashcode);
+    OnRIL(info <span class="k">as</span> T, ril);
+    stage.rilsync.Send(ril);
+}</code></pre>
+
+<p>哈希的存储与比较：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Translators/Common/Translator.cs : 151</span><code><span class="k">protected</span> (<span class="t">bool</span> diffed, <span class="t">int</span> hashcode) <span class="f">CacheHashCode</span>(BehaviorInfo info)
+{
+    <span class="t">int</span> hashcode = OnCalcHashCode(info <span class="k">as</span> T);
+    <span class="k">if</span> (stage.rilsync.Query(info.actor, id).Equals(hashcode)) <span class="k">return</span> (<span class="k">false</span>, hashcode);
+    stage.rilsync.CacheHashCode(info.actor, id, hashcode);
+    <span class="k">return</span> (<span class="k">true</span>, hashcode);
+}</code></pre>
+
+<ul>
+  <li>key 是 <code>(actor, id)</code> 元组，<strong>每个 Actor 的每种 RIL 各存一份</strong>，<code>SpatialInfo</code> 与 <code>FacadeInfo</code> 互不干扰。</li>
+  <li>哈希在 <code>Send()</code> <strong>之前</strong>就写入（第 155 行 vs 第 143 行）。若 <code>OnRIL(info, ril)</code> 抛异常，哈希已更新但 RIL 没发出去，下一帧算出相同哈希会跳过，<strong>渲染层永久收不到这次更新</strong>。<code>OnRIL</code> 里新增可能返回 null 的查表逻辑时要留意。</li>
+</ul>
+
+<h4>once 开关</h4>
+
+<p><code>protected virtual bool once =&gt; false;</code>，为 <code>true</code> 时用 <code>rileds</code>（<code>HashSet&lt;ulong&gt;</code>）记录已推送的 Actor，后续帧在第一步就短路，<strong>连哈希都不算</strong>。Actor 被移除时 <code>RmvOnce(actor)</code> 会从 <code>rileds</code> 里删除，允许重建后再推一次。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Translator</th><th>once</th><th>每帧行为</th></tr></thead>
+<tbody>
+<tr><td><code>ActorTranslator</code></td><td><code>true</code></td><td>首帧算哈希推送，之后靠 <code>rileds</code> 直接短路</td></tr>
+<tr><td><code>StageTranslator</code></td><td><code>false</code></td><td>每帧算哈希，<code>frame / actorcnt / behaviorcnt</code> 变化才推</td></tr>
+<tr><td><code>SeatTranslator</code></td><td><code>false</code></td><td>每帧算哈希，座位表变化才推</td></tr>
+<tr><td><code>SpatialTranslator</code></td><td><code>false</code></td><td>每帧算哈希，位置 / 旋转 / 缩放变化才推</td></tr>
+<tr><td><code>TickerTranslator</code></td><td><code>false</code></td><td>每帧算哈希，timescale 变化才推</td></tr>
+<tr><td><code>FacadeModelTranslator</code></td><td><code>false</code></td><td>每帧算哈希，model 变化才推</td></tr>
+<tr><td><code>FacadeAnimationTranslator</code></td><td><code>false</code></td><td>每帧算哈希，动画状态变化才推</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="warn">
+<b>重要：</b><code>ActorTranslator</code> 的 <code>once = true</code> 意味着 <code>RIL_ACTOR</code>（全量 Actor 列表）<strong>只在首帧发送一次</strong>，后续 Actor 增减靠 <code>RIL_DIFF_ACTOR</code> 由 <code>ActorCross</code> 合并进那份列表，不会重发全量。因此 <code>ActorTranslator.OnCalcHashCode</code> 里遍历 <code>info.actors</code> 的哈希计算实际上只有首帧用得上。
+</div>
+
+<p>注册在 <code>RILSync.ManualTranslators()</code>，<strong>Info 类型 → Translator 列表</strong>（一个 Info 可挂多个 Translator）：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Behaviors/Stage/RILSync.cs : 47</span><code>Translator&lt;StageTranslator, StageInfo&gt;();
+Translator&lt;TickerTranslator, TickerInfo&gt;();
+Translator&lt;SeatTranslator, SeatInfo&gt;();
+Translator&lt;SpatialTranslator, SpatialInfo&gt;();
+Translator&lt;ActorTranslator, StageInfo&gt;();          <span class="c">// 与 StageTranslator 同挂 StageInfo</span>
+Translator&lt;FacadeModelTranslator, FacadeInfo&gt;();
+Translator&lt;FacadeAnimationTranslator, FacadeInfo&gt;();</code></pre>
+
+<h3 id="s3-2">RILSync：出口</h3>
+
+<p><code>OnEndTick()</code> → <code>Translate()</code>（每个逻辑帧末执行一次）：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Behaviors/Stage/RILSync.cs : 224</span><code>SendLossRIL();                                  <span class="c">// ① 先发 RIL_LOSS</span>
+<span class="k">foreach</span> (<span class="k">var</span> kv <span class="k">in</span> info.behaviorinfos)             <span class="c">// ② 逐类型、逐 Info 翻译（IRIL）</span>
+    ...translator.Translate(behaviorinfo)...
+
+<span class="k">while</span> (diffqueue.TryDequeue(<span class="k">out</span> <span class="k">var</span> diff)) { ... stage.ondiff?.Invoke(clone); }    <span class="c">// ③ DIFF</span>
+<span class="k">while</span> (eventqueue.TryDequeue(<span class="k">out</span> <span class="k">var</span> evt)) { ... stage.onevent?.Invoke(clone); }   <span class="c">// ④ EVENT</span></code></pre>
+
+<p>四个步骤的先后顺序是<strong>强约束</strong>：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>顺序</th><th>内容</th><th>为什么必须在这个位置</th></tr></thead>
+<tbody>
+<tr><td>①</td><td><code>SendLossRIL()</code></td><td><code>RIL_LOSS</code> 与普通 IRIL 共用 <code>rilqueue</code>，必须先入队才能保证渲染层「先删后建」</td></tr>
+<tr><td>②</td><td>遍历 <code>behaviorinfos</code> 翻译</td><td>产生全量 IRIL；<code>StageInfo</code> 排在最前，<code>RIL_ACTOR</code> 才能先于任何 Actor 级 RIL 到达</td></tr>
+<tr><td>③</td><td>排空 <code>diffqueue</code></td><td>diff 是增量的「补丁」，必须建立在已有 IRIL 之上</td></tr>
+<tr><td>④</td><td>排空 <code>eventqueue</code></td><td>事件通常依赖当前状态已就位</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">
+<b>关于并行：</b>此处早期用 <code>Parallel.ForEach</code>，现已改为普通 <code>foreach</code>。并行版的问题：入队顺序不确定，<code>RIL_LOSS</code> 与同 Actor 的 IRIL 可能乱序到达渲染层（导致 Agent 建了又被回收）；且 <code>Query</code> 未加锁，与 <code>CacheHashCode</code> 的写操作并发会破坏 <code>Dictionary</code>。改单线程后这两类风险消失，<code>hashcodedict</code> 上残留的 <code>lock (@lock)</code> 已成为冗余。
+</div>
+
+<div class="warn">
+<b>注意：</b><code>Translate()</code> 内的翻译逻辑不能碰 UnityEngine——它由逻辑帧（<code>FixedTickEvent</code>）驱动，与渲染帧无关。
+</div>
+
+<h3 id="s3-4">SendLossRIL：撤销指令</h3>
+
+<p>负责把逻辑层删掉的 <code>BehaviorInfo</code> 转成 <code>RIL_LOSS</code>，通知渲染层丢弃对应类型的渲染状态。</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Behaviors/Stage/RILSync.cs : 190</span><code><span class="k">private</span> <span class="k">void</span> <span class="f">SendLossRIL</span>()
+{
+    <span class="k">foreach</span> (<span class="k">var</span> rmvbehaviorinfo <span class="k">in</span> stage.cache.rmvbehaviorinfos)
+    {
+        <span class="k">if</span> (stage.SeekBehavior(rmvbehaviorinfo.actor, <span class="k">out</span> Tag tag, <span class="k">true</span>) &amp;&amp; tag.Get(TAG_DEFINE.ACTOR_TYPE, <span class="k">out</span> <span class="k">var</span> val))
+        {
+            <span class="k">if</span> (val == ACTOR_DEFINE.FLOW) <span class="k">continue</span>;      <span class="c">// 逻辑 Actor 无渲染状态</span>
+        }
+
+        <span class="k">if</span> (<span class="k">false</span> == translatordict.TryGetValue(rmvbehaviorinfo.GetType(), <span class="k">out</span> <span class="k">var</span> translators)) <span class="k">continue</span>;
+        <span class="k">foreach</span> (<span class="k">var</span> translator <span class="k">in</span> translators)
+        {
+            <span class="k">var</span> ril = RILCache.Ensure&lt;RIL_LOSS&gt;();
+            ril.Ready(rmvbehaviorinfo.actor, <span class="n">0</span>);
+            ril.loss = translator.id;
+
+            translator.RmvOnce(rmvbehaviorinfo.actor);        <span class="c">// 清 once 标记</span>
+            hashcodedict.Remove((rmvbehaviorinfo.actor, translator.id), <span class="k">out</span> _);  <span class="c">// 清哈希</span>
+            RmvHashCode(ril.actor, ril.loss);
+            Send(ril);
+        }
+    }
+}</code></pre>
+
+<p><strong>为什么需要它：</strong><code>Translate()</code> 只翻「当前存活」的 Info（<code>if (false == behaviorinfo.active) continue;</code>），Info 被删时渲染层收不到任何信号。全量快照只能表达「有什么」，没法表达「少了一个」，删除必须靠显式撤销指令。</p>
+
+<h4>渲染层如何响应</h4>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/View/Resolvers/Common/RILBucket.cs</span><code><span class="k">if</span> (ril.id == RIL_DEFINE.LOSS)
+{
+    <span class="c">// 1. 通知 Enchant（如 ModelEnchant 回收 ModelAgent）</span>
+    <span class="k">foreach</span> (<span class="k">var</span> enchant <span class="k">in</span> enchantdict[loss]) enchant.LossRIL(loss);
+    <span class="c">// 2. 删表</span>
+    iddict.Rmove(loss);                  <span class="c">// 按 RIL ID 删</span>
+    rildict.Remove(ril.GetType());       <span class="c">// 按类型删</span>
+    <span class="k">return</span>;
+}</code></pre>
+
+<h4>三个容易漏的点</h4>
+
+<ol>
+  <li><strong>一个 Info 可能发多条 LOSS</strong>：<code>FacadeInfo</code> 同时挂了 <code>FacadeModelTranslator</code> 和 <code>FacadeAnimationTranslator</code>，内层 <code>foreach (var translator in translators)</code> 每条只撤销一个 <code>translator.id</code>。</li>
+  <li><strong>必须清 <code>hashcodedict</code></strong>：不清的话，同一 Actor 重新添加同类型 Info 时，若新哈希与旧值相同会被判为「无变化」而跳过发送，渲染层永久缺失该状态。</li>
+  <li><strong>必须清 <code>rileds</code></strong>（通过 <code>translator.RmvOnce(actor)</code>）：否则 <code>once = true</code> 的 <code>ActorTranslator</code> 会因 Actor 仍在集合里而永远不再推送。</li>
+</ol>
+
+<h4>时序隐患</h4>
+
+<p><code>SendLossRIL()</code> 排在 <code>foreach</code> 之前，靠「先入队」保证渲染层先删后建。这个顺序是隐式约定——如果把它挪到翻译之后，<code>RIL_LOSS</code> 会晚于新 IRIL 入队，渲染层就会「先建后删」，把刚建好的状态又删掉。</p>
+
+<h3 id="s3-3">三种 RIL 形态</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>类型</th><th>语义</th><th>消费方</th></tr></thead>
+<tbody>
+<tr><td><code>IRIL</code></td><td>全量状态快照（幂等）</td><td><code>RILBucket.SetRIL</code> 存表 + 分发</td></tr>
+<tr><td><code>IRIL_DIFF</code></td><td>增量（<code>DIFF_NEW / DIFF_DEL</code>）</td><td><code>RILBucket.SetDiff</code> → <code>RILCross</code> 合并进已有 RIL</td></tr>
+<tr><td><code>IRIL_EVENT</code></td><td>一次性事件（伤害 / 治疗）</td><td><code>RILBucket.SetEvent</code> → <code>RILSalute</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<p><code>IRIL</code> 的 ID 常量在 <code>RIL_DEFINE</code>：<code>SPATIAL=5</code>、<code>ACTOR=8</code>、<code>FACADE_MODEL=10</code> …</p>
+
+<!-- ============ 4 ============ -->
+<h2 id="s4"><span class="num">04</span>渲染层（View）</h2>
+
+<h3 id="s4-1">World</h3>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/View/Core/World.cs</span><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="t">World</span> : Comp
+{
+    <span class="k">public</span> <span class="t">ulong</span> sa =&gt; <span class="t">ulong</span>.MaxValue;   <span class="c">// 与 Stage 一致</span>
+    <span class="k">public</span> <span class="t">ulong</span> self =&gt; rilbucket.SeekRIL&lt;RIL_SEAT&gt;(sa).seatdict[selfseat];  <span class="c">// 我的 Actor</span>
+}</code></pre>
+
+<p><code>OnCreate</code> 顺序（<strong>顺序不能乱</strong>）：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/View/Core/World.cs : 64</span><code>eventor   = AddComp&lt;EventorComp&gt;(); eventor.Create();
+ticker    = AddComp&lt;TickerComp&gt;();  ticker.Create();
+rilbucket = AddComp&lt;RILBucket&gt;().Initialize(<span class="k">this</span>); rilbucket.Create();
+Batches();
+agentdict = ...; snapshotagents = ...;
+ticker.eventor.Listen&lt;TickEvent&gt;(OnTick);</code></pre>
+
+<ul>
+  <li><code>agentdict</code>：<code>Actor → (Type → Agent)</code>，是所有渲染对象的注册表。</li>
+  <li><code>OnTick</code>：按 <code>RIL_TICKER</code> 取出每个 Actor 的 timescale，收集存活 Agent 后统一 <code>Chase(tick, timescale)</code>。<strong>先收集再处理</strong>，因为 <code>Chase</code> 里可能增删 agentdict。</li>
+</ul>
+
+<h3 id="s4-2">RILBucket：渲染层的唯一数据源</h3>
+
+<p>三张表 + 三类处理器：</p>
+
+<pre><span class="fname">RILBucket 内部结构</span><code>rildict     : Dictionary&lt;ulong, Dictionary&lt;Type, IRIL&gt;&gt;   <span class="c">// 按 Actor + 类型取状态</span>
+rilidsdict  : Dictionary&lt;ulong, Dictionary&lt;ushort, IRIL&gt;&gt; <span class="c">// 按 Actor + RIL ID 取状态</span>
+crossdict   : ushort → RILCross        <span class="c">// DIFF 合并</span>
+salutedict  : ushort → RILSalute       <span class="c">// EVENT 处理</span>
+enchantdict : ushort → List&lt;AgentEnchant&gt; <span class="c">// 根据 RIL 增删 Agent</span></code></pre>
+
+<p><code>SetRIL</code> 的心跳逻辑：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/View/Resolvers/Common/RILBucket.cs : 330</span><code><span class="k">public</span> <span class="k">void</span> <span class="f">SetRIL</span>(IRIL ril)
+{
+    <span class="k">if</span> (ril.id == RIL_DEFINE.LOSS) { ...LossRIL... <span class="k">return</span>; }
+    <span class="c">// 取出/创建该 Actor 的两张表</span>
+    <span class="k">if</span> (dict.TryGetValue(type, <span class="k">out</span> <span class="k">var</span> oldril))
+    {
+        <span class="k">if</span> (ril.hashcode.Equals(oldril.hashcode)) { <span class="c">/* 丢弃重复 */</span> <span class="k">return</span>; }
+        oldril.Reset(); RILCache.Set(oldril); dict.Remove(type); iddict.Remove(ril.id);
+    }
+    dict.Add(type, ril); iddict.Add(ril.id, ril);
+    RILDispatch(ril);
+}</code></pre>
+
+<div class="tip">
+<b>关键：</b><code>RILDispatch</code> <strong>先 Enchant 后 Agent</strong>。顺序很重要——Enchant 负责“创建 ModelAgent”，之后 Agent 才有机会收到同一条 RIL。
+</div>
+
+<h4>队列消费顺序</h4>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Director/LocalDirector.cs — OnTick</span><code><span class="k">while</span> (rilqueue.TryDequeue(<span class="k">out</span> <span class="k">var</span> ril))   rilbucket.SetRIL(ril);    <span class="c">// ① 全量 + LOSS（同一队列 FIFO）</span>
+<span class="k">while</span> (diffqueue.TryDequeue(<span class="k">out</span> <span class="k">var</span> diff)) rilbucket.SetDiff(diff);  <span class="c">// ② 增量补丁</span>
+<span class="k">while</span> (eventqueue.TryDequeue(<span class="k">out</span> <span class="k">var</span> evt))  rilbucket.SetEvent(evt);  <span class="c">// ③ 一次性事件</span></code></pre>
+
+<p><code>RIL_LOSS</code> 与普通 <code>IRIL</code> 共用 <code>rilqueue</code>，单线程入队 + FIFO 出队 ⇒ 渲染层的删除/重建顺序与逻辑层一致。这个正确性依赖两点：<code>SendLossRIL()</code> 在 <code>Translate()</code> 里先于翻译执行，以及翻译本身是单线程的。</p>
+
+<div class="warn">
+<b>脆弱点：</b><code>RIL_ACTOR</code> 必须先于任何 Actor 级 RIL 到达渲染层，目前靠「<code>StageInfo</code> 在 <code>behaviorinfos</code> 中排在第一个」这一结构约定，代码里没有断言。调整 <code>ManualTranslators()</code> 顺序或 <code>Stage</code> 加 Behavior 顺序时要小心。
+</div>
+
+<h4>DIFF 的时序</h4>
+
+<p>diff 只有两个产生点，都在 Tick 之外：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>调用点</th><th>方法</th><th>token</th><th>时机</th></tr></thead>
+<tbody>
+<tr><td><code>Stage.cs:564</code></td><td><code>GenActor()</code>（<code>Spawn()</code> 内）</td><td><code>DIFF_NEW</code></td><td>业务主动 <code>Spawn</code></td></tr>
+<tr><td><code>Stage.cs:526</code></td><td><code>ActorToRecycle()</code></td><td><code>DIFF_DEL</code></td><td><code>Stage.Step()</code> 末尾 <code>Recycle()</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>因此 <code>Recycle()</code> 产生的 <code>DIFF_DEL</code> 会留到<strong>下一帧</strong>的 <code>Translate()</code> 才被消费，比同一轮的 <code>RIL_LOSS</code> 晚一拍。<code>ActorCross</code> 的删除是幂等的（查表后 <code>Remove</code>），不会出错，只是多一次空转。</p>
+
+<h3 id="s4-3">Enchant / Cross / Salute</h3>
+
+<pre><span class="fname">三种 RIL 消费者</span><code><span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="t">AgentEnchant</span> : Comp   <span class="c">// 根据某个 RIL 决定 Agent 的生死</span>
+<span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="t">RILCross</span>     : Comp   <span class="c">// 把 DIFF 合并进已有的 IRIL</span>
+<span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="t">RILSalute</span>    : Comp   <span class="c">// 处理一次性事件</span></code></pre>
+
+<p>已注册的两个 Enchant（<code>RILBucket.Enchants()</code>）：</p>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/View/Resolvers/Common/RILBucket.cs : 135</span><code>Enchant&lt;NodeEnchant&gt;(RIL_DEFINE.SPATIAL);
+Enchant&lt;ModelEnchant&gt;(RIL_DEFINE.FACADE_MODEL);</code></pre>
+
+<ul>
+  <li><code>NodeEnchant</code>：收到 <code>RIL_SPATIAL</code> 就 <code>EnsureAgent&lt;NodeAgent&gt;</code>（无条件）</li>
+  <li><code>ModelEnchant</code>：<code>model &gt; 0</code> 才 <code>EnsureAgent&lt;ModelAgent&gt;</code>，否则回收；<code>RIL_LOSS</code> 时回收</li>
+</ul>
+
+<div class="warn">
+<b>踩坑记录：</b>这两条规则的差异就是“有 Node 没模型”的根因——<code>FacadeInfo.model</code> 默认 0。
+</div>
+
+<p><code>ActorCross</code> 是 <code>RIL_ACTOR</code> 的合并器：<code>DIFF_DEL</code> → 递归 <code>LossRIL(actor)</code> + <code>RmvAgent(actor)</code> 再从业列表里删除；<code>DIFF_NEW</code> → 加入列表。</p>
+
+<h3 id="s4-4">Agent：渲染实体的生命周期</h3>
+
+<pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/View/Core/Agent.cs</span><code><span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="t">Agent</span>
+{
+    <span class="k">public</span> ChaseStatus status;                       <span class="c">// Chasing / Arrived</span>
+    <span class="k">public</span> <span class="k">void</span> DoRIL(IRIL ril);                     <span class="c">// 只处理自己 Watch 过的 RIL 类型</span>
+    <span class="k">public</span> <span class="k">void</span> Chase(<span class="t">float</span> tick, <span class="t">float</span> timescale);   <span class="c">// 追赶 → OnArrived 后停表</span>
+}</code></pre>
+
+<ul>
+  <li><code>Ready()</code> → <code>OnReady()</code> + <code>Flash()</code>（Flash = 立即对齐所有 RIL，不插值）</li>
+  <li><code>WatchRIL&lt;T&gt;(Action&lt;T&gt;)</code> 是 Agent 的订阅方式</li>
+  <li><strong><code>Arrived</code> 后 <code>World.OnTick</code> 不再调用它</strong>，所以 <code>NodeAgent.OnRILSpatial</code> 里要 <code>ChangeStatus(Chasing)</code> 重新唤醒</li>
+</ul>
+
+<p><code>NodeAgent</code>（位置 / 旋转 / 缩放）与 <code>ModelAgent</code>（模型资源）是<strong>两个独立 Agent</strong>，挂在同一个 Actor 上；<code>ModelAgent</code> 会把模型挂到 <code>NodeAgent.go</code> 下面。这个拆分是刻意的：节点跟随逻辑帧，模型是纯视觉资源，可以独立于位置更新。</p>
+
+<!-- ============ 5 ============ -->
+<h2 id="s5"><span class="num">05</span>业务：角色创建全链路</h2>
+
+<p>以 <code>WECS_0.Start()</code> 里 18 个玩家为例，从点击 Play 到屏幕上出现球体，完整链路如下。</p>
+
+<ol class="steps">
+
+<li>
+  <span class="title">准备数据</span>
+  <span class="meta">WECS_0.cs : 17</span>
+  <pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Test/WECS_0.cs : 17</span><code>List&lt;PlayerData&gt; players = <span class="k">new</span>() { <span class="k">new</span> PlayerData { seat = 1, hero = 100001,
+    position = <span class="k">new</span> IntVector3(-2000, 0, 5000), euler = ..., scale = 1000 }, ... };
+BuildData data = <span class="k">new</span> BuildData { id = 10086, seat = 1,
+    sdata = <span class="k">new</span> StageData { seed = 19491001, players = players.ToArray() } };</code></pre>
+  <p>坐标单位是 <strong>1000 = 1 米</strong>（<code>IntVector3 → FPVector3</code> 走 <code>* FP.EN3</code>）。</p>
+</li>
+
+<li>
+  <span class="title">创建游戏</span>
+  <span class="meta">BaseDirector.CreateGame : 44</span>
+  <pre><span class="fname">调用</span><code>director.CreateGame(data, <span class="k">false</span>);</code></pre>
+  <p><code>BaseDirector.CreateGame</code> 里 <code>world.Create()</code> 先于 <code>OnCreateGame()</code>，保证 <code>World</code>（含 <code>RILBucket</code>、Enchant、Agent 表）已就绪；然后 <code>LocalDirector.OnCreateGame</code> 构造 <code>Stage</code> 并把三个回调挂上：</p>
+  <pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Director/LocalDirector.cs : 57</span><code>stage = <span class="k">new</span> Stage().Initialize(data.sdata);
+stage.onril   += OnRIL;
+stage.ondiff  += OnDiff;
+stage.onevent += OnEvent;</code></pre>
+  <div class="note">回调必须在 <code>Stage.Initialize()</code> <strong>之后</strong>挂——<code>Initialize</code> 里 <code>Building()</code> 产生的差异指令不需要推送给渲染层，真正的第一帧全量同步由第一个 <code>EndTick</code> 的 <code>Translate()</code> 完成。</div>
+</li>
+
+<li>
+  <span class="title">逻辑层生成英雄</span>
+  <span class="meta">Stage.Building : 216</span>
+  <pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Core/Stage.cs : 216</span><code><span class="k">var</span> hero = Spawn(<span class="k">new</span> HeroPrefabInfo
+{
+    hero = player.hero,
+    spatial = <span class="k">new</span>() { position = ..., euler = ..., scale = player.scale * cfg.int2fp }
+});
+AddBehavior&lt;Gamepad&gt;(hero);
+seat.Sitdown(player.seat, hero);</code></pre>
+  <p><code>Spawn</code> → <code>GenActor()</code> → <code>AddActor()</code>（挂默认 <code>Tag</code>）+ <code>ActorAddEvent</code> + <code>DiffActor(DIFF_NEW)</code> → <code>prefab.Processing()</code>。</p>
+  <p><code>Prefab&lt;T&gt;.OnProcessing</code> 先写 <code>TAG.ACTOR_TYPE = HERO</code>，再走业务：</p>
+  <pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Logic/Prefabs/HeroPrefab.cs : 30</span><code><span class="k">var</span> facade = stage.AddBehavior&lt;Facade&gt;(actor);
+facade.SetModel(info.hero);          <span class="c">// 模型 ID，必须 &gt; 0</span>
+stage.AddBehaviorInfo&lt;TickerInfo&gt;(actor);
+<span class="k">var</span> spatial = stage.AddBehaviorInfo&lt;SpatialInfo&gt;(actor);
+spatial.position = ...; spatial.euler = ...; spatial.scale = ...;</code></pre>
+  <p>此刻逻辑层状态：</p>
+  <div class="table-wrap">
+  <table>
+  <thead><tr><th>Actor</th><th>Behavior</th><th>BehaviorInfo</th></tr></thead>
+  <tbody>
+  <tr><td><code>1..18</code></td><td><code>Tag(HERO)</code> <code>Facade</code> <code>Gamepad</code></td><td><code>FacadeInfo{model=100001}</code> <code>SpatialInfo{pos/euler/scale}</code> <code>TickerInfo</code> <code>GamepadInfo</code></td></tr>
+  <tr><td><code>Stage(sa)</code></td><td><code>Tag/Config/Eventor/Seat/Random/RILSync</code></td><td><code>StageInfo</code>(actors 列表) <code>SeatInfo</code>(seat→actor)</td></tr>
+  </tbody>
+  </table>
+  </div>
+</li>
+
+<li>
+  <span class="title">逻辑帧驱动</span>
+  <span class="meta">WECS_0.Update</span>
+  <pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Test/WECS_0.cs</span><code>engine.ticker.Tick(Time.deltaTime);
+engine.ticker.FixedTick(Time.fixedDeltaTime);   <span class="c">// 必须有，否则 FixedTickEvent 不派发</span></code></pre>
+  <p><code>TickerComp.FixedTick</code> 按固定步长派发 <code>FixedTickEvent</code> → <code>BaseDirector.OnFixedTick</code> → <code>LocalDirector.OnStep</code> → <code>Stage.Step()</code>：</p>
+  <ul>
+    <li><code>frame++</code></li>
+    <li><code>Gamepad.Tick</code>（清 release 等）</li>
+    <li><code>Facade.Tick</code>（动画时间累加）</li>
+    <li><code>RILSync.Tick</code>（空实现）</li>
+    <li>帧末 <code>RILSync.EndTick</code> → <code>Translate()</code> ← <strong>关键</strong></li>
+  </ul>
+</li>
+
+<li>
+  <span class="title">逻辑 → RIL</span>
+  <span class="meta">RILSync.Translate</span>
+  <p><code>Translate()</code> 对每个 BehaviorInfo 跑一遍 Translator，典型产出：</p>
+  <div class="table-wrap">
+  <table>
+  <thead><tr><th>Info</th><th>Translator</th><th>RIL</th><th>内容</th></tr></thead>
+  <tbody>
+  <tr><td><code>StageInfo</code></td><td><code>StageTranslator</code></td><td><code>RIL_STAGE</code></td><td>frame / actorcnt / behaviorcnt</td></tr>
+  <tr><td><code>StageInfo</code></td><td><code>ActorTranslator</code>(once)</td><td><code>RIL_ACTOR</code></td><td>全量 Actor 列表</td></tr>
+  <tr><td><code>SeatInfo</code></td><td><code>SeatTranslator</code></td><td><code>RIL_SEAT</code></td><td>seat → actor</td></tr>
+  <tr><td><code>SpatialInfo</code></td><td><code>SpatialTranslator</code></td><td><code>RIL_SPATIAL</code></td><td>position / euler / scale</td></tr>
+  <tr><td><code>FacadeInfo</code></td><td><code>FacadeModelTranslator</code></td><td><code>RIL_FACADE_MODEL</code></td><td>model</td></tr>
+  <tr><td><code>FacadeInfo</code></td><td><code>FacadeAnimationTranslator</code></td><td><code>RIL_FACADE_ANIMATION</code></td><td>animstate / animname</td></tr>
+  <tr><td><code>TickerInfo</code></td><td><code>TickerTranslator</code></td><td><code>RIL_TICKER</code></td><td>timescale</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <p>每个 RIL 都带 <code>actor + hashcode</code>。哈希没变 → 不发送。</p>
+</li>
+
+<li>
+  <span class="title">跨线程交给渲染层</span>
+  <span class="meta">LocalDirector.OnRIL</span>
+  <pre><span class="fname">LocalDirector.cs</span><code><span class="c">// 只入队，不碰 Unity 对象</span>
+<span class="k">private</span> <span class="k">void</span> <span class="f">OnRIL</span>(IRIL ril) { <span class="k">lock</span> (@lock) rilqueue.Enqueue(ril); }</code></pre>
+  <p><code>Stage.onril</code> 在逻辑帧（可能是子线程）被调用，所以 Director 层只做 <code>lock + Enqueue</code>；真正的消费在 Unity 主线程的 <code>TickEvent</code> 上。</p>
+</li>
+
+<li>
+  <span class="title">World 消费 RIL</span>
+  <span class="meta">BaseDirector.OnTick</span>
+  <pre><span class="fname">BaseDirector.cs</span><code><span class="k">if</span> (<span class="k">false</span> == rendering) <span class="k">return</span>;
+OnTick();                       <span class="c">// LocalDirector: 排空三个队列 → rilbucket</span>
+world.ticker.Tick(e.tick);      <span class="c">// 驱动 Agent 的 Chase</span></code></pre>
+  <p><code>LocalDirector.OnTick</code> 依次 <code>SetRIL</code> / <code>SetDiff</code> / <code>SetEvent</code>。以一条 <code>RIL_SPATIAL</code> 为例：</p>
+  <ol>
+    <li><code>SetRIL</code>：哈希相同则丢弃；不同则替换旧 RIL，<code>RILDispatch</code></li>
+    <li><code>RILDispatch</code>：
+      <br>→ <code>enchantdict[SPATIAL]</code> → <code>NodeEnchant.OnRIL</code> → <code>world.EnsureAgent&lt;NodeAgent&gt;(actor)</code>
+      → <code>AddAgent</code> → <code>agent.Ready()</code> → <code>NodeAgent.OnReady()</code>（拿到 / 新建 <code>GameObject</code>，<code>WatchRIL&lt;RIL_SPATIAL&gt;</code>）→ <code>Flash()</code> 立即对齐位置
+      <br>→ <code>world.GetAgents(actor)</code> 里已有的 Agent 挨个 <code>DoRIL(ril)</code></li>
+  </ol>
+  <p><code>RIL_FACADE_MODEL</code> 同理：<code>ModelEnchant</code> 判断 <code>model &gt; 0</code> → <code>EnsureAgent&lt;ModelAgent&gt;</code>。</p>
+</li>
+
+<li>
+  <span class="title">Agent 追帧 → GameObject</span>
+  <span class="meta">Agent.Chase</span>
+  <pre><span class="fname">Agent.Chase(tick, timescale)</span><code>OnChase(tick, timescale);          <span class="c">// ModelAgent: Load() 按需加载模型</span>
+<span class="k">if</span> (OnArrived()) ChangeStatus(ChaseStatus.Arrived);   <span class="c">// NodeAgent: 到位后停表</span></code></pre>
+  <p><code>NodeAgent.OnArrived()</code> 第一次会直接写 <code>position / rotation / localScale</code> 并 <code>SetActive(true)</code>；<code>ModelAgent.Load()</code> 把 <code>Sphere</code> 挂到 <code>NodeAgent.go</code> 下。</p>
+  <p>至此屏幕出现模型，并进入稳态：位置不变 → 哈希不变 → 不再产生 RIL → <code>Arrived</code> → 不再追帧。</p>
+</li>
+
+</ol>
+
+<!-- ============ 6 ============ -->
+<h2 id="s6"><span class="num">06</span>排查清单 &amp; 扩展步骤</h2>
+
+<h3>常见问题定位</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>现象</th><th>优先检查</th></tr></thead>
+<tbody>
+<tr><td><code>NullReferenceException</code> 在 <code>Stage.xxx</code></td><td><code>Stage.Behaviors()</code> 是否漏挂对应 Behavior</td></tr>
+<tr><td>完全没有 Agent / Node</td><td><code>World.OnCreate</code> 是否 <code>AddComp&lt;RILBucket&gt;()</code>、<code>rilbucket.Create()</code></td></tr>
+<tr><td>有 Node 没模型</td><td><code>FacadeInfo.model</code> 是否 &gt; 0；<code>RILBucket.Enchants()</code> 是否注册 <code>ModelEnchant</code></td></tr>
+<tr><td>逻辑帧不推进</td><td><code>Update</code> 里是否调了 <code>engine.ticker.FixedTick</code>；<code>TICK_DEFINE.TICK_TYPE_LIST</code> 是否登记</td></tr>
+<tr><td>位置变了但画面不动</td><td>Agent 是否停在 <code>Arrived</code>；<code>SpatialTranslator</code> 的 hash 是否覆盖了变更字段</td></tr>
+<tr><td>新 Behavior 不生效</td><td>是否登记进 <code>TICK_TYPE_LIST</code>；Info 是否在 <code>ManualTranslators()</code> 里注册了 Translator</td></tr>
+<tr><td>对象在别处不消失</td><td>是否漏 <code>RIL_LOSS</code>（<code>BehaviorInfo</code> 移除由 <code>SendLossRIL</code> 自动处理，手写的缓存除外）</td></tr>
+<tr><td>场景里散落根节点</td><td><code>NodeAgent / ModelAgent</code> 静态构造里 <code>GameObject.Find("Gameplay")</code> 为 null</td></tr>
+<tr><td>改动后渲染层收不到更新</td><td>新字段是否纳入 <code>OnCalcHashCode</code>；<code>BehaviorInfo</code> 被移除重加后 <code>hashcodedict</code> 是否清过</td></tr>
+<tr><td>Actor 重建后再没推送过 <code>RIL_ACTOR</code></td><td><code>once = true</code> 的 Translator 是否漏了 <code>RmvOnce(actor)</code>（该调用在 <code>SendLossRIL</code> 里）</td></tr>
+<tr><td>初始化阶段 Actor 相关 diff 全丢</td><td>这是 <code>Diff()</code> 里 <code>info.frame &lt;= 1</code> 的有意拦截，正常行为</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>新增一个渲染字段的完整步骤</h3>
+
+<ol>
+  <li><code>XxxInfo</code> 加字段，更新 <code>OnReady / OnReset / OnClone</code></li>
+  <li><code>XxxTranslator.OnCalcHashCode</code> 把新字段纳入哈希（否则变了也不发）</li>
+  <li><code>XxxTranslator.OnRIL(info, ril)</code> 填充 RIL 字段 + RIL 的 <code>OnReady / OnReset</code> 初始化</li>
+  <li>Agent 里 <code>WatchRIL&lt;Xxx&gt;</code> 或对应 Enchant 里消费</li>
+  <li>若涉及新 RIL 类型：<code>RIL_DEFINE</code> 加 ID → <code>RILSync.ManualTranslators()</code> 注册 → 需要增删 Agent 则 <code>RILBucket.Enchants()</code> 注册 Enchant</li>
+</ol>
+
+<h3>关键文件索引</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>层</th><th>文件</th><th>作用</th></tr></thead>
+<tbody>
+<tr><td rowspan="3">入口</td><td><code>Test/WECS_0.cs</code></td><td>测试驱动，构造数据 + 驱动 Tick</td></tr>
+<tr><td><code>Director/Common/BaseDirector.cs</code></td><td>游戏生命周期、Tick 派发、rendering 开关</td></tr>
+<tr><td><code>Director/LocalDirector.cs</code></td><td>本地单机实现，RIL 队列消费</td></tr>
+<tr><td rowspan="4">逻辑</td><td><code>Logic/Core/Stage.cs</code></td><td>逻辑世界，Actor 管理、Step</td></tr>
+<tr><td><code>Logic/Core/Behavior.cs</code></td><td>Behavior 基类</td></tr>
+<tr><td><code>Logic/Behaviors/Stage/RILSync.cs</code></td><td>逻辑 → 渲染出口</td></tr>
+<tr><td><code>Logic/Prefabs/HeroPrefab.cs</code></td><td>英雄生成模板</td></tr>
+<tr><td rowspan="4">渲染</td><td><code>View/Core/World.cs</code></td><td>渲染世界，Agent 注册表</td></tr>
+<tr><td><code>View/Resolvers/Common/RILBucket.cs</code></td><td>RIL 存储 + 分发</td></tr>
+<tr><td><code>View/Resolvers/Enchants/*</code></td><td>Node / Model 的创建与回收</td></tr>
+<tr><td><code>View/Agents/*</code></td><td>渲染实体，驱动 GameObject</td></tr>
+</tbody>
+</table>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav a[href^="#"]'));
+  var targets = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); });
+
+  function onScroll(){
+    var y = window.scrollY + 120;
+    var idx = -1;
+    for (var i = 0; i < targets.length; i++){
+      if (targets[i] && targets[i].offsetTop <= y) idx = i;
+    }
+    links.forEach(function(a){ a.classList.remove('active'); });
+    if (idx >= 0) {
+      links[idx].classList.add('active');
+      // 同时高亮所属的父级章节
+      var parentLi = links[idx].closest('nav > ol > li');
+      if (parentLi) {
+        var topA = parentLi.querySelector(':scope > a');
+        if (topA) topA.classList.add('active');
+      }
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

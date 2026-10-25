@@ -89,7 +89,7 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         protected virtual bool once => false;
         /// <summary>
-        /// 处理了的 RIL ActorID 列表
+        /// 处理了的 RIL Actor 列表
         /// </summary>
         private HashSet<ulong> rileds { get; set; }
 
@@ -134,7 +134,7 @@ namespace GameLogic.Gameplay.Logic
             if (once && rileds.Contains(info.actor)) return;
             var result = CacheHashCode(info);
             if (false == result.diffed) return;
-            // 记录已经处理过 RIL 的 ActorID
+            // 记录已经处理过 RIL 的 Actor
             if (once) rileds.Add(info.actor);
 
             var ril = RILCache.Ensure<E>();

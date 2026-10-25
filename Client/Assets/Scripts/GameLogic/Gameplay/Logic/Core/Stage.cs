@@ -147,7 +147,7 @@ namespace GameLogic.Gameplay.Logic
             // 添加预制创建器
             Prefabs();
             // 构建初始化 Stage
-            Building();
+            Builds();
 
             return this;
         }
@@ -213,7 +213,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 构建初始化 Stage
         /// </summary>
-        public void Building()
+        public void Builds()
         {
             foreach (var player in data.players)
             {
@@ -329,7 +329,7 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="diff">差异渲染指令</param>
         public void Diff(IRIL_DIFF diff)
         {
-            if (0 == info.frame || 1 == frame) return;
+            if (info.frame <= 1) return;
             if (null == rilsync) return;
             rilsync.Send(diff);
         }
