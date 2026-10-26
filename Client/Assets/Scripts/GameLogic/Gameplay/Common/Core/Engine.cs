@@ -18,6 +18,10 @@ namespace GameLogic.Gameplay.Common
         /// 引擎 Tick
         /// </summary>
         public TickerKit ticker { get; private set; }
+        /// <summary>
+        /// U3D
+        /// </summary>
+        public U3DKit u3dkit { get; private set; }
 
         protected override void OnCreate()
         {
