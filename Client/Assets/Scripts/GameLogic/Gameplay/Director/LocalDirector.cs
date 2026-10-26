@@ -149,9 +149,10 @@ namespace GameLogic.Gameplay.Director
             //    ObjectPool.Set(command);
             //}
 
-            //var joystick = world.input.GetInput(INPUT_DEFINE.JOYSTICK);
+            var joystick = engine.u3dkit.input.GetInput(INPUT_DEFINE.JOYSTICK);
+            stage.SetInput(world.selfseat, INPUT_DEFINE.JOYSTICK, joystick.press, joystick.dire);
+
             //var ba = world.input.GetInput(INPUT_DEFINE.BA);
-            //stage.SetInput(world.selfseat, INPUT_DEFINE.JOYSTICK, joystick.press, joystick.dire);
             //stage.SetInput(world.selfseat, INPUT_DEFINE.BA, ba.press, ba.dire);
 
             stage.Step();

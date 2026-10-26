@@ -1,23 +1,28 @@
-using GameLogic.Gameplay.Common;
 using GameLogic.Gameplay.Logic;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic.Gameplay.View
+namespace GameLogic.Gameplay.Common
 {
     /// <summary>
-    /// 输入系统
+    /// 输入系统, 负责把键盘/鼠标设备(Keyboard)的状态采集为逻辑层可用的输入数据
+    /// 自身创建并持有 Keyboard, 每个 Tick 刷新一次 inputdict / cmddict
     /// </summary>
-    public class InputSystem : Comp
+    public class InputKit : Comp
     {
         /// <summary>
-        /// 渲染世界
+        /// 键盘/鼠标设备
         /// </summary>
-        private World world { get; set; }
+        public Keyboard keyboard { get; private set; }
+
         /// <summary>
         /// 输入数据集合
         /// </summary>
         private Dictionary<ushort, (bool press, IntVector2 dire)> inputdict { get; set; }
+        /// <summary>
+        /// 输入寻址映射, 按键类型 -> 设备状态读取器
+        /// </summary>
+        private Dictionary<ushort, System.Func<Vector2>> keydict { get; set; }
         /// <summary>
         /// 输入指令队列
         /// </summary>
@@ -26,17 +31,27 @@ namespace GameLogic.Gameplay.View
         protected override void OnCreate()
         {
             base.OnCreate();
-            world.ticker.eventor.Listen<TickEvent>(OnTick);
+
+            keyboard = AddComp<Keyboard>();
+            keyboard.Create();
+
             inputdict = ObjectPool.Ensure<Dictionary<ushort, (bool press, IntVector2 dire)>>();
+            keydict = ObjectPool.Ensure<Dictionary<ushort, System.Func<Vector2>>>();
             cmdqueue = ObjectPool.Ensure<Queue<Command>>();
+
+            Bind();
+            engine.ticker.eventor.Listen<TickEvent>(OnTick);
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            world.ticker.eventor.UnListen<TickEvent>(OnTick);
+            engine.ticker.eventor.UnListen<TickEvent>(OnTick);
+
             inputdict.Clear();
             ObjectPool.Set(inputdict);
+            keydict.Clear();
+            ObjectPool.Set(keydict);
 
             foreach (var command in cmdqueue)
             {
@@ -48,15 +63,16 @@ namespace GameLogic.Gameplay.View
         }
 
         /// <summary>
-        /// 初始化输入系统
+        /// 绑定按键类型与设备读取器
         /// </summary>
-        /// <param name="world">世界</param>
-        /// <returns>输入系统</returns>
-        public InputSystem Initialize(World world)
+        private void Bind()
         {
-            this.world = world;
-
-            return this;
+            keydict.Clear();
+            keydict.Add(INPUT_DEFINE.JOYSTICK, () => keyboard.joystick);
+            //keydict.Add(INPUT_DEFINE.BA, () => new Vector2(keyboard.leftdown ? 1 : 0, 0));
+            //keydict.Add(INPUT_DEFINE.BB, () => new Vector2(keyboard.right ? 1 : 0, 0));
+            //keydict.Add(INPUT_DEFINE.BC, () => new Vector2(keyboard.GetKey(UnityEngine.InputSystem.Key.Q) ? 1 : 0, 0));
+            //keydict.Add(INPUT_DEFINE.BD, () => new Vector2(keyboard.GetKey(UnityEngine.InputSystem.Key.E) ? 1 : 0, 0));
         }
 
         /// <summary>
@@ -110,12 +126,12 @@ namespace GameLogic.Gameplay.View
 
         private void OnTick(TickEvent e)
         {
-            if (CursorLockMode.Locked != Cursor.lockState) return;
-
-            var joystickdire = engine.u3dkit.keyboard.Player.Move.ReadValue<Vector2>();
-
-
-            SetInput(INPUT_DEFINE.JOYSTICK, Vector2.zero != joystickdire, new IntVector2((int)(joystickdire.x * ConfigKit.Float2Int), (int)(joystickdire.y * ConfigKit.Float2Int)));
+            foreach (var kv in keydict)
+            {
+                var dire = kv.Value.Invoke();
+                Debug.Log($"InputKit OnTick: {kv.Key} => {dire}");
+                SetInput(kv.Key, Vector2.zero != dire, new IntVector2((int)(dire.x * ConfigKit.Float2Int), (int)(dire.y * ConfigKit.Float2Int)));
+            }
         }
     }
 }

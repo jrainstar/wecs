@@ -26,6 +26,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
+
             eventor = AddComp<EventorKit>();
             eventor.Create();
 
@@ -36,6 +37,9 @@ namespace GameLogic.Gameplay.Common
             ticker = AddComp<TickerKit>();
             ticker.Create();
 
+
+            u3dkit = AddComp<U3DKit>();
+            u3dkit.Create();
         }
 
         /// <summary>

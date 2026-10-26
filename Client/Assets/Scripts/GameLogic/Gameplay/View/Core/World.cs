@@ -56,6 +56,7 @@ namespace GameLogic.Gameplay.View
         /// Agent 集合
         /// </summary>
         private Dictionary<ulong, Dictionary<Type, Agent>> agentdict { get; set; }
+
         /// <summary>
         /// 快照之后产生的 Agent
         /// </summary>

@@ -9,14 +9,14 @@ namespace GameLogic.Gameplay.Common
     /// </summary>
     public class U3DKit : Comp
     {
-        public Keyboard keyboard { get; private set; }
+        public InputKit input { get; private set; }
 
         protected override void OnCreate()
         {
             base.OnCreate();
 
-            keyboard = AddComp<Keyboard>();
-            keyboard.Create();
+            input = AddComp<InputKit>();
+            input.Create();
         }
 
         protected override void OnDestroy()
