@@ -1,5 +1,4 @@
-using GameLogic.Gameplay.Logic;
-
+using GameLogic.Gameplay.Common;
 
 namespace GameLogic.Gameplay.Logic
 {

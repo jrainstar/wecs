@@ -29,6 +29,8 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnProcessing(ulong actor, HeroPrefabInfo info)
         {
+            stage.AddBehavior<Movement>(actor);
+
             var facade = stage.AddBehavior<Facade>(actor);
             // 模型 ID 必须大于 0, 否则渲染层 (ModelEnchant) 会认为没有模型而不创建 ModelAgent
             facade.SetModel(info.hero);

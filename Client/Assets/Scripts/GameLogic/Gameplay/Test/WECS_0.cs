@@ -34,6 +34,7 @@ public class WECS_0 : MonoBehaviour
                     },
                 };
         // 位置单位: 1000 = 1 米, 相机在 (0,1,-10), 所以摆放在相机前方 5 米处
+        // 间距放大 10 倍: 每格 10000 (10 米)
         ulong seat = 3;
         for (int i = 0; i < 4; i++)
         {
@@ -43,7 +44,7 @@ public class WECS_0 : MonoBehaviour
                 {
                     seat = seat,
                     hero = 100001,
-                    position = new IntVector3(-1500 + 1000 * i, 0, 5000 + 1000 * j),
+                    position = new IntVector3(-15000 + 10000 * i, 0, 5000 + 10000 * j),
                     euler = new IntVector3(0, 0, 0),
                     scale = 1000,
                 });
@@ -81,6 +82,11 @@ public class WECS_0 : MonoBehaviour
         // 渲染帧驱动, 同时必须驱动 FixedTick, 否则 FixedTickEvent 永远不会派发,
         // BaseDirector.OnFixedTick -> OnStep -> Stage.Step 也就永远不会执行
         engine.ticker.Tick(Time.deltaTime);
+
+    }
+
+    private void FixedUpdate()
+    {
         engine.ticker.FixedTick(Time.fixedDeltaTime);
     }
 }

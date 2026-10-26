@@ -1,7 +1,5 @@
-using GameConf.Gameplay.Skill;
 using System;
 using System.Collections.Generic;
-using UnityEditorInternal;
 
 namespace GameLogic.Gameplay.Logic
 {
@@ -17,6 +15,7 @@ namespace GameLogic.Gameplay.Logic
         public static List<Type> TICK_TYPE_LIST { get; private set; } = new()
         {            
             typeof(Gamepad),
+            typeof(Movement),
             typeof(Facade),
             typeof(RILSync),
         };

@@ -12,7 +12,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// 事件订阅派发者
     /// </summary>
-    public class EventorComp : Comp
+    public class EventorKit : Comp
     {
         /// <summary>
         /// 事件的集合

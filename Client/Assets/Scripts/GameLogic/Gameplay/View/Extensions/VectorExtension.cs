@@ -53,7 +53,7 @@ namespace GameLogic.Gameplay.View
         /// <returns>Vector3</returns>
         public static Vector3 ToVector3(this IntVector3 vector)
         {
-            return new Vector3(vector.x * ConfigComp.Int2Float, vector.y * ConfigComp.Int2Float, vector.z * ConfigComp.Int2Float);
+            return new Vector3(vector.x * ConfigKit.Int2Float, vector.y * ConfigKit.Int2Float, vector.z * ConfigKit.Int2Float);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace GameLogic.Gameplay.View
         /// <returns>Vector2</returns>
         public static Vector2 ToVector2(this IntVector2 vector)
         {
-            return new Vector2(vector.x * ConfigComp.Int2Float, vector.y * ConfigComp.Int2Float);
+            return new Vector2(vector.x * ConfigKit.Int2Float, vector.y * ConfigKit.Int2Float);
         }
     }
 }

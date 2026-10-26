@@ -1,15 +1,11 @@
 using GameConf;
-using Luban;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace GameLogic.Gameplay.Common
 {
     /// <summary>
     /// 游戏配置
     /// </summary>
-    public class ConfigComp : Comp
+    public class ConfigKit : Comp
     {
         /// <summary>
         /// 配置表定位器

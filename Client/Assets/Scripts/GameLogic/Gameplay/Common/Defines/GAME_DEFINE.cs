@@ -1,3 +1,5 @@
+using GameLogic.Gameplay.Common;
+
 namespace GameLogic.Gameplay.Common
 {
     /// <summary>

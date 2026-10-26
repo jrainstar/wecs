@@ -1,4 +1,4 @@
-namespace GameLogic.Gameplay.Logic
+namespace GameLogic.Gameplay.Common
 {
     /// <summary>
     /// 输入定义
