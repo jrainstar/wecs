@@ -25,14 +25,14 @@ namespace GameLogic.Gameplay.Logic
         {
             position = FPVector3.Zero;
             euler = FPVector3.Zero;
-            scale = FP.Zero;
+            scale = FP.One;
         }
 
         protected override void OnReset()
         {
             position = FPVector3.Zero;
             euler = FPVector3.Zero;
-            scale = FP.Zero;
+            scale = FP.One;
         }
 
         public override string ToString()
