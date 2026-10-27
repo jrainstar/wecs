@@ -1,12 +1,11 @@
 using GameLogic.Gameplay.Common;
 using GameLogic.Gameplay.Logic;
-using GameLogic.Gameplay.View;
 using UnityEngine;
 
 namespace GameLogic.Gameplay.View
 {
     /// <summary>
-    /// 节点代理
+    /// 节点代理, 负责把逻辑层的空间状态同步到 GameObject 的 Transform
     /// </summary>
     public class NodeAgent : Agent
     {
@@ -16,7 +15,8 @@ namespace GameLogic.Gameplay.View
         private static GameObject root = new("Node");
         static NodeAgent()
         {
-            root.transform.SetParent(GameObject.Find("Gameplay").transform, false);
+            var gameplay = GameObject.Find("Gameplay");
+            if (null != gameplay) root.transform.SetParent(gameplay.transform, false);
             root.transform.localPosition = Vector3.zero;
             root.transform.localScale = Vector3.one;
         }
@@ -32,10 +32,13 @@ namespace GameLogic.Gameplay.View
             if (null == go)
             {
                 go = new GameObject("Node");
+                go.transform.SetParent(root.transform, false);
                 go.SetActive(false);
             }
-            go.transform.SetParent(root.transform);
+            go.transform.SetParent(root.transform, false);
+            go.SetActive(true);
 
+            // 关心空间状态, 空间变化时重新进入追逐
             WatchRIL<RIL_SPATIAL>(OnRILSpatial);
         }
 
@@ -43,10 +46,16 @@ namespace GameLogic.Gameplay.View
         {
             if (null == go) return;
 
+            go.transform.SetParent(root.transform, false);
             go.SetActive(false);
             ObjectPool.Set(go, "NODE_GO_KEY");
+            go = null;
         }
 
+        /// <summary>
+        /// 空间状态变更
+        /// </summary>
+        /// <param name="ril">渲染指令</param>
         private void OnRILSpatial(RIL_SPATIAL ril)
         {
             ChangeStatus(ChaseStatus.Chasing);
@@ -54,29 +63,32 @@ namespace GameLogic.Gameplay.View
 
         protected override bool OnArrived()
         {
-            if (false == world.rilbucket.SeekRIL<RIL_SPATIAL>(actor, out var ril)) return true;
-            if (false == go.activeSelf)
-            {
-                go.transform.position = ril.position.ToVector3();
-                go.transform.rotation = Quaternion.Euler(ril.euler.ToVector3());
-                go.transform.localScale = Vector3.one * ril.scale.AsFloat();
-                go.SetActive(true);
-
-                return true;
-            }
-
-            return go.transform.position == ril.position.ToVector3() &&
-                   go.transform.rotation.eulerAngles == ril.euler.ToVector3() &&
-                   go.transform.localScale == Vector3.one * ril.scale.AsFloat();
+            return ApplySpatial();
         }
 
         protected override void OnFlash()
         {
             base.OnFlash();
-            if (false == world.rilbucket.SeekRIL<RIL_SPATIAL>(actor, out var ril)) return;
-            go.transform.position = ril.position.ToVector3();
-            go.transform.rotation = Quaternion.Euler(ril.euler.ToVector3());
-            go.transform.localScale = Vector3.one * ril.scale.AsFloat();
+            ApplySpatial();
+        }
+
+        /// <summary>
+        /// 将逻辑层的空间状态同步到 Transform
+        /// </summary>
+        /// <returns>YES/NO</returns>
+        private bool ApplySpatial()
+        {
+            if (null == go) return false;
+            if (false == world.rilbucket.SeekRIL<RIL_SPATIAL>(actor, out var ril)) return false;
+
+            var transform = go.transform;
+            transform.position = ril.position.ToVector3();
+            transform.rotation = Quaternion.Euler(ril.euler.ToVector3());
+            transform.localScale = Vector3.one * ril.scale.AsFloat();
+
+            if (false == go.activeSelf) go.SetActive(true);
+
+            return true;
         }
     }
 }

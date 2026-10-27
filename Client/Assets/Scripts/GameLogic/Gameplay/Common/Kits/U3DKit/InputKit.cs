@@ -129,7 +129,6 @@ namespace GameLogic.Gameplay.Common
             foreach (var kv in keydict)
             {
                 var dire = kv.Value.Invoke();
-                Debug.Log($"InputKit OnTick: {kv.Key} => {dire}");
                 SetInput(kv.Key, Vector2.zero != dire, new IntVector2((int)(dire.x * ConfigKit.Float2Int), (int)(dire.y * ConfigKit.Float2Int)));
             }
         }

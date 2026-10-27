@@ -33,4 +33,5 @@ namespace GameLogic.Gameplay.View
             rilbucket.world.RmvAgent(agent);
         }
     }
+
 }

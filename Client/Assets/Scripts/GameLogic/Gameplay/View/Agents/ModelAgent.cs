@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameLogic.Gameplay.View
 {
     /// <summary>
-    /// 模型代理
+    /// 模型代理, 负责根据 RIL_FACADE_MODEL 在节点代理下挂载模型
     /// </summary>
     public class ModelAgent : Agent
     {
@@ -15,7 +15,8 @@ namespace GameLogic.Gameplay.View
         private static GameObject modelpool = new("ModelPool");
         static ModelAgent()
         {
-            modelpool.transform.SetParent(GameObject.Find("Gameplay").transform, false);
+            var gameplay = GameObject.Find("Gameplay");
+            if (null != gameplay) modelpool.transform.SetParent(gameplay.transform, false);
             modelpool.transform.localPosition = Vector3.zero;
             modelpool.transform.localScale = Vector3.one;
             modelpool.SetActive(false);
@@ -36,10 +37,12 @@ namespace GameLogic.Gameplay.View
 
         protected override void OnReady()
         {
-            RecycleModel();
             model = 0;
             res = null;
             go = null;
+
+            // 模型定义变化时重新加载
+            WatchRIL<RIL_FACADE_MODEL>(OnRILFacadeModel);
         }
 
         protected override void OnReset()
@@ -51,15 +54,12 @@ namespace GameLogic.Gameplay.View
         }
 
         /// <summary>
-        /// 回收模型 Go
+        /// 模型定义变化
         /// </summary>
-        private void RecycleModel()
+        /// <param name="ril">渲染指令</param>
+        private void OnRILFacadeModel(RIL_FACADE_MODEL ril)
         {
-            if (null != go)
-            {
-                ObjectPool.Set(go, res);
-                go.transform.SetParent(modelpool.transform, false);
-            }
+            ChangeStatus(ChaseStatus.Chasing);
         }
 
         protected override void OnChase(float tick, float timescale)
@@ -68,24 +68,39 @@ namespace GameLogic.Gameplay.View
             Load();
         }
 
+        protected override bool OnArrived()
+        {
+            // 模型挂载完成, 后续位置由节点代理驱动
+            var node = world.GetAgent<NodeAgent>(actor);
+            if (null == node || null == node.go) return false;
+            if (model <= 0 || null == go) return false;
+            if (go.transform.parent != node.go.transform) return false;
+
+            return true;
+        }
+
         /// <summary>
         /// 加载模型
         /// </summary>
         public void Load()
         {
-            if (false == world.rilbucket.SeekRIL(actor, out RIL_FACADE_MODEL facademodel) || 0 >= facademodel.model)
+            if (false == world.rilbucket.SeekRIL<RIL_FACADE_MODEL>(actor, out var ril) || ril.model <= 0)
             {
                 RecycleModel();
+                model = 0;
+
                 return;
             }
-            if (model == facademodel.model) return;
 
+            if (model == ril.model && null != go) return;
+
+            // 节点代理不存在则先创建, 模型需要挂载到节点之下
             var node = world.EnsureAgent<NodeAgent>(actor);
             if (null == node || null == node.go) return;
 
             RecycleModel();
-            model = facademodel.model;
-            //if (false == world.engine.cfg.location.ModelInfos.TryGetValue(facademodel.model, out var modelinfo)) return;
+            model = ril.model;
+            //if (false == world.engine.cfg.location.ModelInfos.TryGetValue(ril.model, out var modelinfo)) return;
             res = "Sphere";
             go = ObjectPool.Get<GameObject>(res);
             //if (null == go) go = world.engine.gameres.location.LoadModelSync(res);
@@ -94,6 +109,20 @@ namespace GameLogic.Gameplay.View
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.identity;
             go.transform.localScale = Vector3.one;
+            go.SetActive(true);
+        }
+
+        /// <summary>
+        /// 回收模型 Go
+        /// </summary>
+        private void RecycleModel()
+        {
+            if (null == go) return;
+
+            go.transform.SetParent(modelpool.transform, false);
+            go.SetActive(false);
+            ObjectPool.Set(go, res);
+            go = null;
         }
     }
 }

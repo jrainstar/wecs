@@ -134,6 +134,7 @@ namespace GameLogic.Gameplay.View
             
             Enchant<NodeEnchant>(RIL_DEFINE.SPATIAL);
             Enchant<ModelEnchant>(RIL_DEFINE.FACADE_MODEL);
+            Enchant<AnimationEnchant>(RIL_DEFINE.FACADE_ANIMATION);
         }
 
         /// <summary>

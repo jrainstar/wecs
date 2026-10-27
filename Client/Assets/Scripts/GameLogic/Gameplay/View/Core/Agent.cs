@@ -22,7 +22,13 @@ namespace GameLogic.Gameplay.View
 
     public class Invoker
     {
+        /// <summary>
+        /// 关心的 Actor
+        /// </summary>
         protected ulong actor { get; set; }
+        /// <summary>
+        /// 回调
+        /// </summary>
         protected Delegate func { get; set; }
 
         public void Ready(ulong actor, Delegate func)

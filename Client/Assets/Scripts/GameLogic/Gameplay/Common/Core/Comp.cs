@@ -52,7 +52,7 @@ namespace GameLogic.Gameplay.Common
             destroyed = true;
 
             OnDestroy();
-            parent.RmvComp(this);
+            if (null != parent) parent.RmvComp(this);
 
             if (null != comps)
             {
@@ -81,7 +81,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>组件</returns>
         public T GetComp<T>(bool force = false) where T : Comp
         {
-            if (false == compdict.TryGetValue(typeof(T), out var comps)) return null;
+            if (null == compdict || false == compdict.TryGetValue(typeof(T), out var comps)) return null;
 
             return comps.Last() as T;
         }
@@ -116,6 +116,7 @@ namespace GameLogic.Gameplay.Common
         /// <param name="comp">组件</param>
         public void RmvComp(Comp comp)
         {
+            if (null == comps) return;
             if (false == comps.Contains(comp)) return;
 
             if (compdict.TryGetValue(comp.GetType(), out var list)) list.Remove(comp);
