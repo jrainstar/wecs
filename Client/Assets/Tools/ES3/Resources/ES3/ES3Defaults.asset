@@ -45,6 +45,8 @@ MonoBehaviour:
     - GameLaunch
     - GameLogic
     - Joystick
+    - Kybernetik.Animancer
+    - Kybernetik.Animancer.FSM
     - Luban.Runtime
     - SuperScrollView
     - UniTask
