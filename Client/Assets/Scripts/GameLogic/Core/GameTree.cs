@@ -78,7 +78,7 @@ namespace GameLogic
                     ),
                     new Node(
                         GameState.Gameplay,
-                        null,
+                        new[] { typeof(GameplaySys) },
                         new[]
                         {
                             new Node(GameState.GameplayLocal),

@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 341097111}
   - component: {fileID: 341097110}
   m_Layer: 0
-  m_Name: GameEngine
+  m_Name: GameFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
