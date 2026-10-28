@@ -29,6 +29,7 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnProcessing(ulong actor, HeroPrefabInfo info)
         {
+            stage.AddBehavior<StateMachine>(actor);
             stage.AddBehavior<Movement>(actor);
 
             var facade = stage.AddBehavior<Facade>(actor);

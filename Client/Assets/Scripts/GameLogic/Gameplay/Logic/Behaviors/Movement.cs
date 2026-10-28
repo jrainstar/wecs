@@ -14,6 +14,9 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="tick">步长</param>
         public void Move(FPVector3 dire, FP tick)
         {
+            if (false == stage.SeekBehavior(actor, out StateMachine machine)) return;
+            if (false == machine.TryChangeState(STATE_DEFINE.MOVE)) return;
+
             if (false == stage.SeekBehaviorInfo(actor, out SpatialInfo spatial)) return;
 
             dire.Normalize();
@@ -41,11 +44,11 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnEndTick()
         {
             base.OnEndTick();
-            //// 如果没有在移动状态, 则尝试切换到 Idle 状态
-            //if (false == info.turnmotion && stage.SeekBehavior(actor, out StateMachine machine))
-            //{
-            //    machine.TryChangeState(STATE_DEFINE.IDLE);
-            //}
+            // 如果没有在移动状态, 则尝试切换到 Idle 状态
+            if (false == info.turnmotion && stage.SeekBehavior(actor, out StateMachine machine))
+            {
+                machine.TryChangeState(STATE_DEFINE.IDLE);
+            }
             info.turnmotion = false;
         }
     }

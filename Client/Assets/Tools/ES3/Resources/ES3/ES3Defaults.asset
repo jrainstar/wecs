@@ -47,6 +47,7 @@ MonoBehaviour:
     - Joystick
     - Kybernetik.Animancer
     - Kybernetik.Animancer.FSM
+    - Kybernetik.Animancer.Samples
     - Luban.Runtime
     - SuperScrollView
     - UniTask
