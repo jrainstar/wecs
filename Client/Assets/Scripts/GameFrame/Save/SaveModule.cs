@@ -1,4 +1,4 @@
-namespace GameEngine
+namespace GameFrame
 {
     public class SaveModule : GameModule<SaveModule>
     {

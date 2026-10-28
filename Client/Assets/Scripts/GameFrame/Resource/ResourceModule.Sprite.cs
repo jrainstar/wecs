@@ -4,7 +4,7 @@ using GameCore;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule - SpriteAtlas 便捷加载分部

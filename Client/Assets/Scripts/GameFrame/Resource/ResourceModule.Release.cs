@@ -5,7 +5,7 @@ using YooAsset;
 using GameCore;
 using Object = UnityEngine.Object;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule - 资源释放/查询分部

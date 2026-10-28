@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace GameEngine
+namespace GameFrame
 {
     [RequireComponent(typeof(Camera))]
     public class AddUICameraHelper : MonoBehaviour

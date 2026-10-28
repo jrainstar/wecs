@@ -1,0 +1,303 @@
+<module name="Gameplay">
+
+<enum name="Quality">
+	<var name="None" alias="空" value="0" />
+	<var name="Common" alias="普通" value="1" />
+	<var name="Rare" alias="稀有" value="2" />
+	<var name="Premium" alias="精品" value="3" />
+	<var name="Epic" alias="史诗" value="4" />
+	<var name="Peerless" alias="绝世" value="5" />
+	<var name="Legendary" alias="传说" value="6" />
+	<var name="Mythic" alias="神话" value="7" />
+
+</enum>
+
+<module name="Tag">
+
+<bean name="TagData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="pid" type="int" alias="父编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+</bean>
+
+<table name="TbTagData" value="TagData" input="data@gameplay/tag.xlsx"/>
+
+</module>
+
+<module name="Role">
+
+<bean name="RoleData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+	<var name="model_id" type="int" alias="模型编号"/>
+	<var name="hp" type="int" alias="生命"/>
+	<var name="atk" type="int" alias="攻击"/>
+	<var name="def" type="int" alias="防御"/>
+	<var name="spd" type="int" alias="速度"/>
+	<var name="crit" type="int" alias="暴击"/>
+	<var name="luck" type="int" alias="幸运"/>
+</bean>
+
+<table name="TbRoleData" value="RoleData" input="data@gameplay/role.xlsx"/>
+
+<bean name="RoleModel">
+	<var name="id" type="int" alias="编号"/>
+	<var name="model" type="string" alias="模型"/>
+	<var name="born" type="string" alias="出场"/>
+	<var name="idle" type="string" alias="待机"/>
+	<var name="move" type="string" alias="移动"/>
+	<var name="damage" type="string" alias="受伤"/>
+	<var name="dead" type="string" alias="死亡"/>
+	<var name="happy" type="string" alias="高兴"/>
+	<var name="attack" type="string" alias="攻击"/>
+	<var name="attack01" type="string" alias="攻击01"/>
+	<var name="attack02" type="string" alias="攻击02"/>
+</bean>
+
+<table name="TbRoleModel" value="RoleModel" input="model@gameplay/role.xlsx"/>
+
+<enum name="RoleAnim">
+	<var name="None" alias="空" />
+	<var name="Born" alias="出场" />
+	<var name="Idle" alias="待机" />
+	<var name="Move" alias="移动" />
+	<var name="Damage" alias="受伤" />
+	<var name="Dead" alias="死亡" />
+	<var name="Happy" alias="高兴" />
+	<var name="Attack" alias="攻击" />
+	<var name="Attack01" alias="攻击01" />
+	<var name="Attack02" alias="攻击02" />
+</enum>
+
+</module>
+
+<module name="Buff">
+
+<enum name="BuffStackPolicy">
+	<var name="None" alias="空" />
+	<var name="Reset" alias="重置" />
+	<var name="Stack" alias="叠加" />
+	<var name="Immune" alias="无视" />
+	<var name="Refresh" alias="刷新" />
+	<var name="Independent" alias="单独" />
+</enum>
+
+<bean name="BuffData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+	<var name="priority" type="int" alias="优先级"/>
+	<var name="duration" type="float" alias="持续时间"/>
+	<var name="max_stack" type="int" alias="最大层数"/>
+	<var name="tick_interval" type="float" alias="间隔时间"/>
+	<var name="stack_policy" type="BuffStackPolicy" alias="叠加策略"/>
+	<var name="tags" type="(array#sep=,),int" alias="自身标签"/>
+	<var name="dispel_tags" type="(array#sep=,),int" alias="驱散标签"/>
+	<var name="immune_by_tags" type="(array#sep=,),int" alias="免疫标签"/>
+	<var name="effects" type="array,BuffEffect#sep=," alias="效果"/>
+</bean>
+
+<table name="TbBuffData" value="BuffData" input="data@gameplay/buff.xlsx"/>
+
+<bean name="BuffEffect">
+	<bean name="Log">
+		<var name="Type" type="string"/>
+		<var name="Info" type="string"/>
+	</bean>
+	<bean name="DoDamage">
+		<var name="Fixed" type="int"/>
+		<var name="Percent" type="int"/>
+	</bean>
+	<bean name="ModifyAttr">
+		<var name="Fixed" type="int"/>
+		<var name="Percent" type="int"/>
+		<bean name="ModifyHP"/>
+		<bean name="ModifyATK"/>
+		<bean name="ModifyDEF"/>
+		<bean name="ModifySPD"/>
+		<bean name="ModifyCrit"/>
+		<bean name="ModifyLuck"/>
+	</bean>
+</bean>
+</module>
+
+<module name="Skill">
+
+<bean name="SkillData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+	<var name="type" type="SkillType" alias="类型"/>
+	<var name="cost" type="SkillCost?" alias="消耗"/>
+	<var name="target" type="SkillTarget?" alias="目标"/>
+	<var name="cooldown" type="float" alias="冷却时间"/>
+	<var name="duration" type="float" alias="持续时间"/>
+	<var name="wait_time" type="float" alias="等待时间"/>
+	<var name="max_time" type="float" alias="最大时间"/>
+	<var name="learns" type="array,SkillEffect#sep=," alias="习得效果"/>
+	<var name="forgets" type="array,SkillEffect#sep=," alias="遗忘效果"/>
+	<var name="nodes" type="array,SkillNode#sep=," alias="能力节点"/>
+	<var name="go_to" type="SkillGoTo?#sep=," alias="能力循环"/>
+	<var name="next_skill" type="int?#ref=Gameplay.Skill.TbSkillData" alias="衔接技能"/>
+</bean>
+
+<table name="TbSkillData" value="SkillData" input="data@gameplay/skill.xlsx"/>
+
+<enum name="SkillType">
+	<var name="Passive" value="0" alias="被动"/>
+	<var name="Linear" value="1" alias="线性"/>
+	<var name="Charge" value="2" alias="蓄力"/>
+	<var name="Loop" value="3" alias="循环"/>
+</enum>
+
+<bean name="SkillCost">
+	<var name="Value" type="int"/>
+</bean>
+
+<bean name="SkillTarget">
+	<bean name="SkillForward"/>
+</bean>
+
+<bean name="SkillGoTo">
+	<var name="From" type="float"/>
+	<var name="To" type="float"/>
+</bean>
+
+<bean name="SkillNode">
+	<var name="Time" type="float"/>
+	<var name="Effect" type="SkillEffect"/>
+</bean>
+
+<bean name="SkillEffect">
+	<bean name="Log" alias="打印">
+		<var name="Type" type="byte"/>
+		<var name="Info" type="string"/>
+	</bean>
+	<bean name="PlayAnimation" alias="播放动画">
+		<var name="Type" type="Gameplay.Role.RoleAnim"/>
+		<var name="Loop" type="bool"/>
+		<var name="Speed" type="float"/>
+	</bean>
+
+	<!-- 子弹 -->
+	<bean name="Bullet" alias="子弹">
+		<var name="EffectId" type="int#ref=Gameplay.Skill.TbEffectData" alias="效果"/>
+		<var name="Model" type="string" alias="模型"/>
+		<var name="Speed" type="float" alias="速度"/>
+		<var name="Count" type="int" alias="数量"/>
+		<var name="Angle" type="float" alias="散射角"/>
+		<var name="PierceCount" type="int" alias="穿透数"/> 
+		<var name="Target" type="EffectTarget" alias="目标"/>
+	</bean>
+
+	<!-- 法术场 -->
+	<bean name="SpellField" alias="法术场">
+		<var name="Model" type="string" alias="模型"/>
+		<var name="Radius" type="float" alias="半径"/>
+		<var name="Duration" type="float" alias="持续"/>
+		<var name="TickInterval" type="float" alias="间隔"/>
+		<var name="Target" type="EffectTarget" alias="目标"/>
+		<var name="SnapToGround" type="bool" alias="贴地"/>
+		<var name="EffectId" type="int#ref=Gameplay.Skill.TbEffectData" alias="效果"/>
+	</bean>
+
+	<!-- 连接 -->
+	<bean name="Link" alias="连接">
+		<var name="Model" type="string" alias="模型"/>
+		<var name="MaxDistance" type="float" alias="最大距离"/>
+		<var name="BreakDistance" type="float" alias="断开距离"/>
+		<var name="Duration" type="float" alias="持续"/>
+		<var name="TickInterval" type="float" alias="间隔"/>
+		<var name="Target" type="EffectTarget" alias="目标"/>
+		<var name="EffectId" type="int#ref=Gameplay.Skill.TbEffectData" alias="效果"/>
+	</bean>
+</bean>
+
+<bean name="EffectData">
+    <var name="id" type="int" alias="编号"/>
+    <var name="name" type="string" alias="名字"/>
+    <var name="desc" type="string" alias="描述"/>
+    <var name="type" type="EffectDamageType" alias="伤害类型"/>
+    <var name="damage" type="int" alias="伤害值"/>
+    <var name="atk_rate" type="float" alias="攻击系数"/>
+    <var name="can_crit" type="bool" alias="可暴击"/>
+	<var name="hit_count" type="int" alias="打击次数"/>
+    <var name="hit_fx" type="string" alias="命中特效"/>
+    <var name="hit_sound" type="string" alias="命中音效"/>
+	<var name="extra_hit" type="array,SkillEffect#sep=," alias="击中效果"/>
+    <var name="extra_enter" type="array,SkillEffect#sep=," alias="进入效果"/>
+	<var name="extra_leave" type="array,SkillEffect#sep=," alias="离开效果"/>
+</bean>
+
+<table name="TbEffectData" value="EffectData" input="data@gameplay/effect.xlsx"/>
+
+<enum name="EffectTarget">
+	<var name="Self" alias="自身"/>
+	<var name="Enemy" alias="敌人"/>
+	<var name="AllEnemy" alias="全体敌人"/>
+	<var name="Ally" alias="队友"/>
+	<var name="AllAlly" alias="全体队友"/>
+	<var name="Point" alias="指定点"/>
+</enum>
+
+<enum name="EffectDamageType">
+	<var name="Physical" alias="物理"/>
+	<var name="Magical" alias="法术"/>
+	<var name="True" alias="真实"/>
+</enum>
+
+<enum name="DamageType">
+	<var name="Physical" alias="物理"/>
+	<var name="Magical" alias="法术"/>
+	<var name="True" alias="真实"/>
+</enum>
+
+<bean name="VisualData">
+    <var name="hit_fx" type="string" alias="命中特效"/>
+    <var name="hit_sound" type="string" alias="命中音效"/>
+    <var name="hit_point" type="string" alias="命中挂点"/>
+</bean>
+
+<bean name="DamageData">
+    <var name="type" type="DamageType" alias="伤害类型"/>
+    <var name="damage" type="int" alias="基础伤害"/>
+    <var name="atk_rate" type="float" alias="攻击系数"/>
+    <var name="hit_count" type="int" alias="击中次数"/>
+    <var name="can_crit" type="bool" alias="可暴击"/>
+</bean>
+
+<bean name="PayloadData">
+    <var name="id" type="int" alias="编号"/>
+    <var name="name" type="string" alias="名字"/>
+    <var name="desc" type="string" alias="描述"/>
+    <var name="visual_data" type="VisualData" alias="表现数据"/>
+    <var name="damage_data" type="DamageData" alias="伤害数据"/>
+</bean>
+
+<table name="TbPayloadData" value="PayloadData" input="data@gameplay/payload.xlsx"/>
+
+</module>
+
+<module name="Moudle">
+<bean name="MoudleData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+	<var name="weight" type="int" alias="权重"/>
+	<var name="quality" type="Gameplay.Quality" alias="品质"/>
+	<var name="add_skill_id" type="int" alias="添加技能"/>
+	<var name="remove_skill_id" type="int" alias="移除技能"/>
+	<var name="require_module_ids" type="(array#sep=,),int" alias="前置模组"/>
+	<var name="exclude_module_ids" type="(array#sep=,),int" alias="互斥模组"/>
+	<var name="dispel_module_ids" type="(array#sep=,),int" alias="驱散模组"/>
+</bean>
+<table name="TbMoudleData" value="MoudleData" input="data@gameplay/moudle.xlsx"/>
+</module>
+</module>

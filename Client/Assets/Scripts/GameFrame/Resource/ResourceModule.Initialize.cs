@@ -6,7 +6,7 @@ using UnityEngine;
 using YooAsset;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule - 初始化/销毁分部

@@ -7,6 +7,10 @@ namespace GameLogic.Gameplay.Common
     public class Engine : Comp
     {
         /// <summary>
+        /// 资源
+        /// </summary>
+        public GameResKit gameres { get; private set; }
+        /// <summary>
         /// 事件
         /// </summary>
         public EventorKit eventor { get; private set; }
@@ -23,9 +27,13 @@ namespace GameLogic.Gameplay.Common
         /// </summary>
         public U3DKit u3dkit { get; private set; }
 
+
         protected override void OnCreate()
         {
             base.OnCreate();
+
+            gameres = AddComp<GameResKit>();
+            gameres.Create();
 
             eventor = AddComp<EventorKit>();
             eventor.Create();

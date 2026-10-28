@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class SoundAgent
     {

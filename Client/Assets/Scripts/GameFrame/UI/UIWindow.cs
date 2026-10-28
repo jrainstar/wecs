@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace GameEngine
+namespace GameFrame
 {
     public abstract class UIWindow : UIBase
     {

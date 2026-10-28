@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using YooAsset;
 using SceneHandle = YooAsset.SceneHandle;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule - 场景加载分部

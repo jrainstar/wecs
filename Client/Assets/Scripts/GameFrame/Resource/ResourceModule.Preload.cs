@@ -9,7 +9,7 @@ using YooAsset;
 using GameCore;
 using SceneHandle = YooAsset.SceneHandle;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule - 预加载分部

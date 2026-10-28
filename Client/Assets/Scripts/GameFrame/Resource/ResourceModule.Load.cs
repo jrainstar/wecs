@@ -7,7 +7,7 @@ using YooAsset;
 using GameCore;
 using Object = UnityEngine.Object;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule - 资源加载分部

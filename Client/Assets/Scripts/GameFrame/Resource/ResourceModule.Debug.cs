@@ -3,7 +3,7 @@ using YooAsset;
 using Object = UnityEngine.Object;
 using SceneHandle = YooAsset.SceneHandle;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule - 调试 / Inspector 支持分部

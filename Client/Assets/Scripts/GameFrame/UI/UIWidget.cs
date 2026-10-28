@@ -1,7 +1,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class UIWidget : UIBase
     {

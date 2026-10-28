@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class SoundModule : GameModule<SoundModule>
     {

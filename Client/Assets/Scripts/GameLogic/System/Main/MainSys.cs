@@ -1,4 +1,4 @@
-﻿using GameEngine;
+﻿using GameFrame;
 
 namespace GameLogic
 {

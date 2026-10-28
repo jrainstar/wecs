@@ -1,7 +1,7 @@
 using UnityEngine;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// 引用强制检查类型。

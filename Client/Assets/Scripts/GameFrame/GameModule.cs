@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GameEngine
+namespace GameFrame
 {
     public abstract class GameModule : MonoBehaviour
     {

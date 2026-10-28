@@ -2,7 +2,7 @@ using System;
 using YooAsset;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class AssetObject : IMemory
     {

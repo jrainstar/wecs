@@ -5,7 +5,7 @@ using YooAsset;
 using Object = UnityEngine.Object;
 using SceneHandle = YooAsset.SceneHandle;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// ResourceModule 自定义 Inspector

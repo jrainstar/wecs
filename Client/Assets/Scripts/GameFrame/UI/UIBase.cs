@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace GameEngine
+namespace GameFrame
 {
     public abstract class UIBase : MonoBehaviour
     {

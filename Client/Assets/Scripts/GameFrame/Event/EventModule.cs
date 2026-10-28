@@ -1,7 +1,7 @@
 using System;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// 事件中心

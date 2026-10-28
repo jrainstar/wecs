@@ -1,0 +1,93 @@
+// ========== 1. 载体层 Delivery (union) ==========
+// 只负责"效果如何到达目标"，不含任何伤害/表现数据
+
+<bean name="Bullet">
+    <var name="Model" type="string" alias="模型"/>
+    <var name="Trajectory" type="TrajectoryType" alias="轨迹"/>
+    <var name="Speed" type="float" alias="速度"/>
+    <var name="Accel" type="float" alias="加速度" default="0"/>
+    <var name="LifeTime" type="float" alias="生命周期"/>
+    <var name="Count" type="int" alias="数量" default="1"/>
+    <var name="Angle" type="float" alias="散射角" default="0"/>
+    <var name="PierceCount" type="int" alias="穿透数" default="0"/>
+    <var name="MaxHitCount" type="int" alias="最大命中数" default="0"/>
+    <var name="HitLayer" type="string" alias="命中层" default="Enemy"/>
+    <var name="PayloadId" type="int#ref=PayloadData" alias="负载"/>
+</bean>
+
+<bean name="SpellField">
+    <var name="Model" type="string" alias="模型"/>
+    <var name="Shape" type="FieldShape" alias="形状"/>
+    <var name="Radius" type="float" alias="半径"/>
+    <var name="Duration" type="float" alias="持续"/>
+    <var name="TickInterval" type="float" alias="间隔"/>
+    <var name="SnapToGround" type="bool" alias="贴地"/>
+    <!-- enter/leave 是法术场生命周期特有的，留在这里，不污染通用负载 -->
+    <var name="OnEnterId" type="int#ref=PayloadData" alias="进入负载" optional=""/>
+    <var name="OnLeaveId" type="int#ref=PayloadData" alias="离开负载" optional=""/>
+    <var name="OnTickId" type="int#ref=PayloadData" alias="周期负载"/>
+</bean>
+
+<bean name="Link">
+    <var name="Model" type="string" alias="模型"/>
+    <var name="MaxDistance" type="float" alias="最大距离"/>
+    <var name="BreakDistance" type="float" alias="断开距离"/>
+    <var name="Duration" type="float" alias="持续"/>
+    <var name="TickInterval" type="float" alias="间隔"/>
+    <var name="OnTickId" type="int#ref=PayloadData" alias="周期负载"/>
+</bean>
+
+// 用 union 收敛：一个技能声明一种载体，约束而非约定
+<bean name="Delivery">
+    <var name="Type" type="DeliveryType" alias="类型"/>
+    <var name="Bullet" type="Bullet" alias="子弹" optional=""/>
+    <var name="SpellField" type="SpellField" alias="法术场" optional=""/>
+    <var name="Link" type="Link" alias="连接" optional=""/>
+    <var name="Target" type="EffectTarget" alias="目标"/>
+</bean>
+
+// ========== 2. 负载层 Payload ==========
+// 决定"到达后造成什么"，纯数据，可被任意载体复用
+
+<bean name="DamageData">
+    <var name="Type" type="EffectDamageType" alias="伤害类型"/>
+    <var name="Damage" type="int" alias="基础伤害"/>
+    <var name="AtkRate" type="float" alias="攻击系数" desc="最终伤害 = (Damage + 攻击力×AtkRate)"/>
+    <var name="CanCrit" type="bool" alias="可暴击"/>
+    <var name="CritRate" type="float" alias="暴击率" default="0"/>
+    <var name="CritMultiplier" type="float" alias="暴击倍率" default="1.5"/>
+    <var name="HitCount" type="int" alias="打击次数" default="1"/>
+    <var name="Falloff" type="DamageFalloff" alias="距离衰减" optional=""/>
+</bean>
+
+<bean name="PayloadData">
+    <var name="Id" type="int" alias="编号"/>
+    <var name="Name" type="string" alias="名字"/>
+    <var name="Desc" type="string" alias="描述"/>
+    <var name="Damage" type="DamageData" alias="伤害"/>
+    <var name="Visual" type="VisualData" alias="表现"/>
+    <!-- 效果链统一用 ref，杜绝内联导致的循环结构 -->
+    <var name="ExtraHit" type="array,int#ref=PayloadData#sep=," alias="命中链"/>
+</bean>
+
+// ========== 3. 表现层 Visual ==========
+<bean name="VisualData">
+    <var name="HitFx" type="string" alias="命中特效"/>
+    <var name="HitSound" type="string" alias="命中音效"/>
+    <var name="MountPoint" type="string" alias="挂点" default="Hit"/>
+</bean>
+
+// ========== 4. 枚举（补全形状/轨迹）==========
+<enum name="TrajectoryType">
+    <var name="Linear" alias="直线"/>
+    <var name="Parabola" alias="抛物线"/>
+    <var name="Homing" alias="追踪"/>
+    <var name="Spiral" alias="螺旋"/>
+</enum>
+
+<enum name="FieldShape">
+    <var name="Circle" alias="圆形"/>
+    <var name="Sector" alias="扇形"/>
+    <var name="Rect" alias="矩形"/>
+    <var name="Ring" alias="环形"/>
+</enum>

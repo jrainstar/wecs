@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class ObjectPoolData
     {

@@ -1,4 +1,4 @@
-﻿namespace GameEngine
+﻿namespace GameFrame
 {
     /// <summary>
     /// 音效分类，可分别关闭/开启对应分类音效。

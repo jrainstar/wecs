@@ -1,4 +1,5 @@
 using GameConf;
+using Luban;
 
 namespace GameLogic.Gameplay.Common
 {
@@ -38,7 +39,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
-            // location = new Tables((cfgName) => new ByteBuf(engine.gameres.location.LoadConfigSync(cfgName)));
+            location = TableModule.Instance.Tables;
         }
 #endif
     }

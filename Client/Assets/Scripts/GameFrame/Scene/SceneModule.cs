@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class SceneModule : GameModule<SceneModule>
     {

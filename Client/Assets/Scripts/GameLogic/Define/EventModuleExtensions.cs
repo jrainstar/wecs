@@ -1,5 +1,5 @@
 using System;
-using GameEngine;
+using GameFrame;
 
 namespace GameLogic
 {

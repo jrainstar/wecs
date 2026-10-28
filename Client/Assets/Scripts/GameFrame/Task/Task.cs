@@ -1,7 +1,7 @@
 using GameCore;
 using System;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// 任务执行器

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class SoundGroup
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     public class UIModule : GameModule<UIModule>
     {

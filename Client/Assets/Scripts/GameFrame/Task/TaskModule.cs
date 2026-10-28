@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using GameCore;
 
-namespace GameEngine
+namespace GameFrame
 {
     /// <summary>
     /// 任务管理器
