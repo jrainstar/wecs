@@ -19,7 +19,7 @@ namespace GameLogic
             var package = YooAssets.GetPackage(GameApp.PackageName);
 
             // 先叠加加载场景，最后再卸载旧场景
-            var engineHandle = package.LoadSceneSync("GameEngine", LoadSceneMode.Additive);
+            var engineHandle = package.LoadSceneSync("GameFrame", LoadSceneMode.Additive);
             await UniTask.DelayFrame(0);
 
             var entryHandle = package.LoadSceneSync("GameEntry", LoadSceneMode.Additive);
@@ -31,7 +31,7 @@ namespace GameLogic
 
             // 卸载旧的场景
             await SceneManager.UnloadSceneAsync("GameLaunch");
-            await SceneManager.UnloadSceneAsync("GameEngine");
+            await SceneManager.UnloadSceneAsync("GameFrame");
         }
 
         //private static async void EntryBuild()

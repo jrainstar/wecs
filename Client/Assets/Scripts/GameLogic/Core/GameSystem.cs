@@ -1,13 +1,31 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace GameLogic
 {
+    /// <summary>
+    /// 游戏系统基类。
+    /// 生命周期：
+    ///   OnInit → OnEnter → OnEnterAsync(可选异步) → OnUpdate/OnFixedUpdate ...
+    ///        → OnLeave → OnStateChangeFinish(切换收尾) → OnClear
+    /// </summary>
     public abstract class GameSystem : MonoBehaviour
     {
         public virtual void OnInit() { }
         public virtual void OnClear() { }
+
+        /// <summary>进入状态（同步）</summary>
         public virtual void OnEnter() { }
+
+        /// <summary>进入状态的异步流程（可选，默认立即完成）</summary>
+        public virtual UniTask OnEnterAsync() => UniTask.CompletedTask;
+
+        /// <summary>离开状态（同步）</summary>
         public virtual void OnLeave() { }
+
+        /// <summary>状态切换收尾（切换完成后通知本次新进入的系统）</summary>
+        public virtual void OnStateChangeFinish() { }
+
         public virtual void OnUpdate() { }
         public virtual void OnFixedUpdate() { }
     }

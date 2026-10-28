@@ -1,39 +1,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace GameLogic
 {
     public class GameEntry : GameSystem<GameEntry>
     {
-        private class GameNode
-        {
-            private GameState state;
-            private Type[] system = null;
-            private GameNode[] children = null;
+        private GameTree m_Tree;
+        private Stack<GameState> m_StateHistory = new Stack<GameState>();
+        private Dictionary<Type, GameSystem> m_SystemCache = new Dictionary<Type, GameSystem>();
 
-            public GameNode(GameState state, Type[] system, GameNode[] children)
-            {
-                this.state = state;
-                this.system = system ?? new Type[0];
-                this.children = children ?? new GameNode[0];
-            }
+        // ── 状态切换队列（串行）────────────────────────────────
+        private readonly Queue<GameState> m_SwitchQueue = new Queue<GameState>();
+        private bool m_Running = false;        // 切换队列处理中
+        private bool m_SceneLoading = false;   // 场景加载中（切场景期间暂停系统更新）
+        private GameState? m_NextState;        // 目标状态
 
-            public GameState State => state;
-            public Type[] Systems => system;
-            public GameNode[] Children => children;
-        }
+        /// <summary>切换前触发（old, new）</summary>
+        public event Action<GameState, GameState> OnPreStateChange;
 
+        /// <summary>离开旧系统之后、进入新系统之前触发（old, new）</summary>
+        public event Action<GameState, GameState> OnStateChange;
 
-        private GameNode root;
-        private GameNode current;
-        private bool transitioning = false;
-        private Stack<GameState> stateHistory = new Stack<GameState>();
-        private Dictionary<Type, GameSystem> systemCache = new Dictionary<Type, GameSystem>();
+        /// <summary>切换完成后触发（old, new）</summary>
+        public event Action<GameState, GameState> OnPostStateChange;
 
-        // 缓存当前节点到根节点的路径
-        private List<GameNode> currentPath = new List<GameNode>();
+        /// <summary>当前状态</summary>
+        public GameState CurState => m_Tree?.CurState ?? GameState.Root;
+
+        /// <summary>目标状态（切换队列中）</summary>
+        public GameState? NextState => m_NextState;
+
+        /// <summary>是否正在切换（含场景加载）</summary>
+        public bool IsSwitching => m_Running || m_SceneLoading;
 
         public void Awake()
         {
@@ -47,133 +48,25 @@ namespace GameLogic
             Debug.Log("=== 游戏管理器初始化 ===\n");
 
             // 构建状态树
-            BuildTree();
+            m_Tree = new GameTree();
 
             // 初始化所有系统
             InitSystem();
 
-            // 初始化路径缓存
-            UpdateCurrentPath();
-
             // 进入根节点
-            EnterNode(root);
+            EnterNode(m_Tree.Root);
 
             DontDestroyOnLoad(gameObject);
 
             Debug.Log("\n=== 初始化完成 ===\n");
         }
 
-        private void BuildTree()
-        {
-            root = new GameNode
-            (
-                GameState.Root,
-                null,
-                new[]
-                {
-                    new GameNode
-                    (
-                        GameState.Main,
-                        new[]
-                        {
-                            typeof(MainSys)
-                        },
-                        null
-                    ),
-                    new GameNode
-                    (
-                        GameState.Hall,
-                        new[]
-                        {                            
-                            typeof(HeroSys),
-                            typeof(PackSys),
-                            typeof(HallSys),
-                        },
-                        new[]
-                        {
-                            new GameNode
-                            (
-                                GameState.Task,
-                                new[]
-                                {
-                                    typeof (TaskSys)
-                                },
-                                null
-                            ),
-                            new GameNode
-                            (
-                                GameState.Mail,
-                                new[]
-                                {
-                                    typeof (MailSys)
-                                },
-                                null
-                            ),
-                            new GameNode
-                            (
-                                GameState.Mall,
-                                new[]
-                                {
-                                    typeof (MallSys)
-                                },
-                                null
-                            ),
-                            new GameNode
-                            (
-                                GameState.Pack,
-                                new[]
-                                {
-                                    typeof (PackSys)
-                                },
-                                null
-                            ),
-                            new GameNode
-                            (
-                                GameState.UIPack,
-                                new[]
-                                {
-                                    typeof (PackUISys)
-                                },
-                                null
-                            ),
-                            new GameNode
-                            (
-                                GameState.UIHero,
-                                new[]
-                                {
-                                    typeof (HeroUISys)
-                                },
-                                null
-                            )
-                        }
-                    ),
-                    new GameNode
-                    (
-                        GameState.Gameplay,
-                        null,
-                        new[]
-                        {
-                            new GameNode
-                            (
-                                GameState.GameplayLocal,
-                                null,
-                                null
-                            )
-                        }
-                    )
-                }
-            );
-
-            // 设置当前节点为根节点
-            current = root;
-        }
-
         private void InitSystem()
         {
-            InitNodeSystem(root, transform);
+            InitNodeSystem(m_Tree.Root, transform);
         }
 
-        private void InitNodeSystem(GameNode node, Transform parent)
+        private void InitNodeSystem(GameTree.Node node, Transform parent)
         {
             // 创建当前节点对应的GameObject
             string nodeName = $"{node.State}";
@@ -183,12 +76,12 @@ namespace GameLogic
             // 初始化当前节点的系统并挂载到GameObject上
             foreach (var systemType in node.Systems)
             {
-                if (!systemCache.ContainsKey(systemType))
+                if (!m_SystemCache.ContainsKey(systemType))
                 {
                     // 创建系统组件并挂载到节点GameObject上
                     var system = nodeGO.AddComponent(systemType) as GameSystem;
                     system.OnInit();
-                    systemCache[systemType] = system;
+                    m_SystemCache[systemType] = system;
                     Debug.Log($"[初始化] {systemType.Name} 用于状态 {node.State}");
                 }
             }
@@ -200,152 +93,124 @@ namespace GameLogic
             }
         }
 
+        // ─────────────────────────────────────────────────────
+        // 状态切换：同步入队 + 串行异步处理
+        // ─────────────────────────────────────────────────────
+
         public void ChangeState(GameState targetState)
         {
-            if (transitioning)
-            {
-                Debug.Log("正在转换中，忽略请求");
-                return;
-            }
-
-            if (current.State == targetState)
+            // 已在目标状态，短路
+            if (m_Tree != null && m_Tree.CurState == targetState)
             {
                 Debug.Log($"已经在状态 {targetState}");
                 return;
             }
 
-            var targetNode = FindNodeByState(root, targetState);
+            m_SwitchQueue.Enqueue(targetState);
+            m_NextState = targetState;
+
+            if (!m_Running)
+            {
+                HandleSwitchQueueAsync().Forget();
+            }
+        }
+
+        /// <summary>串行处理切换队列</summary>
+        private async UniTaskVoid HandleSwitchQueueAsync()
+        {
+            m_Running = true;
+            try
+            {
+                while (m_SwitchQueue.Count > 0)
+                {
+                    var target = m_SwitchQueue.Dequeue();
+                    await SwitchStateAsync(target);
+                }
+            }
+            finally
+            {
+                m_Running = false;
+                m_NextState = null;
+            }
+        }
+
+        /// <summary>单个状态切换（异步）</summary>
+        private async UniTask SwitchStateAsync(GameState targetState)
+        {
+            // 相同状态短路
+            if (m_Tree.CurState == targetState)
+                return;
+
+            var targetNode = m_Tree.FindNode(targetState);
             if (targetNode == null)
             {
                 Debug.Log($"状态 {targetState} 未找到！");
                 return;
             }
 
-            transitioning = true;
+            var oldState = m_Tree.CurState;
 
+            // 1. 触发切换前事件
+            OnPreStateChange?.Invoke(oldState, targetState);
+
+            // 2. 查找公共祖先
+            var commonAncestor = m_Tree.FindCommonAncestor(m_Tree.Current, targetNode);
+
+            // 3. 离开旧状态路径到公共祖先（自下而上）
+            var leaveNodes = m_Tree.CollectToAncestor(m_Tree.Current, commonAncestor);
+            for (int i = leaveNodes.Count - 1; i >= 0; i--)
+                LeaveNode(leaveNodes[i]);
+
+            // 4. 触发状态切换事件
+            OnStateChange?.Invoke(oldState, targetState);
+
+            // 5. 场景切换（场景名不同才真正加载，切场景期间暂停系统更新）
+            m_SceneLoading = true;
             try
             {
-                Debug.Log($"状态转换: {current.State} -> {targetState}");
-
-                // 保存历史
-                stateHistory.Push(current.State);
-
-                // 查找公共祖先并执行转换
-                var commonAncestor = FindCommonAncestor(current, targetNode);
-
-                // 离开当前状态路径到公共祖先
-                LeaveToAncestor(current, commonAncestor);
-
-                // 从公共祖先进入目标状态
-                EnterToTarget(commonAncestor, targetNode);
-
-                // 更新当前节点
-                current = targetNode;
-
-                // 更新缓存路径
-                UpdateCurrentPath();
-
-                Debug.Log($"状态转换完成。当前状态: {current.State}");
+                await GameScene.ChangeSceneAsync(targetState, oldState);
             }
             finally
             {
-                transitioning = false;
+                m_SceneLoading = false;
             }
+
+            // 6. 从公共祖先进入目标状态（自上而下，含异步进入流程）
+            var enterNodes = m_Tree.CollectFromAncestor(commonAncestor, targetNode);
+
+            foreach (var node in enterNodes)
+            {
+                await EnterNodeAsync(node);
+            }
+
+            // 7. 新系统收尾（OnStateChangeFinish）
+            foreach (var node in enterNodes)
+            {
+                foreach (var systemType in node.Systems)
+                {
+                    if (m_SystemCache.TryGetValue(systemType, out var s))
+                        s.OnStateChangeFinish();
+                }
+            }
+
+            // 8. 更新状态与路径缓存
+            m_StateHistory.Push(oldState);
+            m_Tree.SetCurrent(targetNode);
+
+            Debug.Log($"状态转换完成。当前状态: {m_Tree.CurState}");
+
+            // 9. 触发切换完成事件
+            OnPostStateChange?.Invoke(oldState, targetState);
         }
 
-        private GameNode FindNodeByState(GameNode node, GameState state)
-        {
-            if (node.State == state)
-                return node;
-
-            foreach (var child in node.Children)
-            {
-                var result = FindNodeByState(child, state);
-                if (result != null)
-                    return result;
-            }
-            return null;
-        }
-
-        private GameNode FindCommonAncestor(GameNode node1, GameNode node2)
-        {
-            // 获取节点1的所有祖先（包括自身）
-            var ancestors1 = new HashSet<GameNode>();
-            var current = node1;
-            while (current != null)
-            {
-                ancestors1.Add(current);
-                current = GetParent(current);
-            }
-
-            // 查找节点2的祖先中第一个在ancestors1中的节点
-            current = node2;
-            while (current != null)
-            {
-                if (ancestors1.Contains(current))
-                    return current;
-                current = GetParent(current);
-            }
-
-            return null;
-        }
-
-        private GameNode GetParent(GameNode node)
-        {
-            // 遍历树查找父节点
-            return FindParent(root, node);
-        }
-
-        private GameNode FindParent(GameNode currentNode, GameNode targetNode)
-        {
-            foreach (var child in currentNode.Children)
-            {
-                if (child == targetNode)
-                    return currentNode;
-
-                var result = FindParent(child, targetNode);
-                if (result != null)
-                    return result;
-            }
-            return null;
-        }
-
-        private void LeaveToAncestor(GameNode fromNode, GameNode ancestor)
-        {
-            var current = fromNode;
-            while (current != null && current != ancestor)
-            {
-                LeaveNode(current);
-                current = GetParent(current);
-            }
-        }
-
-        private void EnterToTarget(GameNode ancestor, GameNode targetNode)
-        {
-            // 获取从ancestor到targetNode的路径
-            var path = new List<GameNode>();
-            var current = targetNode;
-            while (current != null && current != ancestor)
-            {
-                path.Insert(0, current);
-                current = GetParent(current);
-            }
-
-            // 沿路径进入
-            foreach (var node in path)
-            {
-                EnterNode(node);
-            }
-        }
-
-        private void EnterNode(GameNode node)
+        /// <summary>同步进入节点（供 Init 使用）</summary>
+        private void EnterNode(GameTree.Node node)
         {
             Debug.Log($"[进入] 状态: {node.State}");
 
-            // 启动节点的所有系统
             foreach (var systemType in node.Systems)
             {
-                if (systemCache.TryGetValue(systemType, out var system))
+                if (m_SystemCache.TryGetValue(systemType, out var system))
                 {
                     system.OnEnter();
                     Debug.Log($"  ├─ 系统启动: {systemType.Name}");
@@ -353,14 +218,29 @@ namespace GameLogic
             }
         }
 
-        private void LeaveNode(GameNode node)
+        /// <summary>异步进入节点（含异步进入流程）</summary>
+        private async UniTask EnterNodeAsync(GameTree.Node node)
+        {
+            Debug.Log($"[进入] 状态: {node.State}");
+
+            foreach (var systemType in node.Systems)
+            {
+                if (m_SystemCache.TryGetValue(systemType, out var system))
+                {
+                    system.OnEnter();
+                    await system.OnEnterAsync();
+                    Debug.Log($"  ├─ 系统启动: {systemType.Name}");
+                }
+            }
+        }
+
+        private void LeaveNode(GameTree.Node node)
         {
             Debug.Log($"[离开] 状态: {node.State}");
 
-            // 停止节点的所有系统
             foreach (var systemType in node.Systems)
             {
-                if (systemCache.TryGetValue(systemType, out var system))
+                if (m_SystemCache.TryGetValue(systemType, out var system))
                 {
                     system.OnLeave();
                     Debug.Log($"  ├─ 系统停止: {systemType.Name}");
@@ -368,40 +248,20 @@ namespace GameLogic
             }
         }
 
-        // 更新当前节点到根节点的路径缓存
-        private void UpdateCurrentPath()
-        {
-            currentPath.Clear();
-            var node = current;
-
-            // 收集从当前节点到根节点的路径
-            var tempPath = new List<GameNode>();
-            while (node != null)
-            {
-                tempPath.Add(node);
-                node = GetParent(node);
-            }
-
-            // 反转顺序，从根到当前节点
-            for (int i = tempPath.Count - 1; i >= 0; i--)
-            {
-                currentPath.Add(tempPath[i]);
-            }
-        }
-
         public void Update()
         {
-            if (transitioning || current == null)
+            // 切换中或场景加载中暂停系统更新
+            if (m_Tree == null || m_Running || m_SceneLoading)
             {
                 return;
             }
 
             // 直接使用缓存的路径，无需每次查找
-            foreach (var node in currentPath)
+            foreach (var node in m_Tree.CurrentPath)
             {
                 foreach (var systemType in node.Systems)
                 {
-                    if (systemCache.TryGetValue(systemType, out var system))
+                    if (m_SystemCache.TryGetValue(systemType, out var system))
                     {
                         system.OnUpdate();
                     }
@@ -411,16 +271,16 @@ namespace GameLogic
 
         public void FixedUpdate()
         {
-            if (transitioning || current == null)
+            if (m_Tree == null || m_Running || m_SceneLoading)
             {
                 return;
             }
 
-            foreach (var node in currentPath)
+            foreach (var node in m_Tree.CurrentPath)
             {
                 foreach (var systemType in node.Systems)
                 {
-                    if (systemCache.TryGetValue(systemType, out var system))
+                    if (m_SystemCache.TryGetValue(systemType, out var system))
                     {
                         system.OnFixedUpdate();
                     }
@@ -430,9 +290,9 @@ namespace GameLogic
 
         public void GoBack()
         {
-            if (stateHistory.Count > 0)
+            if (m_StateHistory.Count > 0)
             {
-                var previousState = stateHistory.Pop();
+                var previousState = m_StateHistory.Pop();
                 Debug.Log($"返回上一个状态: {previousState}");
                 ChangeState(previousState);
             }
@@ -444,28 +304,30 @@ namespace GameLogic
 
         public T GetSystem<T>() where T : GameSystem
         {
-            systemCache.TryGetValue(typeof(T), out var system);
+            m_SystemCache.TryGetValue(typeof(T), out var system);
             return system as T;
         }
 
         public bool IsInState(GameState state)
         {
-            return current != null && current.State == state;
+            return m_Tree != null && m_Tree.CurState == state;
         }
 
         public bool IsInStateOrChild(GameState state)
         {
-            var stateNode = FindNodeByState(root, state);
+            if (m_Tree == null) return false;
+
+            var stateNode = m_Tree.FindNode(state);
             if (stateNode == null) return false;
 
-            var current = this.current;
+            var current = m_Tree.Current;
             while (current != null)
             {
                 if (current == stateNode)
                 {
                     return true;
                 }
-                current = GetParent(current);
+                current = m_Tree.GetParent(current);
             }
             return false;
         }
@@ -473,26 +335,31 @@ namespace GameLogic
         // 获取当前路径（调试用）
         public List<GameState> GetCurrentPath()
         {
-            return currentPath.Select(node => node.State).ToList();
+            return m_Tree?.CurrentPath.Select(node => node.State).ToList() ?? new List<GameState>();
         }
 
         public override void OnClear()
         {
             Debug.Log("\n=== 清理游戏管理器 ===\n");
 
+            OnPreStateChange = null;
+            OnStateChange = null;
+            OnPostStateChange = null;
+
             // 清理所有系统
-            foreach (var system in systemCache.Values)
+            foreach (var system in m_SystemCache.Values)
             {
                 system.OnClear();
                 Debug.Log($"[清理] 系统: {system.GetType().Name}");
             }
 
-            systemCache.Clear();
-            stateHistory.Clear();
-            currentPath.Clear();
-            current = null;
-            root = null;
-            transitioning = false;
+            m_SystemCache.Clear();
+            m_SwitchQueue.Clear();
+            m_StateHistory.Clear();
+            m_Tree = null;
+            m_Running = false;
+            m_SceneLoading = false;
+            m_NextState = null;
 
             base.OnClear();
 
