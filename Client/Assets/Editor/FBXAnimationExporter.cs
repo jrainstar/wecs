@@ -1,389 +1,708 @@
-using UnityEngine;
-using UnityEditor;
-using System.IO;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using UnityEditor;
 using UnityEditor.Animations;
+using UnityEngine;
 
-public class FBXAnimationExporter : EditorWindow
+namespace GameLogic.Editor
 {
-    private DefaultAsset sourceFolder;
-    private DefaultAsset targetFolder;
-    private Vector2 scrollPosition;
-
-    private bool createAnimController = false;
-    private bool includeFBXName = true; // 是否包含FBX文件名
-
-    private Dictionary<string, bool> selectedFiles = new Dictionary<string, bool>();
-    private List<string> fbxFiles = new List<string>();
-    private Dictionary<string, List<string>> fbxAnimations = new Dictionary<string, List<string>>();
-    private bool isScanning = false;
-
-    [MenuItem("Tools/FBX动画导出器")]
-    public static void ShowWindow()
+    /// <summary>
+    /// FBX 动画批量提取工具。
+    /// 支持指定多个文件夹（可递归）和多个指定 FBX 文件，
+    /// 将 FBX 内嵌的 AnimationClip 提取为独立的 .anim 资源，
+    /// 动画文件名与 FBX 文件名保持一致。
+    /// </summary>
+    public class FBXAnimationExporter : EditorWindow
     {
-        GetWindow<FBXAnimationExporter>("FBX动画导出器");
-    }
+        private const string PrefsKey = "GameLogic.Editor.FBXAnimationExporter.Settings";
 
-    private void OnGUI()
-    {
-        GUILayout.Label("FBX动画批量导出工具", EditorStyles.boldLabel);
-        EditorGUILayout.Space(10);
+        #region Settings
 
-        // 源文件夹选择
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("源文件夹:", GUILayout.Width(80));
-        sourceFolder = (DefaultAsset)EditorGUILayout.ObjectField(sourceFolder, typeof(DefaultAsset), false);
-
-        if (GUILayout.Button("扫描FBX", GUILayout.Width(80)))
+        [Serializable]
+        private class Settings
         {
-            ScanFBXFiles();
+            public List<string> folders = new List<string>();   // asset 相对路径
+            public List<string> files = new List<string>();     // asset 相对路径
+            public string targetFolder = "Assets/AssetRaws/Animations";
+            public bool recursive = true;
+            public bool scanSubFolders = false;
+            public bool createAnimController = false;
+            public bool overwrite = true;
         }
-        EditorGUILayout.EndHorizontal();
 
-        // 目标文件夹选择
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("目标文件夹:", GUILayout.Width(80));
-        targetFolder = (DefaultAsset)EditorGUILayout.ObjectField(targetFolder, typeof(DefaultAsset), false);
-        EditorGUILayout.EndHorizontal();
+        private Settings _settings = new Settings();
 
-        EditorGUILayout.Space(10);
+        private readonly List<string> _fbxList = new List<string>();
+        private readonly Dictionary<string, List<string>> _fbxAnimations = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, bool> _selected = new Dictionary<string, bool>();
 
-        // 导出设置
-        GUILayout.Label("导出设置:", EditorStyles.boldLabel);
-        createAnimController = EditorGUILayout.Toggle("创建动画控制器", createAnimController);
-        includeFBXName = EditorGUILayout.Toggle("文件名包含FBX名称", includeFBXName);
+        private Vector2 _listScroll;
+        private Vector2 _folderScroll;
+        private string _status = string.Empty;
+        private bool _dirty = true;
 
-        // 显示文件名预览
-        EditorGUILayout.Space(5);
-        GUILayout.Label("文件名格式预览:", EditorStyles.boldLabel);
-        if (includeFBXName)
-            GUILayout.Label("FBX名称_动画名称.anim", EditorStyles.miniLabel);
-        else
-            GUILayout.Label("动画名称.anim", EditorStyles.miniLabel);
-
-        EditorGUILayout.Space(10);
-
-        // 扫描状态和文件列表
-        if (isScanning)
+        [MenuItem("Tools/FBX动画导出器", false, 100)]
+        public static void ShowWindow()
         {
-            EditorGUILayout.LabelField("正在扫描FBX文件...");
+            var win = GetWindow<FBXAnimationExporter>("FBX动画导出器");
+            win.minSize = new Vector2(560, 620);
+            win.Show();
         }
-        else if (fbxFiles.Count > 0)
+
+        private void OnEnable()
         {
-            GUILayout.Label($"找到 {fbxFiles.Count} 个FBX文件:", EditorStyles.boldLabel);
+            LoadSettings();
+        }
 
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Height(200));
+        private void OnDisable()
+        {
+            SaveSettings();
+        }
 
-            // 全选按钮
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("全选", GUILayout.Width(60)))
+        #endregion
+
+        #region GUI
+
+        private void OnGUI()
+        {
+            EditorGUILayout.Space(4);
+            EditorGUILayout.LabelField("FBX 动画批量提取", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox(
+                "提取 FBX 内嵌动画为独立 .anim 文件，动画文件名 = FBX 文件名。\n" +
+                "可添加多个文件夹（支持递归）与多个指定 FBX 文件。",
+                MessageType.Info);
+
+            DrawSourceSection();
+            EditorGUILayout.Space(6);
+            DrawOptionSection();
+            EditorGUILayout.Space(6);
+            DrawScanSection();
+            EditorGUILayout.Space(6);
+            DrawExportSection();
+        }
+
+        private void DrawSourceSection()
+        {
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                SetAllSelected(true);
-            }
-            if (GUILayout.Button("全不选", GUILayout.Width(60)))
-            {
-                SetAllSelected(false);
-            }
-            EditorGUILayout.EndHorizontal();
+                EditorGUILayout.LabelField("源（文件夹 / 指定文件）", EditorStyles.boldLabel);
 
-            // 文件列表
-            foreach (string file in fbxFiles)
-            {
-                if (!selectedFiles.ContainsKey(file))
-                    selectedFiles[file] = true;
+                // 支持把 Project 中的文件夹 / FBX 直接拖进来
+                var dropArea = GUILayoutUtility.GetRect(0f, 0f);
+                dropArea.height = 1f;
+                HandleDragAndDrop(dropArea);
 
-                EditorGUILayout.BeginHorizontal();
-                selectedFiles[file] = EditorGUILayout.Toggle(selectedFiles[file], GUILayout.Width(20));
-                EditorGUILayout.LabelField(Path.GetFileName(file));
-
-                // 显示该FBX中的动画数量
-                if (fbxAnimations.ContainsKey(file) && fbxAnimations[file].Count > 0)
+                // ---------- 文件夹 ----------
+                using (new EditorGUILayout.HorizontalScope())
                 {
-                    GUIStyle style = new GUIStyle(EditorStyles.miniLabel);
-                    style.normal.textColor = Color.green;
-                    EditorGUILayout.LabelField($"({fbxAnimations[file].Count} 个动画)", style, GUILayout.Width(80));
+                    EditorGUILayout.LabelField("文件夹列表", EditorStyles.miniBoldLabel);
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("添加选中文件夹", EditorStyles.miniButtonLeft, GUILayout.Width(100)))
+                        AddSelectedFolders();
+                    if (GUILayout.Button("添加文件夹…", EditorStyles.miniButtonMid, GUILayout.Width(90)))
+                        AddFolderViaPanel();
+                    if (GUILayout.Button("清空", EditorStyles.miniButtonRight, GUILayout.Width(50)))
+                    {
+                        _settings.folders.Clear();
+                        MarkDirty();
+                    }
+                }
+
+                _folderScroll = EditorGUILayout.BeginScrollView(_folderScroll, GUILayout.MaxHeight(90));
+                if (_settings.folders.Count == 0)
+                {
+                    EditorGUILayout.LabelField("（空）可直接把 Project 中的文件夹拖到下框", EditorStyles.miniLabel);
                 }
                 else
                 {
-                    GUIStyle style = new GUIStyle(EditorStyles.miniLabel);
-                    style.normal.textColor = Color.yellow;
-                    EditorGUILayout.LabelField("(无动画)", style, GUILayout.Width(60));
+                    for (int i = _settings.folders.Count - 1; i >= 0; i--)
+                    {
+                        using (new EditorGUILayout.HorizontalScope())
+                        {
+                            EditorGUILayout.LabelField(_settings.folders[i], EditorStyles.miniLabel);
+                            GUILayout.FlexibleSpace();
+                            if (GUILayout.Button("定位", EditorStyles.miniButtonLeft, GUILayout.Width(38)))
+                            {
+                                var obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(_settings.folders[i]);
+                                Selection.activeObject = obj;
+                                EditorGUIUtility.PingObject(obj);
+                            }
+                            if (GUILayout.Button("×", EditorStyles.miniButtonRight, GUILayout.Width(22)))
+                            {
+                                _settings.folders.RemoveAt(i);
+                                MarkDirty();
+                            }
+                        }
+                    }
+                }
+                EditorGUILayout.EndScrollView();
+
+                _settings.recursive = EditorGUILayout.ToggleLeft("文件夹递归（包含所有子文件夹）", _settings.recursive);
+
+                EditorGUILayout.Space(4);
+
+                // ---------- 指定文件 ----------
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    EditorGUILayout.LabelField("指定文件列表", EditorStyles.miniBoldLabel);
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("添加选中文件", EditorStyles.miniButtonLeft, GUILayout.Width(100)))
+                        AddSelectedFiles();
+                    if (GUILayout.Button("清空", EditorStyles.miniButtonRight, GUILayout.Width(50)))
+                    {
+                        _settings.files.Clear();
+                        MarkDirty();
+                    }
                 }
 
-                EditorGUILayout.EndHorizontal();
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    if (GUILayout.Button("添加单个文件…", EditorStyles.miniButtonLeft))
+                        AddFileViaPanel();
+                }
+
+                _listScroll = EditorGUILayout.BeginScrollView(_listScroll, GUILayout.MaxHeight(80));
+                if (_settings.files.Count == 0)
+                {
+                    EditorGUILayout.LabelField("（空）可直接把 Project 中的 FBX 拖到下框", EditorStyles.miniLabel);
+                }
+                else
+                {
+                    for (int i = _settings.files.Count - 1; i >= 0; i--)
+                    {
+                        using (new EditorGUILayout.HorizontalScope())
+                        {
+                            EditorGUILayout.LabelField(_settings.files[i], EditorStyles.miniLabel);
+                            GUILayout.FlexibleSpace();
+                            if (GUILayout.Button("×", EditorStyles.miniButton, GUILayout.Width(22)))
+                            {
+                                _settings.files.RemoveAt(i);
+                                MarkDirty();
+                            }
+                        }
+                    }
+                }
+                EditorGUILayout.EndScrollView();
             }
-
-            EditorGUILayout.EndScrollView();
         }
 
-        EditorGUILayout.Space(10);
-
-        // 导出按钮
-        GUI.enabled = sourceFolder != null && targetFolder != null && fbxFiles.Count > 0;
-
-        if (GUILayout.Button("开始导出动画", GUILayout.Height(40)))
+        private void DrawOptionSection()
         {
-            ExportAnimations();
-        }
-
-        GUI.enabled = true;
-    }
-
-    private void ScanFBXFiles()
-    {
-        if (sourceFolder == null)
-        {
-            EditorUtility.DisplayDialog("提示", "请先选择源文件夹", "确定");
-            return;
-        }
-
-        string folderPath = AssetDatabase.GetAssetPath(sourceFolder);
-        if (!Directory.Exists(folderPath))
-        {
-            EditorUtility.DisplayDialog("错误", "源文件夹不存在", "确定");
-            return;
-        }
-
-        isScanning = true;
-        fbxFiles.Clear();
-        selectedFiles.Clear();
-        fbxAnimations.Clear();
-
-        // 递归查找所有FBX文件
-        string[] allFiles = Directory.GetFiles(folderPath, "*.fbx", SearchOption.AllDirectories);
-        foreach (string file in allFiles)
-        {
-            string relativePath = file.Replace("\\", "/");
-            fbxFiles.Add(relativePath);
-
-            // 获取FBX内部的动画信息
-            List<string> animationNames = GetFBXAnimations(relativePath);
-            fbxAnimations[relativePath] = animationNames;
-        }
-
-        // 设置默认选中状态
-        foreach (string file in fbxFiles)
-        {
-            selectedFiles[file] = true;
-        }
-
-        isScanning = false;
-        Repaint();
-
-        Debug.Log($"扫描完成，找到 {fbxFiles.Count} 个FBX文件");
-    }
-
-    private List<string> GetFBXAnimations(string fbxPath)
-    {
-        List<string> animations = new List<string>();
-
-        // 加载FBX资源
-        GameObject fbxAsset = AssetDatabase.LoadAssetAtPath<GameObject>(fbxPath);
-        if (fbxAsset == null)
-            return animations;
-
-        // 获取该FBX的所有子资源（包括动画）
-        Object[] subAssets = AssetDatabase.LoadAllAssetsAtPath(fbxPath);
-        foreach (Object subAsset in subAssets)
-        {
-            if (subAsset is AnimationClip clip && !clip.name.Contains("__preview__"))
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                animations.Add(clip.name);
+                EditorGUILayout.LabelField("输出设置", EditorStyles.boldLabel);
+
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    EditorGUILayout.LabelField("目标文件夹", GUILayout.Width(70));
+                    _settings.targetFolder = EditorGUILayout.TextField(_settings.targetFolder);
+                    if (GUILayout.Button("…", GUILayout.Width(28)))
+                    {
+                        string abs = ChooseFolderPanel("选择输出文件夹",
+                            Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), _settings.targetFolder)));
+                        if (!string.IsNullOrEmpty(abs))
+                        {
+                            string assetPath = ToAssetPath(abs);
+                            if (string.IsNullOrEmpty(assetPath))
+                                EditorUtility.DisplayDialog("错误", "目标文件夹必须位于 Assets 目录下。", "确定");
+                            else
+                            {
+                                _settings.targetFolder = assetPath;
+                                MarkDirty();
+                            }
+                        }
+                    }
+                }
+
+                _settings.scanSubFolders = EditorGUILayout.ToggleLeft(
+                    "保留相对子目录结构（按 FBX 所在子文件夹输出）", _settings.scanSubFolders);
+                _settings.createAnimController = EditorGUILayout.ToggleLeft(
+                    "为每个 FBX 生成 AnimatorController（同名）", _settings.createAnimController);
+                _settings.overwrite = EditorGUILayout.ToggleLeft(
+                    "覆盖已存在的同名 .anim（不勾选则跳过）", _settings.overwrite);
             }
         }
 
-        return animations;
-    }
-
-    private void SetAllSelected(bool selected)
-    {
-        List<string> keys = new List<string>(selectedFiles.Keys);
-        foreach (string key in keys)
+        private void DrawScanSection()
         {
-            selectedFiles[key] = selected;
-        }
-    }
-
-    private void ExportAnimations()
-    {
-        if (targetFolder == null)
-        {
-            EditorUtility.DisplayDialog("提示", "请选择目标文件夹", "确定");
-            return;
-        }
-
-        string targetPath = AssetDatabase.GetAssetPath(targetFolder);
-        int exportedCount = 0;
-        int totalSelected = 0;
-
-        // 计算选中的文件数
-        foreach (var pair in selectedFiles)
-        {
-            if (pair.Value)
-                totalSelected++;
-        }
-
-        if (totalSelected == 0)
-        {
-            EditorUtility.DisplayDialog("提示", "没有选择任何文件", "确定");
-            return;
-        }
-
-        // 开始导出
-        for (int i = 0; i < fbxFiles.Count; i++)
-        {
-            string fbxPath = fbxFiles[i];
-
-            if (!selectedFiles.ContainsKey(fbxPath) || !selectedFiles[fbxPath])
-                continue;
-
-            // 显示进度条
-            float progress = (float)i / fbxFiles.Count;
-            if (EditorUtility.DisplayCancelableProgressBar("导出动画", $"正在处理: {Path.GetFileName(fbxPath)}", progress))
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                break;
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    EditorGUILayout.LabelField($"扫描结果：{_fbxList.Count} 个 FBX", EditorStyles.boldLabel);
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("重新扫描", GUILayout.Width(80)))
+                        Scan();
+                }
+
+                if (_fbxList.Count > 0)
+                {
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        if (GUILayout.Button("全选", EditorStyles.miniButtonLeft, GUILayout.Width(60)))
+                            SetAll(true);
+                        if (GUILayout.Button("全不选", EditorStyles.miniButtonMid, GUILayout.Width(60)))
+                            SetAll(false);
+                        if (GUILayout.Button("仅选有动画的", EditorStyles.miniButtonRight, GUILayout.Width(100)))
+                            SelectOnlyWithAnim();
+                        GUILayout.FlexibleSpace();
+                        int selectedCount = _selected.Count(p => p.Value);
+                        EditorGUILayout.LabelField($"{selectedCount} / {_fbxList.Count}", GUILayout.Width(80));
+                    }
+
+                    _listScroll = EditorGUILayout.BeginScrollView(_listScroll, GUILayout.Height(220));
+                    foreach (string fbxPath in _fbxList)
+                    {
+                        using (new EditorGUILayout.HorizontalScope())
+                        {
+                            bool cur = _selected.TryGetValue(fbxPath, out var v) && v;
+                            bool next = EditorGUILayout.Toggle(cur, GUILayout.Width(18));
+                            if (next != cur) _selected[fbxPath] = next;
+
+                            EditorGUILayout.LabelField(fbxPath, EditorStyles.miniLabel);
+
+                            if (_fbxAnimations.TryGetValue(fbxPath, out var anims) && anims.Count > 0)
+                            {
+                                var style = new GUIStyle(EditorStyles.miniLabel) { normal = { textColor = new Color(0.3f, 0.85f, 0.4f) } };
+                                EditorGUILayout.LabelField($"({anims.Count} 动画)", style, GUILayout.Width(70));
+                            }
+                            else
+                            {
+                                var style = new GUIStyle(EditorStyles.miniLabel) { normal = { textColor = new Color(0.95f, 0.75f, 0.25f) } };
+                                EditorGUILayout.LabelField("(无动画)", style, GUILayout.Width(60));
+                            }
+                        }
+                    }
+                    EditorGUILayout.EndScrollView();
+                }
             }
+        }
+
+        private void DrawExportSection()
+        {
+            if (!string.IsNullOrEmpty(_status))
+                EditorGUILayout.HelpBox(_status, MessageType.None);
+
+            bool canExport = _fbxList.Count > 0
+                             && !string.IsNullOrEmpty(_settings.targetFolder)
+                             && _selected.Count(p => p.Value) > 0;
+
+            using (new EditorGUI.DisabledScope(!canExport))
+            {
+                if (GUILayout.Button("开始提取动画", GUILayout.Height(36)))
+                    Export();
+            }
+        }
+
+        #endregion
+
+        #region 源收集
+
+        private void AddSelectedFolders()
+        {
+            int added = 0;
+            foreach (var obj in Selection.objects)
+            {
+                string p = AssetDatabase.GetAssetPath(obj);
+                if (string.IsNullOrEmpty(p) || !AssetDatabase.IsValidFolder(p)) continue;
+                if (_settings.folders.Contains(p)) continue;
+                _settings.folders.Add(p);
+                added++;
+            }
+            if (added == 0) _status = "没有在 Project 中选中文件夹。";
+            MarkDirty();
+        }
+
+        private void AddSelectedFiles()
+        {
+            int added = 0;
+            foreach (var obj in Selection.objects)
+            {
+                string p = AssetDatabase.GetAssetPath(obj);
+                if (string.IsNullOrEmpty(p)) continue;
+                if (!p.EndsWith(".fbx", StringComparison.OrdinalIgnoreCase)) continue;
+                if (_settings.files.Contains(p)) continue;
+                _settings.files.Add(p);
+                added++;
+            }
+            if (added == 0) _status = "没有在 Project 中选中 FBX 文件。";
+            MarkDirty();
+        }
+
+        private void AddFolderViaPanel()
+        {
+            string abs = ChooseFolderPanel("添加源文件夹", Directory.GetCurrentDirectory());
+            if (string.IsNullOrEmpty(abs)) return;
+            string assetPath = ToAssetPath(abs);
+            if (string.IsNullOrEmpty(assetPath))
+            {
+                EditorUtility.DisplayDialog("错误", "只能添加 Assets 目录下的文件夹。", "确定");
+                return;
+            }
+            if (!_settings.folders.Contains(assetPath))
+                _settings.folders.Add(assetPath);
+            MarkDirty();
+        }
+
+        private void AddFileViaPanel()
+        {
+            string start = _settings.folders.Count > 0
+                ? Path.GetFullPath(_settings.folders[0])
+                : Directory.GetCurrentDirectory();
+
+            string abs = EditorUtility.OpenFilePanelWithFilters("添加 FBX 文件", start, new[] { "FBX", "fbx,FBX" });
+            if (string.IsNullOrEmpty(abs)) return;
+
+            string assetPath = ToAssetPath(abs);
+            if (string.IsNullOrEmpty(assetPath))
+            {
+                EditorUtility.DisplayDialog("错误", "只能添加 Assets 目录下的 FBX 文件。", "确定");
+                return;
+            }
+            if (!_settings.files.Contains(assetPath))
+                _settings.files.Add(assetPath);
+            MarkDirty();
+        }
+
+        /// <summary>
+        /// 处理拖拽：文件夹加入 folders，.fbx 加入 files。
+        /// </summary>
+        private void HandleDragAndDrop(Rect area)
+        {
+            var evt = Event.current;
+            if (!area.Contains(evt.mousePosition)) return;
+            if (evt.type != EventType.DragUpdated && evt.type != EventType.DragPerform) return;
+
+            bool hasValid = DragAndDrop.paths.Any(p =>
+                AssetDatabase.IsValidFolder(p) || p.EndsWith(".fbx", StringComparison.OrdinalIgnoreCase));
+            if (!hasValid) return;
+
+            DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+            if (evt.type != EventType.DragPerform) return;
+
+            DragAndDrop.AcceptDrag();
+            foreach (string p in DragAndDrop.paths)
+            {
+                string path = p.Replace('\\', '/');
+                if (AssetDatabase.IsValidFolder(path))
+                {
+                    if (!_settings.folders.Contains(path)) _settings.folders.Add(path);
+                }
+                else if (path.EndsWith(".fbx", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (!_settings.files.Contains(path)) _settings.files.Add(path);
+                }
+            }
+            MarkDirty();
+            evt.Use();
+        }
+
+        private static string ChooseFolderPanel(string title, string startDir)
+        {
+            // Unity 没有原生“选择文件夹”对话框，改用 OpenFolderPanel 取绝对路径。
+            return EditorUtility.OpenFolderPanel(title, startDir, string.Empty);
+        }
+
+        private static string ToAssetPath(string absolutePath)
+        {
+            if (string.IsNullOrEmpty(absolutePath)) return null;
+            absolutePath = absolutePath.Replace('\\', '/').TrimEnd('/');
+            string projectRoot = Directory.GetCurrentDirectory().Replace('\\', '/').TrimEnd('/');
+            if (!absolutePath.StartsWith(projectRoot, StringComparison.OrdinalIgnoreCase)) return null;
+            string rel = absolutePath.Substring(projectRoot.Length).TrimStart('/');
+            if (rel == "Assets" || rel.StartsWith("Assets/", StringComparison.Ordinal)) return rel;
+            return null;
+        }
+
+        #endregion
+
+        #region 扫描
+
+        private void MarkDirty()
+        {
+            _dirty = true;
+            SaveSettings();
+        }
+
+        private void Scan()
+        {
+            _fbxList.Clear();
+            _fbxAnimations.Clear();
+            _selected.Clear();
+
+            var set = new HashSet<string>(StringComparer.Ordinal);
+
+            // 1) 文件夹
+            foreach (string folder in _settings.folders)
+            {
+                if (!AssetDatabase.IsValidFolder(folder))
+                {
+                    _status = $"文件夹无效：{folder}";
+                    continue;
+                }
+
+                var search = _settings.recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+                string absFolder = Path.GetFullPath(folder);
+                if (!Directory.Exists(absFolder)) continue;
+
+                foreach (string abs in Directory.GetFiles(absFolder, "*.fbx", search))
+                {
+                    string assetPath = ToAssetPath(abs);
+                    if (!string.IsNullOrEmpty(assetPath)) set.Add(assetPath);
+                }
+            }
+
+            // 2) 指定文件
+            foreach (string file in _settings.files)
+            {
+                if (File.Exists(Path.GetFullPath(file)))
+                    set.Add(file);
+            }
+
+            _fbxList.AddRange(set.OrderBy(p => p, StringComparer.Ordinal));
 
             try
             {
-                bool success = ExportSingleFBXAnimations(fbxPath, targetPath);
-                if (success)
-                    exportedCount++;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"导出失败: {fbxPath}\n错误: {e.Message}");
-            }
-        }
-
-        EditorUtility.ClearProgressBar();
-        AssetDatabase.Refresh();
-
-        EditorUtility.DisplayDialog("完成", $"成功导出 {exportedCount} 个FBX文件的动画", "确定");
-    }
-
-    private bool ExportSingleFBXAnimations(string fbxPath, string targetFolderPath)
-    {
-        // 加载FBX资源
-        GameObject fbxAsset = AssetDatabase.LoadAssetAtPath<GameObject>(fbxPath);
-        if (fbxAsset == null)
-        {
-            Debug.LogWarning($"无法加载FBX: {fbxPath}");
-            return false;
-        }
-
-        // 获取文件信息用于命名
-        string fileName = Path.GetFileNameWithoutExtension(fbxPath);
-        string relativePath = GetRelativePath(fbxPath, targetFolderPath);
-
-        // 创建目标子文件夹
-        string targetSubFolder = Path.Combine(targetFolderPath, relativePath);
-        if (!Directory.Exists(targetSubFolder))
-        {
-            Directory.CreateDirectory(targetSubFolder);
-        }
-
-        // 获取FBX内部的所有动画剪辑
-        Object[] subAssets = AssetDatabase.LoadAllAssetsAtPath(fbxPath);
-        List<AnimationClip> clips = new List<AnimationClip>();
-
-        foreach (Object subAsset in subAssets)
-        {
-            if (subAsset is AnimationClip clip && !clip.name.Contains("__preview__"))
-            {
-                clips.Add(clip);
-            }
-        }
-
-        if (clips.Count == 0)
-        {
-            Debug.LogWarning($"FBX文件中没有找到动画: {fbxPath}");
-            return false;
-        }
-
-        Debug.Log($"找到 {clips.Count} 个动画在 {fileName}");
-
-        // 导出动画剪辑
-        AnimatorController controller = null;
-
-        if (createAnimController)
-        {
-            // 创建动画控制器
-            string controllerPath = Path.Combine(targetSubFolder, $"{fileName}_Controller.controller");
-            controller = AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
-        }
-
-        int exportedClipCount = 0;
-
-        foreach (AnimationClip originalClip in clips)
-        {
-            // 创建新的动画剪辑并复制原始数据
-            AnimationClip newClip = new AnimationClip();
-            EditorUtility.CopySerialized(originalClip, newClip);
-
-            // 保持原始名称
-            newClip.name = originalClip.name;
-
-            // 根据选项生成文件名
-            string clipFileName;
-            if (includeFBXName)
-            {
-                clipFileName = $"{fileName}_{originalClip.name}.anim";
-            }
-            else
-            {
-                clipFileName = $"{originalClip.name}.anim";
-            }
-
-            string clipPath = Path.Combine(targetSubFolder, clipFileName);
-
-            // 检查文件是否已存在
-            if (File.Exists(clipPath))
-            {
-                if (!EditorUtility.DisplayDialog("文件已存在",
-                    $"文件 {clipFileName} 已存在，是否覆盖？",
-                    "覆盖", "跳过"))
+                for (int i = 0; i < _fbxList.Count; i++)
                 {
-                    continue;
+                    string path = _fbxList[i];
+                    EditorUtility.DisplayProgressBar("扫描 FBX", path, (float)i / Mathf.Max(1, _fbxList.Count));
+                    var clips = GetClips(path);
+                    _fbxAnimations[path] = clips.Select(c => c.name).ToList();
+                    _selected[path] = clips.Count > 0;
                 }
             }
-
-            // 创建并保存动画资源
-            AssetDatabase.CreateAsset(newClip, clipPath);
-
-            if (controller != null)
+            finally
             {
-                // 添加到动画控制器
-                AnimationClip savedClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
-                if (savedClip != null)
-                {
-                    controller.AddMotion(savedClip);
-                }
+                EditorUtility.ClearProgressBar();
             }
 
-            exportedClipCount++;
-            Debug.Log($"导出动画: {clipFileName}");
+            _status = $"扫描完成：{_fbxList.Count} 个 FBX，" +
+                      $"{_fbxAnimations.Values.Sum(v => v.Count)} 个动画。";
+            Repaint();
         }
 
-        Debug.Log($"成功从 {fileName} 导出 {exportedClipCount} 个动画");
-        AssetDatabase.SaveAssets();
-
-        return exportedClipCount > 0;
-    }
-
-    private string GetRelativePath(string fullPath, string targetFolder)
-    {
-        // 获取源文件夹的相对路径
-        string sourceFolderPath = AssetDatabase.GetAssetPath(sourceFolder);
-
-        if (fullPath.StartsWith(sourceFolderPath))
+        private static List<AnimationClip> GetClips(string fbxPath)
         {
-            string relative = fullPath.Substring(sourceFolderPath.Length);
-            relative = relative.TrimStart('/');
-            relative = Path.GetDirectoryName(relative);
-            return relative;
+            var result = new List<AnimationClip>();
+            foreach (var obj in AssetDatabase.LoadAllAssetsAtPath(fbxPath))
+            {
+                if (obj is AnimationClip clip && !clip.name.StartsWith("__preview__", StringComparison.Ordinal))
+                    result.Add(clip);
+            }
+            return result;
         }
 
-        return "";
+        private void SetAll(bool value)
+        {
+            foreach (string k in _fbxList) _selected[k] = value;
+        }
+
+        private void SelectOnlyWithAnim()
+        {
+            foreach (string k in _fbxList)
+                _selected[k] = _fbxAnimations.TryGetValue(k, out var v) && v.Count > 0;
+        }
+
+        #endregion
+
+        #region 导出
+
+        private void Export()
+        {
+            if (_dirty || _fbxList.Count == 0)
+                Scan();
+
+            var targets = _fbxList.Where(p => _selected.TryGetValue(p, out var v) && v).ToList();
+            if (targets.Count == 0)
+            {
+                EditorUtility.DisplayDialog("提示", "没有勾选任何 FBX。", "确定");
+                return;
+            }
+
+            string targetRoot = _settings.targetFolder.Replace('\\', '/').TrimEnd('/');
+            EnsureFolder(targetRoot);
+
+            int okFiles = 0, okClips = 0, skipped = 0;
+            var failed = new List<string>();
+
+            try
+            {
+                for (int i = 0; i < targets.Count; i++)
+                {
+                    string fbxPath = targets[i];
+                    float progress = (float)i / targets.Count;
+                    if (EditorUtility.DisplayCancelableProgressBar(
+                            "提取动画", $"{fbxPath}  ({i + 1}/{targets.Count})", progress))
+                        break;
+
+                    try
+                    {
+                        int n = ExportSingle(fbxPath, targetRoot, out int skip);
+                        skipped += skip;
+                        if (n > 0) { okFiles++; okClips += n; }
+                        else if (skip == 0) failed.Add(fbxPath + "（无动画）");
+                    }
+                    catch (Exception e)
+                    {
+                        failed.Add(fbxPath + " -> " + e.Message);
+                        Debug.LogError($"[FBXAnimationExporter] 导出失败: {fbxPath}\n{e}");
+                    }
+                }
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+            }
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            _status = $"完成：{okFiles} 个 FBX，共 {okClips} 个动画；跳过 {skipped} 个。" +
+                      (failed.Count > 0 ? $" 失败 {failed.Count} 个。" : string.Empty);
+
+            foreach (var f in failed) Debug.LogWarning("[FBXAnimationExporter] " + f);
+
+            EditorUtility.DisplayDialog("提取完成",
+                $"{_status}\n输出目录：{targetRoot}", "确定");
+            Repaint();
+        }
+
+        /// <summary>
+        /// 导出单个 FBX，返回成功写出的 clip 数。
+        /// </summary>
+        private int ExportSingle(string fbxPath, string targetRoot, out int skipped)
+        {
+            skipped = 0;
+            var clips = GetClips(fbxPath);
+            if (clips.Count == 0) return 0;
+
+            // 动画名 = FBX 文件名
+            string baseName = Path.GetFileNameWithoutExtension(fbxPath);
+
+            // 输出子目录
+            string outFolder = targetRoot;
+            if (_settings.scanSubFolders)
+            {
+                string dir = Path.GetDirectoryName(fbxPath)?.Replace('\\', '/');
+                string relative = GetRelativeToSources(dir);
+                if (!string.IsNullOrEmpty(relative))
+                    outFolder = $"{targetRoot}/{relative}";
+            }
+            EnsureFolder(outFolder);
+
+            var exported = new List<AnimationClip>();
+
+            // 单动画：文件名 = FBX 文件名；多动画：FBX 文件名_序号（避免同名互相覆盖）
+            for (int i = 0; i < clips.Count; i++)
+            {
+                AnimationClip src = clips[i];
+                string clipName = clips.Count > 1 ? $"{baseName}_{i:00}" : baseName;
+                string animPath = $"{outFolder}/{clipName}.anim";
+
+                if (File.Exists(Path.GetFullPath(animPath)))
+                {
+                    if (!_settings.overwrite)
+                    {
+                        skipped++;
+                        continue;
+                    }
+                    AssetDatabase.DeleteAsset(animPath);
+                }
+
+                // CopySerialized 会连同原 clip 的 name 一起复制，必须先写到临时名再改名，
+                // 否则磁盘上会出现「文件名与内部 name 不一致」的警告。
+                var newClip = new AnimationClip { name = clipName };
+                AssetDatabase.CreateAsset(newClip, animPath);
+                EditorUtility.CopySerialized(src, newClip);
+                newClip.name = clipName;
+                EditorUtility.SetDirty(newClip);
+
+                exported.Add(newClip);
+            }
+
+            if (_settings.createAnimController && exported.Count > 0)
+            {
+                string controllerPath = $"{outFolder}/{baseName}.controller";
+                if (File.Exists(Path.GetFullPath(controllerPath)))
+                {
+                    if (!_settings.overwrite) return exported.Count;
+                    AssetDatabase.DeleteAsset(controllerPath);
+                }
+
+                var controller = AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
+                foreach (var clip in exported)
+                    controller.AddMotion(clip);
+            }
+
+            return exported.Count;
+        }
+
+        private string GetRelativeToSources(string dir)
+        {
+            if (string.IsNullOrEmpty(dir)) return null;
+            // 找到包含该目录的最长源文件夹，取相对路径
+            string best = null;
+            foreach (string folder in _settings.folders)
+            {
+                string f = folder.Replace('\\', '/').TrimEnd('/');
+                if (dir.Equals(f, StringComparison.OrdinalIgnoreCase) ||
+                    dir.StartsWith(f + "/", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (best == null || f.Length > best.Length) best = f;
+                }
+            }
+            if (best == null) return null;
+            string rel = dir.Substring(best.Length).TrimStart('/');
+            return rel;
+        }
+
+        private static void EnsureFolder(string assetFolder)
+        {
+            if (AssetDatabase.IsValidFolder(assetFolder)) return;
+
+            string[] parts = assetFolder.Split('/');
+            string cur = parts[0]; // "Assets"
+            for (int i = 1; i < parts.Length; i++)
+            {
+                string next = cur + "/" + parts[i];
+                if (!AssetDatabase.IsValidFolder(next))
+                    AssetDatabase.CreateFolder(cur, parts[i]);
+                cur = next;
+            }
+        }
+
+        #endregion
+
+        #region 配置持久化
+
+        private void LoadSettings()
+        {
+            string json = EditorPrefs.GetString(PrefsKey, string.Empty);
+            if (!string.IsNullOrEmpty(json))
+            {
+                try
+                {
+                    var s = JsonUtility.FromJson<Settings>(json);
+                    if (s != null) _settings = s;
+                }
+                catch
+                {
+                    // 配置损坏时忽略，使用默认值
+                }
+            }
+            _settings.folders ??= new List<string>();
+            _settings.files ??= new List<string>();
+            _dirty = true;
+        }
+
+        private void SaveSettings()
+        {
+            EditorPrefs.SetString(PrefsKey, JsonUtility.ToJson(_settings));
+        }
+
+        #endregion
     }
 }

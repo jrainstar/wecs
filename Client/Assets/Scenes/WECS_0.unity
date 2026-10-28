@@ -145,7 +145,27 @@ MonoBehaviour:
   _PlayAutomatically: 1
   _Names: []
   _Animations:
-  - {fileID: -623603649343465320, guid: 2121a6b9649b5ff4cb325dfefdbf3acb, type: 3}
+  - {fileID: 7400000, guid: 251e75b358e2c3343b2131ba3653085a, type: 2}
+  - {fileID: 7400000, guid: 4549d0de21b87a642838b83ceaf7dc76, type: 2}
+  - {fileID: 7400000, guid: 770e871d2af61204a9eca076bb1bf89d, type: 2}
+  - {fileID: 7400000, guid: 5d4bc13ae93d3094e947e4aecc9de568, type: 2}
+  - {fileID: 7400000, guid: 2082bd6d748e59c4cb846e5a2feae881, type: 2}
+  - {fileID: 7400000, guid: 4fd41cb55901f624f9364a40017f8821, type: 2}
+  - {fileID: 7400000, guid: 8116ca908d14b7b42bc5815e40eb18e0, type: 2}
+  - {fileID: 7400000, guid: bbcf3f3c20d063d488aebeba8d6a9778, type: 2}
+  - {fileID: 7400000, guid: d3f35e7c8996c534d9580910a8610595, type: 2}
+  - {fileID: 7400000, guid: c38e6e6624eabbf48bd8d35430a64b4f, type: 2}
+  - {fileID: 7400000, guid: 4c08d72859e945540b923e4321108201, type: 2}
+  - {fileID: 7400000, guid: f252619899717ff44ba7c6f5a4536c24, type: 2}
+  - {fileID: 7400000, guid: cfc9b9b859f27cf4a844821859336b7b, type: 2}
+  - {fileID: 7400000, guid: a23ce478f5be0b2488cd041f92bb0716, type: 2}
+  - {fileID: 7400000, guid: 7c8e2dce5bfbbe242bc2176afda74db3, type: 2}
+  - {fileID: 7400000, guid: 61ca766e15037e549bf05101ecae336b, type: 2}
+  - {fileID: 7400000, guid: 22f5e8961eba37b42a85afbed599536e, type: 2}
+  - {fileID: 7400000, guid: 3b15ca7a3af83764c9d08cd6a80da684, type: 2}
+  - {fileID: 7400000, guid: a7152c72905a98d4aa530c230a3ba461, type: 2}
+  - {fileID: 7400000, guid: 24297a3cd18779e499202c88f15a03cf, type: 2}
+  - {fileID: 7400000, guid: 5d60ceb4b4e1f7f4aab36d1ea64078af, type: 2}
 --- !u!95 &64933593
 Animator:
   serializedVersion: 5
