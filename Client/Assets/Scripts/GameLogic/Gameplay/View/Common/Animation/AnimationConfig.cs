@@ -25,7 +25,7 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 模型
         /// </summary>
-        [ValueDropdown("@OdinValueDropdown.ModelValueDropdown()", NumberOfItemsBeforeEnablingSearch = 0, DropdownTitle = "选择模型")]
+        [ValueDropdown("@AnimationDropdown.ModelValueDropdown()", NumberOfItemsBeforeEnablingSearch = 0, DropdownTitle = "选择模型")]
         [PropertySpace(SpaceAfter = 5)]
         [LabelText("模型")]
         public int model;
@@ -95,12 +95,12 @@ namespace GameLogic.Gameplay.View
         /// 状态
         /// </summary>
         [LabelText("状态")]
-        [ValueDropdown("@OdinValueDropdown.GetStateDefine()")]
+        [ValueDropdown("@AnimationDropdown.GetStateDefine()")]
         public byte state;
         /// <summary>
         /// 动画名称
         /// </summary>
-        [ValueDropdown("@OdinValueDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
+        [ValueDropdown("@AnimationDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
         [LabelText("动画名称")]
         public string name;
     }
@@ -114,7 +114,7 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 动画名称
         /// </summary>
-        [ValueDropdown("@OdinValueDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
+        [ValueDropdown("@AnimationDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
         [LabelText("动画名称")]
         public string name;
         /// <summary>
@@ -157,13 +157,13 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 上一个动画名称
         /// </summary>
-        [ValueDropdown("@OdinValueDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
+        [ValueDropdown("@AnimationDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
         [LabelText("上一个动画名称")]
         public string prename;
         /// <summary>
         /// 动画名称
         /// </summary>
-        [ValueDropdown("@OdinValueDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
+        [ValueDropdown("@AnimationDropdown.GetModelAnimNames(AnimationConfigCache.current.model)")]
         [LabelText("动画名称")]
         public string name;
         /// <summary>

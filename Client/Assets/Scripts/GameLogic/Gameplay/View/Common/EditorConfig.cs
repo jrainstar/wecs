@@ -25,8 +25,8 @@ namespace GameLogic.Gameplay.View
 
         static JSONNode LoadByteBuf(string file)
         {
-            return JSON.Parse(File.ReadAllText($"{Application.dataPath}/AssetRaws/Cfgs"));
-        }
+            return JSON.Parse(File.ReadAllText($"{Application.dataPath}/AssetRaws/Configs/{file}.json"));
+        } 
     }
 }
 #endif

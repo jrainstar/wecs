@@ -25,6 +25,19 @@ MonoBehaviour:
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
     Groups:
+    - GroupName: AnimConfig
+      GroupDesc: "\u52A8\u753B\u914D\u7F6E"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/AssetRaws/AnimConfigs
+        CollectorGUID: 9f99d86abf373b9479ff33561eff7e86
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
     - GroupName: Prefab
       GroupDesc: "\u9884\u5236"
       AssetTags: Prefab
@@ -101,12 +114,12 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Cfg
+    - GroupName: Config
       GroupDesc: "\u6570\u636E\u8868"
       AssetTags: DataTable
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/AssetRaws/Cfgs
+      - CollectPath: Assets/AssetRaws/Configs
         CollectorGUID: ce40ff24bcff95047be0d6ba2fcebfb9
         CollectorType: 0
         AddressRuleName: AddressByFileName
