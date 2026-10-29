@@ -14,25 +14,17 @@ namespace GameConf
 {
 public partial class Tables
 {
-    public Gameplay.Tag.TbTagData TbTagData {get; }
-    public Gameplay.Role.TbRoleData TbRoleData {get; }
-    public Gameplay.Role.TbRoleModel TbRoleModel {get; }
-    public Gameplay.Buff.TbBuffData TbBuffData {get; }
-    public Gameplay.Skill.TbSkillData TbSkillData {get; }
-    public Gameplay.Skill.TbEffectData TbEffectData {get; }
-    public Gameplay.Skill.TbPayloadData TbPayloadData {get; }
-    public Gameplay.Moudle.TbMoudleData TbMoudleData {get; }
+    public Gameplay.TbTagData TbTagData {get; }
+    public Gameplay.TbRoleData TbRoleData {get; }
+    public Gameplay.TbRoleModel TbRoleModel {get; }
+    public Gameplay.TbMoudleData TbMoudleData {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
-        TbTagData = new Gameplay.Tag.TbTagData(loader("gameplay_tag_tbtagdata"));
-        TbRoleData = new Gameplay.Role.TbRoleData(loader("gameplay_role_tbroledata"));
-        TbRoleModel = new Gameplay.Role.TbRoleModel(loader("gameplay_role_tbrolemodel"));
-        TbBuffData = new Gameplay.Buff.TbBuffData(loader("gameplay_buff_tbbuffdata"));
-        TbSkillData = new Gameplay.Skill.TbSkillData(loader("gameplay_skill_tbskilldata"));
-        TbEffectData = new Gameplay.Skill.TbEffectData(loader("gameplay_skill_tbeffectdata"));
-        TbPayloadData = new Gameplay.Skill.TbPayloadData(loader("gameplay_skill_tbpayloaddata"));
-        TbMoudleData = new Gameplay.Moudle.TbMoudleData(loader("gameplay_moudle_tbmoudledata"));
+        TbTagData = new Gameplay.TbTagData(loader("gameplay_tbtagdata"));
+        TbRoleData = new Gameplay.TbRoleData(loader("gameplay_tbroledata"));
+        TbRoleModel = new Gameplay.TbRoleModel(loader("gameplay_tbrolemodel"));
+        TbMoudleData = new Gameplay.TbMoudleData(loader("gameplay_tbmoudledata"));
         ResolveRef();
     }
     
@@ -41,10 +33,6 @@ public partial class Tables
         TbTagData.ResolveRef(this);
         TbRoleData.ResolveRef(this);
         TbRoleModel.ResolveRef(this);
-        TbBuffData.ResolveRef(this);
-        TbSkillData.ResolveRef(this);
-        TbEffectData.ResolveRef(this);
-        TbPayloadData.ResolveRef(this);
         TbMoudleData.ResolveRef(this);
     }
 }

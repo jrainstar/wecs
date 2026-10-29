@@ -7,6 +7,10 @@ namespace GameLogic.Gameplay.Common
     public class Engine : Comp
     {
         /// <summary>
+        /// 配置
+        /// </summary>
+        public ConfigKit config { get; private set; }
+        /// <summary>
         /// 资源
         /// </summary>
         public GameResKit gameres { get; private set; }
@@ -32,6 +36,9 @@ namespace GameLogic.Gameplay.Common
         {
             base.OnCreate();
 
+            config = AddComp<ConfigKit>();
+            config.Create();
+            
             gameres = AddComp<GameResKit>();
             gameres.Create();
 

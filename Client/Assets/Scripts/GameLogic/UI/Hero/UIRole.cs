@@ -49,7 +49,7 @@ namespace GameLogic
             m_HeroItems?.NotifyCurrentSelected();
         }
 
-        private void OnHeroSelectedChanged(GameConf.Gameplay.Role.RoleData heroData)
+        private void OnHeroSelectedChanged(GameConf.Gameplay.RoleData heroData)
         {
             if (heroData == null)
             {

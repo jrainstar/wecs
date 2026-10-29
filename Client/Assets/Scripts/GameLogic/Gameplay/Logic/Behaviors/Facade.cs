@@ -11,7 +11,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 设置模型
         /// </summary>
-        /// <param name="model">模型 ID</param>
+        /// <param name="model">heroid</param>
         public void SetModel(int model)
         {
             info.model = model;

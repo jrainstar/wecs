@@ -1,0 +1,30 @@
+[
+  {
+    "id": 10001,
+    "model": "Chun",
+    "born": "000000_balloon_flying_down",
+    "idle": "Stand1",
+    "walk": "Walk_F",
+    "run": "Run_F",
+    "damage": "01_damage",
+    "dead": "01_die",
+    "happy": "01_joy_long",
+    "attack": "01_attack",
+    "attack01": "attack01",
+    "attack02": "attack02"
+  },
+  {
+    "id": 103261,
+    "model": "103261",
+    "born": "000000_balloon_flying_down",
+    "idle": "05_idle",
+    "walk": "05_run",
+    "run": "",
+    "damage": "05_damage",
+    "dead": "05_die",
+    "happy": "05_joy_long",
+    "attack": "05_attack",
+    "attack01": "attack01",
+    "attack02": "attack02"
+  }
+]

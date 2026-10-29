@@ -1,9 +1,7 @@
-using GameConf.Gameplay.Skill;
 using GameLogic.Gameplay.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 
 namespace GameLogic.Gameplay.Logic
 {

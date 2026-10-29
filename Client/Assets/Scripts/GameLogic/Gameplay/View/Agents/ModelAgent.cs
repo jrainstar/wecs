@@ -98,9 +98,14 @@ namespace GameLogic.Gameplay.View
             var node = world.EnsureAgent<NodeAgent>(actor);
             if (null == node || null == node.go) return;
 
+            if (null == world.engine.config) return;
+
             RecycleModel();
+
+            if (null == world.engine.config.location.TbRoleData.Get(ril.model)) return;
+
             model = ril.model;
-            //if (false == world.engine.cfg.location.ModelInfos.TryGetValue(ril.model, out var modelinfo)) return;
+            if (false == world.engine.config.location.TB.TryGetValue(ril.model, out var modelinfo)) return;
             res = "Sphere";
             go = ObjectPool.Get<GameObject>(res);
             //if (null == go) go = world.engine.gameres.location.LoadModelSync(res);

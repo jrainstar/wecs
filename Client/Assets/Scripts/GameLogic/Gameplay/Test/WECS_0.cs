@@ -19,7 +19,7 @@ public class WECS_0 : MonoBehaviour
                     new PlayerData
                     {
                         seat = 1,
-                        hero = 100001,
+                        hero = 10001,
                         position = new IntVector3(-2000, 0, 5000),
                         euler = new IntVector3(0, 0, 0),
                         scale = 1000,
@@ -27,7 +27,7 @@ public class WECS_0 : MonoBehaviour
                     new PlayerData
                     {
                         seat = 2,
-                        hero = 100001,
+                        hero = 10001,
                         position = new IntVector3(2000, 0, 5000),
                         euler = new IntVector3(0, 0, 0),
                         scale = 1000,
