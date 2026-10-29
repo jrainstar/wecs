@@ -1,0 +1,89 @@
+[
+  {
+    "id": 10001,
+    "name": "线性打印",
+    "desc": "",
+    "icon": "",
+    "max_time": 0,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "PrintEvent",
+          "Type": 0,
+          "Print": "线性0秒"
+        }
+      },
+      {
+        "Time": 0.5,
+        "Event": {
+          "$type": "PrintEvent",
+          "Type": 0,
+          "Print": "线性0.5秒"
+        }
+      },
+      {
+        "Time": 1,
+        "Event": {
+          "$type": "PrintEvent",
+          "Type": 0,
+          "Print": "线性1秒"
+        }
+      }
+    ]
+  },
+  {
+    "id": 100011,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "max_time": 0,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "AnimationEvent",
+          "Name": "Attack01",
+          "Loop": false,
+          "Speed": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": 100012,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "max_time": 0,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "AnimationEvent",
+          "Name": "AM_Attack02",
+          "Loop": false,
+          "Speed": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": 100013,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "max_time": 0,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "AnimationEvent",
+          "Name": "AM_Attack03",
+          "Loop": false,
+          "Speed": 1
+        }
+      }
+    ]
+  }
+]

@@ -340,10 +340,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chun
       objectReference: {fileID: 0}
-    - target: {fileID: 3293068341547468356, guid: 3d33f98c91ca48d418deb12e647fb128, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

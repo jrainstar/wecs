@@ -17,6 +17,7 @@ public partial class Tables
     public Gameplay.TbTagData TbTagData {get; }
     public Gameplay.TbRoleData TbRoleData {get; }
     public Gameplay.TbRoleModel TbRoleModel {get; }
+    public Gameplay.TbTimelineData TbTimelineData {get; }
     public Gameplay.TbMoudleData TbMoudleData {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
@@ -24,6 +25,7 @@ public partial class Tables
         TbTagData = new Gameplay.TbTagData(loader("gameplay_tbtagdata"));
         TbRoleData = new Gameplay.TbRoleData(loader("gameplay_tbroledata"));
         TbRoleModel = new Gameplay.TbRoleModel(loader("gameplay_tbrolemodel"));
+        TbTimelineData = new Gameplay.TbTimelineData(loader("gameplay_tbtimelinedata"));
         TbMoudleData = new Gameplay.TbMoudleData(loader("gameplay_tbmoudledata"));
         ResolveRef();
     }
@@ -33,6 +35,7 @@ public partial class Tables
         TbTagData.ResolveRef(this);
         TbRoleData.ResolveRef(this);
         TbRoleModel.ResolveRef(this);
+        TbTimelineData.ResolveRef(this);
         TbMoudleData.ResolveRef(this);
     }
 }

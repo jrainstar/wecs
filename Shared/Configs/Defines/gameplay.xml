@@ -56,20 +56,39 @@
 
 <table name="TbRoleModel" value="RoleModel" input="model@gameplay/role.xlsx"/>
 
-<enum name="RoleAnim">
-	<var name="None" alias="空" />
-	<var name="Born" alias="出场" />
-	<var name="Idle" alias="待机" />
-	<var name="Walk" alias="移动走" />
-	<var name="Run" alias="移动跑" />
-	<var name="Damage" alias="受伤" />
-	<var name="Dead" alias="死亡" />
-	<var name="Happy" alias="高兴" />
-	<var name="Attack" alias="攻击" />
-	<var name="Attack01" alias="攻击01" />
-	<var name="Attack02" alias="攻击02" />
-</enum>
+<bean name="TimelineData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+	<var name="max_time" type="float" alias="最大时间"/>
+	<var name="nodes" type="array,TimelineNode#sep=," alias="节点"/>
+	<var name="go_to" type="TimelineGoTo?#sep=," alias="循环"/>
+</bean>
 
+<table name="TbTimelineData" value="TimelineData" input="data@gameplay/timeline.xlsx"/>
+
+<bean name="TimelineNode">
+	<var name="Time" type="float"/>
+	<var name="Event" type="TimelineEvent"/>
+</bean>
+
+<bean name="TimelineEvent">
+	<bean name="PrintEvent" alias="打印">
+		<var name="Type" type="byte" alias="级别"/>
+		<var name="Print" type="string" alias="日志打印"/>
+	</bean>
+	<bean name="AnimationEvent" alias="动画">
+		<var name="Name"  type="string" alias="动画名称"/>
+		<var name="Loop"  type="bool"   alias="动画循环"/>
+		<var name="Speed" type="float"  alias="动画速度"/>
+	</bean>
+</bean>
+
+<bean name="TimelineGoTo">
+	<var name="From" type="float"/>
+	<var name="To" type="float"/>
+</bean>
 
 <bean name="MoudleData">
 	<var name="id" type="int" alias="编号"/>

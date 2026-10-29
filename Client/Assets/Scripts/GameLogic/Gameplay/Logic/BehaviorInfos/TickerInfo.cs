@@ -7,15 +7,10 @@ namespace GameLogic.Gameplay.Logic
     /// </summary>
     public class TickerInfo : BehaviorInfo
     {
-        private FP mTimeScale = FP.One;
         /// <summary>
         /// 时间缩放
         /// </summary>
-        public FP timescale
-        {
-            get => mTimeScale;
-            set => mTimeScale = FPMath.Clamp(value, 0, FP.MaxValue);
-        }
+        public FP timescale { get; set; }
 
         protected override void OnReady()
         {

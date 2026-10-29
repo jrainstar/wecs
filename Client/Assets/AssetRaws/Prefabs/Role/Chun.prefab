@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ae415b8448704f14f9404010c759ed12, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.763
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ae415b8448704f14f9404010c759ed12, type: 3}
       propertyPath: m_LocalPosition.y
@@ -128,3 +128,8 @@ MonoBehaviour:
   - {fileID: 7400000, guid: a7152c72905a98d4aa530c230a3ba461, type: 2}
   - {fileID: 7400000, guid: 24297a3cd18779e499202c88f15a03cf, type: 2}
   - {fileID: 7400000, guid: 5d60ceb4b4e1f7f4aab36d1ea64078af, type: 2}
+  - {fileID: 7400000, guid: beb70b03bd5dd514ea7ea5b75955976c, type: 2}
+  - {fileID: 7400000, guid: 35b9f662cc08b82428cd4dbfab3eae05, type: 2}
+  - {fileID: 7400000, guid: 271c4d0d2b7b1f44481bcfe0b22a936f, type: 2}
+  - {fileID: 7400000, guid: 1a41879f0ad0c4a4baae4479556f0fce, type: 2}
+  - {fileID: 7400000, guid: 4361b768df5961b44a5c3b68828e341d, type: 2}
