@@ -9,7 +9,7 @@ namespace GameLogic.Gameplay.Common
     public class Location : Comp
     {
         public const string soundpath = "Assets/GameRes/Sound/";
-        public const string modelpath = "Assets/GameRes/Model/";
+        public const string modelpath = "Assets/AssetRaws/Prefabs/Role/";
         public const string animcfgpath = "Assets/GameRes/AnimCfg/";
         public const string effectpath = "Assets/GameRes/Effect/";
         public const string uieffectpath = "Assets/GameRes/UIEffect/";

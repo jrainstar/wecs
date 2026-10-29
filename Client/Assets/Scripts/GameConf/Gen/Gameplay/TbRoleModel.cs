@@ -36,6 +36,7 @@ public partial class TbRoleModel
     public System.Collections.Generic.IReadOnlyDictionary<int, Gameplay.RoleModel> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<Gameplay.RoleModel> DataList => _dataList;
 
+    public bool TryGetValue(int key, out Gameplay.RoleModel value) => _dataMap.TryGetValue(key, out value);
     public Gameplay.RoleModel GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : default;
     public Gameplay.RoleModel Get(int key) => _dataMap[key];
     public Gameplay.RoleModel this[int key] => _dataMap[key];

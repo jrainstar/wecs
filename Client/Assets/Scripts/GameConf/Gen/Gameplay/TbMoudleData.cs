@@ -36,6 +36,7 @@ public partial class TbMoudleData
     public System.Collections.Generic.IReadOnlyDictionary<int, Gameplay.MoudleData> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<Gameplay.MoudleData> DataList => _dataList;
 
+    public bool TryGetValue(int key, out Gameplay.MoudleData value) => _dataMap.TryGetValue(key, out value);
     public Gameplay.MoudleData GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : default;
     public Gameplay.MoudleData Get(int key) => _dataMap[key];
     public Gameplay.MoudleData this[int key] => _dataMap[key];

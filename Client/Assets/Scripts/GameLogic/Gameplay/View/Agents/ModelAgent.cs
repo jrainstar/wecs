@@ -102,14 +102,15 @@ namespace GameLogic.Gameplay.View
 
             RecycleModel();
 
-            if (null == world.engine.config.location.TbRoleData.Get(ril.model)) return;
+            if (false == world.engine.config.location.TbRoleData.TryGetValue(ril.model, out var roledata)) return;
+            if (false == world.engine.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var modeldata)) return;
 
-            model = ril.model;
-            if (false == world.engine.config.location.TB.TryGetValue(ril.model, out var modelinfo)) return;
-            res = "Sphere";
+            model = roledata.ModelId;
+            res = modeldata.Model;
+
             go = ObjectPool.Get<GameObject>(res);
-            //if (null == go) go = world.engine.gameres.location.LoadModelSync(res);
-            if (null == go) go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            if (null == go) go = world.engine.gameres.location.LoadModelSync(res);
+
             go.transform.SetParent(node.go.transform, false);
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.identity;

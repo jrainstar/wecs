@@ -36,6 +36,7 @@ public partial class TbTagData
     public System.Collections.Generic.IReadOnlyDictionary<int, Gameplay.TagData> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<Gameplay.TagData> DataList => _dataList;
 
+    public bool TryGetValue(int key, out Gameplay.TagData value) => _dataMap.TryGetValue(key, out value);
     public Gameplay.TagData GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : default;
     public Gameplay.TagData Get(int key) => _dataMap[key];
     public Gameplay.TagData this[int key] => _dataMap[key];
