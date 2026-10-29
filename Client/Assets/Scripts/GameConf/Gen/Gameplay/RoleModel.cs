@@ -19,6 +19,7 @@ public sealed partial class RoleModel : Luban.BeanBase
     {
         { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
         { if(!_buf["model"].IsString) { throw new SerializationException(); }  Model = _buf["model"]; }
+        { if(!_buf["animation"].IsString) { throw new SerializationException(); }  Animation = _buf["animation"]; }
         { if(!_buf["born"].IsString) { throw new SerializationException(); }  Born = _buf["born"]; }
         { if(!_buf["idle"].IsString) { throw new SerializationException(); }  Idle = _buf["idle"]; }
         { if(!_buf["walk"].IsString) { throw new SerializationException(); }  Walk = _buf["walk"]; }
@@ -38,6 +39,7 @@ public sealed partial class RoleModel : Luban.BeanBase
 
     public readonly int Id;
     public readonly string Model;
+    public readonly string Animation;
     public readonly string Born;
     public readonly string Idle;
     public readonly string Walk;
@@ -61,6 +63,7 @@ public sealed partial class RoleModel : Luban.BeanBase
         return "{ "
         + "id:" + Id + ","
         + "model:" + Model + ","
+        + "animation:" + Animation + ","
         + "born:" + Born + ","
         + "idle:" + Idle + ","
         + "walk:" + Walk + ","

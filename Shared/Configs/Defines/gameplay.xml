@@ -41,6 +41,7 @@
 <bean name="RoleModel">
 	<var name="id" type="int" alias="编号"/>
 	<var name="model" type="string" alias="模型"/>
+	<var name="animation" type="string" alias="动画"/>
 	<var name="born" type="string" alias="出场"/>
 	<var name="idle" type="string" alias="待机"/>
 	<var name="walk" type="string" alias="走动"/>

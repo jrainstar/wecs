@@ -2,6 +2,7 @@
   {
     "id": 10001,
     "model": "Chun",
+    "animation": "10001",
     "born": "000000_balloon_flying_down",
     "idle": "Stand1",
     "walk": "Walk_F",
@@ -16,6 +17,7 @@
   {
     "id": 103261,
     "model": "103261",
+    "animation": "103261",
     "born": "000000_balloon_flying_down",
     "idle": "05_idle",
     "walk": "05_run",

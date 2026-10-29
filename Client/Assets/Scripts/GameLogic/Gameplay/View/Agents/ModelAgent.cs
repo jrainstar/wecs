@@ -84,7 +84,7 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         public void Load()
         {
-            if (false == world.rilbucket.SeekRIL<RIL_FACADE_MODEL>(actor, out var ril) || ril.model <= 0)
+            if (false == world.rilbucket.SeekRIL<RIL_FACADE_MODEL>(actor, out var facademodel) || facademodel.model <= 0)
             {
                 RecycleModel();
                 model = 0;
@@ -92,7 +92,7 @@ namespace GameLogic.Gameplay.View
                 return;
             }
 
-            if (model == ril.model && null != go) return;
+            if (model == facademodel.model && null != go) return;
 
             // 节点代理不存在则先创建, 模型需要挂载到节点之下
             var node = world.EnsureAgent<NodeAgent>(actor);
@@ -102,7 +102,7 @@ namespace GameLogic.Gameplay.View
 
             RecycleModel();
 
-            if (false == world.engine.config.location.TbRoleData.TryGetValue(ril.model, out var roledata)) return;
+            if (false == world.engine.config.location.TbRoleData.TryGetValue(facademodel.model, out var roledata)) return;
             if (false == world.engine.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var modeldata)) return;
 
             model = roledata.ModelId;

@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using GameLogic.Gameplay.View;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace GameLogic.Gameplay.Common
@@ -57,6 +59,28 @@ namespace GameLogic.Gameplay.Common
         {
             return GameObject.Instantiate(engine.gameres.LoadAssetSync<GameObject>(modelpath + res));
         }
+
+
+        /// <summary>
+        /// 异步加载模型动画配置
+        /// </summary>
+        /// <param name="res">资源地址</param>
+        /// <returns>AnimationConfig</returns>
+        public async Task<AnimationConfig> LoadAnimationConfigAsync(string res)
+        {
+            return await engine.gameres.LoadAssetAsync<AnimationConfig>(animcfgpath + res);
+        }
+
+        /// <summary>
+        /// 同步加载模型动画配置
+        /// </summary>
+        /// <param name="res">资源地址</param>
+        /// <returns>AnimationConfig</returns>
+        public AnimationConfig LoadAnimationConfigSync(string res)
+        {
+            return engine.gameres.LoadAssetSync<AnimationConfig>(animcfgpath + res);
+        }
+
 
         /// <summary>
         /// 异步 Effect 加载预制体

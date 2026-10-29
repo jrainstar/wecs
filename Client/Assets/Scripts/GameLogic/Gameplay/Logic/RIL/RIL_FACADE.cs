@@ -10,7 +10,7 @@ namespace GameLogic.Gameplay.Logic
         public override ushort id => RIL_DEFINE.FACADE_MODEL;
         
         /// <summary>
-        /// 模型 ID
+        /// 角色id
         /// </summary>
         public int model { get; set; }
         
