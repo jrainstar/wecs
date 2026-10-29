@@ -145,7 +145,10 @@ namespace GameLogic.Gameplay.View
             if (null == animancer) return;
             animstate = animancer.TryPlay(playname, mixduration * (1 / timescale));
             if (null == animstate) return;
+
+            // 关掉自动推进播放
             animstate.Speed = 0;
+            // 脚本控制播放时间
             animstate.Time = Mathf.Clamp(animstate.Time + tick * timescale, 0, tarduration);
         }
     }

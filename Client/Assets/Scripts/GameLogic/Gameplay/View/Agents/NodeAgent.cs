@@ -24,6 +24,7 @@ namespace GameLogic.Gameplay.View
         /// Node 根
         /// </summary>
         private static GameObject root = new("Node");
+
         static NodeAgent()
         {
             var gameplay = GameObject.Find("Gameplay");

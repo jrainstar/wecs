@@ -107,7 +107,7 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// Tick, 子类重写
         /// </summary>
-        /// <param name="tick">步长</param>
+        /// <param name="tick">步长 此时已经受到了Ticker组件的影响 不需要再次乘算</param>
         protected virtual void OnTick(FP tick)
         {
         }

@@ -18,4 +18,10 @@ MonoBehaviour:
     name: Stand2
   - state: 4
     name: Run_F
-  animationmixs: []
+  animationmixs:
+  - name: Run_F
+    mixduration: 0.1
+    mixanimations: []
+  - name: Stand2
+    mixduration: 0.1
+    mixanimations: []
