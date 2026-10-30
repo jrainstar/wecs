@@ -42,16 +42,6 @@
 	<var name="id" type="int" alias="编号"/>
 	<var name="model" type="string" alias="模型"/>
 	<var name="animation" type="string" alias="动画"/>
-	<var name="born" type="string" alias="出场"/>
-	<var name="idle" type="string" alias="待机"/>
-	<var name="walk" type="string" alias="走动"/>
-	<var name="run" type="string" alias="跑动"/>
-	<var name="damage" type="string" alias="受伤"/>
-	<var name="dead" type="string" alias="死亡"/>
-	<var name="happy" type="string" alias="高兴"/>
-	<var name="attack" type="string" alias="攻击"/>
-	<var name="attack01" type="string" alias="攻击01"/>
-	<var name="attack02" type="string" alias="攻击02"/>
 </bean>
 
 <table name="TbRoleModel" value="RoleModel" input="model@gameplay/role.xlsx"/>
@@ -66,7 +56,7 @@
 	<var name="go_to" type="TimelineGoTo?#sep=," alias="循环"/>
 </bean>
 
-<table name="TbTimelineData" value="TimelineData" input="data@gameplay/timeline.xlsx"/>
+<table name="TbTimelineData" value="TimelineData" input="gameplay/timeline.xlsx"/>
 
 <bean name="TimelineNode">
 	<var name="Time" type="float"/>
@@ -88,6 +78,31 @@
 <bean name="TimelineGoTo">
 	<var name="From" type="float"/>
 	<var name="To" type="float"/>
+</bean>
+
+<bean name="SkillData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+	<var name="cond" type="SkillCond?" alias="条件"/>
+	<var name="cost" type="SkillCost?" alias="消耗"/>
+	<var name="cooldown" type="float" alias="冷却"/>
+	<var name="timeline" type="int" alias="时间轴"/>
+</bean>
+
+<table name="TbSkillData" value="SkillData" input="gameplay/skill.xlsx"/>
+
+<bean name="SkillCond">
+	<bean name="RoleResourceCond">
+
+	</bean>
+</bean>
+
+<bean name="SkillCost">
+	<bean name="RoleResourceCost">
+		
+	</bean>
 </bean>
 
 <bean name="MoudleData">

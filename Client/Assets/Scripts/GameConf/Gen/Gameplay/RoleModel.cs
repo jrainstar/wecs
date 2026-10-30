@@ -20,16 +20,6 @@ public sealed partial class RoleModel : Luban.BeanBase
         { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
         { if(!_buf["model"].IsString) { throw new SerializationException(); }  Model = _buf["model"]; }
         { if(!_buf["animation"].IsString) { throw new SerializationException(); }  Animation = _buf["animation"]; }
-        { if(!_buf["born"].IsString) { throw new SerializationException(); }  Born = _buf["born"]; }
-        { if(!_buf["idle"].IsString) { throw new SerializationException(); }  Idle = _buf["idle"]; }
-        { if(!_buf["walk"].IsString) { throw new SerializationException(); }  Walk = _buf["walk"]; }
-        { if(!_buf["run"].IsString) { throw new SerializationException(); }  Run = _buf["run"]; }
-        { if(!_buf["damage"].IsString) { throw new SerializationException(); }  Damage = _buf["damage"]; }
-        { if(!_buf["dead"].IsString) { throw new SerializationException(); }  Dead = _buf["dead"]; }
-        { if(!_buf["happy"].IsString) { throw new SerializationException(); }  Happy = _buf["happy"]; }
-        { if(!_buf["attack"].IsString) { throw new SerializationException(); }  Attack = _buf["attack"]; }
-        { if(!_buf["attack01"].IsString) { throw new SerializationException(); }  Attack01 = _buf["attack01"]; }
-        { if(!_buf["attack02"].IsString) { throw new SerializationException(); }  Attack02 = _buf["attack02"]; }
     }
 
     public static RoleModel DeserializeRoleModel(JSONNode _buf)
@@ -40,16 +30,6 @@ public sealed partial class RoleModel : Luban.BeanBase
     public readonly int Id;
     public readonly string Model;
     public readonly string Animation;
-    public readonly string Born;
-    public readonly string Idle;
-    public readonly string Walk;
-    public readonly string Run;
-    public readonly string Damage;
-    public readonly string Dead;
-    public readonly string Happy;
-    public readonly string Attack;
-    public readonly string Attack01;
-    public readonly string Attack02;
    
     public const int __ID__ = -1109251445;
     public override int GetTypeId() => __ID__;
@@ -64,16 +44,6 @@ public sealed partial class RoleModel : Luban.BeanBase
         + "id:" + Id + ","
         + "model:" + Model + ","
         + "animation:" + Animation + ","
-        + "born:" + Born + ","
-        + "idle:" + Idle + ","
-        + "walk:" + Walk + ","
-        + "run:" + Run + ","
-        + "damage:" + Damage + ","
-        + "dead:" + Dead + ","
-        + "happy:" + Happy + ","
-        + "attack:" + Attack + ","
-        + "attack01:" + Attack01 + ","
-        + "attack02:" + Attack02 + ","
         + "}";
     }
 }
