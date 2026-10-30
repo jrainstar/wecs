@@ -25,14 +25,14 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 运行时间
         /// </summary>
-        public float timeelapsed { get; set; }
+        public FP timeelapsed { get; set; }
 
         protected override void OnReady()
         {
             id = 0;
             caster = 0;
             timescale = FP.One;
-            timeelapsed = 0f;
+            timeelapsed = FP.Zero;
         }
 
         protected override void OnReset()
@@ -40,7 +40,7 @@ namespace GameLogic.Gameplay.Logic
             id = 0;
             caster = 0;
             timescale = FP.One;
-            timeelapsed = 0f;
+            timeelapsed = FP.Zero;
         }
 
         protected override BehaviorInfo OnClone()
