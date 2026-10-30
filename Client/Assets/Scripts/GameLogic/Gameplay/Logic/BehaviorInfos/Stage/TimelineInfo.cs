@@ -27,12 +27,24 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public FP timeelapsed { get; set; }
 
+        /// <summary>
+        /// 蓄力时间
+        /// </summary>
+        public FP chargeelapsed { get; set; }
+
+        /// <summary>
+        /// 蓄力中
+        /// </summary>
+        public bool charging { get; set; }
+
         protected override void OnReady()
         {
             id = 0;
             caster = 0;
             timescale = FP.One;
             timeelapsed = FP.Zero;
+            chargeelapsed = FP.Zero;
+            charging = false;
         }
 
         protected override void OnReset()
@@ -41,6 +53,8 @@ namespace GameLogic.Gameplay.Logic
             caster = 0;
             timescale = FP.One;
             timeelapsed = FP.Zero;
+            chargeelapsed = FP.Zero;
+            charging = false;
         }
 
         protected override BehaviorInfo OnClone()
@@ -52,6 +66,8 @@ namespace GameLogic.Gameplay.Logic
             clone.caster = caster;
             clone.timescale = timescale;
             clone.timeelapsed = timeelapsed;
+            clone.chargeelapsed = chargeelapsed;
+            clone.charging = charging;
 
             return clone;
         }

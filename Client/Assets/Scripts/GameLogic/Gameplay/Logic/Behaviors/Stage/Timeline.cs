@@ -55,6 +55,8 @@ namespace GameLogic.Gameplay.Logic
             timelineinfo.caster = caster;
             timelineinfo.timescale = timescale;
             timelineinfo.timeelapsed = FP.Zero;
+            timelineinfo.chargeelapsed = FP.Zero;
+            timelineinfo.charging = false;
 
             return timelineinfo;
         }
@@ -72,8 +74,14 @@ namespace GameLogic.Gameplay.Logic
             if (null == timelinedata.Nodes) return;
 
             var maxtime = (FP)timelinedata.MaxTime;
+            var delta = tick * timelineinfo.timescale;
             var begin = timelineinfo.timeelapsed;
-            var end = begin + tick * timelineinfo.timescale;
+            var end = begin + delta;
+            // 蓄力计时: 只在蓄力中推进, 只加不减, GoTo 回跳不清零
+            if (timelineinfo.charging)
+            {
+                timelineinfo.chargeelapsed += delta;
+            }
             // 本帧为结束帧, 需要把 MaxTime 上的节点一并触发, 因此窗口右端闭合
             var finish = end >= maxtime;
             if (finish) end = maxtime;
