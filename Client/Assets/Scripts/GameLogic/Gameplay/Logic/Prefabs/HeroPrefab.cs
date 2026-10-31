@@ -32,6 +32,9 @@ namespace GameLogic.Gameplay.Logic
             stage.AddBehavior<StateMachine>(actor);
             stage.AddBehavior<Movement>(actor);
 
+            var launcher = stage.AddBehavior<SkillLauncher>(actor);
+            launcher.Load(10001);
+
             var facade = stage.AddBehavior<Facade>(actor);
             // 模型 ID 必须大于 0, 否则渲染层 (ModelEnchant) 会认为没有模型而不创建 ModelAgent
             facade.SetModel(info.hero);

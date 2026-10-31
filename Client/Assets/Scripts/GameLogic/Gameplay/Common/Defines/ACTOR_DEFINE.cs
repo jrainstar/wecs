@@ -14,7 +14,7 @@ namespace GameLogic.Gameplay.Common
         /// </summary>
         public const byte STAGE = 1;
         /// <summary>
-        /// 管线
+        /// 流式
         /// </summary>
         public const byte FLOW = 2;
         /// <summary>
@@ -22,12 +22,17 @@ namespace GameLogic.Gameplay.Common
         /// </summary>
         public const byte HERO = 3;
         /// <summary>
+        /// 技能
+        /// </summary>
+        public const byte SKILL = 4;
+
+        /// <summary>
         /// 子弹
         /// </summary>
-        public const byte BULLET = 4;
+        public const byte BULLET = 5;
         /// <summary>
         /// BUFF
         /// </summary>
-        public const byte BUFF = 5;
+        public const byte BUFF = 6;
     }
 }

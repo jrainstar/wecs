@@ -39,12 +39,7 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnReady()
         {
-            id = 0;
-            caster = 0;
-            timescale = FP.One;
-            timeelapsed = FP.Zero;
-            chargeelapsed = FP.Zero;
-            charging = false;
+            OnReset();
         }
 
         protected override void OnReset()

@@ -98,7 +98,7 @@ namespace GameLogic.Gameplay.Logic
         /// 随机数
         /// </summary>
         public Random random => GetBehavior<Random>(sa, true);
-        
+
         /// <summary>
         /// 渲染指令同步
         /// </summary>
@@ -205,6 +205,7 @@ namespace GameLogic.Gameplay.Logic
             prefabs = ObjectCache.Ensure<Dictionary<Type, Prefab>>();
 
             Prefab<HeroPrefab, HeroPrefabInfo>();
+            Prefab<SkillPrefab, SkillPrefabInfo>();
 
         }
 

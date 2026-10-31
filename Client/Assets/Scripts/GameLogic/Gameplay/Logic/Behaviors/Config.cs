@@ -22,7 +22,7 @@ namespace GameLogic.Gameplay.Logic
         {
             base.OnAssemble();
             // TODO 后续加宏, 判断非 UNITY 环境使用 File.ReadAllBytes 构建
-            // location = Export.engine.cfg.location;
+            // location = stage.engine.cfg.location;
         }
 
         protected override void OnDisassemble()
