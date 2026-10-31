@@ -23,24 +23,18 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// Node 根
         /// </summary>
-        private static GameObject root = new("Node");
-
-        static NodeAgent()
-        {
-            var gameplay = GameObject.Find("Gameplay");
-            if (null != gameplay) root.transform.SetParent(gameplay.transform, false);
-            root.transform.localPosition = Vector3.zero;
-            root.transform.localScale = Vector3.one;
-        }
+        private GameObject root => world.root;
 
         /// <summary>
         /// GameObject
         /// </summary>
         public GameObject go { get; private set; }
+
         /// <summary>
         /// 是否已经完成一次定位 (完成前直接贴合, 避免从原点飞过来)
         /// </summary>
         private bool settled { get; set; }
+
 
         protected override void OnReady()
         {

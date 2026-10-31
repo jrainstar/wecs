@@ -150,13 +150,36 @@ namespace GameLogic.Gameplay.Director
             //}
 
             var joystick = engine.u3dkit.input.GetInput(INPUT_DEFINE.JOYSTICK);
-            stage.SetInput(world.selfseat, INPUT_DEFINE.JOYSTICK, joystick.press, joystick.dire);
+            stage.SetInput(world.selfseat, INPUT_DEFINE.JOYSTICK, joystick.press, ToWorldDire(joystick.dire));
 
             //var ba = world.input.GetInput(INPUT_DEFINE.BA);
             //stage.SetInput(world.selfseat, INPUT_DEFINE.BA, ba.press, ba.dire);
 
             stage.Step();
 
+        }
+
+        /// <summary>
+        /// 把摇杆的相机相对方向转换为世界方向
+        /// 摇杆的 x 为相机右方, y 为相机前方, 绕相机偏航角旋转后即为世界方向
+        /// </summary>
+        /// <param name="dire">摇杆方向 (相机相对)</param>
+        /// <returns>世界方向</returns>
+        private IntVector2 ToWorldDire(IntVector2 dire)
+        {
+            if (0 == dire.x && 0 == dire.y) return dire;
+            if (false == rendering) return dire;
+
+            var eyes = world.eyes;
+            if (null == eyes) return dire;
+
+            var rad = eyes.yaw * Mathf.Deg2Rad;
+            var sin = Mathf.Sin(rad);
+            var cos = Mathf.Cos(rad);
+            var x = dire.x * cos + dire.y * sin;
+            var y = dire.y * cos - dire.x * sin;
+
+            return new IntVector2(Mathf.RoundToInt(x), Mathf.RoundToInt(y));
         }
 
         /// <summary>

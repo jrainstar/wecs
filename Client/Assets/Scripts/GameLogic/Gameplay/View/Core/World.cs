@@ -3,6 +3,7 @@ using GameLogic.Gameplay.Logic;
 using GameLogic.Gameplay.View;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameLogic.Gameplay.View
 {
@@ -11,6 +12,11 @@ namespace GameLogic.Gameplay.View
     /// </summary>
     public sealed class World : Comp
     {
+        /// <summary>
+        /// 世界根节点
+        /// </summary>
+        public GameObject root { get; private set; }
+
         /// <summary>
         /// Stage.Actor, Stage 的数据走的也是 Actor/Behavior/BehaviorInfo 那一套
         /// 通过包装 Actor 的形式使用
@@ -53,6 +59,11 @@ namespace GameLogic.Gameplay.View
         public RILBucket rilbucket { get; private set; }
 
         /// <summary>
+        /// 眼睛/摄像机
+        /// </summary>
+        public Eyes eyes { get; private set; }
+
+        /// <summary>
         /// Agent 集合
         /// </summary>
         private Dictionary<ulong, Dictionary<Type, Agent>> agentdict { get; set; }
@@ -62,8 +73,20 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private List<Agent> snapshotagents { get; set; }
 
+        /// <summary>
+        /// 绑定节点
+        /// </summary>
+        public void BindRoot()
+        {
+            root = new GameObject("World");
+            root.transform.localPosition = Vector3.zero;
+            root.transform.localScale = Vector3.one;
+        }
+
         protected override void OnCreate()
         {
+            BindRoot();
+
             base.OnCreate();
             eventor = AddComp<EventorKit>();
             eventor.Create();
@@ -73,6 +96,9 @@ namespace GameLogic.Gameplay.View
 
             rilbucket = AddComp<RILBucket>().Initialize(this);
             rilbucket.Create();
+
+            eyes = AddComp<Eyes>();
+            eyes.Initialize(this).Create();
 
             Batches();
 
@@ -123,7 +149,7 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private void Batches()
         {
-            
+
         }
 
         /// <summary>
