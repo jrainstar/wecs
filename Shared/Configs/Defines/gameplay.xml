@@ -46,6 +46,15 @@
 
 <table name="TbRoleModel" value="RoleModel" input="model@gameplay/role.xlsx"/>
 
+<enum name="RoleAttr">
+	<var name="None" 	alias="空" 			value="0" />
+	<var name="Hp" 		alias="血量" 		value="1" />
+	<var name="Mp" 		alias="蓝量" 		value="2" />
+	<var name="Atk" 	alias="攻击" 		value="3" />
+	<var name="Def" 	alias="防御" 		value="4" />
+	<var name="Spd" 	alias="速度" 		value="5" />
+</enum>
+
 <bean name="TimelineData">
 	<var name="id" type="int" alias="编号"/>
 	<var name="name" type="string" alias="名字"/>
@@ -95,13 +104,15 @@
 
 <bean name="SkillCond">
 	<bean name="RoleResourceCond">
-
+		<var name="Fixed" type="(map#sep=,),RoleAttr,int"/>
+		<var name="Percent" type="(map#sep=,),RoleAttr,int"/>
 	</bean>
 </bean>
 
 <bean name="SkillCost">
 	<bean name="RoleResourceCost">
-		
+		<var name="Fixed" type="(map#sep=,),RoleAttr,int"/>
+		<var name="Percent" type="(map#sep=,),RoleAttr,int"/>
 	</bean>
 </bean>
 

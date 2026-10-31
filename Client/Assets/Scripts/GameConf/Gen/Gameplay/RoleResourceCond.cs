@@ -17,6 +17,8 @@ public sealed partial class RoleResourceCond : Gameplay.SkillCond
 {
     public RoleResourceCond(JSONNode _buf)  : base(_buf) 
     {
+        { var __json0 = _buf["Fixed"]; if(!__json0.IsArray) { throw new SerializationException(); } Fixed = new System.Collections.Generic.Dictionary<Gameplay.RoleAttr, int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { Gameplay.RoleAttr _k0;  { if(!__e0[0].IsNumber) { throw new SerializationException(); }  _k0 = (Gameplay.RoleAttr)__e0[0].AsInt; } int _v0;  { if(!__e0[1].IsNumber) { throw new SerializationException(); }  _v0 = __e0[1]; }  Fixed.Add(_k0, _v0); }   }
+        { var __json0 = _buf["Percent"]; if(!__json0.IsArray) { throw new SerializationException(); } Percent = new System.Collections.Generic.Dictionary<Gameplay.RoleAttr, int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { Gameplay.RoleAttr _k0;  { if(!__e0[0].IsNumber) { throw new SerializationException(); }  _k0 = (Gameplay.RoleAttr)__e0[0].AsInt; } int _v0;  { if(!__e0[1].IsNumber) { throw new SerializationException(); }  _v0 = __e0[1]; }  Percent.Add(_k0, _v0); }   }
     }
 
     public static RoleResourceCond DeserializeRoleResourceCond(JSONNode _buf)
@@ -24,6 +26,8 @@ public sealed partial class RoleResourceCond : Gameplay.SkillCond
         return new Gameplay.RoleResourceCond(_buf);
     }
 
+    public readonly System.Collections.Generic.Dictionary<Gameplay.RoleAttr, int> Fixed;
+    public readonly System.Collections.Generic.Dictionary<Gameplay.RoleAttr, int> Percent;
    
     public const int __ID__ = -317632850;
     public override int GetTypeId() => __ID__;
@@ -36,6 +40,8 @@ public sealed partial class RoleResourceCond : Gameplay.SkillCond
     public override string ToString()
     {
         return "{ "
+        + "Fixed:" + Luban.StringUtil.CollectionToString(Fixed) + ","
+        + "Percent:" + Luban.StringUtil.CollectionToString(Percent) + ","
         + "}";
     }
 }
