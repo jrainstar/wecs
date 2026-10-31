@@ -1,4 +1,5 @@
 using GameConf;
+using GameFrame;
 using GameLogic.Gameplay.Common;
 
 namespace GameLogic.Gameplay.Logic
@@ -22,7 +23,7 @@ namespace GameLogic.Gameplay.Logic
         {
             base.OnAssemble();
             // TODO 后续加宏, 判断非 UNITY 环境使用 File.ReadAllBytes 构建
-            // location = stage.engine.cfg.location;
+            location = TableModule.Instance.Tables;
         }
 
         protected override void OnDisassemble()
