@@ -14,7 +14,9 @@ namespace GameLogic.Gameplay.Logic
             int hash = 17;
             hash = hash * 31 + info.actor.GetHashCode();
             hash = hash * 31 + info.animstate.GetHashCode();
+            hash = hash * 31 + info.animticktype.GetHashCode();
             hash = hash * 31 + (info.animname != null ? info.animname.GetHashCode() : 0);
+            hash = hash * 31 + info.animloop.GetHashCode();
             hash = hash * 31 + info.animelapsed.GetHashCode();
             hash = hash * 31 + info.effectincrement.GetHashCode();
 
@@ -24,7 +26,9 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnRIL(FacadeInfo info, RIL_FACADE_ANIMATION ril)
         {
             ril.animstate = info.animstate;
+            ril.animticktype = info.animticktype;
             ril.animname = info.animname;
+            ril.animloop = info.animloop;
             ril.animelapsed = (info.animelapsed * stage.cfg.fp2int).AsUInt();
         }
     }

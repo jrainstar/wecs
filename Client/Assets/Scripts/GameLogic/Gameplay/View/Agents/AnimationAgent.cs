@@ -46,6 +46,19 @@ namespace GameLogic.Gameplay.View
         /// 混合持续时间
         /// </summary>
         private float mixduration { get; set; }
+        /// <summary>
+        /// 动画是否循环
+        /// </summary>
+        private bool animloop { get; set; } = true;
+        /// <summary>
+        /// 上一次播放的动画名称
+        /// </summary>
+        private string lastplayname { get; set; }
+        /// <summary>
+        /// 动画播放位置 (秒)
+        /// 完全由脚本推进, 不依赖 Animancer 的内部时间, 切换动画时才重置
+        /// </summary>
+        private float playtime { get; set; }
 
         protected override void OnReady()
         {
@@ -58,6 +71,9 @@ namespace GameLogic.Gameplay.View
             playname = null;
             tarduration = 0;
             mixduration = 0;
+            animloop = true;
+            lastplayname = null;
+            playtime = 0;
 
             WatchRIL<RIL_FACADE_ANIMATION>(OnRILStateMachine);
         }
@@ -73,6 +89,9 @@ namespace GameLogic.Gameplay.View
             playname = null;
             tarduration = 0;
             mixduration = 0;
+            animloop = true;
+            lastplayname = null;
+            playtime = 0;
         }
 
         private void OnRILStateMachine(RIL_FACADE_ANIMATION ril)
@@ -109,16 +128,22 @@ namespace GameLogic.Gameplay.View
             }
 
             playname = curplayname;
+            animloop = ril.animloop;
             mixduration = 0;
-            tarduration = ril.animelapsed * ConfigKit.Int2Float;
 
             var animinfo = animcfg.GetAnimationMixInfo(animname);
-            if (null == animinfo) return;
-            mixduration = animinfo.mixduration;
+            if (null != animinfo) mixduration = animinfo.mixduration;
 
-            if (null == preplayname) return;
+            // 时间轴手动推进的动画, 用逻辑层给出的流逝时间对齐播放位置
+            // 自动推进的动画由 OnChase 自行累加, 不理会这个值
+            if (ANIM_DEFINE.TICK_MANUAL == ril.animticktype)
+            {
+                playtime = ril.animelapsed * ConfigKit.Int2Float;
+            }
+
+            if (null == preplayname || null == animinfo) return;
             var beforeAnimInfo = animinfo.GetAnimationBeforeMixInfo(preplayname);
-            if (null != beforeAnimInfo && tarduration < beforeAnimInfo.duration)
+            if (null != beforeAnimInfo && playtime < beforeAnimInfo.duration)
             {
                 playname = beforeAnimInfo.name;
                 mixduration = beforeAnimInfo.mixduration;
@@ -128,8 +153,9 @@ namespace GameLogic.Gameplay.View
         protected override void OnFlash()
         {
             base.OnFlash();
-            if (null == animstate) return;
-            animstate.Time = tarduration;
+
+            if (null == playname) return;
+            ApplyTime();
         }
 
         protected override void OnChase(float tick, float timescale)
@@ -143,13 +169,42 @@ namespace GameLogic.Gameplay.View
             }
 
             if (null == animancer) return;
-            animstate = animancer.TryPlay(playname, mixduration * (1 / timescale));
+            if (string.IsNullOrEmpty(playname)) return;
+
+            // 混合时间随 timescale 缩放, timescale 为 0 时按 1 处理, 避免除零
+            var scale = timescale > 0 ? timescale : 1f;
+            animstate = animancer.TryPlay(playname, mixduration * (1 / scale));
             if (null == animstate) return;
 
-            // 关掉自动推进播放
+            // 动画切换时重置播放位置, 同一段动画继续往下播
+            if (playname != lastplayname)
+            {
+                lastplayname = playname;
+                playtime = 0;
+            }
+
+            // 关掉 Animancer 的自动推进, 全部由脚本控制时间
             animstate.Speed = 0;
-            // 脚本控制播放时间
-            animstate.Time = Mathf.Clamp(animstate.Time + tick * timescale, 0, tarduration);
+
+            // 推进播放位置; 不能用状态时长以外的值作上限, 否则动画会静止
+            playtime += tick * timescale;
+            ApplyTime();
+        }
+
+        /// <summary>
+        /// 把 playtime 应用到 Animancer 状态上
+        /// 循环动画取模, 非循环动画停在末帧
+        /// </summary>
+        private void ApplyTime()
+        {
+            if (null == animstate) return;
+
+            // 优先用 Animancer 的真实时长, 拿不到时回落到配置时长
+            var duration = animstate.Length > 0 ? animstate.Length : tarduration;
+            if (duration <= 0) return;
+
+            var time = animloop ? Mathf.Repeat(playtime, duration) : Mathf.Clamp(playtime, 0, duration);
+            animstate.Time = time;
         }
     }
 }

@@ -268,11 +268,18 @@ namespace GameLogic.Gameplay.Logic
             if (false == info.casting) return false;
             // 时间轴已经播完 (BehaviorInfo 被移除), 技能释放结束
             if (0 == info.timeline) return true;
-            if (stage.SeekBehaviorInfo<TimelineInfo>(info.timeline, out _, true)) return true;
+            // 注意: 这里不能用 force, force 会把 Rmv 掉的 TimelineInfo 也算作存在
+            // 时间轴播完时 Timeline.Execute 会调用 RmvBehaviorInfo, 但条目要等 Recycle() 才真正删除
+            // 用 force 会导致 casting 永远清不掉, 技能只能放一次且动画永远停在技能动画上
+            if (stage.SeekBehaviorInfo<TimelineInfo>(info.timeline, out _)) return true;
 
             info.skill = 0;
             info.timeline = 0;
             info.casting = false;
+
+            // 技能结束, 把动画控制权交还状态机
+            // 必须显式刷新: 若期间状态一直是 MOVE, TryChangeState 会因状态相同直接返回, 动画将停留在技能动画上
+            if (stage.SeekBehavior(actor, out StateMachine machine)) machine.RefreshAnimation();
 
             return false;
         }

@@ -14,10 +14,14 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="tick">步长</param>
         public void Move(FPVector3 dire, FP tick)
         {
-            if (false == stage.SeekBehavior(actor, out StateMachine machine)) return;
-            if (false == machine.TryChangeState(STATE_DEFINE.MOVE)) return;
-
             if (false == stage.SeekBehaviorInfo(actor, out SpatialInfo spatial)) return;
+
+            // 先算出本帧位移, 状态切换失败 (例如死亡/受击) 就不移动
+            // 注意不能把位移写在状态切换之后: 切换成功时状态已经是 MOVE, 再次切换会直接返回 true
+            if (stage.SeekBehavior(actor, out StateMachine machine))
+            {
+                if (false == machine.TryChangeState(STATE_DEFINE.MOVE)) return;
+            }
 
             dire.Normalize();
             var speed = 5;

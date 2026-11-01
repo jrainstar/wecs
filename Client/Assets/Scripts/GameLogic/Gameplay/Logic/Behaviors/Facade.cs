@@ -24,6 +24,8 @@ namespace GameLogic.Gameplay.Logic
         public void SetAnimation(byte state)
         {
             info.animstate = state;
+            info.animname = null;
+            info.animloop = true;
             info.animelapsed = 0;
         }
 
@@ -36,6 +38,24 @@ namespace GameLogic.Gameplay.Logic
             info.animticktype = ticktype;
             info.animname = animname;
             info.animelapsed = 0;
+        }
+
+        /// <summary>
+        /// 设置动画是否循环
+        /// </summary>
+        /// <param name="loop">是否循环</param>
+        public void SetAnimationLoop(bool loop)
+        {
+            info.animloop = loop;
+        }
+
+        /// <summary>
+        /// 手动推进动画时间, 用于 TICK_MANUAL 类型的动画 (例如由时间轴驱动)
+        /// </summary>
+        /// <param name="elapsed">流逝时间</param>
+        public void SetAnimationElapsed(FP elapsed)
+        {
+            info.animelapsed = elapsed;
         }
 
         /// <summary>

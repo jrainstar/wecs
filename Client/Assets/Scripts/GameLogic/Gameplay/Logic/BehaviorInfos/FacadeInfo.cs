@@ -76,6 +76,10 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public string animname { get; set; }
         /// <summary>
+        /// 动画是否循环
+        /// </summary>
+        public bool animloop { get; set; }
+        /// <summary>
         /// 流逝时间
         /// </summary>
         public FP animelapsed { get; set; }
@@ -102,6 +106,7 @@ namespace GameLogic.Gameplay.Logic
             animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
             animstate = 0;
             animname = null;
+            animloop = true;
             animelapsed = FP.Zero;
             effectincrement = 0;
             rmveffects = ObjectCache.Ensure<List<uint>>();
@@ -115,6 +120,7 @@ namespace GameLogic.Gameplay.Logic
             animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
             animstate = 0;
             animname = null;
+            animloop = true;
             animelapsed = FP.Zero;
             effectincrement = 0;
             rmveffects.Clear();
@@ -133,6 +139,7 @@ namespace GameLogic.Gameplay.Logic
             clone.animticktype = animticktype;
             clone.animstate = animstate;
             clone.animname = animname;
+            clone.animloop = animloop;
             clone.animelapsed = animelapsed;
             clone.effectincrement = effectincrement;
             clone.rmveffects.AddRange(rmveffects);

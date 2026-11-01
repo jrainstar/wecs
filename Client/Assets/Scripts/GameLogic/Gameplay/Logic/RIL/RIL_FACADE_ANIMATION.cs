@@ -14,9 +14,17 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public byte animstate { get; set; }
         /// <summary>
+        /// 动画更新类型, 见 ANIM_DEFINE
+        /// </summary>
+        public byte animticktype { get; set; }
+        /// <summary>
         /// 动画名称
         /// </summary>
         public string animname { get; set; }
+        /// <summary>
+        /// 动画是否循环
+        /// </summary>
+        public bool animloop { get; set; }
         /// <summary>
         /// 流逝时间
         /// </summary>
@@ -25,14 +33,18 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnReady()
         {
             animstate = 0;
+            animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
             animname = null;
+            animloop = true;
             animelapsed = 0;
         }
 
         protected override void OnReset()
         {
             animstate = 0;
+            animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
             animname = null;
+            animloop = true;
             animelapsed = 0;
         }
     }

@@ -15,6 +15,12 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         private Dictionary<Type, Executor> executordict { get; set; }
 
+        /// <summary>
+        /// 当前正在播放的时间轴宿主
+        /// 时间轴是 Stage 级单例, 事件派发时通过它得知事件属于哪个 Actor
+        /// </summary>
+        public TimelineInfo current { get; private set; }
+
         protected override void OnAssemble()
         {
             base.OnAssemble();
@@ -93,7 +99,10 @@ namespace GameLogic.Gameplay.Logic
                 var time = (FP)node.Time;
                 if (time < begin) continue;
                 if (finish ? time > end : time >= end) continue;
+                // 执行器无状态, 事件作用于哪条时间轴通过 current 传递
+                current = timelineinfo;
                 HandleEvent(node.Event);
+                current = null;
             }
 
             // 循环, 本帧跨越 GoTo.From 时回跳到 GoTo.To
@@ -108,6 +117,8 @@ namespace GameLogic.Gameplay.Logic
             // 到达 MaxTime, 时间轴结束
             if (finish)
             {
+                // 时间轴只负责切换动画, 结束时不还原动画状态
+                // 角色保持节点指定的动画, 由 Movement/StateMachine 等行为在后续帧自然切回待机/移动
                 stage.RmvBehaviorInfo(timelineinfo);
                 return;
             }
@@ -142,6 +153,7 @@ namespace GameLogic.Gameplay.Logic
             }
 
             Executor<PrintEvent, PrintExecutor>();
+            Executor<AnimationEvent, AnimationExecutor>();
         }
 
         private void RecycleExecutors()

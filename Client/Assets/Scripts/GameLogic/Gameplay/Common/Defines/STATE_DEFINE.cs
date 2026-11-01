@@ -55,7 +55,8 @@ namespace GameLogic.Gameplay.Common
             { MOVE, new List<byte>() { DEATH, IDLE, FALL, CASTING, BEHIT } },
             { JUMP, new List<byte>() { DEATH, FALL, CASTING, BEHIT } },
             { FALL, new List<byte>() { DEATH, IDLE, CASTING, BEHIT } },
-            { CASTING, new List<byte>() { DEATH, BEHIT } },
+            // 释放技能期间允许移动/转待机, 保持技能动画的同时可以走位
+            { CASTING, new List<byte>() { DEATH, BEHIT, MOVE, IDLE, FALL } },
             { BEHIT, new List<byte>() { DEATH, BEHIT } },
         };
     }
