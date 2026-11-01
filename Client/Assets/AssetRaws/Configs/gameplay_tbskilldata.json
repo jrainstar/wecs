@@ -6,5 +6,21 @@
     "icon": "",
     "cooldown": 0,
     "timeline": 10001
+  },
+  {
+    "id": 100011,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "cooldown": 0,
+    "timeline": 100011
+  },
+  {
+    "id": 100012,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "cooldown": 0,
+    "timeline": 100012
   }
 ]

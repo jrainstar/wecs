@@ -42,8 +42,17 @@
       {
         "Time": 0,
         "Event": {
+          "$type": "PrintEvent",
+          "Type": 0,
+          "Print": "砍一刀0秒"
+        }
+      },
+      {
+        "Time": 0,
+        "Event": {
           "$type": "AnimationEvent",
           "Name": "Attack01",
+          "Move": true,
           "Loop": false,
           "Speed": 1
         }
@@ -61,7 +70,8 @@
         "Time": 0,
         "Event": {
           "$type": "AnimationEvent",
-          "Name": "AM_Attack02",
+          "Name": "Attack01",
+          "Move": false,
           "Loop": false,
           "Speed": 1
         }
@@ -80,6 +90,7 @@
         "Event": {
           "$type": "AnimationEvent",
           "Name": "AM_Attack03",
+          "Move": false,
           "Loop": false,
           "Speed": 1
         }

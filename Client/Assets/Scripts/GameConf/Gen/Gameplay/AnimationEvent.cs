@@ -18,6 +18,7 @@ public sealed partial class AnimationEvent : Gameplay.TimelineEvent
     public AnimationEvent(JSONNode _buf)  : base(_buf) 
     {
         { if(!_buf["Name"].IsString) { throw new SerializationException(); }  Name = _buf["Name"]; }
+        { if(!_buf["Move"].IsBoolean) { throw new SerializationException(); }  Move = _buf["Move"]; }
         { if(!_buf["Loop"].IsBoolean) { throw new SerializationException(); }  Loop = _buf["Loop"]; }
         { if(!_buf["Speed"].IsNumber) { throw new SerializationException(); }  Speed = _buf["Speed"]; }
     }
@@ -28,6 +29,7 @@ public sealed partial class AnimationEvent : Gameplay.TimelineEvent
     }
 
     public readonly string Name;
+    public readonly bool Move;
     public readonly bool Loop;
     public readonly float Speed;
    
@@ -43,6 +45,7 @@ public sealed partial class AnimationEvent : Gameplay.TimelineEvent
     {
         return "{ "
         + "Name:" + Name + ","
+        + "Move:" + Move + ","
         + "Loop:" + Loop + ","
         + "Speed:" + Speed + ","
         + "}";

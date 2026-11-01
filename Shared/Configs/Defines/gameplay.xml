@@ -48,7 +48,7 @@
 
 <bean name="RoleSkill">
 	<var name="id" type="int" alias="编号"/>
-	<var name="skills" type="array,int" alias="技能组"/>
+	<var name="skills" type="(array#sep=,),int" alias="技能组"/>
 </bean>
 
 <table name="TbRoleSkill" value="RoleSkill" input="skill@gameplay/role.xlsx"/>
@@ -86,6 +86,7 @@
 	</bean>
 	<bean name="AnimationEvent" alias="动画">
 		<var name="Name"  type="string" alias="动画名称"/>
+		<var name="Move"  type="bool"   alias="锁住移动"/>
 		<var name="Loop"  type="bool"   alias="动画循环"/>
 		<var name="Speed" type="float"  alias="动画速度"/>
 	</bean>
