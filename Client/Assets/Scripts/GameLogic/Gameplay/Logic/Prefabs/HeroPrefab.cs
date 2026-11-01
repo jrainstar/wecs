@@ -32,8 +32,12 @@ namespace GameLogic.Gameplay.Logic
             stage.AddBehavior<StateMachine>(actor);
             stage.AddBehavior<Movement>(actor);
 
+            // 技能学习, 按英雄 ID 从 TbRoleSkill 读取该角色的技能列表并逐个载入
             var launcher = stage.AddBehavior<SkillLauncher>(actor);
-            launcher.Load(10001);
+            if (stage.cfg.location.TbRoleSkill.TryGetValue(info.hero, out var roleskill))
+            {
+                foreach (var skill in roleskill.Skills) launcher.Load((uint)skill);
+            }
 
             var facade = stage.AddBehavior<Facade>(actor);
             // 模型 ID 必须大于 0, 否则渲染层 (ModelEnchant) 会认为没有模型而不创建 ModelAgent

@@ -8,7 +8,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 时间轴行为
     /// </summary>
-    public class Timeline : Behavior<TimelineInfo>
+    public class Timeline : Behavior
     {
         /// <summary>
         /// 指令执行器字典

@@ -4,7 +4,7 @@
     "name": "线性打印",
     "desc": "",
     "icon": "",
-    "max_time": 0,
+    "max_time": 1,
     "nodes": [
       {
         "Time": 0,
@@ -37,7 +37,7 @@
     "name": "砍一刀",
     "desc": "",
     "icon": "",
-    "max_time": 0,
+    "max_time": 1,
     "nodes": [
       {
         "Time": 0,
@@ -55,7 +55,7 @@
     "name": "砍一刀",
     "desc": "",
     "icon": "",
-    "max_time": 0,
+    "max_time": 1,
     "nodes": [
       {
         "Time": 0,
@@ -73,7 +73,7 @@
     "name": "砍一刀",
     "desc": "",
     "icon": "",
-    "max_time": 0,
+    "max_time": 1,
     "nodes": [
       {
         "Time": 0,

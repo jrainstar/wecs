@@ -74,7 +74,7 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         /// <param name="state">状态</param>
         /// <returns>YES/NO</returns>
-        private bool QueryPassState(byte state)
+        public bool QueryPassState(byte state)
         {
             if (STATE_DEFINE.NONE == info.current) return true;
             if (STATE_DEFINE.PASSES.TryGetValue(info.current, out var passes) && passes.Contains(state))

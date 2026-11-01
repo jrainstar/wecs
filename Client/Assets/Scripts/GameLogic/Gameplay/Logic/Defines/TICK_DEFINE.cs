@@ -16,6 +16,8 @@ namespace GameLogic.Gameplay.Logic
         {            
             typeof(Gamepad),
             typeof(Movement),
+            typeof(Timeline),
+            typeof(SkillLauncher),
             typeof(Facade),
             typeof(RILSync),
         };

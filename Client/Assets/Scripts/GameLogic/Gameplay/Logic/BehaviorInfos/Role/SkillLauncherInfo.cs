@@ -33,6 +33,12 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public Dictionary<uint, ulong> loadedskilldict { get; set; }
 
+        /// <summary>
+        /// 技能槽位表, 下标为槽位序号, 值为技能 ID (0 表示该槽位没有技能)
+        /// 按键与槽位一一对应, 见 SKILL_DEFINE.SLOT_INPUTS
+        /// </summary>
+        public uint[] slots { get; set; }
+
 
         protected override void OnReady()
         {
@@ -41,6 +47,7 @@ namespace GameLogic.Gameplay.Logic
             casting = false;
             loadedskills = ObjectCache.Ensure<List<uint>>();
             loadedskilldict = ObjectCache.Ensure<Dictionary<uint, ulong>>();
+            slots = new uint[SKILL_DEFINE.SLOT_COUNT];
         }
 
         protected override void OnReset()
@@ -52,6 +59,7 @@ namespace GameLogic.Gameplay.Logic
             ObjectCache.Set(loadedskills);
             loadedskilldict.Clear();
             ObjectCache.Set(loadedskilldict);
+            System.Array.Clear(slots, 0, slots.Length);
         }
 
         protected override BehaviorInfo OnClone()
@@ -63,6 +71,7 @@ namespace GameLogic.Gameplay.Logic
             clone.timeline = timeline;
             clone.loadedskills.AddRange(loadedskills);
             foreach (var kv in loadedskilldict) clone.loadedskilldict.Add(kv.Key, kv.Value);
+            System.Array.Copy(slots, clone.slots, slots.Length);
 
             return clone;
         }

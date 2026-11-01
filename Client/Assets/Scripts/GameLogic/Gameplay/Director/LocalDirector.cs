@@ -149,14 +149,28 @@ namespace GameLogic.Gameplay.Director
             //    ObjectPool.Set(command);
             //}
 
-            var joystick = engine.u3dkit.input.GetInput(INPUT_DEFINE.JOYSTICK);
-            stage.SetInput(world.selfseat, INPUT_DEFINE.JOYSTICK, joystick.press, ToWorldDire(joystick.dire));
-
-            //var ba = world.input.GetInput(INPUT_DEFINE.BA);
-            //stage.SetInput(world.selfseat, INPUT_DEFINE.BA, ba.press, ba.dire);
+            // 同步本地输入到逻辑层
+            SyncInput();
 
             stage.Step();
 
+        }
+
+        /// <summary>
+        /// 同步本地输入到逻辑层
+        /// 按 INPUT_DEFINE.SYNC_INPUTS 登记的类型批量采集并下发, 新增按键无需改动此处
+        /// </summary>
+        private void SyncInput()
+        {
+            var input = engine.u3dkit.input;
+            if (null == input) return;
+
+            var inputs = INPUT_DEFINE.SYNC_INPUTS;
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                var value = input.GetInput(inputs[i]);
+                stage.SetInput(world.selfseat, inputs[i], value.press, ToWorldDire(value.dire));
+            }
         }
 
         /// <summary>

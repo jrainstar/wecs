@@ -64,15 +64,48 @@ namespace GameLogic.Gameplay.Common
 
         /// <summary>
         /// 绑定按键类型与设备读取器
+        /// 摇杆与按键一视同仁, 都是"输入类型 -> 设备读取器", 不存在特殊分支
         /// </summary>
         private void Bind()
         {
             keydict.Clear();
-            keydict.Add(INPUT_DEFINE.JOYSTICK, () => keyboard.joystick);
-            //keydict.Add(INPUT_DEFINE.BA, () => new Vector2(keyboard.leftdown ? 1 : 0, 0));
-            //keydict.Add(INPUT_DEFINE.BB, () => new Vector2(keyboard.right ? 1 : 0, 0));
-            //keydict.Add(INPUT_DEFINE.BC, () => new Vector2(keyboard.GetKey(UnityEngine.InputSystem.Key.Q) ? 1 : 0, 0));
-            //keydict.Add(INPUT_DEFINE.BD, () => new Vector2(keyboard.GetKey(UnityEngine.InputSystem.Key.E) ? 1 : 0, 0));
+            BindKey(INPUT_DEFINE.JOYSTICK, new System.Func<Vector2>(() => keyboard.move));
+            BindMouse(INPUT_DEFINE.BA, () => keyboard.left);
+            BindKey(INPUT_DEFINE.BB, UnityEngine.InputSystem.Key.Q);
+            BindKey(INPUT_DEFINE.BC, UnityEngine.InputSystem.Key.E);
+            BindKey(INPUT_DEFINE.BD, UnityEngine.InputSystem.Key.R);
+        }
+
+        /// <summary>
+        /// 绑定单个按键到输入类型
+        /// 按键按住为一维输入 (非零即按下), 方向由上层使用
+        /// </summary>
+        /// <param name="type">输入类型</param>
+        /// <param name="key">键盘按键</param>
+        private void BindKey(ushort type, UnityEngine.InputSystem.Key key)
+        {
+            keydict.Add(type, () => keyboard.GetKey(key) ? Vector2.right : Vector2.zero);
+        }
+
+        /// <summary>
+        /// 绑定鼠标按键到输入类型
+        /// 鼠标按住按照一维输入处理 (非零即按下), 与键盘按键语义一致
+        /// </summary>
+        /// <param name="type">输入类型</param>
+        /// <param name="button">鼠标按键按住状态读取器</param>
+        private void BindMouse(ushort type, System.Func<bool> button)
+        {
+            keydict.Add(type, () => button.Invoke() ? Vector2.right : Vector2.zero);
+        }
+
+        /// <summary>
+        /// 绑定自定义读取器到输入类型
+        /// </summary>
+        /// <param name="type">输入类型</param>
+        /// <param name="reader">设备状态读取器</param>
+        private void BindKey(ushort type, System.Func<Vector2> reader)
+        {
+            keydict.Add(type, reader);
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// 移动方向 (WASD/方向键), 未输入时为 zero, 长度不超过 1
         /// </summary>
-        public Vector2 joystick
+        public Vector2 move
         {
             get
             {

@@ -92,7 +92,7 @@ namespace GameLogic.Gameplay.Common
         /// <summary>
         /// 时间缩放
         /// </summary>
-        public float timeScale = 1f;
+        public float timeScale { get; set; } = 1f;
 
         protected override void OnCreate()
         {

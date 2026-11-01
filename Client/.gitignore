@@ -43,6 +43,7 @@ ExportedObj/
 *.opendb
 *.VC.db
 *.idea
+*.dwlt
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -77,3 +78,4 @@ Bundles/
 Sandbox/
 
 Package/
+UserSettings/

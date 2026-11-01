@@ -46,6 +46,13 @@
 
 <table name="TbRoleModel" value="RoleModel" input="model@gameplay/role.xlsx"/>
 
+<bean name="RoleSkill">
+	<var name="id" type="int" alias="编号"/>
+	<var name="skills" type="array,int" alias="技能组"/>
+</bean>
+
+<table name="TbRoleSkill" value="RoleSkill" input="skill@gameplay/role.xlsx"/>
+
 <enum name="RoleAttr">
 	<var name="None" 	alias="空" 			value="0" />
 	<var name="Hp" 		alias="血量" 		value="1" />

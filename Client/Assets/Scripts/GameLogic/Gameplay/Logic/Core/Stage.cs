@@ -94,10 +94,16 @@ namespace GameLogic.Gameplay.Logic
         /// 座位
         /// </summary>
         public Seat seat => GetBehavior<Seat>(sa, true);
+
         /// <summary>
         /// 随机数
         /// </summary>
         public Random random => GetBehavior<Random>(sa, true);
+
+        /// <summary>
+        /// 随机数
+        /// </summary>
+        public Timeline timeline => GetBehavior<Timeline>(sa, true);
 
         /// <summary>
         /// 渲染指令同步
@@ -189,7 +195,10 @@ namespace GameLogic.Gameplay.Logic
             AddBehavior<Seat>(sa);
             AddBehavior<Random>(sa).Initialze(data.seed);
 
+            AddBehavior<Timeline>(sa);
+
             AddBehavior<RILSync>(sa);
+
         }
 
         /// <summary>

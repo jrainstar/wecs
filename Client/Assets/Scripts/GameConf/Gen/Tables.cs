@@ -17,6 +17,7 @@ public partial class Tables
     public Gameplay.TbTagData TbTagData {get; }
     public Gameplay.TbRoleData TbRoleData {get; }
     public Gameplay.TbRoleModel TbRoleModel {get; }
+    public Gameplay.TbRoleSkill TbRoleSkill {get; }
     public Gameplay.TbTimelineData TbTimelineData {get; }
     public Gameplay.TbSkillData TbSkillData {get; }
     public Gameplay.TbMoudleData TbMoudleData {get; }
@@ -26,6 +27,7 @@ public partial class Tables
         TbTagData = new Gameplay.TbTagData(loader("gameplay_tbtagdata"));
         TbRoleData = new Gameplay.TbRoleData(loader("gameplay_tbroledata"));
         TbRoleModel = new Gameplay.TbRoleModel(loader("gameplay_tbrolemodel"));
+        TbRoleSkill = new Gameplay.TbRoleSkill(loader("gameplay_tbroleskill"));
         TbTimelineData = new Gameplay.TbTimelineData(loader("gameplay_tbtimelinedata"));
         TbSkillData = new Gameplay.TbSkillData(loader("gameplay_tbskilldata"));
         TbMoudleData = new Gameplay.TbMoudleData(loader("gameplay_tbmoudledata"));
@@ -37,6 +39,7 @@ public partial class Tables
         TbTagData.ResolveRef(this);
         TbRoleData.ResolveRef(this);
         TbRoleModel.ResolveRef(this);
+        TbRoleSkill.ResolveRef(this);
         TbTimelineData.ResolveRef(this);
         TbSkillData.ResolveRef(this);
         TbMoudleData.ResolveRef(this);
