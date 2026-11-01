@@ -42,6 +42,9 @@ namespace GameLogic.Gameplay.Logic
             var joystick = gamepad.GetInput(INPUT_DEFINE.JOYSTICK);
             if (false == joystick.press) return;
 
+            // 时间轴锁定移动 (如施法动作 Move=false): 不位移也不切 MOVE 状态, 动画由时间轴全权接管
+            if (stage.SeekBehaviorInfo(actor, out TimelineInfo timelineinfo) && timelineinfo.lockmove) return;
+
             Move(new FPVector3(joystick.dire.x, 0, joystick.dire.y), tick);
         }
 

@@ -24,6 +24,10 @@ namespace GameLogic.Gameplay.Logic
             var host = timeline.current.actor;
             if (false == stage.SeekBehavior(host, out Facade facade)) return;
 
+            // 动画节点同时声明施法期间是否锁定移动 (Move=false 锁定),
+            // 写在时间轴信息上, Movement 每帧检查; 时间轴结束随 info 移除自动解锁
+            timeline.current.lockmove = false == timelineevent.Move;
+
             facade.SetAnimation(name);
             // SetAnimation 会把速度重置为 1, 必须在其后设置
             facade.SetAnimationSpeed((FP)timelineevent.Speed);
