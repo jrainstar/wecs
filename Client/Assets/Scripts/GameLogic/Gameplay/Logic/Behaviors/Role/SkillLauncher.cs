@@ -266,11 +266,9 @@ namespace GameLogic.Gameplay.Logic
         public bool IsCasting()
         {
             if (false == info.casting) return false;
-            // 时间轴已经播完 (BehaviorInfo 被移除), 技能释放结束
+            // 无时间轴技能 (配置 Timeline <= 0 或时间轴创建失败), casting 标志还在即视为释放中
             if (0 == info.timeline) return true;
-            // 注意: 这里不能用 force, force 会把 Rmv 掉的 TimelineInfo 也算作存在
-            // 时间轴播完时 Timeline.Execute 会调用 RmvBehaviorInfo, 但条目要等 Recycle() 才真正删除
-            // 用 force 会导致 casting 永远清不掉, 技能只能放一次且动画永远停在技能动画上
+            // 有时间轴: TimelineInfo 被移除说明时间轴已播完, 技能释放结束
             if (stage.SeekBehaviorInfo<TimelineInfo>(info.timeline, out _)) return true;
 
             info.skill = 0;

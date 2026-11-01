@@ -1,5 +1,4 @@
 using GameLogic.Gameplay.Common;
-using System.Collections.Generic;
 
 namespace GameLogic.Gameplay.Logic
 {
@@ -23,21 +22,35 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="state">动画状态</param>
         public void SetAnimation(byte state)
         {
+            // 同一状态且动画未被时间轴显式指定时, 视为同一动画继续播放, 不重置进度
+            // 场景: 施法中移动, CASTING→MOVE 切换会再次 SetAnimation(MOVE), 跑动动画不应从头重播
+            if (info.animstate == state && null == info.animname) return;
+
             info.animstate = state;
             info.animname = null;
             info.animloop = true;
             info.animelapsed = 0;
+            info.animspeed = FP.One;
         }
 
         /// <summary>
         /// 设置动画名称
         /// </summary>
         /// <param name="animname">动画名称</param>
-        public void SetAnimation(string animname, byte ticktype = ANIM_DEFINE.TICK_AUTOMATIC)
+        public void SetAnimation(string animname)
         {
-            info.animticktype = ticktype;
             info.animname = animname;
             info.animelapsed = 0;
+            info.animspeed = FP.One;
+        }
+
+        /// <summary>
+        /// 设置动画速度倍率, 0 为定格
+        /// </summary>
+        /// <param name="speed">速度倍率</param>
+        public void SetAnimationSpeed(FP speed)
+        {
+            info.animspeed = speed;
         }
 
         /// <summary>
@@ -47,15 +60,6 @@ namespace GameLogic.Gameplay.Logic
         public void SetAnimationLoop(bool loop)
         {
             info.animloop = loop;
-        }
-
-        /// <summary>
-        /// 手动推进动画时间, 用于 TICK_MANUAL 类型的动画 (例如由时间轴驱动)
-        /// </summary>
-        /// <param name="elapsed">流逝时间</param>
-        public void SetAnimationElapsed(FP elapsed)
-        {
-            info.animelapsed = elapsed;
         }
 
         /// <summary>
@@ -76,7 +80,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnTick(FP tick)
         {
             base.OnTick(tick);
-            if (info.animticktype == ANIM_DEFINE.TICK_AUTOMATIC) info.animelapsed += tick;
+            info.animelapsed += tick * info.animspeed;
 
             //// 移除已结束的管线特效
             //if (stage.SeekBehaviorInfos(out List<FlowEffectInfo> floweffects, true))

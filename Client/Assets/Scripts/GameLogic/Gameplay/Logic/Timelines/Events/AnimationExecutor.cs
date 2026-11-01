@@ -5,9 +5,8 @@ namespace GameLogic.Gameplay.Logic
 {
     /// <summary>
     /// 动画指令执行器
-    /// 时间轴节点只负责切换动画名称, 不接管动画推进:
-    ///   Speed &gt; 0  - TICK_AUTOMATIC, 由 Facade.OnTick 按逻辑帧累加 animelapsed
-    ///   Speed == 0 - TICK_MANUAL, 动画定格, 由外部通过 Facade.SetAnimationElapsed 推进
+    /// 时间轴节点负责切换动画名称与速度倍率, 不接管动画推进:
+    /// 动画由 Facade.OnTick 按逻辑帧累加 animelapsed, 倍率由节点的 Speed 决定 (0 为定格)
     /// 时间轴播完后不会还原动画, 角色保持在节点指定的动画上, 直到
     /// Movement / StateMachine 等行为切换状态时再切回移动或待机
     /// </summary>
@@ -25,10 +24,9 @@ namespace GameLogic.Gameplay.Logic
             var host = timeline.current.actor;
             if (false == stage.SeekBehavior(host, out Facade facade)) return;
 
-            var animticktype = timelineevent.Speed > 0 ? ANIM_DEFINE.TICK_AUTOMATIC : ANIM_DEFINE.TICK_MANUAL;
-
-            // 先设循环, SetAnimation 内部会重置 animelapsed
-            facade.SetAnimation(name, animticktype);
+            facade.SetAnimation(name);
+            // SetAnimation 会把速度重置为 1, 必须在其后设置
+            facade.SetAnimationSpeed((FP)timelineevent.Speed);
             facade.SetAnimationLoop(timelineevent.Loop);
         }
     }

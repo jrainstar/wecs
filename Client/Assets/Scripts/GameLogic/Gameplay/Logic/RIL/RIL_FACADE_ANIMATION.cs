@@ -14,9 +14,9 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public byte animstate { get; set; }
         /// <summary>
-        /// 动画更新类型, 见 ANIM_DEFINE
+        /// 动画速度倍率 (FP 定点千分位, 1000 = 1 倍, 0 为定格)
         /// </summary>
-        public byte animticktype { get; set; }
+        public uint animspeed { get; set; }
         /// <summary>
         /// 动画名称
         /// </summary>
@@ -33,7 +33,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnReady()
         {
             animstate = 0;
-            animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
+            animspeed = 1000;
             animname = null;
             animloop = true;
             animelapsed = 0;
@@ -42,7 +42,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnReset()
         {
             animstate = 0;
-            animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
+            animspeed = 1000;
             animname = null;
             animloop = true;
             animelapsed = 0;

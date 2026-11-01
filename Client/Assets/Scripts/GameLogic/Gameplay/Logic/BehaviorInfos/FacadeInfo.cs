@@ -64,9 +64,9 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public int model { get; set; }
         /// <summary>
-        /// 动画更新类型
+        /// 动画速度倍率, 0 为定格
         /// </summary>
-        public byte animticktype { get; set; }
+        public FP animspeed { get; set; }
         /// <summary>
         /// 动画状态
         /// </summary>
@@ -103,7 +103,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnReady()
         {
             model = 0;
-            animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
+            animspeed = FP.One;
             animstate = 0;
             animname = null;
             animloop = true;
@@ -117,7 +117,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnReset()
         {
             model = 0;
-            animticktype = ANIM_DEFINE.TICK_AUTOMATIC;
+            animspeed = FP.One;
             animstate = 0;
             animname = null;
             animloop = true;
@@ -136,10 +136,10 @@ namespace GameLogic.Gameplay.Logic
             var clone = ObjectCache.Ensure<FacadeInfo>();
             clone.Ready(actor);
             clone.model = model;
-            clone.animticktype = animticktype;
             clone.animstate = animstate;
             clone.animname = animname;
             clone.animloop = animloop;
+            clone.animspeed = animspeed;
             clone.animelapsed = animelapsed;
             clone.effectincrement = effectincrement;
             clone.rmveffects.AddRange(rmveffects);

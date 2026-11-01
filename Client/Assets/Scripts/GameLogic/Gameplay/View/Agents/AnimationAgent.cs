@@ -14,18 +14,30 @@ namespace GameLogic.Gameplay.View
         /// 动画配置名称
         /// </summary>
         private string cfgname { get; set; } = default;
+
         /// <summary>
         /// 动画配置
         /// </summary>
         private AnimationConfig animcfg { get; set; } = default;
+
         /// <summary>
         /// Animancer 组件
         /// </summary>
         private AnimancerComponent animancer { get; set; }
+
         /// <summary>
         /// Animancer 播放状态
         /// </summary>
         private AnimancerState animstate { get; set; }
+        /// <summary>
+        /// 动画是否循环
+        /// </summary>
+        private bool animloop { get; set; }
+
+        // RIL
+        // preplayname curplayname
+        // 逻辑层想要的动画是什么、从什么切过来的
+
         /// <summary>
         /// 上一个动画名称
         /// </summary>
@@ -34,31 +46,47 @@ namespace GameLogic.Gameplay.View
         /// 当前播放动画名称
         /// </summary>
         private string curplayname { get; set; }
+
         /// <summary>
-        /// 动画名称
+        /// 动画速度倍率, 来自逻辑层 RIL (1 = 常速, 0 = 定格)
         /// </summary>
-        private string playname { get; set; }
+        private float animspeed { get; set; }
+
         /// <summary>
         /// 动画持续时间
         /// </summary>
         private float tarduration { get; set; }
+
         /// <summary>
         /// 混合持续时间
         /// </summary>
         private float mixduration { get; set; }
+
+        // 播放层
+        // playname lastplayname
+        // 这一帧真正交给 Animancer 的是什么、上一帧播的是什么
+
         /// <summary>
-        /// 动画是否循环
+        /// 动画名称
         /// </summary>
-        private bool animloop { get; set; } = true;
+        private string playname { get; set; }
+
         /// <summary>
         /// 上一次播放的动画名称
         /// </summary>
         private string lastplayname { get; set; }
+
         /// <summary>
         /// 动画播放位置 (秒)
         /// 完全由脚本推进, 不依赖 Animancer 的内部时间, 切换动画时才重置
         /// </summary>
         private float playtime { get; set; }
+
+        /// <summary>
+        /// 上一次 RIL 的逻辑层流逝时间 (毫秒)
+        /// 用于检测逻辑时间倒退 (重播/回滚/循环回绕), 倒退时才重新对齐播放位置
+        /// </summary>
+        private uint lastelapsed { get; set; }
 
         protected override void OnReady()
         {
@@ -69,11 +97,13 @@ namespace GameLogic.Gameplay.View
             preplayname = null;
             curplayname = null;
             playname = null;
+            animspeed = 1;
             tarduration = 0;
             mixduration = 0;
             animloop = true;
             lastplayname = null;
             playtime = 0;
+            lastelapsed = 0;
 
             WatchRIL<RIL_FACADE_ANIMATION>(OnRILStateMachine);
         }
@@ -87,11 +117,13 @@ namespace GameLogic.Gameplay.View
             preplayname = null;
             curplayname = null;
             playname = null;
+            animspeed = 1;
             tarduration = 0;
             mixduration = 0;
             animloop = true;
             lastplayname = null;
             playtime = 0;
+            lastelapsed = 0;
         }
 
         private void OnRILStateMachine(RIL_FACADE_ANIMATION ril)
@@ -121,7 +153,8 @@ namespace GameLogic.Gameplay.View
             var animname = ril.animname;
             if (null == animname) animname = animcfg.GetAnimationName(ril.animstate);
 
-            if (curplayname != animname)
+            var switched = curplayname != animname;
+            if (switched)
             {
                 preplayname = curplayname;
                 curplayname = animname;
@@ -134,12 +167,18 @@ namespace GameLogic.Gameplay.View
             var animinfo = animcfg.GetAnimationMixInfo(animname);
             if (null != animinfo) mixduration = animinfo.mixduration;
 
-            // 时间轴手动推进的动画, 用逻辑层给出的流逝时间对齐播放位置
-            // 自动推进的动画由 OnChase 自行累加, 不理会这个值
-            if (ANIM_DEFINE.TICK_MANUAL == ril.animticktype)
+            animspeed = ril.animspeed * ConfigKit.Int2Float;
+
+            // 播放位置只在以下情况对齐逻辑层的 animelapsed:
+            // 1. 动画切换 (SetAnimation 会把 animelapsed 归零)
+            // 2. 逻辑时间倒退 (重播/快照回滚/循环回绕, 回绕后 ApplyTime 取模等价连续)
+            // 其余情况渲染层领先逻辑层不足一帧, 每次都对齐会被拽回造成抖动,
+            // 渲染帧之间由 OnChase 按 tick * timescale * animspeed 自主插值推进
+            if (switched || ril.animelapsed < lastelapsed)
             {
                 playtime = ril.animelapsed * ConfigKit.Int2Float;
             }
+            lastelapsed = ril.animelapsed;
 
             if (null == preplayname || null == animinfo) return;
             var beforeAnimInfo = animinfo.GetAnimationBeforeMixInfo(preplayname);
@@ -187,7 +226,8 @@ namespace GameLogic.Gameplay.View
             animstate.Speed = 0;
 
             // 推进播放位置; 不能用状态时长以外的值作上限, 否则动画会静止
-            playtime += tick * timescale;
+            // 倍率来自逻辑层 (如时间轴节点的 Speed), 定格 (0) 时渲染层同样不推进
+            playtime += tick * timescale * animspeed;
             ApplyTime();
         }
 
