@@ -23,7 +23,7 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// Animancer 组件
         /// </summary>
-        private AnimancerComponent animancer { get; set; }
+        private AnimancerComponentPro animancer { get; set; }
 
         /// <summary>
         /// Animancer 播放状态
@@ -204,7 +204,7 @@ namespace GameLogic.Gameplay.View
             {
                 var model = world.GetAgent<ModelAgent>(actor);
                 if (null == model || null == model.go) return;
-                animancer = model.go.GetComponent<AnimancerComponent>();
+                animancer = model.go.GetComponent<AnimancerComponentPro>();
             }
 
             if (null == animancer) return;
@@ -212,7 +212,7 @@ namespace GameLogic.Gameplay.View
 
             // 混合时间随 timescale 缩放, timescale 为 0 时按 1 处理, 避免除零
             var scale = timescale > 0 ? timescale : 1f;
-            animstate = animancer.TryPlay(playname, mixduration * (1 / scale));
+            animstate = animancer.PlayNamed(playname, mixduration * (1 / scale), false);
             if (null == animstate) return;
 
             // 动画切换时重置播放位置, 同一段动画继续往下播

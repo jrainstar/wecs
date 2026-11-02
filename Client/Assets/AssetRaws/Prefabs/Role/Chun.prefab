@@ -61,7 +61,7 @@ PrefabInstance:
       addedObject: {fileID: 7442546451956551153}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ae415b8448704f14f9404010c759ed12, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4413997472081011116}
+      addedObject: {fileID: 8864152053474432370}
   m_SourcePrefab: {fileID: 100100000, guid: ae415b8448704f14f9404010c759ed12, type: 3}
 --- !u!1 &3293068341547468356 stripped
 GameObject:
@@ -89,7 +89,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4413997472081011116
+--- !u!114 &8864152053474432370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3293068341547468356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c75c0dcb6d50eb64abd727a90406ca2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 204e29c5e6751f24b825a90e723b7789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Animator: {fileID: 7442546451956551153}
@@ -109,27 +109,17 @@ MonoBehaviour:
   _Animations:
   - {fileID: 7400000, guid: 4c7de98a030815345ba17a9355e752ef, type: 2}
   - {fileID: 7400000, guid: 4549d0de21b87a642838b83ceaf7dc76, type: 2}
-  - {fileID: 7400000, guid: 770e871d2af61204a9eca076bb1bf89d, type: 2}
-  - {fileID: 7400000, guid: 5d4bc13ae93d3094e947e4aecc9de568, type: 2}
-  - {fileID: 7400000, guid: 2082bd6d748e59c4cb846e5a2feae881, type: 2}
-  - {fileID: 7400000, guid: 4fd41cb55901f624f9364a40017f8821, type: 2}
-  - {fileID: 7400000, guid: 8116ca908d14b7b42bc5815e40eb18e0, type: 2}
-  - {fileID: 7400000, guid: bbcf3f3c20d063d488aebeba8d6a9778, type: 2}
-  - {fileID: 7400000, guid: d3f35e7c8996c534d9580910a8610595, type: 2}
-  - {fileID: 7400000, guid: c38e6e6624eabbf48bd8d35430a64b4f, type: 2}
-  - {fileID: 7400000, guid: 4c08d72859e945540b923e4321108201, type: 2}
-  - {fileID: 7400000, guid: f252619899717ff44ba7c6f5a4536c24, type: 2}
-  - {fileID: 7400000, guid: cfc9b9b859f27cf4a844821859336b7b, type: 2}
   - {fileID: 7400000, guid: a23ce478f5be0b2488cd041f92bb0716, type: 2}
-  - {fileID: 7400000, guid: 7c8e2dce5bfbbe242bc2176afda74db3, type: 2}
-  - {fileID: 7400000, guid: 61ca766e15037e549bf05101ecae336b, type: 2}
-  - {fileID: 7400000, guid: 22f5e8961eba37b42a85afbed599536e, type: 2}
-  - {fileID: 7400000, guid: 3b15ca7a3af83764c9d08cd6a80da684, type: 2}
-  - {fileID: 7400000, guid: a7152c72905a98d4aa530c230a3ba461, type: 2}
-  - {fileID: 7400000, guid: 24297a3cd18779e499202c88f15a03cf, type: 2}
-  - {fileID: 7400000, guid: 5d60ceb4b4e1f7f4aab36d1ea64078af, type: 2}
   - {fileID: 7400000, guid: beb70b03bd5dd514ea7ea5b75955976c, type: 2}
   - {fileID: 7400000, guid: 35b9f662cc08b82428cd4dbfab3eae05, type: 2}
   - {fileID: 7400000, guid: 271c4d0d2b7b1f44481bcfe0b22a936f, type: 2}
   - {fileID: 7400000, guid: 1a41879f0ad0c4a4baae4479556f0fce, type: 2}
   - {fileID: 7400000, guid: 4361b768df5961b44a5c3b68828e341d, type: 2}
+  - {fileID: 7400000, guid: c0920dee158760e42876404088c6abac, type: 2}
+  _RootBone: {fileID: 7984279433806021942}
+  _DefaultLockRoot: 1
+--- !u!4 &7984279433806021942 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746564759562468899, guid: ae415b8448704f14f9404010c759ed12, type: 3}
+  m_PrefabInstance: {fileID: 2410056801854208789}
+  m_PrefabAsset: {fileID: 0}
