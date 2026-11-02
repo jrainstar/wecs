@@ -159,7 +159,7 @@ namespace GameFrame
                     try
                     {
                         AddWindowLoading<T>();
-                        GameObject gameObject = ResourceModule.Instance.Instantiate<GameObject>(type.Name, Root);
+                        GameObject gameObject = ResourceModule.Instance.Instantiate<GameObject>($"{UIDefine.UI_PREFAB_PATH}{type.Name}", Root);
                         window = gameObject.GetComponent<UIWindow>();
 
                         if (window == null)
@@ -292,7 +292,7 @@ namespace GameFrame
                     try
                     {
                         AddWindowLoading<T>();
-                        GameObject gameObject = await ResourceModule.Instance.InstantiateGameObjectAsync(type.Name, Root);
+                        GameObject gameObject = await ResourceModule.Instance.InstantiateGameObjectAsync($"{UIDefine.UI_PREFAB_PATH}{type.Name}", Root);
                         window = gameObject.GetComponent<UIWindow>();
 
                         if (window == null)

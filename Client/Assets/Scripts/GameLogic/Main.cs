@@ -19,10 +19,10 @@ namespace GameLogic
             var package = YooAssets.GetPackage(GameApp.PackageName);
 
             // 先叠加加载场景，最后再卸载旧场景
-            var engineHandle = package.LoadSceneSync("GameFrame", LoadSceneMode.Additive);
+            var engineHandle = package.LoadSceneSync("Assets/AssetRaws/Scenes/GameFrame", LoadSceneMode.Additive);
             await UniTask.DelayFrame(0);
 
-            var entryHandle = package.LoadSceneSync("GameEntry", LoadSceneMode.Additive);
+            var entryHandle = package.LoadSceneSync("Assets/AssetRaws/Scenes/GameEntry", LoadSceneMode.Additive);
             await UniTask.DelayFrame(0);
 
             // 切换到Hall状态，新UI已创建

@@ -11,9 +11,22 @@ namespace GameFrame
     /// 提供：
     ///   - 旧 API：LoadSceneAsync（Single）/ LoadAddSceneAsync（Additive），自带资源卸载与事件回调
     ///   - 新 API：LoadScene / UnloadScene（句柄式，配合 m_SceneHandles 登记，便于 Inspector 查看）
+    /// 所有 API 的 location 均为「场景名」，内部会自动拼接 SCENE_PACKAGE_NAME 前缀。
     /// </summary>
     public partial class ResourceModule
     {
+        /// <summary>场景资源前缀（场景名 → 完整 location）</summary>
+        public const string SCENE_PACKAGE_NAME = "Assets/AssetRaws/Scenes/";
+
+        /// <summary>把场景名拼成完整 location；已带前缀则原样返回</summary>
+        public static string GetSceneLocation(string sceneName)
+        {
+            if (string.IsNullOrEmpty(sceneName)) return sceneName;
+            return sceneName.StartsWith(SCENE_PACKAGE_NAME, StringComparison.Ordinal)
+                ? sceneName
+                : SCENE_PACKAGE_NAME + sceneName;
+        }
+
         #region 旧 API（UniTask 单向流程）
         /// <summary>
         /// 异步切换场景（Single）：加载完毕会自动卸载之前的资源。
@@ -21,19 +34,20 @@ namespace GameFrame
         /// </summary>
         public async UniTask<Scene> LoadSceneAsync(string location)
         {
+            var sceneLocation = GetSceneLocation(location);
             var package = RequirePackage();
-            var handle = package.LoadSceneAsync(location, LoadSceneMode.Single);
+            var handle = package.LoadSceneAsync(sceneLocation, LoadSceneMode.Single);
 
             // Single 会卸载其他场景，清理已缓存句柄
             m_SceneHandles.Clear();
-            m_SceneHandles[location] = handle;
+            m_SceneHandles[sceneLocation] = handle;
 
             await handle.ToUniTask();
             await UniTask.Yield();
             UnloadAllAssets(false);
             await UnloadUnusedAssets();
             await UniTask.Yield();
-            OnNewSceneLoadDone?.Invoke(location);
+            OnNewSceneLoadDone?.Invoke(sceneLocation);
             return handle.SceneObject;
         }
 
@@ -44,12 +58,13 @@ namespace GameFrame
         /// <param name="onProgress">加载进度回调（0~1），可为 null</param>
         public async UniTask<Scene> LoadSceneAsync(string location, Action<float> onProgress)
         {
+            var sceneLocation = GetSceneLocation(location);
             var package = RequirePackage();
-            var handle = package.LoadSceneAsync(location, LoadSceneMode.Single);
+            var handle = package.LoadSceneAsync(sceneLocation, LoadSceneMode.Single);
 
             // Single 会卸载其他场景，清理已缓存句柄
             m_SceneHandles.Clear();
-            m_SceneHandles[location] = handle;
+            m_SceneHandles[sceneLocation] = handle;
 
             await WaitSceneHandleWithProgress(handle, onProgress);
 
@@ -57,16 +72,17 @@ namespace GameFrame
             UnloadAllAssets(false);
             await UnloadUnusedAssets();
             await UniTask.Yield();
-            OnNewSceneLoadDone?.Invoke(location);
+            OnNewSceneLoadDone?.Invoke(sceneLocation);
             return handle.SceneObject;
         }
 
         /// <summary>异步加载附加场景（Additive）</summary>
         public async UniTask<Scene> LoadAddSceneAsync(string location, bool active)
         {
+            var sceneLocation = GetSceneLocation(location);
             var package = RequirePackage();
-            var handle = package.LoadSceneAsync(location, LoadSceneMode.Additive);
-            m_SceneHandles[location] = handle;
+            var handle = package.LoadSceneAsync(sceneLocation, LoadSceneMode.Additive);
+            m_SceneHandles[sceneLocation] = handle;
 
             await handle.ToUniTask();
             if (active)
@@ -103,22 +119,24 @@ namespace GameFrame
             var package = GetPackageSafe();
             if (package == null) return null;
 
-            var handle = package.LoadSceneAsync(location, mode, allowSceneActivation: activateOnLoad);
+            var sceneLocation = GetSceneLocation(location);
+            var handle = package.LoadSceneAsync(sceneLocation, mode, allowSceneActivation: activateOnLoad);
 
             // Single 模式会卸载其他场景，清理已缓存句柄
             if (mode == LoadSceneMode.Single)
                 m_SceneHandles.Clear();
 
-            m_SceneHandles[location] = handle;
+            m_SceneHandles[sceneLocation] = handle;
             return handle;
         }
 
         /// <summary>卸载场景（仅 Additive 加载的场景需要手动卸载）</summary>
         public void UnloadScene(string location)
         {
-            if (m_SceneHandles.TryGetValue(location, out var handle))
+            var sceneLocation = GetSceneLocation(location);
+            if (m_SceneHandles.TryGetValue(sceneLocation, out var handle))
             {
-                m_SceneHandles.Remove(location);
+                m_SceneHandles.Remove(sceneLocation);
                 handle.UnloadSceneAsync();
             }
         }

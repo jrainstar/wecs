@@ -59,7 +59,7 @@ namespace GameFrame
         {
             m_UIWidgetDict ??= new();
             var type = typeof(T);
-            GameObject gameObject = await ResourceModule.Instance.InstantiateGameObjectAsync(type.Name, parent);
+            GameObject gameObject = await ResourceModule.Instance.InstantiateGameObjectAsync($"{UIDefine.UI_PREFAB_PATH}{type.Name}", parent);
             UIWidget widget = gameObject.GetComponent<UIWidget>();
             if (widget == null)
             {
