@@ -62,71 +62,11 @@ namespace GameLogic.Gameplay.Logic
             info.animloop = loop;
         }
 
-        /// <summary>
-        /// 播放特效
-        /// </summary>
-        /// <param name="effect">特效</param>
-        public uint CreateEffect(EffectInfo effect)
-        {
-            var increment = info.effectincrement++;
-            effect.id = increment;
-            effect.elapsed = 0;
-            info.effects.Add(effect.id);
-            info.effectdict.Add(effect.id, effect);
-
-            return increment;
-        }
-
         protected override void OnTick(FP tick)
         {
             base.OnTick(tick);
             info.animelapsed += tick * info.animspeed;
 
-            //// 移除已结束的管线特效
-            //if (stage.SeekBehaviorInfos(out List<FlowEffectInfo> floweffects, true))
-            //{
-            //    foreach (var floweffect in floweffects)
-            //    {
-            //        if (floweffect.active) continue;
-            //        info.rmveffects.AddRange(floweffect.effects);
-            //    }
-            //}
-
-            //// 移除过期的特效
-            //foreach (var rmveffect in info.rmveffects)
-            //{
-            //    if (info.effectdict.TryGetValue(rmveffect, out var effect)) DiffFacadeEffect(effect, RIL_DEFINE.DIFF_DEL);
-
-            //    info.effects.Remove(rmveffect);
-            //    info.effectdict.Remove(rmveffect);
-            //}
-            //info.rmveffects.Clear();
-
-            //// 更新特效时间流逝
-            //foreach (var id in info.effects)
-            //{
-            //    if (false == info.effectdict.TryGetValue(id, out var effect)) continue;
-            //    effect.elapsed += tick;
-            //    info.effectdict.Remove(id);
-            //    info.effectdict.Add(id, effect);
-            //    if (effect.elapsed >= effect.duration) info.rmveffects.Add(id);
-
-            //    DiffFacadeEffect(effect, RIL_DEFINE.DIFF_NEW);
-            //}
-        }
-
-        /// <summary>
-        /// 外观特效差异
-        /// </summary>
-        /// <param name="effect">特效信息</param>
-        /// <param name="token">RIL 差异标记</param>
-        private void DiffFacadeEffect(EffectInfo effect, byte token)
-        {
-            //var diff = ObjectCache.Ensure<RIL_DIFF_FACADE_EFFECT>();
-            //diff.Ready(actor, token);
-            //diff.effect = effect;
-
-            //stage.Diff(diff);
         }
     }
 }
