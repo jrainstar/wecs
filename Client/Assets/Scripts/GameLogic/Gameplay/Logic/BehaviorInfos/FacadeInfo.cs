@@ -32,6 +32,12 @@ namespace GameLogic.Gameplay.Logic
         /// 流逝时间
         /// </summary>
         public FP animelapsed { get; set; }
+        /// <summary>
+        /// 是否应用动画关键帧位移
+        /// 逻辑层据此在 Facade 中采样关键帧驱动角色位移, 渲染层据此锁住根骨骼,
+        /// 避免动画自带的根骨骼位移与逻辑位移叠加
+        /// </summary>
+        public bool animmotion { get; set; }
 
         protected override void OnReady()
         {
@@ -41,6 +47,7 @@ namespace GameLogic.Gameplay.Logic
             animname = null;
             animloop = true;
             animelapsed = FP.Zero;
+            animmotion = false;
         }
 
         protected override void OnReset()
@@ -51,6 +58,7 @@ namespace GameLogic.Gameplay.Logic
             animname = null;
             animloop = true;
             animelapsed = FP.Zero;
+            animmotion = false;
         }
 
         protected override BehaviorInfo OnClone()
@@ -63,6 +71,7 @@ namespace GameLogic.Gameplay.Logic
             clone.animloop = animloop;
             clone.animspeed = animspeed;
             clone.animelapsed = animelapsed;
+            clone.animmotion = animmotion;
 
             return clone;
         }

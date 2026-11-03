@@ -44,6 +44,14 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public bool lockmove { get; set; }
 
+        /// <summary>
+        /// 是否应用动画关键帧位移
+        /// 由时间轴动画节点的 ApplyMotion 配置决定 (false = 不读取关键帧文件),
+        /// 位移由 Facade 每帧采样关键帧应用, 随 BehaviorInfo 一起移除,
+        /// 所以循环动画的位移最多持续到时间轴结束
+        /// </summary>
+        public bool motionapply { get; set; }
+
         protected override void OnReady()
         {
             OnReset();
@@ -58,6 +66,7 @@ namespace GameLogic.Gameplay.Logic
             chargeelapsed = FP.Zero;
             charging = false;
             lockmove = false;
+            motionapply = false;
         }
 
         protected override BehaviorInfo OnClone()
@@ -72,6 +81,7 @@ namespace GameLogic.Gameplay.Logic
             clone.chargeelapsed = chargeelapsed;
             clone.charging = charging;
             clone.lockmove = lockmove;
+            clone.motionapply = motionapply;
 
             return clone;
         }

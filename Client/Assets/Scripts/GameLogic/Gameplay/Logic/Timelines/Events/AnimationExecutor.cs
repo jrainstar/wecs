@@ -9,6 +9,12 @@ namespace GameLogic.Gameplay.Logic
     /// 动画由 Facade.OnTick 按逻辑帧累加 animelapsed, 倍率由节点的 Speed 决定 (0 为定格)
     /// 时间轴播完后不会还原动画, 角色保持在节点指定的动画上, 直到
     /// Movement / StateMachine 等行为切换状态时再切回移动或待机
+    ///
+    /// 关键帧文件 (Assets/AssetRaws/AnimationKeyframes/{动画名}.json) 按以下规则处理:
+    ///   循环=否, 应用位移=否 → 不读取关键帧文件
+    ///   循环=否, 应用位移=是 → 读取关键帧文件, 在片段时长内应用一次位移
+    ///   循环=是, 应用位移=是 → 读取关键帧文件, 每循环一次应用一次, 直到时间轴结束
+    /// 是否应用位移写在 TimelineInfo 上, 由 Facade 每帧采样, 时间轴结束后自动停止
     /// </summary>
     public class AnimationExecutor : Executor<AnimationEvent>
     {
@@ -26,12 +32,15 @@ namespace GameLogic.Gameplay.Logic
 
             // 动画节点同时声明施法期间是否锁定移动 (Move=false 锁定),
             // 写在时间轴信息上, Movement 每帧检查; 时间轴结束随 info 移除自动解锁
-            timeline.current.lockmove = false == timelineevent.Move;
+            timeline.current.lockmove = false == timelineevent.CanMove;
+            timeline.current.motionapply = timelineevent.ApplyMotion;
 
             facade.SetAnimation(name);
-            // SetAnimation 会把速度重置为 1, 必须在其后设置
+            // SetAnimation 会把速度/标记重置, 必须在其后设置
             facade.SetAnimationSpeed((FP)timelineevent.Speed);
             facade.SetAnimationLoop(timelineevent.Loop);
+            // 渲染层据此锁根骨骼 (动画自带的根骨骼位移交给逻辑层处理, 避免位移叠加两遍)
+            facade.SetAnimationMotion(timelineevent.ApplyMotion);
         }
     }
 }

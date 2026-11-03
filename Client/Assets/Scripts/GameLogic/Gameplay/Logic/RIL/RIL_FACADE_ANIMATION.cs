@@ -29,7 +29,13 @@ namespace GameLogic.Gameplay.Logic
         /// 流逝时间
         /// </summary>
         public uint animelapsed { get; set; }
-        
+        /// <summary>
+        /// 是否应用动画关键帧位移
+        /// true 表示逻辑层会用关键帧驱动角色位移, 渲染层需要锁住根骨骼,
+        /// 避免动画自带的根骨骼位移与逻辑位移叠加两遍
+        /// </summary>
+        public bool animmotion { get; set; }
+
         protected override void OnReady()
         {
             animstate = 0;
@@ -37,6 +43,7 @@ namespace GameLogic.Gameplay.Logic
             animname = null;
             animloop = true;
             animelapsed = 0;
+            animmotion = false;
         }
 
         protected override void OnReset()
@@ -46,6 +53,7 @@ namespace GameLogic.Gameplay.Logic
             animname = null;
             animloop = true;
             animelapsed = 0;
+            animmotion = false;
         }
     }
 }

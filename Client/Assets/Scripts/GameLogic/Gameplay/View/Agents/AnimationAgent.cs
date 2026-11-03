@@ -53,6 +53,13 @@ namespace GameLogic.Gameplay.View
         private float animspeed { get; set; }
 
         /// <summary>
+        /// 是否由逻辑层应用关键帧位移, 来自逻辑层 RIL
+        /// 为 true 时锁住根骨骼, 动画自带的根骨骼位移不再作用到模型上,
+        /// 位移完全由逻辑层采样关键帧驱动, 避免叠加两遍
+        /// </summary>
+        private bool animmotion { get; set; }
+
+        /// <summary>
         /// 动画持续时间
         /// </summary>
         private float tarduration { get; set; }
@@ -98,6 +105,7 @@ namespace GameLogic.Gameplay.View
             curplayname = null;
             playname = null;
             animspeed = 1;
+            animmotion = false;
             tarduration = 0;
             mixduration = 0;
             animloop = true;
@@ -118,6 +126,7 @@ namespace GameLogic.Gameplay.View
             curplayname = null;
             playname = null;
             animspeed = 1;
+            animmotion = false;
             tarduration = 0;
             mixduration = 0;
             animloop = true;
@@ -162,6 +171,7 @@ namespace GameLogic.Gameplay.View
 
             playname = curplayname;
             animloop = ril.animloop;
+            animmotion = ril.animmotion;
             mixduration = 0;
 
             var animinfo = animcfg.GetAnimationMixInfo(animname);
@@ -211,8 +221,10 @@ namespace GameLogic.Gameplay.View
             if (string.IsNullOrEmpty(playname)) return;
 
             // 混合时间随 timescale 缩放, timescale 为 0 时按 1 处理, 避免除零
+            // lockRoot 跟随 animmotion: 逻辑层用关键帧驱动位移时锁住根骨骼,
+            // 动画自带的根骨骼位移不再作用到模型上
             var scale = timescale > 0 ? timescale : 1f;
-            animstate = animancer.PlayNamed(playname, mixduration * (1 / scale), false);
+            animstate = animancer.PlayNamed(playname, mixduration * (1 / scale), animmotion);
             if (null == animstate) return;
 
             // 动画切换时重置播放位置, 同一段动画继续往下播

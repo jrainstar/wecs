@@ -18,6 +18,7 @@ namespace GameLogic.Gameplay.Logic
             hash = hash * 31 + (info.animname != null ? info.animname.GetHashCode() : 0);
             hash = hash * 31 + info.animloop.GetHashCode();
             hash = hash * 31 + info.animelapsed.GetHashCode();
+            hash = hash * 31 + info.animmotion.GetHashCode();
 
             return hash;
         }
@@ -29,6 +30,7 @@ namespace GameLogic.Gameplay.Logic
             ril.animname = info.animname;
             ril.animloop = info.animloop;
             ril.animelapsed = (info.animelapsed * stage.cfg.fp2int).AsUInt();
+            ril.animmotion = info.animmotion;
         }
     }
 }

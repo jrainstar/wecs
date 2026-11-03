@@ -1,3 +1,4 @@
+using GameFrame;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,6 +85,75 @@ namespace GameLogic.Gameplay.Common
 
                 return count;
             }
+        }
+
+        /// <summary>位移（根节点）所在分组的约定名称</summary>
+        public const string MotionGroupName = "Root";
+
+        /// <summary>
+        /// 查找用于位移的关键帧节点：优先取 Root 分组，其次取第一个带位置关键帧的节点。
+        /// 导出时把参与位移的根节点放在 Root 分组，其位置已累加为以动画根原点为基准的坐标。
+        /// </summary>
+        public AnimationKeyframeNodeData FindMotionNode()
+        {
+            var node = FindPositionNode(GetGroup(MotionGroupName)?.Nodes);
+            if (node != null) return node;
+
+            if (Groups == null) return null;
+
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                node = FindPositionNode(Groups[i]?.Nodes);
+                if (node != null) return node;
+            }
+
+            return null;
+        }
+
+        private static AnimationKeyframeNodeData FindPositionNode(List<AnimationKeyframeNodeData> nodes)
+        {
+            if (nodes == null) return null;
+
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                var node = nodes[i];
+                if (node?.Position != null && node.Position.HasKey) return node;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 采样 [begin, end) 时间段内根节点的位置增量（模型空间）。
+        /// 循环：每跨过一次片段末尾都从 0 重新累计，即片段位移被重复应用，直到 end；
+        /// 不循环：只累计到片段末尾，之后不再产生位移（应用一次）。
+        /// </summary>
+        public FPVector3 SampleMotion(AnimationKeyframeNodeData node, float begin, float end, bool loop)
+        {
+            if (node == null || Length <= 0f || end <= begin) return FPVector3.zero;
+
+            var motion = Vector3.zero;
+            var bt = begin;
+
+            while (bt < end)
+            {
+                // 当前循环段的末尾；不循环时就是片段末尾
+                var cycleend = loop ? (Mathf.Floor(bt / Length) + 1f) * Length : Length;
+                var cur = Mathf.Min(end, cycleend);
+                // 浮点精度导致段末没有前进时直接结束, 避免死循环
+                if (cur <= bt) break;
+
+                // 循环时把时间折算回片段内 (每段都从 0 开始)，不循环时本来就在片段内
+                var cyclebegin = cycleend - Length;
+
+                motion += node.SamplePosition(cur - cyclebegin) - node.SamplePosition(bt - cyclebegin);
+                bt = cur;
+
+                // 不循环时片段末尾之后的位移不再应用
+                if (false == loop) break;
+            }
+
+            return new FPVector3((FP)motion.x, (FP)motion.y, (FP)motion.z);
         }
     }
 
@@ -279,6 +349,34 @@ namespace GameLogic.Gameplay.Common
             }
 
             return lo;
+        }
+    }
+
+    /// <summary>
+    /// 关键帧文件缓存：按动画名称加载 Assets/AssetRaws/AnimationKeyframes/{动画名}.json，
+    /// 解析结果与资源实例分离，只加载/解析一次。
+    /// 逻辑层 (Facade 的位移应用) 按动画名取用，不需要每帧读文件。
+    /// </summary>
+    public static class AnimationKeyframeCache
+    {
+        private static readonly Dictionary<string, AnimationKeyframeClipData> cache =
+            new Dictionary<string, AnimationKeyframeClipData>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// 获取动画的关键帧数据，文件不存在或解析失败返回 null
+        /// 失败也会缓存，避免每帧重复加载
+        /// </summary>
+        /// <param name="name">动画名称（Clip 名称，也是文件名）</param>
+        public static AnimationKeyframeClipData Load(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return null;
+            if (cache.TryGetValue(name, out var data)) return data;
+
+            var asset = ResourceModule.Instance.LoadAssetSync<TextAsset>(Location.animationkeyframes + name);
+            data = asset != null ? AnimationKeyframeClipData.FromJson(asset.text) : null;
+            cache.Add(name, data);
+
+            return data;
         }
     }
 }
