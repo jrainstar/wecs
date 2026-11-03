@@ -18,9 +18,10 @@ public sealed partial class AnimationEvent : Gameplay.TimelineEvent
     public AnimationEvent(JSONNode _buf)  : base(_buf) 
     {
         { if(!_buf["Name"].IsString) { throw new SerializationException(); }  Name = _buf["Name"]; }
-        { if(!_buf["Move"].IsBoolean) { throw new SerializationException(); }  Move = _buf["Move"]; }
         { if(!_buf["Loop"].IsBoolean) { throw new SerializationException(); }  Loop = _buf["Loop"]; }
         { if(!_buf["Speed"].IsNumber) { throw new SerializationException(); }  Speed = _buf["Speed"]; }
+        { if(!_buf["CanMove"].IsBoolean) { throw new SerializationException(); }  CanMove = _buf["CanMove"]; }
+        { if(!_buf["ApplyMotion"].IsBoolean) { throw new SerializationException(); }  ApplyMotion = _buf["ApplyMotion"]; }
     }
 
     public static AnimationEvent DeserializeAnimationEvent(JSONNode _buf)
@@ -29,9 +30,10 @@ public sealed partial class AnimationEvent : Gameplay.TimelineEvent
     }
 
     public readonly string Name;
-    public readonly bool Move;
     public readonly bool Loop;
     public readonly float Speed;
+    public readonly bool CanMove;
+    public readonly bool ApplyMotion;
    
     public const int __ID__ = -187607490;
     public override int GetTypeId() => __ID__;
@@ -45,9 +47,10 @@ public sealed partial class AnimationEvent : Gameplay.TimelineEvent
     {
         return "{ "
         + "Name:" + Name + ","
-        + "Move:" + Move + ","
         + "Loop:" + Loop + ","
         + "Speed:" + Speed + ","
+        + "CanMove:" + CanMove + ","
+        + "ApplyMotion:" + ApplyMotion + ","
         + "}";
     }
 }

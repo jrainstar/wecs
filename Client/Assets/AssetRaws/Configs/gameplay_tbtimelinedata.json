@@ -52,9 +52,10 @@
         "Event": {
           "$type": "AnimationEvent",
           "Name": "Attack01",
-          "Move": true,
           "Loop": false,
-          "Speed": 1
+          "Speed": 1,
+          "CanMove": true,
+          "ApplyMotion": true
         }
       }
     ]
@@ -71,9 +72,10 @@
         "Event": {
           "$type": "AnimationEvent",
           "Name": "Attack01",
-          "Move": false,
           "Loop": false,
-          "Speed": 1
+          "Speed": 1,
+          "CanMove": false,
+          "ApplyMotion": true
         }
       }
     ]
@@ -90,9 +92,10 @@
         "Event": {
           "$type": "AnimationEvent",
           "Name": "AM_Attack03",
-          "Move": false,
           "Loop": false,
-          "Speed": 1
+          "Speed": 1,
+          "CanMove": false,
+          "ApplyMotion": true
         }
       }
     ]

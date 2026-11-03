@@ -85,10 +85,11 @@
 		<var name="Print" type="string" alias="日志打印"/>
 	</bean>
 	<bean name="AnimationEvent" alias="动画">
-		<var name="Name"  type="string" alias="动画名称"/>
-		<var name="Move"  type="bool"   alias="锁住移动"/>
-		<var name="Loop"  type="bool"   alias="动画循环"/>
-		<var name="Speed" type="float"  alias="动画速度"/>
+		<var name="Name"    		type="string" alias="动画名称"/>
+		<var name="Loop"    		type="bool"   alias="动画循环"/>
+		<var name="Speed"   		type="float"  alias="动画速度"/>
+		<var name="CanMove"    		type="bool"   alias="锁住移动"/>
+		<var name="ApplyMotion"  	type="bool"   alias="动画位移"/>
 	</bean>
 </bean>
 
