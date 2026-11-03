@@ -41,8 +41,8 @@ namespace GameLogic
             { GameState.Pack,          new SceneConfig(null, LoadSceneMode.Additive) },
             { GameState.UIPack,        new SceneConfig(null, LoadSceneMode.Additive) },
             { GameState.UIHero,        new SceneConfig(null, LoadSceneMode.Additive) },
-            { GameState.Gameplay,      new SceneConfig("Gameplay", LoadSceneMode.Single) },
-            { GameState.GameplayLocal, new SceneConfig("Gameplay1", LoadSceneMode.Single) },
+            { GameState.Gameplay,      new SceneConfig("Assets/AssetRaws/Scenes/Gameplay", LoadSceneMode.Single) },
+            { GameState.GameplayLocal, new SceneConfig("Assets/AssetRaws/Scenes/Gameplay1", LoadSceneMode.Single) },
         };
 
         /// <summary>场景加载进度（0~1）</summary>

@@ -3,7 +3,7 @@ using GameFrame;
 using Luban.SimpleJSON;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameFrame
 {
     public class TableModule : GameModule<TableModule>
     {
@@ -41,7 +41,7 @@ namespace GameLogic
 
         private JSONNode LoadByteBuf(string file)
         {
-            TextAsset textAsset = ResourceModule.Instance.LoadAssetSync<TextAsset>(file);
+            TextAsset textAsset = ResourceModule.Instance.LoadAssetSync<TextAsset>($"{Location.CONFIG_PATH}{file}");
             return JSON.Parse(textAsset.text);
         }
     }

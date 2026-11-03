@@ -1,4 +1,5 @@
 using GameConf.Gameplay;
+using GameFrame;
 using Sirenix.OdinInspector;
 using SuperScrollView;
 using System;

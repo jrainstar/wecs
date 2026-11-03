@@ -1,4 +1,5 @@
 using GameConf;
+using GameFrame;
 using Luban;
 
 namespace GameLogic.Gameplay.Common
