@@ -124,36 +124,50 @@ namespace GameLogic.Gameplay.Common
         }
 
         /// <summary>
-        /// 采样 [begin, end) 时间段内根节点的位置增量（模型空间）。
+        /// 采样 [begin, end) 时间段内根节点的位置增量（模型空间，定点运算）。
         /// 循环：每跨过一次片段末尾都从 0 重新累计，即片段位移被重复应用，直到 end；
         /// 不循环：只累计到片段末尾，之后不再产生位移（应用一次）。
+        /// 逻辑层必须用 FP 计算，浮点会因平台/时序差异导致逻辑不同步
         /// </summary>
-        public FPVector3 SampleMotion(AnimationKeyframeNodeData node, float begin, float end, bool loop)
+        public FPVector3 SampleMotion(AnimationKeyframeNodeData node, FP begin, FP end, bool loop)
         {
-            if (node == null || Length <= 0f || end <= begin) return FPVector3.zero;
+            if (node == null || end <= begin) return FPVector3.zero;
 
-            var motion = Vector3.zero;
-            var bt = begin;
+            FP length = (FP)Length;
+            if (length <= FP.Zero) return FPVector3.zero;
 
-            while (bt < end)
+            // 不循环: 只累计到片段末尾, 之后不再产生位移
+            if (false == loop)
             {
-                // 当前循环段的末尾；不循环时就是片段末尾
-                var cycleend = loop ? (Mathf.Floor(bt / Length) + 1f) * Length : Length;
-                var cur = Mathf.Min(end, cycleend);
-                // 浮点精度导致段末没有前进时直接结束, 避免死循环
-                if (cur <= bt) break;
+                if (begin >= length) return FPVector3.zero;
 
-                // 循环时把时间折算回片段内 (每段都从 0 开始)，不循环时本来就在片段内
-                var cyclebegin = cycleend - Length;
-
-                motion += node.SamplePosition(cur - cyclebegin) - node.SamplePosition(bt - cyclebegin);
-                bt = cur;
-
-                // 不循环时片段末尾之后的位移不再应用
-                if (false == loop) break;
+                var stop = end < length ? end : length;
+                return node.SamplePosition(stop) - node.SamplePosition(begin);
             }
 
-            return new FPVector3((FP)motion.x, (FP)motion.y, (FP)motion.z);
+            // 循环: 每跨过一次片段末尾都从 0 重新累计
+            var local = begin % length;
+            if (local < FP.Zero) local += length; // 反向播放等异常时间兜底
+            var span = end - begin;
+            var remain = length - local;
+
+            // 没跨过片段末尾, 直接在本段内采样
+            if (span < remain) return node.SamplePosition(local + span) - node.SamplePosition(local);
+
+            // 跨过片段末尾: 本段剩余 + 整段(多圈) + 下一段已播放部分
+            var motion = node.SamplePosition(length) - node.SamplePosition(local);
+            var rest = span - remain;
+
+            // 正常一帧不足一个片段, 循环只是兜底
+            while (rest >= length)
+            {
+                motion += node.SamplePosition(length) - node.SamplePosition(FP.Zero);
+                rest -= length;
+            }
+
+            if (rest > FP.Zero) motion += node.SamplePosition(rest) - node.SamplePosition(FP.Zero);
+
+            return motion;
         }
     }
 
@@ -197,6 +211,12 @@ namespace GameLogic.Gameplay.Common
         public Vector3 SamplePosition(float time)
         {
             return Position != null ? Position.Evaluate(time, Vector3.zero) : Vector3.zero;
+        }
+
+        /// <summary>按 FP 时间采样位置（逻辑层使用，避免浮点误差导致不同步）</summary>
+        public FPVector3 SamplePosition(FP time)
+        {
+            return Position != null ? Position.Evaluate(time, FPVector3.zero) : FPVector3.zero;
         }
 
         public Vector3 SampleEuler(float time)
@@ -246,6 +266,15 @@ namespace GameLogic.Gameplay.Common
         public Vector3 Evaluate(float time)
         {
             return Evaluate(time, Vector3.zero);
+        }
+
+        /// <summary>按 FP 时间采样，逻辑层使用</summary>
+        public FPVector3 Evaluate(FP time, FPVector3 defaultValue)
+        {
+            return new FPVector3(
+                AnimationKeyframeSampler.Evaluate(X, time, defaultValue.x),
+                AnimationKeyframeSampler.Evaluate(Y, time, defaultValue.y),
+                AnimationKeyframeSampler.Evaluate(Z, time, defaultValue.z));
         }
 
         private static bool Has(List<AnimationKeyframeKey> keys)
@@ -333,6 +362,49 @@ namespace GameLogic.Gameplay.Common
             if (dt <= 1e-6f) return k1.V;
 
             return k0.V + (k1.V - k0.V) * ((time - k0.T) / dt);
+        }
+
+        /// <summary>
+        /// 定点采样：逻辑层必须用 FP 计算, 浮点会因平台/时序差异导致逻辑不同步
+        /// 关键帧本身是 float, 参与运算前统一转成 FP
+        /// </summary>
+        public static FP Evaluate(List<AnimationKeyframeKey> keys, FP time, FP defaultValue)
+        {
+            if (keys == null || keys.Count == 0) return defaultValue;
+
+            int count = keys.Count;
+            if (time <= (FP)keys[0].T) return (FP)keys[0].V;
+
+            int last = count - 1;
+            if (time >= (FP)keys[last].T) return (FP)keys[last].V;
+
+            int index = FindIndex(keys, time);
+
+            FP t0 = (FP)keys[index].T;
+            FP t1 = (FP)keys[index + 1].T;
+            FP v0 = (FP)keys[index].V;
+            FP v1 = (FP)keys[index + 1].V;
+
+            FP dt = t1 - t0;
+            if (dt <= FP.Zero) return v1;
+
+            return v0 + (v1 - v0) * ((time - t0) / dt);
+        }
+
+        /// <summary>返回满足 keys[index].T &lt;= time &lt; keys[index + 1].T 的下标（FP 版本）。</summary>
+        private static int FindIndex(List<AnimationKeyframeKey> keys, FP time)
+        {
+            int lo = 0;
+            int hi = keys.Count - 1;
+
+            while (lo + 1 < hi)
+            {
+                int mid = (lo + hi) >> 1;
+                if ((FP)keys[mid].T <= time) lo = mid;
+                else hi = mid;
+            }
+
+            return lo;
         }
 
         /// <summary>返回满足 keys[index].T &lt;= time &lt; keys[index + 1].T 的下标。</summary>

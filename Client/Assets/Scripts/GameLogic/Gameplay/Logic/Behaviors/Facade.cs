@@ -113,7 +113,8 @@ namespace GameLogic.Gameplay.Logic
             var node = clipdata.FindMotionNode();
             if (null == node) return;
 
-            var motion = clipdata.SampleMotion(node, begin.AsFloat(), end.AsFloat(), info.animloop);
+            // 采样全程使用 FP, 不能走浮点, 否则不同步
+            var motion = clipdata.SampleMotion(node, begin, end, info.animloop);
             if (FP.Zero == motion.x && FP.Zero == motion.y && FP.Zero == motion.z) return;
 
             // 关键帧位置以动画根原点为基准 (模型空间), 按角色当前朝向转到世界方向

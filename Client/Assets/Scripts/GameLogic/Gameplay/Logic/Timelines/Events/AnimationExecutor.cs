@@ -36,9 +36,9 @@ namespace GameLogic.Gameplay.Logic
             timeline.current.motionapply = timelineevent.ApplyMotion;
 
             facade.SetAnimation(name);
+            facade.SetAnimationLoop(timelineevent.Loop);
             // SetAnimation 会把速度/标记重置, 必须在其后设置
             facade.SetAnimationSpeed((FP)timelineevent.Speed);
-            facade.SetAnimationLoop(timelineevent.Loop);
             // 渲染层据此锁根骨骼 (动画自带的根骨骼位移交给逻辑层处理, 避免位移叠加两遍)
             facade.SetAnimationMotion(timelineevent.ApplyMotion);
         }
