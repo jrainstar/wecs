@@ -95,6 +95,18 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private uint lastelapsed { get; set; }
 
+        /// <summary>
+        /// 根骨骼锁定剩余时间 (秒)
+        /// 从带位移的动画切到不带位移的动画时, 继续锁住根骨骼直到混合结束,
+        /// 否则解锁瞬间上一段动画的根骨骼位移会显形 (向前窜一下再被拉回来)
+        /// </summary>
+        private float rootlockremaining { get; set; }
+
+        /// <summary>
+        /// 上一帧是否锁住根骨骼
+        /// </summary>
+        private bool rootlocked { get; set; }
+
         protected override void OnReady()
         {
             cfgname = null;
@@ -112,6 +124,8 @@ namespace GameLogic.Gameplay.View
             lastplayname = null;
             playtime = 0;
             lastelapsed = 0;
+            rootlockremaining = 0;
+            rootlocked = false;
 
             WatchRIL<RIL_FACADE_ANIMATION>(OnRILStateMachine);
         }
@@ -133,6 +147,8 @@ namespace GameLogic.Gameplay.View
             lastplayname = null;
             playtime = 0;
             lastelapsed = 0;
+            rootlockremaining = 0;
+            rootlocked = false;
         }
 
         private void OnRILStateMachine(RIL_FACADE_ANIMATION ril)
@@ -223,18 +239,30 @@ namespace GameLogic.Gameplay.View
             if (string.IsNullOrEmpty(playname)) return;
 
             // 混合时间随 timescale 缩放, timescale 为 0 时按 1 处理, 避免除零
-            // lockRoot 跟随 animmotion: 逻辑层用关键帧驱动位移时锁住根骨骼,
-            // 动画自带的根骨骼位移不再作用到模型上
             var scale = timescale > 0 ? timescale : 1f;
-            animstate = animancer.PlayNamed(playname, mixduration * (1 / scale), animmotion);
-            if (null == animstate) return;
+            var fade = mixduration * (1 / scale);
 
             // 动画切换时重置播放位置, 同一段动画继续往下播
             if (playname != lastplayname)
             {
                 lastplayname = playname;
                 playtime = 0;
+                // 从带位移的动画切到不带位移的动画时, 继续锁到混合结束:
+                // 此时上一段动画还在淡出, 根骨骼还带着片段末尾的位移, 立刻解锁会看见
+                // 角色向前窜一下再被混合拉回绑定姿态
+                rootlockremaining = (false == animmotion && rootlocked) ? fade : 0f;
             }
+            else if (rootlockremaining > 0f)
+            {
+                rootlockremaining -= tick;
+                if (rootlockremaining < 0f) rootlockremaining = 0f;
+            }
+
+            // lockRoot: 带位移的动画一直锁; 不带位移时只在离开位移动画的混合期间继续锁
+            var lockroot = animmotion || rootlockremaining > 0f;
+            animstate = animancer.PlayNamed(playname, fade, lockroot);
+            rootlocked = lockroot;
+            if (null == animstate) return;
 
             // 关掉 Animancer 的自动推进, 全部由脚本控制时间
             animstate.Speed = 0;
