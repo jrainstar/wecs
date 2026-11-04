@@ -424,7 +424,7 @@ namespace GameLogic.Gameplay.Common
         public static FPQuaternion CreateFromAxisAngle(FPVector3 axis, FP angle)
         {
             // 确保旋转轴是单位向量
-            axis = axis.Normalized;
+            axis = axis.normalized;
 
             // 将角度减半并计算正弦和余弦值
             FP halfAngle = angle * FP.Half;

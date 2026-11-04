@@ -155,7 +155,7 @@ namespace GameLogic.Gameplay.Common
         /// Gets a normalized version of the vector.
         /// </summary>
         /// <returns>Returns a normalized version of the vector.</returns>
-        public FPVector3 Normalized
+        public FPVector3 normalized
         {
             get
             {
@@ -487,7 +487,7 @@ namespace GameLogic.Gameplay.Common
         // Returns the angle in degrees between /from/ and /to/. This is always the smallest
         public static FP Angle(FPVector3 from, FPVector3 to)
         {
-            return FPMath.Acos(FPMath.Clamp(Dot(from.Normalized, to.Normalized), -FP.One, FP.One)) * FPMath.Rad2Deg;
+            return FPMath.Acos(FPMath.Clamp(Dot(from.normalized, to.normalized), -FP.One, FP.One)) * FPMath.Rad2Deg;
         }
 
         // The smaller of the two possible angles between the two vectors is returned, therefore the result will never be greater than 180 degrees or smaller than -180 degrees.
@@ -495,7 +495,7 @@ namespace GameLogic.Gameplay.Common
         // The measured angle between the two vectors would be positive in a clockwise direction and negative in an anti-clockwise direction.
         public static FP SignedAngle(FPVector3 from, FPVector3 to, FPVector3 axis)
         {
-            FPVector3 fromNorm = from.Normalized, toNorm = to.Normalized;
+            FPVector3 fromNorm = from.normalized, toNorm = to.normalized;
             FP unsignedAngle = FPMath.Acos(FPMath.Clamp(Dot(fromNorm, toNorm), -FP.One, FP.One)) * FPMath.Rad2Deg;
             FP sign = FPMath.Sign(Dot(axis, Cross(fromNorm, toNorm)));
             return unsignedAngle * sign;
