@@ -172,10 +172,11 @@ namespace GameLogic.Gameplay.View
             playname = curplayname;
             animloop = ril.animloop;
             animmotion = ril.animmotion;
-            mixduration = 0;
+            // 先取配置的默认混合时间, 动画自己配置了 (大于 0) 再覆盖
+            mixduration = animcfg.defaultfadeduration;
 
             var animinfo = animcfg.GetAnimationMixInfo(animname);
-            if (null != animinfo) mixduration = animinfo.mixduration;
+            if (null != animinfo && animinfo.mixduration > 0) mixduration = animinfo.mixduration;
 
             animspeed = ril.animspeed * ConfigKit.Int2Float;
 
@@ -195,7 +196,8 @@ namespace GameLogic.Gameplay.View
             if (null != beforeAnimInfo && playtime < beforeAnimInfo.duration)
             {
                 playname = beforeAnimInfo.name;
-                mixduration = beforeAnimInfo.mixduration;
+                // 前置混合动画同样没配置时回落到默认混合时间
+                mixduration = beforeAnimInfo.mixduration > 0 ? beforeAnimInfo.mixduration : animcfg.defaultfadeduration;
             }
         }
 

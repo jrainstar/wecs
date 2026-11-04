@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 10001
   m_EditorClassIdentifier: 
   model: 10001
+  defaultfadeduration: 0.2
   animationstates:
   - state: 3
     name: Stand2

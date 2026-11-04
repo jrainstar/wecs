@@ -31,6 +31,15 @@ namespace GameLogic.Gameplay.View
         public int model;
 
         /// <summary>
+        /// 默认混合时间（秒）
+        /// 动画在动画配置列表里没有配置混合时间（未配置或 0）时使用该值，
+        /// 0 表示瞬间切换
+        /// </summary>
+        [PropertySpace(SpaceAfter = 5)]
+        [LabelText("默认混合时间")]
+        public float defaultfadeduration;
+
+        /// <summary>
         /// 动画状态绑定信息列表
         /// </summary>
         [PropertySpace(SpaceAfter = 5)]
