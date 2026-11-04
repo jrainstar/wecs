@@ -33,6 +33,38 @@ namespace GameLogic.Gameplay.Logic
         public FP radius { get; set; }
     }
 
+    public struct Capsule
+    {
+        /// <summary>
+        /// 偏移
+        /// </summary>
+        public FPVector3 offset { get; set; }
+        /// <summary>
+        /// 半径
+        /// </summary>
+        public FP radius { get; set; }
+        /// <summary>
+        /// 高度
+        /// </summary>
+        public FP height { get; set; }
+    }
+
+    public struct Cylinder
+    {
+        /// <summary>
+        /// 偏移
+        /// </summary>
+        public FPVector3 offset { get; set; }
+        /// <summary>
+        /// 半径
+        /// </summary>
+        public FP radius { get; set; }
+        /// <summary>
+        /// 高度
+        /// </summary>
+        public FP height { get; set; }
+    }
+
     public struct AABB
     {
         /// <summary>
