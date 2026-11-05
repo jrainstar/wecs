@@ -118,6 +118,8 @@ namespace GameLogic.Gameplay.Logic
             shape = 0;
             box = default;
             sphere = default;
+            capsule = default;
+            cylinder = default;
         }
 
         protected override BehaviorInfo OnClone()
@@ -128,6 +130,8 @@ namespace GameLogic.Gameplay.Logic
             clone.shape = shape;
             clone.box = box;
             clone.sphere = sphere;
+            clone.capsule = capsule;
+            clone.cylinder = cylinder;
 
             return clone;
         }
