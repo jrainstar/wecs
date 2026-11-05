@@ -82,6 +82,12 @@ namespace GameLogic.Gameplay.Logic
         /// 初始化 Stage 的游戏数据
         /// </summary>
         public StageData data { get; set; }
+
+        /// <summary>
+        /// 座位
+        /// </summary>
+        public Seat seat => GetBehavior<Seat>(sa, true);
+
         /// <summary>
         /// 配置
         /// </summary>
@@ -90,10 +96,11 @@ namespace GameLogic.Gameplay.Logic
         /// 事件订阅派发者
         /// </summary>
         public Eventor eventor => GetBehavior<Eventor>(sa, true);
+
         /// <summary>
-        /// 座位
+        /// 碰撞检测
         /// </summary>
-        public Seat seat => GetBehavior<Seat>(sa, true);
+        public Detection detection => GetBehavior<Detection>(sa, true);
 
         /// <summary>
         /// 随机数
@@ -190,11 +197,14 @@ namespace GameLogic.Gameplay.Logic
         private void Behaviors()
         {
             GetBehavior<Tag>(sa).Set(TAG_DEFINE.ACTOR_TYPE, ACTOR_DEFINE.STAGE);
+
             AddBehavior<Config>(sa);
             AddBehavior<Eventor>(sa);
-            AddBehavior<Seat>(sa);
-            AddBehavior<Random>(sa).Initialze(data.seed);
 
+            AddBehavior<Seat>(sa);
+
+            AddBehavior<Random>(sa).Initialze(data.seed);
+            AddBehavior<Detection>(sa);
             AddBehavior<Timeline>(sa);
 
             AddBehavior<RILSync>(sa);

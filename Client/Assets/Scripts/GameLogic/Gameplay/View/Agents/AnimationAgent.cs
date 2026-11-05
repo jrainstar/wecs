@@ -249,7 +249,7 @@ namespace GameLogic.Gameplay.View
                 playtime = 0;
                 // 从带位移的动画切到不带位移的动画时, 继续锁到混合结束:
                 // 此时上一段动画还在淡出, 根骨骼还带着片段末尾的位移, 立刻解锁会看见
-                // 角色向前窜一下再被混合拉回绑定姿态
+                // 角色向前窜一下再被混合拉回绑定姿态!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 rootlockremaining = (false == animmotion && rootlocked) ? fade : 0f;
             }
             else if (rootlockremaining > 0f)

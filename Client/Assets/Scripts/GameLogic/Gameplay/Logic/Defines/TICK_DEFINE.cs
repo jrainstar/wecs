@@ -15,6 +15,7 @@ namespace GameLogic.Gameplay.Logic
         public static List<Type> TICK_TYPE_LIST { get; private set; } = new()
         {            
             typeof(Gamepad),
+            typeof(Detection),
             typeof(Movement),
             typeof(Timeline),
             typeof(SkillLauncher),

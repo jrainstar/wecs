@@ -98,6 +98,14 @@ namespace GameLogic.Gameplay.Logic
         /// 球体
         /// </summary>
         public Sphere sphere { get; set; }
+        /// <summary>
+        /// 胶囊体
+        /// </summary>
+        public Capsule capsule { get; set; }
+        /// <summary>
+        /// 圆柱体
+        /// </summary>
+        public Cylinder cylinder { get; set; }
 
         protected override void OnReady()
         {

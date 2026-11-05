@@ -15,6 +15,14 @@ namespace GameLogic.Gameplay.Common
         /// 球体
         /// </summary>
         public const byte COLLIDER_SPHERE = 2;
+        /// <summary>
+        /// 胶囊体
+        /// </summary>
+        public const byte COLLIDER_CAPSULE = 3;
+        /// <summary>
+        /// 圆柱体
+        /// </summary>
+        public const byte COLLIDER_CYLINDER = 4;
 
         /// <summary>
         /// 碰撞类型 - 攻击盒
