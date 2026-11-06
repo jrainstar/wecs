@@ -169,9 +169,16 @@ namespace GameLogic.Gameplay.Logic
 
             if (false == stage.SeekBehaviorInfos(out List<ColliderInfo> colliders)) return default;
 
-            BoxShape box = new BoxShape(FPVector3.zero, size);
+            ColliderInfo probe = ObjectCache.Ensure<ColliderInfo>();
+            probe.Ready(0);
+            probe.shape = COLLISION_DEFINE.COLLIDER_BOX;
+            probe.box = new BoxShape { offset = FPVector3.zero, size = size };
+
             Transform transform = new Transform(position, rotation);
-            return OverlapShape(box, transform, colliders, layer);
+            HitResult result = OverlapShape(probe, transform, colliders, layer);
+            probe.Reset();
+            ObjectCache.Set(probe);
+            return result;
         }
 
         /// <summary>
@@ -190,9 +197,16 @@ namespace GameLogic.Gameplay.Logic
 
             if (false == stage.SeekBehaviorInfos(out List<ColliderInfo> colliders)) return default;
 
-            SphereShape sphere = new SphereShape(FPVector3.zero, radius);
+            ColliderInfo probe = ObjectCache.Ensure<ColliderInfo>();
+            probe.Ready(0);
+            probe.shape = COLLISION_DEFINE.COLLIDER_SPHERE;
+            probe.sphere = new SphereShape { offset = FPVector3.zero, radius = radius };
+
             Transform transform = new Transform(position, FPQuaternion.identity);
-            return OverlapShape(sphere, transform, colliders, layer);
+            HitResult result = OverlapShape(probe, transform, colliders, layer);
+            probe.Reset();
+            ObjectCache.Set(probe);
+            return result;
         }
 
         /// <summary>
@@ -207,18 +221,18 @@ namespace GameLogic.Gameplay.Logic
             if (false == stage.SeekBehaviorInfos(out List<ColliderInfo> colliders)) return default;
 
             Transform transform = MakeTransform(spatial);
-            return OverlapShape(collider.geometry, transform, colliders, layer);
+            return OverlapShape(collider, transform, colliders, layer);
         }
 
         /// <summary>
-        /// 形状检测通用实现
+        /// 碰撞盒检测通用实现
         /// </summary>
-        /// <param name="shape">检测体形状</param>
+        /// <param name="shape">检测体碰撞盒</param>
         /// <param name="transform">检测体变换</param>
         /// <param name="colliders">待检测碰撞盒集合</param>
         /// <param name="layer">层级 (-1, 默认全检测)</param>
         /// <returns>结果</returns>
-        private HitResult OverlapShape(BaseShape shape, in Transform transform, List<ColliderInfo> colliders, int layer)
+        private HitResult OverlapShape(ColliderInfo shape, in Transform transform, List<ColliderInfo> colliders, int layer)
         {
             HitResult result = new();
             if (null == shape) return result;
@@ -228,12 +242,9 @@ namespace GameLogic.Gameplay.Logic
                 if (false == stage.SeekBehaviorInfo(collider.actor, out SpatialInfo spatial)) continue;
                 if (-1 != layer && false == COLLISION_DEFINE.QUERY(layer, collider.layer)) continue;
 
-                BaseShape target = collider.geometry;
-                if (null == target) continue;
-
                 Transform targetTransform = MakeTransform(spatial);
-                if (false == DetectionShape.Overlaps(shape, transform, target, targetTransform)) continue;
-                if (false == DetectionShape.DetectShapeShape(shape, transform, target, targetTransform,
+                if (false == DetectionShape.Overlaps(shape, transform, collider, targetTransform)) continue;
+                if (false == DetectionShape.DetectShapeShape(shape, transform, collider, targetTransform,
                     out FPVector3 point, out FPVector3 normal, out FP penetration)) continue;
 
                 result.hit = true;
@@ -272,11 +283,8 @@ namespace GameLogic.Gameplay.Logic
                 if (false == stage.SeekBehaviorInfo(collider.actor, out SpatialInfo spatial)) continue;
                 if (-1 != layer && false == COLLISION_DEFINE.QUERY(layer, collider.layer)) continue;
 
-                BaseShape shape = collider.geometry;
-                if (null == shape) continue;
-
                 Transform transform = MakeTransform(spatial);
-                if (false == DetectionShape.DetectLineShape(origin, end, shape, transform,
+                if (false == DetectionShape.DetectLineShape(origin, end, collider, transform,
                     out FPVector3 point, out FPVector3 normal, out FP hitDistance)) continue;
 
                 result.hit = true;
@@ -366,18 +374,14 @@ namespace GameLogic.Gameplay.Logic
             normal = FPVector3.zero;
             penetration = FP.MaxValue;
 
-            BaseShape shapeA = a.geometry;
-            BaseShape shapeB = b.geometry;
-            if (null == shapeA || null == shapeB) return false;
-
             Transform transformA = MakeTransform(aspatial);
             Transform transformB = MakeTransform(bspatial);
 
-            // 缩放由形状数据承载, 这里按 Actor 缩放复制一份后再检测
+            // 缩放由空间信息承载, 按 Actor 缩放复制一份碰撞盒后再检测
             FP scaleA = ScaleOf(aactor);
             FP scaleB = ScaleOf(bactor);
-            if (scaleA != FP.One) shapeA = shapeA.Scaled(scaleA);
-            if (scaleB != FP.One) shapeB = shapeB.Scaled(scaleB);
+            ColliderInfo shapeA = scaleA != FP.One ? Scaled(a, scaleA) : a;
+            ColliderInfo shapeB = scaleB != FP.One ? Scaled(b, scaleB) : b;
 
             return DetectionShape.DetectShapeShape(shapeA, transformA, shapeB, transformB,
                 out point, out normal, out penetration);
@@ -396,10 +400,10 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="normal">从 BoxB 指向 BoxA 的法线</param>
         /// <param name="penetration">穿透深度</param>
         /// <returns>YES/NO</returns>
-        public bool Detect(Box a, Box b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(BoxShape a, BoxShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectBoxBox(new BoxShape(a.offset, a.size), new Transform(apos, arot),
-                new BoxShape(b.offset, b.size), new Transform(bpos, brot),
+            return DetectionShape.DetectBoxBox(a, new Transform(apos, arot),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
@@ -414,10 +418,10 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="normal">从 SphereB 指向 SphereA 的法线</param>
         /// <param name="penetration">穿透深度</param>
         /// <returns>YES/NO</returns>
-        public bool Detect(Sphere a, Sphere b, FPVector3 apos, FPVector3 bpos, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(SphereShape a, SphereShape b, FPVector3 apos, FPVector3 bpos, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectSphereSphere(new SphereShape(a.offset, a.radius), new Transform(apos, FPQuaternion.identity),
-                new SphereShape(b.offset, b.radius), new Transform(bpos, FPQuaternion.identity),
+            return DetectionShape.DetectSphereSphere(a, new Transform(apos, FPQuaternion.identity),
+                b, new Transform(bpos, FPQuaternion.identity),
                 out point, out normal, out penetration);
         }
 
@@ -433,11 +437,11 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="normal">从 Box 指向 Sphere 的法线</param>
         /// <param name="penetration">穿透深度</param>
         /// <returns>YES/NO</returns>
-        public bool Detect(Box a, Sphere b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(BoxShape a, SphereShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             // 参考实现约定: 球在 A 位, 盒在 B 位时法线由盒指向球
-            bool hit = DetectionShape.DetectSphereBox(new SphereShape(b.offset, b.radius), new Transform(bpos, FPQuaternion.identity),
-                new BoxShape(a.offset, a.size), new Transform(apos, arot),
+            bool hit = DetectionShape.DetectSphereBox(b, new Transform(bpos, FPQuaternion.identity),
+                a, new Transform(apos, arot),
                 out point, out normal, out penetration);
             if (hit) normal = -normal;
             return hit;
@@ -446,70 +450,70 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 检测 Box 和 Capsule 之间的碰撞
         /// </summary>
-        public bool Detect(Box a, Capsule b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(BoxShape a, CapsuleShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectBoxCapsule(new BoxShape(a.offset, a.size), new Transform(apos, arot),
-                new CapsuleShape(b.offset, b.radius, b.height), new Transform(bpos, brot),
+            return DetectionShape.DetectBoxCapsule(a, new Transform(apos, arot),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// 检测 Box 和 Cylinder 之间的碰撞
         /// </summary>
-        public bool Detect(Box a, Cylinder b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(BoxShape a, CylinderShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectBoxCylinder(new BoxShape(a.offset, a.size), new Transform(apos, arot),
-                new CylinderShape(b.offset, b.radius, b.height), new Transform(bpos, brot),
+            return DetectionShape.DetectBoxCylinder(a, new Transform(apos, arot),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// 检测 Sphere 和 Capsule 之间的碰撞
         /// </summary>
-        public bool Detect(Sphere a, Capsule b, FPVector3 apos, FPVector3 bpos, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(SphereShape a, CapsuleShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectSphereCapsule(new SphereShape(a.offset, a.radius), new Transform(apos, FPQuaternion.identity),
-                new CapsuleShape(b.offset, b.radius, b.height), new Transform(bpos, brot),
+            return DetectionShape.DetectSphereCapsule(a, new Transform(apos, FPQuaternion.identity),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// 检测 Sphere 和 Cylinder 之间的碰撞
         /// </summary>
-        public bool Detect(Sphere a, Cylinder b, FPVector3 apos, FPVector3 bpos, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(SphereShape a, CylinderShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectSphereCylinder(new SphereShape(a.offset, a.radius), new Transform(apos, FPQuaternion.identity),
-                new CylinderShape(b.offset, b.radius, b.height), new Transform(bpos, brot),
+            return DetectionShape.DetectSphereCylinder(a, new Transform(apos, FPQuaternion.identity),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// 检测 Capsule 和 Capsule 之间的碰撞
         /// </summary>
-        public bool Detect(Capsule a, Capsule b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(CapsuleShape a, CapsuleShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectCapsuleCapsule(new CapsuleShape(a.offset, a.radius, a.height), new Transform(apos, arot),
-                new CapsuleShape(b.offset, b.radius, b.height), new Transform(bpos, brot),
+            return DetectionShape.DetectCapsuleCapsule(a, new Transform(apos, arot),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// 检测 Capsule 和 Cylinder 之间的碰撞
         /// </summary>
-        public bool Detect(Capsule a, Cylinder b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(CapsuleShape a, CylinderShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectCapsuleCylinder(new CapsuleShape(a.offset, a.radius, a.height), new Transform(apos, arot),
-                new CylinderShape(b.offset, b.radius, b.height), new Transform(bpos, brot),
+            return DetectionShape.DetectCapsuleCylinder(a, new Transform(apos, arot),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// 检测 Cylinder 和 Cylinder 之间的碰撞
         /// </summary>
-        public bool Detect(Cylinder a, Cylinder b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Detect(CylinderShape a, CylinderShape b, FPVector3 apos, FPVector3 bpos, FPQuaternion arot, FPQuaternion brot, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectCylinderCylinder(new CylinderShape(a.offset, a.radius, a.height), new Transform(apos, arot),
-                new CylinderShape(b.offset, b.radius, b.height), new Transform(bpos, brot),
+            return DetectionShape.DetectCylinderCylinder(a, new Transform(apos, arot),
+                b, new Transform(bpos, brot),
                 out point, out normal, out penetration);
         }
 
@@ -525,9 +529,9 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="normal">线段接触 Box 的法线</param>
         /// <param name="penetration">起点到碰撞点的距离</param>
         /// <returns>YES/NO</returns>
-        public bool Linecast(FPVector3 start, FPVector3 end, Box box, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Linecast(FPVector3 start, FPVector3 end, BoxShape box, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectLineBox(start, end, new BoxShape(box.offset, box.size), new Transform(position, rotation),
+            return DetectionShape.DetectLineBox(start, end, box, new Transform(position, rotation),
                 out point, out normal, out penetration);
         }
 
@@ -542,27 +546,27 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="normal">线段接触 Sphere 的法线</param>
         /// <param name="penetration">起点到碰撞点的距离</param>
         /// <returns>YES/NO</returns>
-        public bool Linecast(FPVector3 start, FPVector3 end, Sphere sphere, FPVector3 position, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Linecast(FPVector3 start, FPVector3 end, SphereShape sphere, FPVector3 position, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectLineSphere(start, end, new SphereShape(sphere.offset, sphere.radius), new Transform(position, FPQuaternion.identity),
+            return DetectionShape.DetectLineSphere(start, end, sphere, new Transform(position, FPQuaternion.identity),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// Capsule 线段检测
         /// </summary>
-        public bool Linecast(FPVector3 start, FPVector3 end, Capsule capsule, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Linecast(FPVector3 start, FPVector3 end, CapsuleShape capsule, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectLineCapsule(start, end, new CapsuleShape(capsule.offset, capsule.radius, capsule.height), new Transform(position, rotation),
+            return DetectionShape.DetectLineCapsule(start, end, capsule, new Transform(position, rotation),
                 out point, out normal, out penetration);
         }
 
         /// <summary>
         /// Cylinder 线段检测
         /// </summary>
-        public bool Linecast(FPVector3 start, FPVector3 end, Cylinder cylinder, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Linecast(FPVector3 start, FPVector3 end, CylinderShape cylinder, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            return DetectionShape.DetectLineCylinder(start, end, new CylinderShape(cylinder.offset, cylinder.radius, cylinder.height), new Transform(position, rotation),
+            return DetectionShape.DetectLineCylinder(start, end, cylinder, new Transform(position, rotation),
                 out point, out normal, out penetration);
         }
 
@@ -579,7 +583,7 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="normal">射中 Box 的法线</param>
         /// <param name="penetration">起点到碰撞点的距离</param>
         /// <returns>YES/NO</returns>
-        public bool Raycast(FPVector3 origin, FPVector3 dire, FP distance, Box box, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Raycast(FPVector3 origin, FPVector3 dire, FP distance, BoxShape box, FPVector3 position, FPQuaternion rotation, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             return Linecast(origin, origin + dire * distance, box, position, rotation, out point, out normal, out penetration);
         }
@@ -596,7 +600,7 @@ namespace GameLogic.Gameplay.Logic
         /// <param name="normal">射中 Sphere 的法线</param>
         /// <param name="penetration">起点到碰撞点的距离</param>
         /// <returns>YES/NO</returns>
-        public bool Raycast(FPVector3 origin, FPVector3 dire, FP distance, Sphere sphere, FPVector3 position, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public bool Raycast(FPVector3 origin, FPVector3 dire, FP distance, SphereShape sphere, FPVector3 position, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             return Linecast(origin, origin + dire * distance, sphere, position, out point, out normal, out penetration);
         }
@@ -622,7 +626,7 @@ namespace GameLogic.Gameplay.Logic
             {
                 case COLLISION_DEFINE.COLLIDER_BOX:
                     collider.shape = COLLISION_DEFINE.COLLIDER_BOX;
-                    collider.box = new Box
+                    collider.box = new BoxShape
                     {
                         offset = offset,
                         size = new FPVector3(
@@ -634,7 +638,7 @@ namespace GameLogic.Gameplay.Logic
                     break;
                 case COLLISION_DEFINE.COLLIDER_SPHERE:
                     collider.shape = COLLISION_DEFINE.COLLIDER_SPHERE;
-                    collider.sphere = new Sphere
+                    collider.sphere = new SphereShape
                     {
                         offset = offset,
                         radius = collidercfg.ShapeData[0] * stage.cfg.int2fp
@@ -642,7 +646,7 @@ namespace GameLogic.Gameplay.Logic
                     break;
                 case COLLISION_DEFINE.COLLIDER_CAPSULE:
                     collider.shape = COLLISION_DEFINE.COLLIDER_CAPSULE;
-                    collider.capsule = new Capsule
+                    collider.capsule = new CapsuleShape
                     {
                         offset = offset,
                         radius = collidercfg.ShapeData[0] * stage.cfg.int2fp,
@@ -651,7 +655,7 @@ namespace GameLogic.Gameplay.Logic
                     break;
                 case COLLISION_DEFINE.COLLIDER_CYLINDER:
                     collider.shape = COLLISION_DEFINE.COLLIDER_CYLINDER;
-                    collider.cylinder = new Cylinder
+                    collider.cylinder = new CylinderShape
                     {
                         offset = offset,
                         radius = collidercfg.ShapeData[0] * stage.cfg.int2fp,
@@ -661,8 +665,6 @@ namespace GameLogic.Gameplay.Logic
                 default:
                     return;
             }
-
-            collider.Invalidate();
         }
 
         /// <summary>
@@ -690,11 +692,8 @@ namespace GameLogic.Gameplay.Logic
             aabb = default;
             if (false == stage.SeekBehaviorInfo(collider.actor, out SpatialInfo spatial)) return false;
 
-            BaseShape shape = collider.geometry;
-            if (null == shape) return false;
-
             FP scale = ScaleOf(collider.actor);
-            if (scale != FP.One) shape = shape.Scaled(scale);
+            ColliderInfo shape = scale != FP.One ? Scaled(collider, scale) : collider;
 
             Transform transform = MakeTransform(spatial);
             DetectionShape.ComputeBounds(shape, transform, out FPVector3 lower, out FPVector3 upper);
@@ -713,6 +712,43 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         private static Transform MakeTransform(SpatialInfo spatial) =>
             new Transform(spatial.position, FPQuaternion.Euler(spatial.euler));
+
+        /// <summary>
+        /// 按缩放复制一份碰撞盒 (脱离 Actor, 仅用于检测, 不进入对象池)
+        /// </summary>
+        /// <param name="collider">源碰撞盒</param>
+        /// <param name="scale">缩放</param>
+        /// <returns>缩放后的碰撞盒</returns>
+        private static ColliderInfo Scaled(ColliderInfo collider, FP scale)
+        {
+            ColliderInfo copy = new ColliderInfo();
+            copy.Ready(collider.actor);
+            copy.layer = collider.layer;
+            copy.shape = collider.shape;
+            copy.box = new BoxShape
+            {
+                offset = collider.box.offset * scale,
+                size = collider.box.size * scale
+            };
+            copy.sphere = new SphereShape
+            {
+                offset = collider.sphere.offset * scale,
+                radius = collider.sphere.radius * scale
+            };
+            copy.capsule = new CapsuleShape
+            {
+                offset = collider.capsule.offset * scale,
+                radius = collider.capsule.radius * scale,
+                height = collider.capsule.height * scale
+            };
+            copy.cylinder = new CylinderShape
+            {
+                offset = collider.cylinder.offset * scale,
+                radius = collider.cylinder.radius * scale,
+                height = collider.cylinder.height * scale
+            };
+            return copy;
+        }
 
         /// <summary>
         /// 取 Actor 的缩放, 无空间信息时按 1 处理

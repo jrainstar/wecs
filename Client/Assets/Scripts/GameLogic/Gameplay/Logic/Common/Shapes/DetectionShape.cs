@@ -14,19 +14,19 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>搜索最小重叠时的初始轴深度, 不能用 FP.MaxValue 作为哨兵 (浮点模式下其值为正无穷)。</summary>
         private static readonly FP Unbounded = (FP)1000;
 
-        /// <summary>轴对齐包围盒, 用于宽相粗筛。</summary>
-        private struct AABB
+        /// <summary>轴对齐包围盒, 用于宽相粗筛。命名避免与 ColliderInfo 的 AABB 冲突。</summary>
+        private struct OverlapBounds
         {
             public FPVector3 lower;
             public FPVector3 upper;
 
-            public AABB(FPVector3 lower, FPVector3 upper)
+            public OverlapBounds(FPVector3 lower, FPVector3 upper)
             {
                 this.lower = lower;
                 this.upper = upper;
             }
 
-            public bool Overlaps(in AABB other) =>
+            public bool Overlaps(in OverlapBounds other) =>
                 other.upper.X >= lower.X && other.upper.Y >= lower.Y && other.upper.Z >= lower.Z &&
                 other.lower.X <= upper.X && other.lower.Y <= upper.Y && other.lower.Z <= upper.Z;
         }
@@ -40,10 +40,10 @@ namespace GameLogic.Gameplay.Logic
             public FPVector3 y;
             public FPVector3 z;
 
-            public OBB(BoxShape shape, in Transform transform)
+            public OBB(in BoxShape shape, in Transform transform)
             {
-                center = transform.LocalToWorld(shape.Center);
-                half = shape.HalfSize;
+                center = transform.LocalToWorld(shape.offset);
+                half = shape.size * FP.Half;
                 x = Unit(transform.right, FPVector3.right);
                 y = Unit(transform.up, FPVector3.up);
                 z = Unit(transform.forward, FPVector3.forward);
@@ -66,7 +66,7 @@ namespace GameLogic.Gameplay.Logic
             }
         }
 
-        /// <summary>世界空间中的圆柱, 局部长轴为 Y, 用于分离轴与支撑点计算。</summary>
+        /// <summary>世界空间中的圆柱, 局部长轴为 Y。命名避免与 ColliderInfo 的 Cylinder 冲突。</summary>
         private struct Cylinder
         {
             public FPVector3 center;
@@ -74,12 +74,12 @@ namespace GameLogic.Gameplay.Logic
             public FP halfHeight;
             public FP radius;
 
-            public Cylinder(CylinderShape shape, in Transform transform)
+            public Cylinder(in CylinderShape shape, in Transform transform)
             {
-                center = transform.LocalToWorld(shape.Center);
+                center = transform.LocalToWorld(shape.offset);
                 axis = Unit(transform.up, FPVector3.up);
-                halfHeight = shape.HalfHeight;
-                radius = shape.Radius;
+                halfHeight = shape.halfHeight;
+                radius = shape.radius;
             }
 
             /// <summary>圆柱在单位轴上的投影半径: 轴向半高投影加圆盘半径投影。</summary>
@@ -107,91 +107,91 @@ namespace GameLogic.Gameplay.Logic
         #region 形状对检测
 
         /// <summary>
-        /// 形状与形状的窄相检测
+        /// 两个碰撞盒之间的窄相检测, 直接以 ColliderInfo 的 shape 字段与结构体数据分派
         /// </summary>
-        /// <param name="a">形状 A</param>
-        /// <param name="transformA">形状 A 的变换</param>
-        /// <param name="b">形状 B</param>
-        /// <param name="transformB">形状 B 的变换</param>
+        /// <param name="a">碰撞盒 A</param>
+        /// <param name="transformA">A 的变换</param>
+        /// <param name="b">碰撞盒 B</param>
+        /// <param name="transformB">B 的变换</param>
         /// <param name="point">碰撞点</param>
         /// <param name="normal">由 B 指向 A 的法线</param>
         /// <param name="penetration">穿透深度</param>
         /// <returns>是否碰撞</returns>
-        public static bool DetectShapeShape(BaseShape a, in Transform transformA,
-            BaseShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectShapeShape(ColliderInfo a, in Transform transformA,
+            ColliderInfo b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
             if (null == a || null == b) return false;
 
             bool hit;
-            switch (a.Type)
+            switch (a.shape)
             {
-                case ShapeType.Sphere:
-                    switch (b.Type)
+                case COLLISION_DEFINE.COLLIDER_SPHERE:
+                    switch (b.shape)
                     {
-                        case ShapeType.Sphere:
-                            return DetectSphereSphere((SphereShape)a, transformA, (SphereShape)b, transformB, out point, out normal, out penetration);
-                        case ShapeType.Box:
-                            return DetectSphereBox((SphereShape)a, transformA, (BoxShape)b, transformB, out point, out normal, out penetration);
-                        case ShapeType.Capsule:
-                            return DetectSphereCapsule((SphereShape)a, transformA, (CapsuleShape)b, transformB, out point, out normal, out penetration);
-                        case ShapeType.Cylinder:
-                            return DetectSphereCylinder((SphereShape)a, transformA, (CylinderShape)b, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_SPHERE:
+                            return DetectSphereSphere(a.sphere, transformA, b.sphere, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_BOX:
+                            return DetectSphereBox(a.sphere, transformA, b.box, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CAPSULE:
+                            return DetectSphereCapsule(a.sphere, transformA, b.capsule, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CYLINDER:
+                            return DetectSphereCylinder(a.sphere, transformA, b.cylinder, transformB, out point, out normal, out penetration);
                         default:
                             return false;
                     }
-                case ShapeType.Box:
-                    switch (b.Type)
+                case COLLISION_DEFINE.COLLIDER_BOX:
+                    switch (b.shape)
                     {
-                        case ShapeType.Sphere:
-                            hit = DetectSphereBox((SphereShape)b, transformB, (BoxShape)a, transformA, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_SPHERE:
+                            hit = DetectSphereBox(b.sphere, transformB, a.box, transformA, out point, out normal, out penetration);
                             if (hit) normal = -normal;
                             return hit;
-                        case ShapeType.Box:
-                            return DetectBoxBox((BoxShape)a, transformA, (BoxShape)b, transformB, out point, out normal, out penetration);
-                        case ShapeType.Capsule:
-                            return DetectBoxCapsule((BoxShape)a, transformA, (CapsuleShape)b, transformB, out point, out normal, out penetration);
-                        case ShapeType.Cylinder:
-                            return DetectBoxCylinder((BoxShape)a, transformA, (CylinderShape)b, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_BOX:
+                            return DetectBoxBox(a.box, transformA, b.box, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CAPSULE:
+                            return DetectBoxCapsule(a.box, transformA, b.capsule, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CYLINDER:
+                            return DetectBoxCylinder(a.box, transformA, b.cylinder, transformB, out point, out normal, out penetration);
                         default:
                             return false;
                     }
-                case ShapeType.Capsule:
-                    switch (b.Type)
+                case COLLISION_DEFINE.COLLIDER_CAPSULE:
+                    switch (b.shape)
                     {
-                        case ShapeType.Sphere:
-                            hit = DetectSphereCapsule((SphereShape)b, transformB, (CapsuleShape)a, transformA, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_SPHERE:
+                            hit = DetectSphereCapsule(b.sphere, transformB, a.capsule, transformA, out point, out normal, out penetration);
                             if (hit) normal = -normal;
                             return hit;
-                        case ShapeType.Box:
-                            hit = DetectBoxCapsule((BoxShape)b, transformB, (CapsuleShape)a, transformA, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_BOX:
+                            hit = DetectBoxCapsule(b.box, transformB, a.capsule, transformA, out point, out normal, out penetration);
                             if (hit) normal = -normal;
                             return hit;
-                        case ShapeType.Capsule:
-                            return DetectCapsuleCapsule((CapsuleShape)a, transformA, (CapsuleShape)b, transformB, out point, out normal, out penetration);
-                        case ShapeType.Cylinder:
-                            return DetectCapsuleCylinder((CapsuleShape)a, transformA, (CylinderShape)b, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CAPSULE:
+                            return DetectCapsuleCapsule(a.capsule, transformA, b.capsule, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CYLINDER:
+                            return DetectCapsuleCylinder(a.capsule, transformA, b.cylinder, transformB, out point, out normal, out penetration);
                         default:
                             return false;
                     }
-                case ShapeType.Cylinder:
-                    switch (b.Type)
+                case COLLISION_DEFINE.COLLIDER_CYLINDER:
+                    switch (b.shape)
                     {
-                        case ShapeType.Sphere:
-                            hit = DetectSphereCylinder((SphereShape)b, transformB, (CylinderShape)a, transformA, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_SPHERE:
+                            hit = DetectSphereCylinder(b.sphere, transformB, a.cylinder, transformA, out point, out normal, out penetration);
                             if (hit) normal = -normal;
                             return hit;
-                        case ShapeType.Box:
-                            hit = DetectBoxCylinder((BoxShape)b, transformB, (CylinderShape)a, transformA, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_BOX:
+                            hit = DetectBoxCylinder(b.box, transformB, a.cylinder, transformA, out point, out normal, out penetration);
                             if (hit) normal = -normal;
                             return hit;
-                        case ShapeType.Capsule:
-                            hit = DetectCapsuleCylinder((CapsuleShape)b, transformB, (CylinderShape)a, transformA, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CAPSULE:
+                            hit = DetectCapsuleCylinder(b.capsule, transformB, a.cylinder, transformA, out point, out normal, out penetration);
                             if (hit) normal = -normal;
                             return hit;
-                        case ShapeType.Cylinder:
-                            return DetectCylinderCylinder((CylinderShape)a, transformA, (CylinderShape)b, transformB, out point, out normal, out penetration);
+                        case COLLISION_DEFINE.COLLIDER_CYLINDER:
+                            return DetectCylinderCylinder(a.cylinder, transformA, b.cylinder, transformB, out point, out normal, out penetration);
                         default:
                             return false;
                     }
@@ -200,34 +200,34 @@ namespace GameLogic.Gameplay.Logic
             }
         }
 
-        public static bool DetectSphereSphere(SphereShape a, in Transform transformA,
-            SphereShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectSphereSphere(in SphereShape a, in Transform transformA,
+            in SphereShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            FPVector3 centerA = transformA.LocalToWorld(a.Center);
-            FPVector3 centerB = transformB.LocalToWorld(b.Center);
-            return RoundedContact(centerA, a.Radius, centerB, b.Radius,
+            FPVector3 centerA = transformA.LocalToWorld(a.offset);
+            FPVector3 centerB = transformB.LocalToWorld(b.offset);
+            return RoundedContact(centerA, a.radius, centerB, b.radius,
                 Unit(centerA - centerB, FPVector3.up), out point, out normal, out penetration);
         }
 
-        public static bool DetectSphereBox(SphereShape a, in Transform transformA,
-            BoxShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectSphereBox(in SphereShape a, in Transform transformA,
+            in BoxShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
 
-            FPVector3 center = transformA.LocalToWorld(a.Center);
-            FPVector3 local = transformB.WorldToLocal(center) - b.Center;
-            FPVector3 half = b.HalfSize;
+            FPVector3 center = transformA.LocalToWorld(a.offset);
+            FPVector3 local = transformB.WorldToLocal(center) - b.offset;
+            FPVector3 half = b.size * FP.Half;
             FPVector3 closest = ClampToBox(local, half);
             FPVector3 delta = local - closest;
             FP distance = Length(delta);
-            if (distance > a.Radius + Tolerance) return false;
+            if (distance > a.radius + Tolerance) return false;
 
             FPVector3 localNormal;
             if (distance > FP.Zero)
             {
                 localNormal = Unit(delta, FPVector3.right);
-                penetration = Max(FP.Zero, a.Radius - distance);
+                penetration = Max(FP.Zero, a.radius - distance);
             }
             else
             {
@@ -245,17 +245,17 @@ namespace GameLogic.Gameplay.Logic
                 localNormal = Basis(axis) * NonzeroSign(local[axis]);
                 closest = local;
                 closest[axis] = localNormal[axis] * half[axis];
-                penetration = Max(FP.Zero, a.Radius + faceDistance);
+                penetration = Max(FP.Zero, a.radius + faceDistance);
             }
 
             normal = Unit(transformB.TransformDirection(localNormal), FPVector3.right);
-            FPVector3 boxPoint = transformB.LocalToWorld(closest + b.Center);
-            point = (boxPoint + center - normal * a.Radius) * FP.Half;
+            FPVector3 boxPoint = transformB.LocalToWorld(closest + b.offset);
+            point = (boxPoint + center - normal * a.radius) * FP.Half;
             return true;
         }
 
-        public static bool DetectBoxBox(BoxShape a, in Transform transformA,
-            BoxShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectBoxBox(in BoxShape a, in Transform transformA,
+            in BoxShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
@@ -293,18 +293,18 @@ namespace GameLogic.Gameplay.Logic
             return true;
         }
 
-        public static bool DetectSphereCapsule(SphereShape a, in Transform transformA,
-            CapsuleShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectSphereCapsule(in SphereShape a, in Transform transformA,
+            in CapsuleShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            FPVector3 center = transformA.LocalToWorld(a.Center);
+            FPVector3 center = transformA.LocalToWorld(a.offset);
             GetWorldEndpoints(b, transformB, out FPVector3 p0, out FPVector3 p1);
             FPVector3 closest = ClosestOnSegment(center, p0, p1);
-            return RoundedContact(center, a.Radius, closest, b.Radius,
+            return RoundedContact(center, a.radius, closest, b.radius,
                 Perpendicular(p1 - p0), out point, out normal, out penetration);
         }
 
-        public static bool DetectCapsuleCapsule(CapsuleShape a, in Transform transformA,
-            CapsuleShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectCapsuleCapsule(in CapsuleShape a, in Transform transformA,
+            in CapsuleShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             GetWorldEndpoints(a, transformA, out FPVector3 a0, out FPVector3 a1);
             GetWorldEndpoints(b, transformB, out FPVector3 b0, out FPVector3 b1);
@@ -326,32 +326,32 @@ namespace GameLogic.Gameplay.Logic
                 if (FPVector3.Dot(fallback, a0 + a1 - b0 - b1) < FP.Zero) fallback = -fallback;
             }
 
-            return RoundedContact(closestA, a.Radius, closestB, b.Radius,
+            return RoundedContact(closestA, a.radius, closestB, b.radius,
                 fallback, out point, out normal, out penetration);
         }
 
-        public static bool DetectBoxCapsule(BoxShape a, in Transform transformA,
-            CapsuleShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectBoxCapsule(in BoxShape a, in Transform transformA,
+            in CapsuleShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
 
             GetWorldEndpoints(b, transformB, out FPVector3 world0, out FPVector3 world1);
-            FPVector3 p0 = transformA.WorldToLocal(world0) - a.Center;
-            FPVector3 p1 = transformA.WorldToLocal(world1) - a.Center;
-            FPVector3 half = a.HalfSize;
+            FPVector3 p0 = transformA.WorldToLocal(world0) - a.offset;
+            FPVector3 p1 = transformA.WorldToLocal(world1) - a.offset;
+            FPVector3 half = a.size * FP.Half;
             ClosestSegmentBox(p0, p1, half, out FPVector3 segmentPoint, out FPVector3 boxPoint);
             FPVector3 delta = boxPoint - segmentPoint;
             FP distance = Length(delta);
-            if (distance > b.Radius + Tolerance) return false;
+            if (distance > b.radius + Tolerance) return false;
 
             FPVector3 localNormal;
             FPVector3 capsulePoint;
             if (distance > Tolerance)
             {
                 localNormal = Unit(delta, FPVector3.right);
-                penetration = Max(FP.Zero, b.Radius - distance);
-                capsulePoint = segmentPoint + localNormal * b.Radius;
+                penetration = Max(FP.Zero, b.radius - distance);
+                capsulePoint = segmentPoint + localNormal * b.radius;
             }
             else
             {
@@ -366,8 +366,8 @@ namespace GameLogic.Gameplay.Logic
                     FP radius = FPVector3.Dot(half, FPVector3.Abs(axis));
                     FP projection0 = FPVector3.Dot(p0, axis);
                     FP projection1 = FPVector3.Dot(p1, axis);
-                    FP positive = radius + Max(projection0, projection1) + b.Radius;
-                    FP negative = radius - Min(projection0, projection1) + b.Radius;
+                    FP positive = radius + Max(projection0, projection1) + b.radius;
+                    FP negative = radius - Min(projection0, projection1) + b.radius;
                     FP depth = Min(positive, negative);
                     if (depth < bestDepth)
                     {
@@ -379,30 +379,30 @@ namespace GameLogic.Gameplay.Logic
                 FP along = FPVector3.Dot(p1 - p0, localNormal);
                 segmentPoint = FP.Abs(along) <= Tolerance ? ClosestOnSegment(FPVector3.zero, p0, p1)
                     : along > FP.Zero ? p1 : p0;
-                capsulePoint = segmentPoint + localNormal * b.Radius;
+                capsulePoint = segmentPoint + localNormal * b.radius;
                 boxPoint = new FPVector3(SupportCoordinate(-localNormal.X, half.X, segmentPoint.X),
                     SupportCoordinate(-localNormal.Y, half.Y, segmentPoint.Y),
                     SupportCoordinate(-localNormal.Z, half.Z, segmentPoint.Z));
             }
 
             normal = Unit(transformA.TransformDirection(localNormal), FPVector3.right);
-            point = transformA.LocalToWorld((boxPoint + capsulePoint) * FP.Half + a.Center);
+            point = transformA.LocalToWorld((boxPoint + capsulePoint) * FP.Half + a.offset);
             return true;
         }
 
         /// <summary>球与圆柱: 解析最近点。圆柱内部按端面/侧面的最小平移方向处理深度穿透。</summary>
-        public static bool DetectSphereCylinder(SphereShape a, in Transform transformA,
-            CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectSphereCylinder(in SphereShape a, in Transform transformA,
+            in CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
 
-            FPVector3 center = transformA.LocalToWorld(a.Center);
-            FPVector3 local = transformB.WorldToLocal(center) - b.Center;
+            FPVector3 center = transformA.LocalToWorld(a.offset);
+            FPVector3 local = transformB.WorldToLocal(center) - b.offset;
             FPVector3 radial = new FPVector3(local.X, FP.Zero, local.Z);
             FP radialDistance = Length(radial);
-            FP radius = b.Radius;
-            FP halfHeight = b.HalfHeight;
+            FP radius = b.radius;
+            FP halfHeight = b.halfHeight;
 
             FPVector3 localNormal;
             FPVector3 closest;
@@ -412,18 +412,18 @@ namespace GameLogic.Gameplay.Logic
                 closest = new FPVector3(clamped.X, FP.Clamp(local.Y, -halfHeight, halfHeight), clamped.Z);
                 FPVector3 delta = local - closest;
                 FP distance = Length(delta);
-                if (distance > a.Radius + Tolerance) return false;
+                if (distance > a.radius + Tolerance) return false;
                 localNormal = distance > FP.Zero ? Unit(delta, FPVector3.up) : FPVector3.up;
-                penetration = Max(FP.Zero, a.Radius - distance);
+                penetration = Max(FP.Zero, a.radius - distance);
             }
             else if (FP.Abs(local.Y) > halfHeight)
             {
                 FP sign = local.Y < FP.Zero ? -FP.One : FP.One;
                 closest = new FPVector3(local.X, halfHeight * sign, local.Z);
                 FP distance = FP.Abs(local.Y) - halfHeight;
-                if (distance > a.Radius + Tolerance) return false;
+                if (distance > a.radius + Tolerance) return false;
                 localNormal = FPVector3.up * sign;
-                penetration = Max(FP.Zero, a.Radius - distance);
+                penetration = Max(FP.Zero, a.radius - distance);
             }
             else
             {
@@ -434,19 +434,19 @@ namespace GameLogic.Gameplay.Logic
                     FP sign = local.Y < FP.Zero ? -FP.One : FP.One;
                     localNormal = FPVector3.up * sign;
                     closest = new FPVector3(local.X, halfHeight * sign, local.Z);
-                    penetration = a.Radius + capDepth;
+                    penetration = a.radius + capDepth;
                 }
                 else
                 {
                     localNormal = radialDistance > Tolerance ? Unit(radial, FPVector3.right) : FPVector3.right;
                     closest = new FPVector3(localNormal.X * radius, local.Y, localNormal.Z * radius);
-                    penetration = a.Radius + radialDepth;
+                    penetration = a.radius + radialDepth;
                 }
             }
 
             normal = Unit(transformB.TransformDirection(localNormal), FPVector3.up);
-            FPVector3 cylinderPoint = transformB.LocalToWorld(closest + b.Center);
-            point = (cylinderPoint + center - normal * a.Radius) * FP.Half;
+            FPVector3 cylinderPoint = transformB.LocalToWorld(closest + b.offset);
+            point = (cylinderPoint + center - normal * a.radius) * FP.Half;
             return true;
         }
 
@@ -454,8 +454,8 @@ namespace GameLogic.Gameplay.Logic
         /// 盒与圆柱: 在盒三轴、圆柱轴、轴叉积及径向候选轴上做分离轴测试。
         /// 圆柱投影半径解析精确, 接触点用双向支撑点近似。
         /// </summary>
-        public static bool DetectBoxCylinder(BoxShape a, in Transform transformA,
-            CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectBoxCylinder(in BoxShape a, in Transform transformA,
+            in CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
@@ -516,8 +516,8 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>胶囊与圆柱: 候选轴快速排除分离, 剩余情形由轴精化精确处理。</summary>
-        public static bool DetectCapsuleCylinder(CapsuleShape a, in Transform transformA,
-            CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectCapsuleCylinder(in CapsuleShape a, in Transform transformA,
+            in CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
@@ -531,13 +531,13 @@ namespace GameLogic.Gameplay.Logic
             FP bestDepth = Unbounded;
             FPVector3 bestNormal = FPVector3.right;
 
-            FP capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, cylinder.axis)) + a.Radius;
+            FP capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, cylinder.axis)) + a.radius;
             if (!TestAxis(cylinder.axis, delta, cylinder.ProjectRadius(cylinder.axis) + capsuleRadius,
                 ref bestDepth, ref bestNormal)) return false;
 
             if (MaxAbs(capsuleAxis) > AxisTolerance)
             {
-                capsuleRadius = capsuleHalf + a.Radius;
+                capsuleRadius = capsuleHalf + a.radius;
                 if (!TestAxis(capsuleAxis, delta, cylinder.ProjectRadius(capsuleAxis) + capsuleRadius,
                     ref bestDepth, ref bestNormal)) return false;
 
@@ -545,7 +545,7 @@ namespace GameLogic.Gameplay.Logic
                 if (MaxAbs(cross) > AxisTolerance)
                 {
                     cross = Unit(cross, FPVector3.right);
-                    capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, cross)) + a.Radius;
+                    capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, cross)) + a.radius;
                     if (!TestAxis(cross, delta, cylinder.ProjectRadius(cross) + capsuleRadius,
                         ref bestDepth, ref bestNormal)) return false;
                 }
@@ -554,7 +554,7 @@ namespace GameLogic.Gameplay.Logic
                 if (Length(radial) > Tolerance)
                 {
                     radial = Unit(radial, FPVector3.right);
-                    capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, radial)) + a.Radius;
+                    capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, radial)) + a.radius;
                     if (!TestAxis(radial, delta, cylinder.ProjectRadius(radial) + capsuleRadius,
                         ref bestDepth, ref bestNormal)) return false;
                 }
@@ -564,7 +564,7 @@ namespace GameLogic.Gameplay.Logic
             if (Length(cylinderRadial) > Tolerance)
             {
                 cylinderRadial = Unit(cylinderRadial, FPVector3.right);
-                capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, cylinderRadial)) + a.Radius;
+                capsuleRadius = capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, cylinderRadial)) + a.radius;
                 if (!TestAxis(cylinderRadial, delta, cylinder.ProjectRadius(cylinderRadial) + capsuleRadius,
                     ref bestDepth, ref bestNormal)) return false;
             }
@@ -578,8 +578,10 @@ namespace GameLogic.Gameplay.Logic
             if (MaxAbs(capsuleCross) > AxisTolerance)
                 seeds[seedCount++] = Unit(capsuleCross, FPVector3.right);
 
+            // in 参数不能被 lambda 捕获, 先取出值
+            FP capsuleRadiusValue = a.radius;
             if (!RefineSeparatingAxis(axis => cylinder.ProjectRadius(axis)
-                    + capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, axis)) + a.Radius
+                    + capsuleHalf * FP.Abs(FPVector3.Dot(capsuleAxis, axis)) + capsuleRadiusValue
                     - FP.Abs(FPVector3.Dot(delta, axis)),
                 seeds, seedCount, ref bestDepth, ref bestNormal)) return false;
 
@@ -588,8 +590,8 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>圆柱与圆柱: 候选轴快速排除分离, 剩余情形由轴精化精确处理。</summary>
-        public static bool DetectCylinderCylinder(CylinderShape a, in Transform transformA,
-            CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
+        public static bool DetectCylinderCylinder(in CylinderShape a, in Transform transformA,
+            in CylinderShape b, in Transform transformB, out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             point = normal = FPVector3.zero;
             penetration = FP.Zero;
@@ -653,35 +655,35 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         /// <param name="start">起点</param>
         /// <param name="end">终点</param>
-        /// <param name="shape">形状</param>
+        /// <param name="shape">碰撞盒</param>
         /// <param name="transform">形状变换</param>
         /// <param name="point">碰撞点</param>
         /// <param name="normal">由形状指向线段外侧的法线</param>
         /// <param name="distance">起点到碰撞点的距离</param>
         /// <returns>是否碰撞</returns>
-        public static bool DetectLineShape(FPVector3 start, FPVector3 end, BaseShape shape,
+        public static bool DetectLineShape(FPVector3 start, FPVector3 end, ColliderInfo shape,
             in Transform transform, out FPVector3 point, out FPVector3 normal, out FP distance)
         {
             point = normal = FPVector3.zero;
             distance = FP.Zero;
             if (null == shape) return false;
 
-            switch (shape.Type)
+            switch (shape.shape)
             {
-                case ShapeType.Sphere:
-                    return DetectLineSphere(start, end, (SphereShape)shape, transform, out point, out normal, out distance);
-                case ShapeType.Box:
-                    return DetectLineBox(start, end, (BoxShape)shape, transform, out point, out normal, out distance);
-                case ShapeType.Capsule:
-                    return DetectLineCapsule(start, end, (CapsuleShape)shape, transform, out point, out normal, out distance);
-                case ShapeType.Cylinder:
-                    return DetectLineCylinder(start, end, (CylinderShape)shape, transform, out point, out normal, out distance);
+                case COLLISION_DEFINE.COLLIDER_SPHERE:
+                    return DetectLineSphere(start, end, shape.sphere, transform, out point, out normal, out distance);
+                case COLLISION_DEFINE.COLLIDER_BOX:
+                    return DetectLineBox(start, end, shape.box, transform, out point, out normal, out distance);
+                case COLLISION_DEFINE.COLLIDER_CAPSULE:
+                    return DetectLineCapsule(start, end, shape.capsule, transform, out point, out normal, out distance);
+                case COLLISION_DEFINE.COLLIDER_CYLINDER:
+                    return DetectLineCylinder(start, end, shape.cylinder, transform, out point, out normal, out distance);
                 default:
                     return false;
             }
         }
 
-        public static bool DetectLineSphere(FPVector3 start, FPVector3 end, SphereShape shape,
+        public static bool DetectLineSphere(FPVector3 start, FPVector3 end, in SphereShape shape,
             in Transform transform, out FPVector3 point, out FPVector3 normal, out FP distance)
         {
             point = normal = FPVector3.zero;
@@ -691,16 +693,16 @@ namespace GameLogic.Gameplay.Logic
             FP length = Length(delta);
             if (length == FP.Zero) return false;
             FPVector3 direction = Unit(delta, FPVector3.forward);
-            FPVector3 center = transform.LocalToWorld(shape.Center);
+            FPVector3 center = transform.LocalToWorld(shape.offset);
             FP startDistance = Length(start - center);
-            if (startDistance == shape.Radius)
+            if (startDistance == shape.radius)
             {
                 point = start;
                 normal = Unit(start - center, -direction);
                 return true;
             }
-            if (!SphereRoots(start - center, direction, shape.Radius, out FP entry, out FP exit)) return false;
-            FP hit = startDistance < shape.Radius ? exit : entry >= FP.Zero ? entry : exit;
+            if (!SphereRoots(start - center, direction, shape.radius, out FP entry, out FP exit)) return false;
+            FP hit = startDistance < shape.radius ? exit : entry >= FP.Zero ? entry : exit;
             if (hit < FP.Zero || hit > length + Tolerance) return false;
             distance = FP.Clamp(hit, FP.Zero, length);
             point = start + direction * distance;
@@ -708,7 +710,7 @@ namespace GameLogic.Gameplay.Logic
             return true;
         }
 
-        public static bool DetectLineBox(FPVector3 start, FPVector3 end, BoxShape shape,
+        public static bool DetectLineBox(FPVector3 start, FPVector3 end, in BoxShape shape,
             in Transform transform, out FPVector3 point, out FPVector3 normal, out FP distance)
         {
             point = normal = FPVector3.zero;
@@ -716,9 +718,9 @@ namespace GameLogic.Gameplay.Logic
 
             FP length = Length(end - start);
             if (length == FP.Zero) return false;
-            FPVector3 origin = transform.WorldToLocal(start) - shape.Center;
+            FPVector3 origin = transform.WorldToLocal(start) - shape.offset;
             FPVector3 delta = transform.InverseTransformDirection(end - start);
-            FPVector3 half = shape.HalfSize;
+            FPVector3 half = shape.size * FP.Half;
             bool inside = IsInsideBox(origin, half);
             FP enter = FP.Zero;
             FP exit = FP.One;
@@ -790,7 +792,7 @@ namespace GameLogic.Gameplay.Logic
             return true;
         }
 
-        public static bool DetectLineCapsule(FPVector3 start, FPVector3 end, CapsuleShape shape,
+        public static bool DetectLineCapsule(FPVector3 start, FPVector3 end, in CapsuleShape shape,
             in Transform transform, out FPVector3 point, out FPVector3 normal, out FP distance)
         {
             point = normal = FPVector3.zero;
@@ -798,12 +800,12 @@ namespace GameLogic.Gameplay.Logic
 
             FP length = Length(end - start);
             if (length == FP.Zero) return false;
-            FPVector3 origin = transform.WorldToLocal(start) - shape.Center;
+            FPVector3 origin = transform.WorldToLocal(start) - shape.offset;
             FPVector3 direction = Unit(transform.InverseTransformDirection(end - start), FPVector3.forward);
             FP best = Unbounded;
             FPVector3 bestNormal = FPVector3.zero;
-            FP half = shape.HalfLength;
-            FP radius = shape.Radius;
+            FP half = shape.halfLength;
+            FP radius = shape.radius;
 
             FPVector3 startOffset = origin - FPVector3.up * FP.Clamp(origin.Y, -half, half);
             if (Length(startOffset) == radius)
@@ -842,7 +844,7 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>线段与有限圆柱: 侧面二次方程加两个端面, 取最近的正向交点; 起点在内部时自然得到出射点。</summary>
-        public static bool DetectLineCylinder(FPVector3 start, FPVector3 end, CylinderShape shape,
+        public static bool DetectLineCylinder(FPVector3 start, FPVector3 end, in CylinderShape shape,
             in Transform transform, out FPVector3 point, out FPVector3 normal, out FP distance)
         {
             point = normal = FPVector3.zero;
@@ -850,10 +852,10 @@ namespace GameLogic.Gameplay.Logic
 
             FP length = Length(end - start);
             if (length == FP.Zero) return false;
-            FPVector3 origin = transform.WorldToLocal(start) - shape.Center;
+            FPVector3 origin = transform.WorldToLocal(start) - shape.offset;
             FPVector3 delta = transform.InverseTransformDirection(end - start);
-            FP radius = shape.Radius;
-            FP halfHeight = shape.HalfHeight;
+            FP radius = shape.radius;
+            FP halfHeight = shape.halfHeight;
             FP best = Unbounded;
             FPVector3 bestNormal = FPVector3.zero;
 
@@ -940,28 +942,32 @@ namespace GameLogic.Gameplay.Logic
         #region 宽相与包围盒
 
         /// <summary>
-        /// 计算形状在世界空间中的轴对齐包围盒
+        /// 计算碰撞盒在世界空间中的轴对齐包围盒
         /// </summary>
-        /// <param name="shape">形状</param>
+        /// <param name="shape">碰撞盒</param>
         /// <param name="transform">变换</param>
-        /// <returns>包围盒最小/最大点</returns>
-        public static void ComputeBounds(BaseShape shape, in Transform transform,
+        /// <param name="lower">包围盒最小点</param>
+        /// <param name="upper">包围盒最大点</param>
+        public static void ComputeBounds(ColliderInfo shape, in Transform transform,
             out FPVector3 lower, out FPVector3 upper)
         {
-            lower = upper = transform.LocalToWorld(shape.Center);
-            switch (shape.Type)
+            lower = upper = transform.position;
+            if (null == shape) return;
+
+            switch (shape.shape)
             {
-                case ShapeType.Sphere:
+                case COLLISION_DEFINE.COLLIDER_SPHERE:
                 {
-                    FPVector3 radius = new FPVector3(((SphereShape)shape).Radius);
-                    lower -= radius;
-                    upper += radius;
+                    FPVector3 center = transform.LocalToWorld(shape.sphere.offset);
+                    FPVector3 radius = new FPVector3(shape.sphere.radius);
+                    lower = center - radius;
+                    upper = center + radius;
                     break;
                 }
-                case ShapeType.Box:
+                case COLLISION_DEFINE.COLLIDER_BOX:
                 {
-                    BoxShape box = (BoxShape)shape;
-                    FPVector3 half = box.HalfSize;
+                    FPVector3 center = transform.LocalToWorld(shape.box.offset);
+                    FPVector3 half = shape.box.size * FP.Half;
                     FPVector3 x = transform.right * half.X;
                     FPVector3 y = transform.up * half.Y;
                     FPVector3 z = transform.forward * half.Z;
@@ -969,50 +975,49 @@ namespace GameLogic.Gameplay.Logic
                         FP.Abs(x.X) + FP.Abs(y.X) + FP.Abs(z.X),
                         FP.Abs(x.Y) + FP.Abs(y.Y) + FP.Abs(z.Y),
                         FP.Abs(x.Z) + FP.Abs(y.Z) + FP.Abs(z.Z));
-                    lower -= extents;
-                    upper += extents;
+                    lower = center - extents;
+                    upper = center + extents;
                     break;
                 }
-                case ShapeType.Capsule:
+                case COLLISION_DEFINE.COLLIDER_CAPSULE:
                 {
-                    CapsuleShape capsule = (CapsuleShape)shape;
-                    GetWorldEndpoints(capsule, transform, out FPVector3 p0, out FPVector3 p1);
-                    FPVector3 radius = new FPVector3(capsule.Radius);
+                    GetWorldEndpoints(shape.capsule, transform, out FPVector3 p0, out FPVector3 p1);
+                    FPVector3 radius = new FPVector3(shape.capsule.radius);
                     lower = FPVector3.Min(p0, p1) - radius;
                     upper = FPVector3.Max(p0, p1) + radius;
                     break;
                 }
-                case ShapeType.Cylinder:
+                case COLLISION_DEFINE.COLLIDER_CYLINDER:
                 {
-                    CylinderShape cylinder = (CylinderShape)shape;
+                    FPVector3 center = transform.LocalToWorld(shape.cylinder.offset);
                     FPVector3 axis = transform.up;
                     FPVector3 extents = new FPVector3(
-                        CylinderExtent(cylinder, axis.X),
-                        CylinderExtent(cylinder, axis.Y),
-                        CylinderExtent(cylinder, axis.Z));
-                    lower -= extents;
-                    upper += extents;
+                        CylinderExtent(shape.cylinder, axis.X),
+                        CylinderExtent(shape.cylinder, axis.Y),
+                        CylinderExtent(shape.cylinder, axis.Z));
+                    lower = center - extents;
+                    upper = center + extents;
                     break;
                 }
             }
         }
 
         /// <summary>
-        /// 两个形状在世界空间中是否可能重叠, 用于窄相之前的 AABB 粗筛
+        /// 两个碰撞盒在世界空间中是否可能重叠, 用于窄相之前的 AABB 粗筛
         /// </summary>
-        public static bool Overlaps(BaseShape a, in Transform transformA, BaseShape b, in Transform transformB)
+        public static bool Overlaps(ColliderInfo a, in Transform transformA, ColliderInfo b, in Transform transformB)
         {
             if (null == a || null == b) return false;
             ComputeBounds(a, transformA, out FPVector3 al, out FPVector3 au);
             ComputeBounds(b, transformB, out FPVector3 bl, out FPVector3 bu);
-            return new AABB(al, au).Overlaps(new AABB(bl, bu));
+            return new OverlapBounds(al, au).Overlaps(new OverlapBounds(bl, bu));
         }
 
         /// <summary>轴向半高在该轴上的投影与圆盘在该轴上的投影之和, 旋转时精确包围。</summary>
-        private static FP CylinderExtent(CylinderShape shape, FP component)
+        private static FP CylinderExtent(in CylinderShape shape, FP component)
         {
             FP radial = SafeSqrt(FP.One - component * component);
-            return shape.HalfHeight * FP.Abs(component) + shape.Radius * radial;
+            return shape.halfHeight * FP.Abs(component) + shape.radius * radial;
         }
 
         #endregion
@@ -1089,57 +1094,65 @@ namespace GameLogic.Gameplay.Logic
             return true;
         }
 
-        private static bool ResolveConvexContact(BaseShape a, in Transform transformA,
-            BaseShape b, in Transform transformB, FPVector3 fallbackNormal, FP fallbackDepth,
+        private static bool ResolveConvexContact(in BoxShape a, in Transform transformA,
+            in CylinderShape b, in Transform transformB, FPVector3 fallbackNormal, FP fallbackDepth,
             out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
             normal = Unit(fallbackNormal, FPVector3.up);
             penetration = Max(FP.Zero, fallbackDepth);
-            point = (ConvexSupport(a, transformA, normal) + ConvexSupport(b, transformB, -normal)) * FP.Half;
+            point = (BoxSupport(a, transformA, normal) + CylinderSupport(b, transformB, -normal)) * FP.Half;
             return true;
         }
 
-        /// <summary>凸体在给定方向上的支撑点(世界空间), 用于构造接触点。</summary>
-        private static FPVector3 ConvexSupport(BaseShape shape, in Transform transform, FPVector3 direction)
+        private static bool ResolveConvexContact(in CapsuleShape a, in Transform transformA,
+            in CylinderShape b, in Transform transformB, FPVector3 fallbackNormal, FP fallbackDepth,
+            out FPVector3 point, out FPVector3 normal, out FP penetration)
         {
-            switch (shape.Type)
-            {
-                case ShapeType.Box:
-                {
-                    BoxShape box = (BoxShape)shape;
-                    FPVector3 half = box.HalfSize;
-                    FPVector3 local = transform.InverseTransformDirection(direction);
-                    FPVector3 corner = new FPVector3(
-                        local.X < FP.Zero ? -half.X : half.X,
-                        local.Y < FP.Zero ? -half.Y : half.Y,
-                        local.Z < FP.Zero ? -half.Z : half.Z);
-                    return transform.LocalToWorld(corner + box.Center);
-                }
-                case ShapeType.Capsule:
-                {
-                    CapsuleShape capsule = (CapsuleShape)shape;
-                    GetWorldEndpoints(capsule, transform, out FPVector3 start, out FPVector3 end);
-                    FPVector3 center = FPVector3.Dot(end - start, direction) < FP.Zero ? start : end;
-                    return center + Unit(direction, FPVector3.up) * capsule.Radius;
-                }
-                case ShapeType.Cylinder:
-                {
-                    CylinderShape cylinder = (CylinderShape)shape;
-                    FPVector3 axis = Unit(transform.up, FPVector3.up);
-                    FPVector3 center = transform.LocalToWorld(cylinder.Center);
-                    FP axial = FPVector3.Dot(axis, direction);
-                    center += axis * (axial < FP.Zero ? -cylinder.HalfHeight : cylinder.HalfHeight);
-                    FPVector3 radial = direction - axis * axial;
-                    return center + Unit(radial, Perpendicular(axis)) * cylinder.Radius;
-                }
-                case ShapeType.Sphere:
-                {
-                    SphereShape sphere = (SphereShape)shape;
-                    return transform.LocalToWorld(sphere.Center) + Unit(direction, FPVector3.up) * sphere.Radius;
-                }
-                default:
-                    return transform.LocalToWorld(shape.Center);
-            }
+            normal = Unit(fallbackNormal, FPVector3.up);
+            penetration = Max(FP.Zero, fallbackDepth);
+            point = (CapsuleSupport(a, transformA, normal) + CylinderSupport(b, transformB, -normal)) * FP.Half;
+            return true;
+        }
+
+        private static bool ResolveConvexContact(in CylinderShape a, in Transform transformA,
+            in CylinderShape b, in Transform transformB, FPVector3 fallbackNormal, FP fallbackDepth,
+            out FPVector3 point, out FPVector3 normal, out FP penetration)
+        {
+            normal = Unit(fallbackNormal, FPVector3.up);
+            penetration = Max(FP.Zero, fallbackDepth);
+            point = (CylinderSupport(a, transformA, normal) + CylinderSupport(b, transformB, -normal)) * FP.Half;
+            return true;
+        }
+
+        /// <summary>盒在给定方向上的支撑点(世界空间)。</summary>
+        private static FPVector3 BoxSupport(in BoxShape shape, in Transform transform, FPVector3 direction)
+        {
+            FPVector3 half = shape.size * FP.Half;
+            FPVector3 local = transform.InverseTransformDirection(direction);
+            FPVector3 corner = new FPVector3(
+                local.X < FP.Zero ? -half.X : half.X,
+                local.Y < FP.Zero ? -half.Y : half.Y,
+                local.Z < FP.Zero ? -half.Z : half.Z);
+            return transform.LocalToWorld(corner + shape.offset);
+        }
+
+        /// <summary>胶囊在给定方向上的支撑点(世界空间)。</summary>
+        private static FPVector3 CapsuleSupport(in CapsuleShape shape, in Transform transform, FPVector3 direction)
+        {
+            GetWorldEndpoints(shape, transform, out FPVector3 start, out FPVector3 end);
+            FPVector3 center = FPVector3.Dot(end - start, direction) < FP.Zero ? start : end;
+            return center + Unit(direction, FPVector3.up) * shape.radius;
+        }
+
+        /// <summary>圆柱在给定方向上的支撑点(世界空间)。</summary>
+        private static FPVector3 CylinderSupport(in CylinderShape shape, in Transform transform, FPVector3 direction)
+        {
+            FPVector3 axis = Unit(transform.up, FPVector3.up);
+            FPVector3 center = transform.LocalToWorld(shape.offset);
+            FP axial = FPVector3.Dot(axis, direction);
+            center += axis * (axial < FP.Zero ? -shape.halfHeight : shape.halfHeight);
+            FPVector3 radial = direction - axis * axial;
+            return center + Unit(radial, Perpendicular(axis)) * shape.radius;
         }
 
         private static bool TestAxis(FPVector3 axis, FPVector3 delta, FP radiusSum,
@@ -1172,11 +1185,11 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>胶囊两端球心(世界空间)。</summary>
-        private static void GetWorldEndpoints(CapsuleShape shape, in Transform transform,
+        private static void GetWorldEndpoints(in CapsuleShape shape, in Transform transform,
             out FPVector3 p0, out FPVector3 p1)
         {
-            FPVector3 center = transform.LocalToWorld(shape.Center);
-            FPVector3 axis = transform.up * shape.HalfLength;
+            FPVector3 center = transform.LocalToWorld(shape.offset);
+            FPVector3 axis = transform.up * shape.halfLength;
             p0 = center - axis;
             p1 = center + axis;
         }

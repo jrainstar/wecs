@@ -3,10 +3,24 @@ using GameLogic.Gameplay.Common;
 
 namespace GameLogic.Gameplay.Logic
 {
+
+    public struct AABB
+    {
+        /// <summary>
+        /// 位置
+        /// </summary>
+        public FPVector3 position { get; set; }
+        /// <summary>
+        /// 尺寸
+        /// </summary>
+        public FPVector3 size { get; set; }
+    }
+
+
     /// <summary>
     /// 立方体
     /// </summary>
-    public struct Box
+    public struct BoxShape
     {
         /// <summary>
         /// 偏移
@@ -21,7 +35,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 球体
     /// </summary>
-    public struct Sphere
+    public struct SphereShape
     {
         /// <summary>
         /// 偏移
@@ -36,7 +50,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 胶囊体
     /// </summary>
-    public struct Capsule
+    public struct CapsuleShape
     {
         /// <summary>
         /// 偏移
@@ -50,12 +64,16 @@ namespace GameLogic.Gameplay.Logic
         /// 高度 (包含两端半球的全高)
         /// </summary>
         public FP height { get; set; }
+        /// <summary>
+        /// 两端球心距离的一半, 由 height 与 radius 推导
+        /// </summary>
+        public FP halfLength => FP.Max(FP.Zero, (height - FP.Two * radius) * FP.Half);
     }
 
     /// <summary>
     /// 圆柱体
     /// </summary>
-    public struct Cylinder
+    public struct CylinderShape
     {
         /// <summary>
         /// 偏移
@@ -69,18 +87,10 @@ namespace GameLogic.Gameplay.Logic
         /// 高度 (沿轴全高)
         /// </summary>
         public FP height { get; set; }
-    }
-
-    public struct AABB
-    {
         /// <summary>
-        /// 位置
+        /// 轴向半高
         /// </summary>
-        public FPVector3 position { get; set; }
-        /// <summary>
-        /// 尺寸
-        /// </summary>
-        public FPVector3 size { get; set; }
+        public FP halfHeight => height * FP.Half;
     }
 
     /// <summary>
@@ -99,59 +109,19 @@ namespace GameLogic.Gameplay.Logic
         /// <summary>
         /// 立方体
         /// </summary>
-        public Box box { get; set; }
+        public BoxShape box { get; set; }
         /// <summary>
         /// 球体
         /// </summary>
-        public Sphere sphere { get; set; }
+        public SphereShape sphere { get; set; }
         /// <summary>
         /// 胶囊体
         /// </summary>
-        public Capsule capsule { get; set; }
+        public CapsuleShape capsule { get; set; }
         /// <summary>
         /// 圆柱体
         /// </summary>
-        public Cylinder cylinder { get; set; }
-
-        private BaseShape m_Shape;
-
-        /// <summary>
-        /// 当前几何体 (按 shape 字段与尺寸数据惰性构造, 尺寸变化时自动重建)
-        /// </summary>
-        public BaseShape geometry
-        {
-            get
-            {
-                if (null != m_Shape) return m_Shape;
-                m_Shape = Build();
-                return m_Shape;
-            }
-        }
-
-        /// <summary>
-        /// 使几何体缓存失效, 尺寸数据被外部修改后调用
-        /// </summary>
-        public void Invalidate() => m_Shape = null;
-
-        /// <summary>
-        /// 按当前数据构造几何体
-        /// </summary>
-        private BaseShape Build()
-        {
-            switch (shape)
-            {
-                case COLLISION_DEFINE.COLLIDER_BOX:
-                    return new BoxShape(box.offset, box.size);
-                case COLLISION_DEFINE.COLLIDER_SPHERE:
-                    return new SphereShape(sphere.offset, sphere.radius);
-                case COLLISION_DEFINE.COLLIDER_CAPSULE:
-                    return new CapsuleShape(capsule.offset, capsule.radius, capsule.height);
-                case COLLISION_DEFINE.COLLIDER_CYLINDER:
-                    return new CylinderShape(cylinder.offset, cylinder.radius, cylinder.height);
-                default:
-                    return null;
-            }
-        }
+        public CylinderShape cylinder { get; set; }
 
         protected override void OnReady()
         {
@@ -166,7 +136,6 @@ namespace GameLogic.Gameplay.Logic
             sphere = default;
             capsule = default;
             cylinder = default;
-            m_Shape = null;
         }
 
         protected override BehaviorInfo OnClone()
@@ -179,7 +148,6 @@ namespace GameLogic.Gameplay.Logic
             clone.sphere = sphere;
             clone.capsule = capsule;
             clone.cylinder = cylinder;
-            clone.m_Shape = null;
 
             return clone;
         }
