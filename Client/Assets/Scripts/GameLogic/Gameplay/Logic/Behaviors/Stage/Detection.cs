@@ -693,6 +693,7 @@ namespace GameLogic.Gameplay.Logic
                 collidercfg.Offset[2] * stage.cfg.int2fp
             );
 
+            // 质量由 Prefab 的 OnProcessing 决定 (角色 1, 墙体 -1), 配置表不参与
             switch (collidercfg.Type)
             {
                 case COLLISION_DEFINE.COLLIDER_BOX:
@@ -818,6 +819,8 @@ namespace GameLogic.Gameplay.Logic
                 radius = collider.cylinder.radius * scale,
                 height = collider.cylinder.height * scale
             };
+            // 质量与缩放无关, 原样保留
+            copy.mass = collider.mass;
             return copy;
         }
 

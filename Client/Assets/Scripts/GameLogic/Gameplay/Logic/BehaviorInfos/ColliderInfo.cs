@@ -122,6 +122,20 @@ namespace GameLogic.Gameplay.Logic
         /// 圆柱体
         /// </summary>
         public CylinderShape cylinder { get; set; }
+        /// <summary>
+        /// 质量, 小于 0 表示无限大 (不可被推动, 如墙体)
+        /// </summary>
+        public FP mass { get; set; }
+
+        /// <summary>
+        /// 是否不可推动 (质量为负, 视为无限大)
+        /// </summary>
+        public bool immovable => mass < FP.Zero;
+
+        /// <summary>
+        /// 质量倒数, 不可推动时为 0
+        /// </summary>
+        public FP invmass => immovable || mass <= FP.Zero ? FP.Zero : FP.One / mass;
 
         protected override void OnReady()
         {
@@ -136,6 +150,7 @@ namespace GameLogic.Gameplay.Logic
             sphere = default;
             capsule = default;
             cylinder = default;
+            mass = FP.One;
         }
 
         protected override BehaviorInfo OnClone()
@@ -148,6 +163,7 @@ namespace GameLogic.Gameplay.Logic
             clone.sphere = sphere;
             clone.capsule = capsule;
             clone.cylinder = cylinder;
+            clone.mass = mass;
 
             return clone;
         }

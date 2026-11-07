@@ -50,6 +50,16 @@ namespace GameLogic.Gameplay.Logic
             spatial.euler = info.spatial.euler;
             spatial.scale = info.spatial.scale;
 
+            // 碰撞盒, 按英雄的角色配置载入; 同时用于检测与移动推挤
+            var collider = stage.AddBehaviorInfo<ColliderInfo>(actor);
+            if (stage.cfg.location.TbRoleData.TryGetValue(info.hero, out var roledata))
+            {
+                stage.detection.SetColliderInfo(collider, roledata.Collider);
+            }
+
+            // 角色可被推动; 负数表示无限大(不可推动), 墙体等静态物体在各自的 Prefab 里设 -1
+            collider.mass = FP.One;
+
         }
     }
 }
