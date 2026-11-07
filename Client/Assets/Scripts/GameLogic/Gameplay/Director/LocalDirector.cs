@@ -34,6 +34,10 @@ namespace GameLogic.Gameplay.Director
         /// </summary>
         private Stage stage { get; set; }
         /// <summary>
+        /// 碰撞盒可视化 (调试用, 可在运行时关闭)
+        /// </summary>
+        private ColliderDrawer colliderdrawer { get; set; }
+        /// <summary>
         /// 是否正在恢复
         /// </summary>
         private bool restoreing { get; set; } = false;
@@ -64,10 +68,18 @@ namespace GameLogic.Gameplay.Director
             stage.ondiff += OnDiff;
             // 监听 RIL 事件
             stage.onevent += OnEvent;
+            // 碰撞盒可视化; 多线程模式下逻辑在子线程运行, 不做跨线程读取
+            if (false == multithread) colliderdrawer = ColliderDrawer.Attach(stage, world.root.transform);
         }
 
         protected override void OnDestroyGame()
         {
+            // 销毁碰撞盒可视化
+            if (null != colliderdrawer)
+            {
+                UnityEngine.Object.Destroy(colliderdrawer.gameObject);
+                colliderdrawer = null;
+            }
             // 销毁逻辑层
             stage.Dispose();
             // 取消监听 RIL 渲染状态
