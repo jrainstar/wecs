@@ -89,19 +89,6 @@ namespace GameLogic.Gameplay.Logic
                 FP radial = SafeSqrt(FP.One - axial * axial);
                 return halfHeight * axial + radius * radial;
             }
-
-            public FPVector3 SupportNear(FPVector3 direction, FPVector3 target)
-            {
-                FPVector3 offset = target - center;
-                FP axial = FPVector3.Dot(direction, axis);
-                FP axialOffset = SupportCoordinate(axial, halfHeight, FPVector3.Dot(offset, axis));
-                FPVector3 radial = direction - axis * axial;
-                FPVector3 radialOffset = offset - axis * FPVector3.Dot(offset, axis);
-                FPVector3 radialDirection = Length(radial) > Tolerance ? Unit(radial, FPVector3.right)
-                    : Length(radialOffset) > Tolerance ? Unit(radialOffset, FPVector3.right)
-                    : Perpendicular(axis);
-                return center + axis * axialOffset + radialDirection * radius;
-            }
         }
 
         #region 形状对检测

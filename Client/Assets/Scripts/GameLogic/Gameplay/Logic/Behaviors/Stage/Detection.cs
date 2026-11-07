@@ -27,6 +27,8 @@ namespace GameLogic.Gameplay.Logic
         public List<(FPVector3 center, FPVector3 dire, FP dis)> raycasts { get; private set; }
         public List<(FPVector3 position, FPQuaternion rotation, FPVector3 size)> overlapboxes { get; private set; }
         public List<(FPVector3 position, FP radius)> overlapspheres { get; private set; }
+        public List<(FPVector3 position, FPQuaternion rotation, FP radius, FP height)> overlapcapsules { get; private set; }
+        public List<(FPVector3 position, FPQuaternion rotation, FP radius, FP height)> overlapcylinders { get; private set; }
 
         protected override void OnAssemble()
         {
@@ -36,6 +38,8 @@ namespace GameLogic.Gameplay.Logic
                 raycasts = ObjectCache.Ensure<List<(FPVector3 center, FPVector3 dire, FP dis)>>();
                 overlapboxes = ObjectCache.Ensure<List<(FPVector3 position, FPQuaternion rotation, FPVector3 size)>>();
                 overlapspheres = ObjectCache.Ensure<List<(FPVector3 position, FP radius)>>();
+                overlapcapsules = ObjectCache.Ensure<List<(FPVector3 position, FPQuaternion rotation, FP radius, FP height)>>();
+                overlapcylinders = ObjectCache.Ensure<List<(FPVector3 position, FPQuaternion rotation, FP radius, FP height)>>();
             }
         }
 
@@ -50,6 +54,10 @@ namespace GameLogic.Gameplay.Logic
                 ObjectCache.Set(overlapboxes);
                 overlapspheres.Clear();
                 ObjectCache.Set(overlapspheres);
+                overlapcapsules.Clear();
+                ObjectCache.Set(overlapcapsules);
+                overlapcylinders.Clear();
+                ObjectCache.Set(overlapcylinders);
             }
         }
 
@@ -61,6 +69,8 @@ namespace GameLogic.Gameplay.Logic
                 raycasts.Clear();
                 overlapboxes.Clear();
                 overlapspheres.Clear();
+                overlapcapsules.Clear();
+                overlapcylinders.Clear();
             }
         }
 
@@ -128,6 +138,7 @@ namespace GameLogic.Gameplay.Logic
                     result = OverlapSphere(spatial.position + collider.sphere.offset, collider.sphere.radius, collider.layer);
                     break;
                 case COLLISION_DEFINE.COLLIDER_CAPSULE:
+                    // 胶囊/圆柱保留 offset: 直接把自身碰撞盒当作检测体
                     result = OverlapShape(spatial, collider, collider.layer);
                     break;
                 case COLLISION_DEFINE.COLLIDER_CYLINDER:
@@ -203,6 +214,66 @@ namespace GameLogic.Gameplay.Logic
             probe.sphere = new SphereShape { offset = FPVector3.zero, radius = radius };
 
             Transform transform = new Transform(position, FPQuaternion.identity);
+            HitResult result = OverlapShape(probe, transform, colliders, layer);
+            probe.Reset();
+            ObjectCache.Set(probe);
+            return result;
+        }
+
+        /// <summary>
+        /// Capsule 检测
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <param name="rotation">旋转 (长轴为局部 Y)</param>
+        /// <param name="radius">半径</param>
+        /// <param name="height">全高, 包含两端半球</param>
+        /// <param name="layer">层级 (-1, 默认全检测)</param>
+        /// <returns>结果</returns>
+        public HitResult OverlapCapsule(FPVector3 position, FPQuaternion rotation, FP radius, FP height, int layer = -1)
+        {
+            lock (@lock)
+            {
+                overlapcapsules.Add((position, rotation, radius, height));
+            }
+
+            if (false == stage.SeekBehaviorInfos(out List<ColliderInfo> colliders)) return default;
+
+            ColliderInfo probe = ObjectCache.Ensure<ColliderInfo>();
+            probe.Ready(0);
+            probe.shape = COLLISION_DEFINE.COLLIDER_CAPSULE;
+            probe.capsule = new CapsuleShape { offset = FPVector3.zero, radius = radius, height = height };
+
+            Transform transform = new Transform(position, rotation);
+            HitResult result = OverlapShape(probe, transform, colliders, layer);
+            probe.Reset();
+            ObjectCache.Set(probe);
+            return result;
+        }
+
+        /// <summary>
+        /// Cylinder 检测
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <param name="rotation">旋转 (长轴为局部 Y)</param>
+        /// <param name="radius">半径</param>
+        /// <param name="height">沿轴全高</param>
+        /// <param name="layer">层级 (-1, 默认全检测)</param>
+        /// <returns>结果</returns>
+        public HitResult OverlapCylinder(FPVector3 position, FPQuaternion rotation, FP radius, FP height, int layer = -1)
+        {
+            lock (@lock)
+            {
+                overlapcylinders.Add((position, rotation, radius, height));
+            }
+
+            if (false == stage.SeekBehaviorInfos(out List<ColliderInfo> colliders)) return default;
+
+            ColliderInfo probe = ObjectCache.Ensure<ColliderInfo>();
+            probe.Ready(0);
+            probe.shape = COLLISION_DEFINE.COLLIDER_CYLINDER;
+            probe.cylinder = new CylinderShape { offset = FPVector3.zero, radius = radius, height = height };
+
+            Transform transform = new Transform(position, rotation);
             HitResult result = OverlapShape(probe, transform, colliders, layer);
             probe.Reset();
             ObjectCache.Set(probe);

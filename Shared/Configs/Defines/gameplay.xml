@@ -27,6 +27,7 @@
 	<var name="name" type="string" alias="名字"/>
 	<var name="desc" type="string" alias="描述"/>
 	<var name="icon" type="string" alias="图标"/>
+	<var name="collider" type="int" alias="碰撞盒"/>
 	<var name="model_id" type="int" alias="模型编号"/>
 	<var name="hp" type="int" alias="生命"/>
 	<var name="atk" type="int" alias="攻击"/>

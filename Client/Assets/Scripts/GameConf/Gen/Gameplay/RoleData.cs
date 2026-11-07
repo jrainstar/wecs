@@ -21,6 +21,7 @@ public sealed partial class RoleData : Luban.BeanBase
         { if(!_buf["name"].IsString) { throw new SerializationException(); }  Name = _buf["name"]; }
         { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
         { if(!_buf["icon"].IsString) { throw new SerializationException(); }  Icon = _buf["icon"]; }
+        { if(!_buf["collider"].IsNumber) { throw new SerializationException(); }  Collider = _buf["collider"]; }
         { if(!_buf["model_id"].IsNumber) { throw new SerializationException(); }  ModelId = _buf["model_id"]; }
         { if(!_buf["hp"].IsNumber) { throw new SerializationException(); }  Hp = _buf["hp"]; }
         { if(!_buf["atk"].IsNumber) { throw new SerializationException(); }  Atk = _buf["atk"]; }
@@ -39,6 +40,7 @@ public sealed partial class RoleData : Luban.BeanBase
     public readonly string Name;
     public readonly string Desc;
     public readonly string Icon;
+    public readonly int Collider;
     public readonly int ModelId;
     public readonly int Hp;
     public readonly int Atk;
@@ -61,6 +63,7 @@ public sealed partial class RoleData : Luban.BeanBase
         + "name:" + Name + ","
         + "desc:" + Desc + ","
         + "icon:" + Icon + ","
+        + "collider:" + Collider + ","
         + "modelId:" + ModelId + ","
         + "hp:" + Hp + ","
         + "atk:" + Atk + ","
