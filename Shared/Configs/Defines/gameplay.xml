@@ -130,8 +130,8 @@
 	<var name="id" type="int" alias="编号"/>
 	<var name="desc" type="string" alias="描述"/>
 	<var name="type" type="int" alias="类型"/>
-	<var name="offset" type="(array#sep=|),int" alias="偏移"/>
-	<var name="shape_data" type="(array#sep=|),int" alias="几何数据"/>
+	<var name="offset" type="(array#sep=|),float" alias="偏移"/>
+	<var name="shape_data" type="(array#sep=|),float" alias="几何数据"/>
 </bean>
 
 <table name="TbColliderData" value="ColliderData" input="gameplay/collider.xlsx"/>

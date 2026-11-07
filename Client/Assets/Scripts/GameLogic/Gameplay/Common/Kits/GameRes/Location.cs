@@ -14,6 +14,7 @@ namespace GameLogic.Gameplay.Common
         public const string modelpath = "Assets/AssetRaws/Prefabs/Role/";
         public const string animcfgpath = "Assets/AssetRaws/AnimationConfigs/";
         public const string animationkeyframes = "Assets/AssetRaws/AnimationKeyframes/";
+        public const string scenedatas = "Assets/AssetRaws/SceneDatas/";
         public const string effectpath = "Assets/GameRes/Effect/";
         public const string uieffectpath = "Assets/GameRes/UIEffect/";
         public const string uiprefabpath = "Assets/GameRes/UIPrefab/";

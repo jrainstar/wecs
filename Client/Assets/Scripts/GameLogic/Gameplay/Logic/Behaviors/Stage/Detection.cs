@@ -686,11 +686,12 @@ namespace GameLogic.Gameplay.Logic
             if (false == stage.cfg.location.TbColliderData.TryGetValue(id, out var collidercfg)) return;
             if (null == collidercfg) return;
 
+            // 配置已改为米制浮点, 不再需要 int2fp 换算
             FPVector3 offset = new FPVector3
             (
-                collidercfg.Offset[0] * stage.cfg.int2fp,
-                collidercfg.Offset[1] * stage.cfg.int2fp,
-                collidercfg.Offset[2] * stage.cfg.int2fp
+                collidercfg.Offset[0],
+                collidercfg.Offset[1],
+                collidercfg.Offset[2]
             );
 
             // 质量由 Prefab 的 OnProcessing 决定 (角色 1, 墙体 -1), 配置表不参与
@@ -702,9 +703,9 @@ namespace GameLogic.Gameplay.Logic
                     {
                         offset = offset,
                         size = new FPVector3(
-                            collidercfg.ShapeData[0] * stage.cfg.int2fp,
-                            collidercfg.ShapeData[1] * stage.cfg.int2fp,
-                            collidercfg.ShapeData[2] * stage.cfg.int2fp
+                            collidercfg.ShapeData[0],
+                            collidercfg.ShapeData[1],
+                            collidercfg.ShapeData[2]
                         )
                     };
                     break;
@@ -713,7 +714,7 @@ namespace GameLogic.Gameplay.Logic
                     collider.sphere = new SphereShape
                     {
                         offset = offset,
-                        radius = collidercfg.ShapeData[0] * stage.cfg.int2fp
+                        radius = collidercfg.ShapeData[0]
                     };
                     break;
                 case COLLISION_DEFINE.COLLIDER_CAPSULE:
@@ -721,8 +722,8 @@ namespace GameLogic.Gameplay.Logic
                     collider.capsule = new CapsuleShape
                     {
                         offset = offset,
-                        radius = collidercfg.ShapeData[0] * stage.cfg.int2fp,
-                        height = collidercfg.ShapeData[1] * stage.cfg.int2fp
+                        radius = collidercfg.ShapeData[0],
+                        height = collidercfg.ShapeData[1]
                     };
                     break;
                 case COLLISION_DEFINE.COLLIDER_CYLINDER:
@@ -730,8 +731,8 @@ namespace GameLogic.Gameplay.Logic
                     collider.cylinder = new CylinderShape
                     {
                         offset = offset,
-                        radius = collidercfg.ShapeData[0] * stage.cfg.int2fp,
-                        height = collidercfg.ShapeData[1] * stage.cfg.int2fp
+                        radius = collidercfg.ShapeData[0],
+                        height = collidercfg.ShapeData[1]
                     };
                     break;
                 default:

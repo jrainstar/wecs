@@ -10,9 +10,18 @@ public class WECS_0 : MonoBehaviour
     public Engine engine { get; private set; }
     public BaseDirector director { get; private set; }
 
+    [Tooltip("场景碰撞数据名称, 对应 Assets/AssetRaws/SceneDatas/{name}.json")]
+    public string scenedata = "Battle_0";
+
     void Start()
     {
         engine = Engine.CreateEngine();
+
+        // 场景碰撞数据 (Assets/AssetRaws/SceneDatas), 不存在时按空场景处理
+        SceneData scene = default;
+        TextAsset sceneasset = engine.gameres.LoadAssetSync<TextAsset>(Location.scenedatas + scenedata);
+        if (null != sceneasset) scene = SceneData.FromJson(sceneasset);
+        else Debug.LogWarning($"[WECS_0] 场景数据加载失败: {Location.scenedatas + scenedata}");
 
         List<PlayerData> players = new()
                 {
@@ -59,6 +68,7 @@ public class WECS_0 : MonoBehaviour
         {
             seed = 19491001,
             players = players.ToArray(),
+            scene = scene,
         };
 
         Time.fixedDeltaTime = GAME_DEFINE.LOGIC_TICK.AsFloat();

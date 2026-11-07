@@ -223,6 +223,7 @@ namespace GameLogic.Gameplay.Logic
             }
             prefabs = ObjectCache.Ensure<Dictionary<Type, Prefab>>();
 
+            Prefab<WallPrefab, WallPrefabInfo>();
             Prefab<HeroPrefab, HeroPrefabInfo>();
             Prefab<SkillPrefab, SkillPrefabInfo>();
 
@@ -249,6 +250,15 @@ namespace GameLogic.Gameplay.Logic
                 // 入座
                 seat.Sitdown(player.seat, hero);
 
+            }
+
+            // 场景静态碰撞体 (由场景导出工具生成), 形状由数据里的 shape 决定
+            if (null != data.scene.colliders)
+            {
+                foreach (var collision in data.scene.colliders)
+                {
+                    Spawn(new WallPrefabInfo { collision = collision });
+                }
             }
         }
 

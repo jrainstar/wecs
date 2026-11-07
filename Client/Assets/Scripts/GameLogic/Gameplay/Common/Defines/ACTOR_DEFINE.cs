@@ -34,5 +34,9 @@ namespace GameLogic.Gameplay.Common
         /// BUFF
         /// </summary>
         public const byte BUFF = 6;
+        /// <summary>
+        /// 墙体 (场景静态碰撞体)
+        /// </summary>
+        public const byte WALL = 7;
     }
 }

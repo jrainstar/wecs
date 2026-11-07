@@ -64,6 +64,19 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+    - GroupName: SceneData
+      GroupDesc: "\u573A\u666F\u78B0\u649E\u6570\u636E"
+      AssetTags: SceneData
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/AssetRaws/SceneDatas
+        CollectorGUID: 33dcc63667f75c046b433fde6f833867
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
     - GroupName: Prefab
       GroupDesc: "\u9884\u5236"
       AssetTags: Prefab
