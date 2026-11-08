@@ -1,0 +1,7 @@
+死循环是这样形成的（以你配的 Ani_Idle → [Ani_Run_Start, 1.483s] → Ani_Run 为例）：
+
+切到 Run，playname = Ani_Run_Start，playtime 从 0 开始累加；
+累到 1.483 后，RILConv2AnimData 判定窗口结束，playname 变成 Ani_Run；
+OnChase 发现 playname != lastplayname，按"换 clip 就重置"的规则把 playtime = 0；
+下一帧 RIL 转换时，playtime(≈0.016) < 1.483 又成立，playname 被改回 Ani_Run_Start；
+playtime 再次归零，再播 1.483s……

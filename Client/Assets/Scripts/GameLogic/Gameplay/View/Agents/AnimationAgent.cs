@@ -90,6 +90,14 @@ namespace GameLogic.Gameplay.View
         private float playtime { get; set; }
 
         /// <summary>
+        /// 前置混合动画已播放时间 (秒)
+        /// 从逻辑层切换到目标动画开始计时, 只随逻辑层切换动画归零.
+        /// 不能复用 playtime: 前置动画播完切到目标动画时 playtime 会归零,
+        /// 判定条件 "还在前置动画时长内" 会被重新打开, 两段动画就会反复来回切
+        /// </summary>
+        private float mixtime { get; set; }
+
+        /// <summary>
         /// 上一次 RIL 的逻辑层流逝时间 (毫秒)
         /// 用于检测逻辑时间倒退 (重播/回滚/循环回绕), 倒退时才重新对齐播放位置
         /// </summary>
@@ -123,6 +131,7 @@ namespace GameLogic.Gameplay.View
             animloop = true;
             lastplayname = null;
             playtime = 0;
+            mixtime = 0;
             lastelapsed = 0;
             rootlockremaining = 0;
             rootlocked = false;
@@ -146,6 +155,7 @@ namespace GameLogic.Gameplay.View
             animloop = true;
             lastplayname = null;
             playtime = 0;
+            mixtime = 0;
             lastelapsed = 0;
             rootlockremaining = 0;
             rootlocked = false;
@@ -204,12 +214,14 @@ namespace GameLogic.Gameplay.View
             if (switched || ril.animelapsed < lastelapsed)
             {
                 playtime = ril.animelapsed * ConfigKit.Int2Float;
+                // 前置混合动画从这里开始计时, 之后只由 OnChase 推进, 不随播放位置归零
+                mixtime = playtime;
             }
             lastelapsed = ril.animelapsed;
 
             if (null == preplayname || null == animinfo) return;
             var beforeAnimInfo = animinfo.GetAnimationBeforeMixInfo(preplayname);
-            if (null != beforeAnimInfo && playtime < beforeAnimInfo.duration)
+            if (null != beforeAnimInfo && mixtime < beforeAnimInfo.duration)
             {
                 playname = beforeAnimInfo.name;
                 // 前置混合动画同样没配置时回落到默认混合时间
@@ -270,6 +282,7 @@ namespace GameLogic.Gameplay.View
             // 推进播放位置; 不能用状态时长以外的值作上限, 否则动画会静止
             // 倍率来自逻辑层 (如时间轴节点的 Speed), 定格 (0) 时渲染层同样不推进
             playtime += tick * timescale * animspeed;
+            mixtime += tick * timescale * animspeed;
             ApplyTime();
         }
 
