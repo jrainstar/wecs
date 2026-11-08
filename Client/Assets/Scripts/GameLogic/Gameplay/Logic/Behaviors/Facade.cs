@@ -107,7 +107,7 @@ namespace GameLogic.Gameplay.Logic
             if (false == stage.SeekBehaviorInfo(actor, out SpatialInfo spatial)) return;
 
             // ApplyMotion 为 false 时不会走到这里, 也就不读取关键帧文件
-            var clipdata = AnimationKeyframeCache.Load(info.animname);
+            var clipdata = AnimationKeyframeCache.Load($"{info.model}/{info.animname}");
             if (null == clipdata) return;
 
             var node = clipdata.FindMotionNode();

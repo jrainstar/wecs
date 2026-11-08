@@ -99,5 +99,45 @@
         }
       }
     ]
+  },
+  {
+    "id": 100021,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "max_time": 1,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "AnimationEvent",
+          "Name": "Ani_Attack_01",
+          "Loop": false,
+          "Speed": 1,
+          "CanMove": true,
+          "ApplyMotion": true
+        }
+      }
+    ]
+  },
+  {
+    "id": 100022,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "max_time": 1,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "AnimationEvent",
+          "Name": "Ani_Attack_01",
+          "Loop": false,
+          "Speed": 1,
+          "CanMove": false,
+          "ApplyMotion": true
+        }
+      }
+    ]
   }
 ]
