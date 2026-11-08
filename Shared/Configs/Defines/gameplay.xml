@@ -136,6 +136,55 @@
 
 <table name="TbColliderData" value="ColliderData" input="gameplay/collider.xlsx"/>
 
+<bean name="PayloadData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="damage" type="DamageData?" alias="伤害数据"/>
+	<var name="visual" type="VisualData?" alias="表现数据"/>
+	<var name="add_buff" type="AddBuffData?" alias="增减BUFF"/>
+	<var name="extra_data" type="int?#ref=Gameplay.TbPayloadData" alias="命中链"/>
+</bean>
+
+<table name="TbPayloadData" value="PayloadData" input="gameplay/payload.xlsx"/>
+
+<bean name="DamageData">
+	<var name="type" type="DamageType" alias="伤害类型"/>
+	<var name="damage" type="int" alias="基础伤害"/>
+	<var name="attack_type" type="ScalingType" alias="进攻加成类型" comment="取施法者身上的哪个属性做加成"/>
+	<var name="attack_rate" type="float" alias="进攻加成系数"/>
+	<var name="defense_type" type="ScalingType" alias="防守加成类型" comment="取目标身上的哪个属性做加成"/>
+	<var name="defense_rate" type="float" alias="防守加成系数"/>
+	<var name="hit_count" type="int" alias="击中次数"/>
+	<var name="can_crit" type="bool" alias="可暴击"/>
+</bean>
+
+<bean name="VisualData">
+	<var name="hit_fx" type="string" alias="特效"/>
+	<var name="hit_sound" type="string" alias="音效"/>
+	<var name="hit_point" type="int" alias="次数"/>
+</bean>
+
+<bean name="AddBuffData">
+	<var name="buff_id" type="int" alias="特效"/>
+	<var name="buff_stack" type="int" alias="音效"/>
+</bean>
+
+<enum name="DamageType">
+	<var name="Physical" alias="物理"/>
+	<var name="Magical" alias="法术"/>
+	<var name="True" alias="真实" comment="无视抗性"/>
+</enum>
+
+<enum name="ScalingType" comment="伤害加成来源属性，进攻/防守共用">
+	<var name="None" alias="无"/>
+	<var name="Atk" alias="攻击"/>
+	<var name="MaxHp" alias="最大生命"/>
+	<var name="CurHp" alias="当前生命"/>
+	<var name="LostHp" alias="已损生命"/>
+	<var name="MoveSpeed" alias="移动速度"/>
+</enum>
+
 <bean name="MoudleData">
 	<var name="id" type="int" alias="编号"/>
 	<var name="name" type="string" alias="名字"/>
