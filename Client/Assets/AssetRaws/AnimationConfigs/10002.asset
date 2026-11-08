@@ -12,17 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d15fdb5c7811794a98b350bc9e48b00, type: 3}
   m_Name: 10002
   m_EditorClassIdentifier: 
-  model: 10001
+  model: 10002
   defaultfadeduration: 0.1
   animationstates:
   - state: 3
-    name: Stand2
+    name: Ani_Idle
   - state: 4
-    name: Run_F
+    name: Ani_Run
   animationmixs:
-  - name: Stand2
+  - name: Ani_Idle
     mixduration: 0.2
-    mixanimations: []
-  - name: Run_F
+    mixanimations:
+    - prename: Ani_Run
+      name: Ani_Run_End
+      duration: 3.683
+      mixduration: 0.1
+  - name: Ani_Run
     mixduration: 0.2
-    mixanimations: []
+    mixanimations:
+    - prename: Ani_Idle
+      name: Ani_Run_Start
+      duration: 1.483
+      mixduration: 0.1

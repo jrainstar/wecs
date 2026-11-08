@@ -15,11 +15,11 @@
   },
   {
     "id": 10002,
-    "name": "刺客",
+    "name": "雅",
     "desc": "高爆发暗影杀手，擅长潜行突袭与背后一击",
     "icon": "Character/CardCharacter_02",
     "collider": 10003,
-    "model_id": 109431,
+    "model_id": 10002,
     "hp": 65,
     "atk": 95,
     "def": 35,
