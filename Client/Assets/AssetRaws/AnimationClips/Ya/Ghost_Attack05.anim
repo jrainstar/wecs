@@ -270,7 +270,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET
+    path: Armature/Root/Bip001/Bn_PET
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -376,7 +376,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET/Bn_PET_EYE
+    path: Armature/Root/Bip001/Bn_PET/Bn_PET_EYE
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -454,7 +454,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET
+    path: Armature/Root/Bip001/Bn_PET
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -479,7 +479,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET/Bn_PET_EYE
+    path: Armature/Root/Bip001/Bn_PET/Bn_PET_EYE
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -942,7 +942,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET
+    path: Armature/Root/Bip001/Bn_PET
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -967,7 +967,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET/Bn_PET_EYE
+    path: Armature/Root/Bip001/Bn_PET/Bn_PET_EYE
   - curve:
       serializedVersion: 2
       m_Curve:

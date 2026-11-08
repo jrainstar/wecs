@@ -37,20 +37,24 @@ public class AnimancerComponentPro : NamedAnimancerComponent
         }
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        // 池里复用的实例根骨骼可能还留着上一段动画的姿态,
+        // 只在实例创建时(Awake)记录一次, 保证基准是预制体上的绑定姿态
+        CaptureInitPose();
+    }
+
     protected override void OnEnable()
     {
+        // 必须在 base.OnEnable() 之前记录: base 里会自动播放首段动画,
+        // 播放后根骨骼已经是动画首帧的姿态, 拿它当锁定基准会让整个角色视觉偏移
+        CaptureInitPose();
+
         base.OnEnable();
 
         LockRoot = _DefaultLockRoot;
-
-        // 记录初始姿态，作为锁定的还原目标
-        if (_RootBone != null)
-        {
-            _InitPosition = _RootBone.localPosition;
-            _InitRotation = _RootBone.localRotation;
-            _InitScale = _RootBone.localScale;
-            _HasInitPose = true;
-        }
     }
 
     private void LateUpdate()
@@ -58,17 +62,23 @@ public class AnimancerComponentPro : NamedAnimancerComponent
         if (!LockRoot || _RootBone == null)
             return;
 
-        if (!_HasInitPose)
-        {
-            _InitPosition = _RootBone.localPosition;
-            _InitRotation = _RootBone.localRotation;
-            _InitScale = _RootBone.localScale;
-            _HasInitPose = true;
-        }
+        CaptureInitPose();
 
         _RootBone.localPosition = _InitPosition;
         _RootBone.localRotation = _InitRotation;
         _RootBone.localScale = _InitScale;
+    }
+
+    /// <summary>记录根骨骼的初始姿态（只记录一次）。</summary>
+    private void CaptureInitPose()
+    {
+        if (_HasInitPose || null == _RootBone)
+            return;
+
+        _InitPosition = _RootBone.localPosition;
+        _InitRotation = _RootBone.localRotation;
+        _InitScale = _RootBone.localScale;
+        _HasInitPose = true;
     }
 
     // 播放时指定是否锁定（本次播放期间生效，直到下次调用） //

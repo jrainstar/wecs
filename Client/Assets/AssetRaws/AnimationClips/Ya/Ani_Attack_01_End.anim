@@ -270,7 +270,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001
+    path: Armature/Root/Bip001
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -295,7 +295,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis
+    path: Armature/Root/Bip001/Bip001 Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -572,7 +572,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -786,7 +786,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -865,7 +865,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Calf Adv
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Calf Adv
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1115,7 +1115,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1239,7 +1239,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
       L Toe0
   - curve:
       serializedVersion: 2
@@ -1544,7 +1544,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Thigh_fix03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Thigh_fix03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1803,7 +1803,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2062,7 +2062,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2132,7 +2132,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Calf Adv
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Calf Adv
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2418,7 +2418,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2542,7 +2542,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/knee_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/knee_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2675,7 +2675,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Thigh_Twis
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Thigh_Twis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3015,7 +3015,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3319,7 +3319,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3542,7 +3542,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3756,7 +3756,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3961,7 +3961,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4022,7 +4022,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle
   - curve:
       serializedVersion: 2
@@ -4435,7 +4435,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm
   - curve:
       serializedVersion: 2
@@ -4704,7 +4704,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm
   - curve:
       serializedVersion: 2
@@ -4784,7 +4784,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Forearm Adv
   - curve:
       serializedVersion: 2
@@ -4909,7 +4909,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Forearm Adv/Bip001_L_ForeTwist
   - curve:
       serializedVersion: 2
@@ -5205,7 +5205,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand
   - curve:
       serializedVersion: 2
@@ -5339,7 +5339,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0
   - curve:
       serializedVersion: 2
@@ -5455,7 +5455,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
       L Finger01
   - curve:
@@ -5554,7 +5554,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
       L Finger01/Bip001 L Finger02
   - curve:
@@ -5617,7 +5617,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2
   - curve:
       serializedVersion: 2
@@ -5724,7 +5724,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
       L Finger21
   - curve:
@@ -5796,7 +5796,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
       L Finger21/Bip001 L Finger22
   - curve:
@@ -5859,7 +5859,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger3
   - curve:
       serializedVersion: 2
@@ -5921,7 +5921,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4
   - curve:
       serializedVersion: 2
@@ -6055,7 +6055,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4/Bip001
       L Finger41
   - curve:
@@ -6118,7 +6118,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4/Bip001
       L Finger41/Bip001 L Finger42
   - curve:
@@ -6325,7 +6325,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001_L_UpArmTwist01
   - curve:
       serializedVersion: 2
@@ -6441,7 +6441,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001_L_UpArmTwist02
   - curve:
       serializedVersion: 2
@@ -6512,7 +6512,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -6870,7 +6870,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head
   - curve:
       serializedVersion: 2
@@ -7319,7 +7319,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear1_01
   - curve:
       serializedVersion: 2
@@ -7777,7 +7777,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear1_01/Ear1_02
   - curve:
       serializedVersion: 2
@@ -8208,7 +8208,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01
   - curve:
       serializedVersion: 2
@@ -8684,7 +8684,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01/Ear2_02
   - curve:
       serializedVersion: 2
@@ -9277,7 +9277,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01/Ear2_02/Ear2_03
   - curve:
       serializedVersion: 2
@@ -9393,7 +9393,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Eye_L
   - curve:
       serializedVersion: 2
@@ -9689,7 +9689,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01
   - curve:
       serializedVersion: 2
@@ -10084,7 +10084,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01/HairB1_02
   - curve:
       serializedVersion: 2
@@ -10452,7 +10452,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01/HairB1_02/HairB1_03
   - curve:
       serializedVersion: 2
@@ -10721,7 +10721,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01
   - curve:
       serializedVersion: 2
@@ -11125,7 +11125,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02
   - curve:
       serializedVersion: 2
@@ -11484,7 +11484,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03
   - curve:
       serializedVersion: 2
@@ -11807,7 +11807,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03/HairB2_04
   - curve:
       serializedVersion: 2
@@ -12148,7 +12148,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03/HairB2_04/HairB2_05
   - curve:
       serializedVersion: 2
@@ -12444,7 +12444,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01
   - curve:
       serializedVersion: 2
@@ -12920,7 +12920,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01/HairB3_02
   - curve:
       serializedVersion: 2
@@ -13378,7 +13378,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01/HairB3_02/HairB3_03
   - curve:
       serializedVersion: 2
@@ -13485,7 +13485,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01
   - curve:
       serializedVersion: 2
@@ -13934,7 +13934,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01/HairF2_02
   - curve:
       serializedVersion: 2
@@ -14482,7 +14482,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01/HairF2_02/HairF2_03
   - curve:
       serializedVersion: 2
@@ -14589,7 +14589,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF3_01
   - curve:
       serializedVersion: 2
@@ -14678,7 +14678,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF4_01
   - curve:
       serializedVersion: 2
@@ -15163,7 +15163,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF4_01/HairF4_02
   - curve:
       serializedVersion: 2
@@ -15261,7 +15261,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS1_01
   - curve:
       serializedVersion: 2
@@ -15368,7 +15368,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01
   - curve:
       serializedVersion: 2
@@ -15826,7 +15826,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01/HairS2_02
   - curve:
       serializedVersion: 2
@@ -16266,7 +16266,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01/HairS2_02/HairS2_03
   - curve:
       serializedVersion: 2
@@ -16292,7 +16292,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Mouth_A
   - curve:
       serializedVersion: 2
@@ -16318,7 +16318,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Mouth_C
   - curve:
       serializedVersion: 2
@@ -16470,7 +16470,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle
   - curve:
       serializedVersion: 2
@@ -17216,7 +17216,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm
   - curve:
       serializedVersion: 2
@@ -17926,7 +17926,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm
   - curve:
       serializedVersion: 2
@@ -18114,7 +18114,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Forearm Adv
   - curve:
       serializedVersion: 2
@@ -18491,7 +18491,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Forearm Adv/Bip001_R_ForeTwist
   - curve:
       serializedVersion: 2
@@ -19327,7 +19327,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand
   - curve:
       serializedVersion: 2
@@ -19497,7 +19497,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0
   - curve:
       serializedVersion: 2
@@ -19613,7 +19613,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0/Bip001
       R Finger01
   - curve:
@@ -19865,7 +19865,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1
   - curve:
       serializedVersion: 2
@@ -20215,7 +20215,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1/Bip001
       R Finger11
   - curve:
@@ -20485,7 +20485,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2
   - curve:
       serializedVersion: 2
@@ -20790,7 +20790,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
       R Finger21
   - curve:
@@ -20979,7 +20979,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
       R Finger21/Bip001 R Finger22
   - curve:
@@ -21222,7 +21222,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3
   - curve:
       serializedVersion: 2
@@ -21482,7 +21482,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3/Bip001
       R Finger31
   - curve:
@@ -21680,7 +21680,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3/Bip001
       R Finger31/Bip001 R Finger32
   - curve:
@@ -21914,7 +21914,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger4
   - curve:
       serializedVersion: 2
@@ -22462,7 +22462,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001_R_UpArmTwist01
   - curve:
       serializedVersion: 2
@@ -22713,7 +22713,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001_R_UpArmTwist02
   - curve:
       serializedVersion: 2
@@ -23297,7 +23297,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP
   - curve:
       serializedVersion: 2
@@ -23647,7 +23647,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01
   - curve:
       serializedVersion: 2
@@ -24501,7 +24501,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01/Furisode1_02
   - curve:
       serializedVersion: 2
@@ -25454,7 +25454,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01/Furisode1_02/Furisode1_03
   - curve:
       serializedVersion: 2
@@ -25867,7 +25867,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode2_01
   - curve:
       serializedVersion: 2
@@ -26757,7 +26757,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode2_01/Furisode2_02
   - curve:
       serializedVersion: 2
@@ -26900,7 +26900,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bn_Spine2FIX
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bn_Spine2FIX
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -27150,7 +27150,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_L_B
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_L_B
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -27382,7 +27382,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -28235,7 +28235,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -29322,7 +29322,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -30454,7 +30454,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02/MaJia1_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02/MaJia1_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -30695,7 +30695,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R_B
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R_B
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -31125,7 +31125,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -31366,7 +31366,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -31985,7 +31985,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -32568,7 +32568,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -33070,7 +33070,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -33500,7 +33500,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04/Furisode_B_05
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04/Furisode_B_05
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -34074,7 +34074,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -34747,7 +34747,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -35564,7 +35564,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02/LD_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02/LD_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -36156,7 +36156,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -36973,7 +36973,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -37916,7 +37916,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02/MaJia3_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02/MaJia3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -38517,7 +38517,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -39307,7 +39307,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01/MaJia4_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01/MaJia4_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -39665,7 +39665,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -40338,7 +40338,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -41119,7 +41119,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -42008,7 +42008,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02/MaJia5_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02/MaJia5_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -42132,7 +42132,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -42292,7 +42292,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -42497,7 +42497,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02/PDS_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02/PDS_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -42828,7 +42828,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -43240,7 +43240,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -43679,7 +43679,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02/Skirt1_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02/Skirt1_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -43920,7 +43920,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -44359,7 +44359,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -44834,7 +44834,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -45264,7 +45264,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03/Skirt2_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03/Skirt2_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -45568,7 +45568,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -45962,7 +45962,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -46419,7 +46419,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -46912,7 +46912,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03/Skirt3_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03/Skirt3_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -47189,7 +47189,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt4_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt4_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -47457,7 +47457,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -47797,7 +47797,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -48227,7 +48227,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -48666,7 +48666,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03/Skirt5_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03/Skirt5_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -48943,7 +48943,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -49301,7 +49301,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01/Skirt6_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01/Skirt6_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -49569,7 +49569,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -49936,7 +49936,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01/Skirt7_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01/Skirt7_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -50213,7 +50213,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -50598,7 +50598,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -50974,7 +50974,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -51449,7 +51449,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06/Skirt8_07
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06/Skirt8_07
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -51636,7 +51636,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Pelvis_L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Pelvis_L
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -51778,7 +51778,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Pelvis_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Pelvis_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -52379,7 +52379,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt
+    path: Armature/Root/Bip001/Bn_katana_hilt
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -52539,7 +52539,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt/Bn_katana_burst01
+    path: Armature/Root/Bip001/Bn_katana_hilt/Bn_katana_burst01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -52762,7 +52762,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt/Bn_katana_burst01/Bn_katana_burst02
+    path: Armature/Root/Bip001/Bn_katana_hilt/Bn_katana_burst01/Bn_katana_burst02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -52985,7 +52985,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET
+    path: Armature/Root/Bip001/Bn_PET
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -53289,7 +53289,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon
+    path: Armature/Root/Bip001/Bn_Weapon
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -53737,7 +53737,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardA_01
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardA_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -54194,7 +54194,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardA_01/Bn_scabbardA_02
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardA_01/Bn_scabbardA_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -54651,7 +54651,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -55108,7 +55108,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -55628,7 +55628,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02/Bn_scabbardB_03
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02/Bn_scabbardB_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -56355,7 +56355,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015
+    path: Armature/Root/Bip001/Bone015
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -57154,7 +57154,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01
+    path: Armature/Root/Bip001/Bone015/Furisode3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -58142,7 +58142,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01/Furisode3_02
+    path: Armature/Root/Bip001/Bone015/Furisode3_01/Furisode3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -59148,7 +59148,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01/Furisode3_02/Furisode3_03
+    path: Armature/Root/Bip001/Bone015/Furisode3_01/Furisode3_02/Furisode3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -59207,7 +59207,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.0010811713, y: 0.005781383, z: 0.024880173}
+        value: {x: -0.001081171, y: 0.005781383, z: 0.000404503}
         inSlope: {x: -0.0023389852, y: -0.0069845384, z: 0.0014484217}
         outSlope: {x: -0.0023389852, y: -0.0069845384, z: 0.0014484217}
         tangentMode: 0
@@ -59216,7 +59216,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.016666645
-        value: {x: -0.0011201542, y: 0.0056649726, z: 0.02490431}
+        value: {x: -0.001120154, y: 0.005664973, z: 0.000203467}
         inSlope: {x: -0.0036240844, y: -0.008246455, z: 0.0019668126}
         outSlope: {x: -0.003624056, y: -0.008246163, z: 0.001966655}
         tangentMode: 0
@@ -59225,7 +59225,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.08333331
-        value: {x: -0.0013985146, y: 0.004968886, z: 0.025234038}
+        value: {x: -0.001398515, y: 0.004968886, z: -0.000367497}
         inSlope: {x: 0.00078019896, y: -0.009214378, z: 0.009013701}
         outSlope: {x: 0.00078017253, y: -0.009214295, z: 0.009014772}
         tangentMode: 0
@@ -59234,7 +59234,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.100000024
-        value: {x: -0.0013457425, y: 0.0048323087, z: 0.025405027}
+        value: {x: -0.001345743, y: 0.004832309, z: -0.000421681}
         inSlope: {x: 0.007615658, y: -0.007818699, z: 0.011754535}
         outSlope: {x: 0.0076156193, y: -0.0078185825, z: 0.011753814}
         tangentMode: 0
@@ -59243,7 +59243,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.116666675
-        value: {x: -0.0011446604, y: 0.004708262, z: 0.025625853}
+        value: {x: -0.00114466, y: 0.004708262, z: -0.000426028}
         inSlope: {x: 0.016072439, y: -0.007443243, z: 0.01482601}
         outSlope: {x: 0.0160724, y: -0.007443152, z: 0.014827263}
         tangentMode: 0
@@ -59252,7 +59252,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.15000004
-        value: {x: -0.00043639966, y: 0.0044924957, z: 0.026222892}
+        value: {x: -0.0004364, y: 0.004492496, z: -0.000279335}
         inSlope: {x: 0.02074397, y: -0.0035600765, z: 0.020854661}
         outSlope: {x: 0.020743947, y: -0.003560019, z: 0.020852746}
         tangentMode: 0
@@ -59261,7 +59261,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.16666669
-        value: {x: -0.00011852932, y: 0.00446553, z: 0.02659438}
+        value: {x: -0.000118529, y: 0.00446553, z: -0.00013302}
         inSlope: {x: 0.014560897, y: 0.0012956352, z: 0.023653826}
         outSlope: {x: 0.014560935, y: 0.0012957512, z: 0.023655077}
         tangentMode: 0
@@ -59270,7 +59270,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.18333334
-        value: {x: 0.000048963735, y: 0.004535682, z: 0.027011357}
+        value: {x: 0.000048964, y: 0.004535682, z: 0.000058784}
         inSlope: {x: 0.004884391, y: 0.007680947, z: 0.027438445}
         outSlope: {x: 0.004884391, y: 0.007680958, z: 0.027437791}
         tangentMode: 0
@@ -59279,7 +59279,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.19999999
-        value: {x: 0.000044283657, y: 0.004721559, z: 0.027508978}
+        value: {x: 0.000044284, y: 0.004721559, z: 0.000331232}
         inSlope: {x: -0.003363687, y: 0.013811557, z: 0.032361478}
         outSlope: {x: -0.003363655, y: 0.01381147, z: 0.032361437}
         tangentMode: 0
@@ -59288,7 +59288,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.2166667
-        value: {x: -0.000063159045, y: 0.004996066, z: 0.028090082}
+        value: {x: -0.000063159, y: 0.004996066, z: 0.000687163}
         inSlope: {x: -0.008264777, y: 0.018043986, z: 0.03584711}
         outSlope: {x: -0.008264803, y: 0.018043837, z: 0.03584657}
         tangentMode: 0
@@ -59297,7 +59297,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.23333335
-        value: {x: -0.00023121011, y: 0.005323027, z: 0.02870388}
+        value: {x: -0.00023121, y: 0.005323027, z: 0.001075788}
         inSlope: {x: -0.010636663, y: 0.020105647, z: 0.036283217}
         outSlope: {x: -0.010636641, y: 0.020105813, z: 0.03628455}
         tangentMode: 0
@@ -59306,7 +59306,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.26666665
-        value: {x: -0.00058051315, y: 0.0059895865, z: 0.029826311}
+        value: {x: -0.000580513, y: 0.005989587, z: 0.001747873}
         inSlope: {x: -0.0077922237, y: 0.01771697, z: 0.028012883}
         outSlope: {x: -0.0077923094, y: 0.017717356, z: 0.02801262}
         tangentMode: 0
@@ -59315,7 +59315,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.28333336
-        value: {x: -0.000677455, y: 0.0062568304, z: 0.030233333}
+        value: {x: -0.000677455, y: 0.00625683, z: 0.001929722}
         inSlope: {x: -0.0039511938, y: 0.014538906, z: 0.020962263}
         outSlope: {x: -0.003951144, y: 0.014538792, z: 0.020963725}
         tangentMode: 0
@@ -59324,7 +59324,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.3
-        value: {x: -0.00071221736, y: 0.006474211, z: 0.030525075}
+        value: {x: -0.000712217, y: 0.006474211, z: 0.001996291}
         inSlope: {x: -0.0013036734, y: 0.012505932, z: 0.015459659}
         outSlope: {x: -0.0013036807, y: 0.012506265, z: 0.015459407}
         tangentMode: 0
@@ -59333,7 +59333,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.39999998
-        value: {x: -0.0006005233, y: 0.007488526, z: 0.031304248}
+        value: {x: -0.000600523, y: 0.007488526, z: 0.001424427}
         inSlope: {x: 0.0012896731, y: 0.0087754335, z: 0.004703001}
         outSlope: {x: 0.0012896659, y: 0.008775561, z: 0.004702851}
         tangentMode: 0
@@ -59342,7 +59342,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.5166667
-        value: {x: -0.00045314172, y: 0.008444312, z: 0.03162079}
+        value: {x: -0.000453142, y: 0.008444312, z: 0.000164757}
         inSlope: {x: 0.0016570376, y: 0.0066389, z: 0.0009116079}
         outSlope: {x: 0.0016570737, y: 0.006639234, z: 0.0009118256}
         tangentMode: 0
@@ -59351,7 +59351,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.5666667
-        value: {x: -0.00035561825, y: 0.008718167, z: 0.031648166}
+        value: {x: -0.000355618, y: 0.008718167, z: -0.000026346}
         inSlope: {x: 0.002538892, y: 0.0037369456, z: -0.00009474699}
         outSlope: {x: 0.002538871, y: 0.0037370508, z: -0.0000947067}
         tangentMode: 0
@@ -59360,7 +59360,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.6
-        value: {x: -0.00024498426, y: 0.008787507, z: 0.03161304}
+        value: {x: -0.000244984, y: 0.008787507, z: -0.000054777}
         inSlope: {x: 0.0040092436, y: 0.00052756787, z: -0.002029584}
         outSlope: {x: 0.004009247, y: 0.00052756973, z: -0.0020288893}
         tangentMode: 0
@@ -59369,7 +59369,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.65
-        value: {x: -0.000030447523, y: 0.00874138, z: 0.03147361}
+        value: {x: -0.000030448, y: 0.00874138, z: -0.000184166}
         inSlope: {x: 0.003908839, y: -0.0015990593, z: -0.0029302484}
         outSlope: {x: 0.003908834, y: -0.0015988873, z: -0.002929608}
         tangentMode: 0
@@ -59378,7 +59378,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.6666666
-        value: {x: 0.000029897777, y: 0.0087140985, z: 0.031426504}
+        value: {x: 0.000029898, y: 0.008714099, z: -0.000227925}
         inSlope: {x: 0.0031516587, y: -0.0014636698, z: -0.00255495}
         outSlope: {x: 0.0031517153, y: -0.0014638228, z: -0.0025550749}
         tangentMode: 0
@@ -59387,7 +59387,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.6833334
-        value: {x: 0.00007460829, y: 0.008692584, z: 0.031388458}
+        value: {x: 0.000074608, y: 0.008692584, z: -0.000262624}
         inSlope: {x: 0.0020326986, y: -0.00090694864, z: -0.0018432295}
         outSlope: {x: 0.0020326625, y: -0.0009069621, z: -0.0018424048}
         tangentMode: 0
@@ -59396,7 +59396,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.70000005
-        value: {x: 0.000097653225, y: 0.00868387, z: 0.0313651}
+        value: {x: 0.000097653, y: 0.00868387, z: -0.000282635}
         inSlope: {x: -0.000011259861, y: -0.00016173303, z: -0.0007293297}
         outSlope: {x: -0.000011263366, y: -0.0001616701, z: -0.0007289825}
         tangentMode: 0
@@ -59405,7 +59405,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.7166667
-        value: {x: 0.00007423289, y: 0.0086871935, z: 0.03136417}
+        value: {x: 0.000074233, y: 0.008687194, z: -0.000280217}
         inSlope: {x: -0.0028598516, y: 0.00033952028, z: 0.0005441739}
         outSlope: {x: -0.0028598495, y: 0.00033947593, z: 0.00054416695}
         tangentMode: 0
@@ -59414,7 +59414,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.73333335
-        value: {x: 0.000002324882, y: 0.008695194, z: 0.031383254}
+        value: {x: 0.000002325, y: 0.008695194, z: -0.000257786}
         inSlope: {x: -0.0049251528, y: 0.00053378724, z: 0.0014556079}
         outSlope: {x: -0.004925142, y: 0.00053435605, z: 0.0014566092}
         tangentMode: 0
@@ -59423,7 +59423,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.75
-        value: {x: -0.00008993848, y: 0.0087049985, z: 0.031412724}
+        value: {x: -0.000089938, y: 0.008704999, z: -0.000224969}
         inSlope: {x: -0.0053024227, y: 0.00055666524, z: 0.0017910767}
         outSlope: {x: -0.0053024106, y: 0.00055651367, z: 0.0017909881}
         tangentMode: 0
@@ -59432,7 +59432,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.76666665
-        value: {x: -0.0001744221, y: 0.00871374, z: 0.031442963}
+        value: {x: -0.000174422, y: 0.00871374, z: -0.000191383}
         inSlope: {x: -0.0039916635, y: 0.00040665045, z: 0.0015484821}
         outSlope: {x: -0.0039916662, y: 0.00040672882, z: 0.0015482439}
         tangentMode: 0
@@ -59441,7 +59441,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.7833333
-        value: {x: -0.00022299384, y: 0.008718548, z: 0.031464357}
+        value: {x: -0.000222994, y: 0.008718548, z: -0.000166642}
         inSlope: {x: -0.001999257, y: 0.00019317369, z: 0.0010652755}
         outSlope: {x: -0.0019992637, y: 0.00019269178, z: 0.0010654867}
         tangentMode: 0
@@ -59450,7 +59450,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.79999995
-        value: {x: -0.0002410642, y: 0.008720169, z: 0.031478506}
+        value: {x: -0.000241064, y: 0.008720169, z: -0.000149146}
         inSlope: {x: -0.0009131755, y: 0.000082508224, z: 0.0008665773}
         outSlope: {x: -0.0009131992, y: 0.00008259448, z: 0.0008660466}
         tangentMode: 0
@@ -59459,7 +59459,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: -0.00028461826, y: 0.008717777, z: 0.03161281}
+        value: {x: -0.000284618, y: 0.008717777, z: 0.000025324}
         inSlope: {x: -0.0009401961, y: -0.000030703228, z: 0.000026001255}
         outSlope: {x: -0.00094019435, y: -0.00003057891, z: 0.000025980848}
         tangentMode: 0
@@ -59468,7 +59468,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.1666666
-        value: {x: -0.0005740788, y: 0.008709157, z: 0.0314971}
+        value: {x: -0.000574079, y: 0.008709157, z: -0.000056915}
         inSlope: {x: -0.0007707296, y: -0.000027118433, z: -0.00042414697}
         outSlope: {x: -0.0007707116, y: -0.000026770831, z: -0.0004253156}
         tangentMode: 0
@@ -59477,7 +59477,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.2500001
-        value: {x: -0.00057448744, y: 0.0087088235, z: 0.03148932}
+        value: {x: -0.000574487, y: 0.008708824, z: -0.000047959}
         inSlope: {x: 0.00021769575, y: 0.0000030653623, z: -0.0000070707692}
         outSlope: {x: 0.00021772807, y: 0.0000025408626, z: -0.0000070708193}
         tangentMode: 0
@@ -59486,7 +59486,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.8000001
-        value: {x: -0.00044916748, y: 0.008710238, z: 0.031487487}
+        value: {x: -0.000449167, y: 0.008710238, z: -0.000029709}
         inSlope: {x: 0.00023858216, y: 0.00000048535253, z: 0.000004884179}
         outSlope: {x: 0.0002385947, y: 0.000000103881675, z: 0.000003814692}
         tangentMode: 0
@@ -59495,7 +59495,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.8166667
-        value: {x: -0.00043820607, y: 0.008708832, z: 0.03149216}
+        value: {x: -0.000438206, y: 0.008708832, z: -0.000025036}
         inSlope: {x: 0.0026609616, y: -0.0005331027, z: 0.0013811941}
         outSlope: {x: 0.002660967, y: -0.00053323543, z: 0.0013815549}
         tangentMode: 0
@@ -59504,7 +59504,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.8333334
-        value: {x: -0.00036046913, y: 0.008692469, z: 0.03153353}
+        value: {x: -0.000360469, y: 0.008692469, z: 0.000016334}
         inSlope: {x: 0.006532058, y: -0.0013586753, z: 0.0037146532}
         outSlope: {x: 0.006532033, y: -0.0013587706, z: 0.0037139102}
         tangentMode: 0
@@ -59513,7 +59513,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.85
-        value: {x: -0.00022047115, y: 0.008663539, z: 0.03161596}
+        value: {x: -0.000220471, y: 0.008663539, z: 0.000098764}
         inSlope: {x: 0.0070782355, y: -0.0013398674, z: 0.004739792}
         outSlope: {x: 0.007078256, y: -0.0013396479, z: 0.00474093}
         tangentMode: 0
@@ -59522,7 +59522,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.8666667
-        value: {x: -0.00012452736, y: 0.00864781, z: 0.031691544}
+        value: {x: -0.000124527, y: 0.00864781, z: 0.000174348}
         inSlope: {x: 0.002850521, y: -0.000066150875, z: 0.0041149105}
         outSlope: {x: 0.0028505148, y: -0.00006634014, z: 0.0041148355}
         tangentMode: 0
@@ -59531,7 +59531,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.8833333
-        value: {x: -0.00012545413, y: 0.008661336, z: 0.031753138}
+        value: {x: -0.000125454, y: 0.008661336, z: 0.000235942}
         inSlope: {x: -0.0013772463, y: 0.0012076678, z: 0.003489497}
         outSlope: {x: -0.0013772559, y: 0.0012079163, z: 0.0034904643}
         tangentMode: 0
@@ -59540,7 +59540,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.9
-        value: {x: -0.00017043568, y: 0.008688067, z: 0.031807885}
+        value: {x: -0.000170436, y: 0.008688067, z: 0.000290689}
         inSlope: {x: -0.002456681, y: 0.0013276365, z: 0.002283384}
         outSlope: {x: -0.0024566816, y: 0.0013275447, z: 0.0022821515}
         tangentMode: 0
@@ -59549,7 +59549,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.9166666
-        value: {x: -0.00020734366, y: 0.008705589, z: 0.031829227}
+        value: {x: -0.000207344, y: 0.008705589, z: 0.000312031}
         inSlope: {x: -0.0015479388, y: 0.00065537397, z: 0.00035095913}
         outSlope: {x: -0.0015479324, y: 0.00065554946, z: 0.0003502305}
         tangentMode: 0
@@ -59558,7 +59558,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.9333333
-        value: {x: -0.00022203365, y: 0.00870992, z: 0.03181959}
+        value: {x: -0.000222034, y: 0.00870992, z: 0.000302394}
         inSlope: {x: -0.0007609323, y: 0.00010718626, z: -0.0012396823}
         outSlope: {x: -0.00076091086, y: 0.00010688919, z: -0.0012386584}
         tangentMode: 0
@@ -59567,7 +59567,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2.016667
-        value: {x: -0.00027728642, y: 0.008710256, z: 0.03169027}
+        value: {x: -0.000277286, y: 0.008710256, z: 0.000173074}
         inSlope: {x: -0.0005392343, y: -0.00010298692, z: -0.0017057189}
         outSlope: {x: -0.0005392038, y: -0.00010293197, z: -0.0017073345}
         tangentMode: 0
@@ -59576,7 +59576,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2.1333334
-        value: {x: -0.0003429523, y: 0.008702128, z: 0.031583026}
+        value: {x: -0.000342952, y: 0.008702128, z: 0.00006583}
         inSlope: {x: -0.00056603923, y: -0.00007466765, z: -0.0006879199}
         outSlope: {x: -0.00056602806, y: -0.00007437303, z: -0.0006877632}
         tangentMode: 0
@@ -59585,7 +59585,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2.2833333
-        value: {x: -0.00040319382, y: 0.008692072, z: 0.03151777}
+        value: {x: -0.000403194, y: 0.008692072, z: 0.000000574}
         inSlope: {x: -0.00033302896, y: -0.000060097715, z: -0.00035311686}
         outSlope: {x: -0.00033305906, y: -0.000060196475, z: -0.00035182617}
         tangentMode: 0
@@ -59594,7 +59594,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2.3666668
-        value: {x: -0.00039704994, y: 0.008692117, z: 0.031520367}
+        value: {x: -0.00039705, y: 0.008692117, z: 0.000003171}
         inSlope: {x: 0.00016220214, y: 0.000011975434, z: 0.00012319438}
         outSlope: {x: 0.00016220915, y: 0.000012402885, z: 0.00012414124}
         tangentMode: 0
@@ -59603,7 +59603,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2.8000002
-        value: {x: -0.0003251642, y: 0.00869754, z: 0.031574357}
+        value: {x: -0.000325164, y: 0.00869754, z: 0.000057161}
         inSlope: {x: 0.00013770159, y: -0.00000029461398, z: 0.0000059399413}
         outSlope: {x: 0.00013771553, y: 0.0000000136248826, z: 0.0000048978795}
         tangentMode: 0
@@ -59612,7 +59612,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 3.2333336
-        value: {x: -0.0002774318, y: 0.008691898, z: 0.031525016}
+        value: {x: -0.000277432, y: 0.008691898, z: 0.00000782}
         inSlope: {x: 0.00010921794, y: -0.000013440007, z: -0.00011850094}
         outSlope: {x: 0.00010921931, y: -0.00001345363, z: -0.00011790149}
         tangentMode: 0
@@ -59621,7 +59621,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 3.3000002
-        value: {x: -0.0002701373, y: 0.008691008, z: 0.03151722}
+        value: {x: -0.000270137, y: 0.008691008, z: 0.000000024}
         inSlope: {x: 0.00010955021, y: -0.000013140092, z: -0.00011595842}
         outSlope: {x: 0.00010955021, y: -0.000013140092, z: -0.00011595842}
         tangentMode: 0
@@ -59631,7 +59631,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001
+    path: Armature/Root/Bip001
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -59656,7 +59656,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis
+    path: Armature/Root/Bip001/Bip001 Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -59681,7 +59681,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -59706,7 +59706,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -60343,7 +60343,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Calf Adv
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Calf Adv
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -60368,7 +60368,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -60393,7 +60393,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
       L Toe0
   - curve:
       serializedVersion: 2
@@ -60662,7 +60662,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Thigh_fix03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Thigh_fix03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -60687,7 +60687,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -60712,7 +60712,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -61655,7 +61655,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Calf Adv
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Calf Adv
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -61680,7 +61680,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62182,7 +62182,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/knee_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/knee_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62207,7 +62207,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Thigh_Twis
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Thigh_Twis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62574,7 +62574,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62833,7 +62833,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62858,7 +62858,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62883,7 +62883,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62908,7 +62908,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -62933,7 +62933,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle
   - curve:
       serializedVersion: 2
@@ -62959,7 +62959,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm
   - curve:
       serializedVersion: 2
@@ -62985,7 +62985,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm
   - curve:
       serializedVersion: 2
@@ -63308,7 +63308,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Forearm Adv
   - curve:
       serializedVersion: 2
@@ -63334,7 +63334,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Forearm Adv/Bip001_L_ForeTwist
   - curve:
       serializedVersion: 2
@@ -63360,7 +63360,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand
   - curve:
       serializedVersion: 2
@@ -63386,7 +63386,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0
   - curve:
       serializedVersion: 2
@@ -63412,7 +63412,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
       L Finger01
   - curve:
@@ -63439,7 +63439,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
       L Finger01/Bip001 L Finger02
   - curve:
@@ -63466,7 +63466,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2
   - curve:
       serializedVersion: 2
@@ -63492,7 +63492,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
       L Finger21
   - curve:
@@ -63519,7 +63519,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
       L Finger21/Bip001 L Finger22
   - curve:
@@ -63546,7 +63546,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger3
   - curve:
       serializedVersion: 2
@@ -63572,7 +63572,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4
   - curve:
       serializedVersion: 2
@@ -63598,7 +63598,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4/Bip001
       L Finger41
   - curve:
@@ -63625,7 +63625,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4/Bip001
       L Finger41/Bip001 L Finger42
   - curve:
@@ -63652,7 +63652,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001_L_UpArmTwist01
   - curve:
       serializedVersion: 2
@@ -63678,7 +63678,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001_L_UpArmTwist02
   - curve:
       serializedVersion: 2
@@ -63704,7 +63704,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -63729,7 +63729,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head
   - curve:
       serializedVersion: 2
@@ -63755,7 +63755,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear1_01
   - curve:
       serializedVersion: 2
@@ -65266,7 +65266,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear1_01/Ear1_02
   - curve:
       serializedVersion: 2
@@ -65292,7 +65292,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01
   - curve:
       serializedVersion: 2
@@ -66821,7 +66821,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01/Ear2_02
   - curve:
       serializedVersion: 2
@@ -66847,7 +66847,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01/Ear2_02/Ear2_03
   - curve:
       serializedVersion: 2
@@ -66873,7 +66873,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Eye_L
   - curve:
       serializedVersion: 2
@@ -66899,7 +66899,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01
   - curve:
       serializedVersion: 2
@@ -66925,7 +66925,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01/HairB1_02
   - curve:
       serializedVersion: 2
@@ -66951,7 +66951,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01/HairB1_02/HairB1_03
   - curve:
       serializedVersion: 2
@@ -66977,7 +66977,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01
   - curve:
       serializedVersion: 2
@@ -67003,7 +67003,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02
   - curve:
       serializedVersion: 2
@@ -67029,7 +67029,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03
   - curve:
       serializedVersion: 2
@@ -67055,7 +67055,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03/HairB2_04
   - curve:
       serializedVersion: 2
@@ -67081,7 +67081,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03/HairB2_04/HairB2_05
   - curve:
       serializedVersion: 2
@@ -67107,7 +67107,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01
   - curve:
       serializedVersion: 2
@@ -67133,7 +67133,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01/HairB3_02
   - curve:
       serializedVersion: 2
@@ -67159,7 +67159,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01/HairB3_02/HairB3_03
   - curve:
       serializedVersion: 2
@@ -67185,7 +67185,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01
   - curve:
       serializedVersion: 2
@@ -67211,7 +67211,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01/HairF2_02
   - curve:
       serializedVersion: 2
@@ -67237,7 +67237,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01/HairF2_02/HairF2_03
   - curve:
       serializedVersion: 2
@@ -67263,7 +67263,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF3_01
   - curve:
       serializedVersion: 2
@@ -67289,7 +67289,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF4_01
   - curve:
       serializedVersion: 2
@@ -67315,7 +67315,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF4_01/HairF4_02
   - curve:
       serializedVersion: 2
@@ -67341,7 +67341,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS1_01
   - curve:
       serializedVersion: 2
@@ -67367,7 +67367,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01
   - curve:
       serializedVersion: 2
@@ -67393,7 +67393,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01/HairS2_02
   - curve:
       serializedVersion: 2
@@ -67419,7 +67419,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01/HairS2_02/HairS2_03
   - curve:
       serializedVersion: 2
@@ -67445,7 +67445,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Mouth_A
   - curve:
       serializedVersion: 2
@@ -67471,7 +67471,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Mouth_C
   - curve:
       serializedVersion: 2
@@ -67497,7 +67497,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle
   - curve:
       serializedVersion: 2
@@ -67523,7 +67523,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm
   - curve:
       serializedVersion: 2
@@ -67549,7 +67549,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm
   - curve:
       serializedVersion: 2
@@ -68331,7 +68331,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Forearm Adv
   - curve:
       serializedVersion: 2
@@ -68357,7 +68357,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Forearm Adv/Bip001_R_ForeTwist
   - curve:
       serializedVersion: 2
@@ -68383,7 +68383,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand
   - curve:
       serializedVersion: 2
@@ -68409,7 +68409,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0
   - curve:
       serializedVersion: 2
@@ -68435,7 +68435,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0/Bip001
       R Finger01
   - curve:
@@ -68462,7 +68462,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1
   - curve:
       serializedVersion: 2
@@ -68488,7 +68488,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1/Bip001
       R Finger11
   - curve:
@@ -68515,7 +68515,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2
   - curve:
       serializedVersion: 2
@@ -68541,7 +68541,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
       R Finger21
   - curve:
@@ -68568,7 +68568,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
       R Finger21/Bip001 R Finger22
   - curve:
@@ -68595,7 +68595,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3
   - curve:
       serializedVersion: 2
@@ -68621,7 +68621,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3/Bip001
       R Finger31
   - curve:
@@ -68648,7 +68648,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3/Bip001
       R Finger31/Bip001 R Finger32
   - curve:
@@ -68675,7 +68675,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger4
   - curve:
       serializedVersion: 2
@@ -68701,7 +68701,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001_R_UpArmTwist01
   - curve:
       serializedVersion: 2
@@ -68727,7 +68727,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001_R_UpArmTwist02
   - curve:
       serializedVersion: 2
@@ -68753,7 +68753,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP
   - curve:
       serializedVersion: 2
@@ -68779,7 +68779,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01
   - curve:
       serializedVersion: 2
@@ -68805,7 +68805,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01/Furisode1_02
   - curve:
       serializedVersion: 2
@@ -68831,7 +68831,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01/Furisode1_02/Furisode1_03
   - curve:
       serializedVersion: 2
@@ -68857,7 +68857,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode2_01
   - curve:
       serializedVersion: 2
@@ -68883,7 +68883,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode2_01/Furisode2_02
   - curve:
       serializedVersion: 2
@@ -68909,7 +68909,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bn_Spine2FIX
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bn_Spine2FIX
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -69114,7 +69114,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_L_B
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_L_B
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -69337,7 +69337,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -69362,7 +69362,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -69387,7 +69387,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70078,7 +70078,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02/MaJia1_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02/MaJia1_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70283,7 +70283,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R_B
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R_B
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70722,7 +70722,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70747,7 +70747,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70772,7 +70772,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70797,7 +70797,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70822,7 +70822,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70847,7 +70847,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04/Furisode_B_05
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04/Furisode_B_05
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70872,7 +70872,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70897,7 +70897,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70922,7 +70922,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02/LD_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02/LD_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70947,7 +70947,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -70972,7 +70972,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -71672,7 +71672,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02/MaJia3_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02/MaJia3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -71796,7 +71796,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -72343,7 +72343,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01/MaJia4_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01/MaJia4_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -72809,7 +72809,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -72834,7 +72834,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -72859,7 +72859,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73541,7 +73541,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02/MaJia5_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02/MaJia5_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73566,7 +73566,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73591,7 +73591,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73616,7 +73616,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02/PDS_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02/PDS_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73641,7 +73641,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73666,7 +73666,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73691,7 +73691,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02/Skirt1_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02/Skirt1_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73815,7 +73815,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73840,7 +73840,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73865,7 +73865,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73890,7 +73890,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03/Skirt2_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03/Skirt2_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73915,7 +73915,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73940,7 +73940,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73965,7 +73965,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -73990,7 +73990,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03/Skirt3_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03/Skirt3_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74015,7 +74015,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt4_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt4_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74040,7 +74040,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74065,7 +74065,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74090,7 +74090,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74115,7 +74115,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03/Skirt5_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03/Skirt5_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74140,7 +74140,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74165,7 +74165,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01/Skirt6_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01/Skirt6_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74190,7 +74190,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74215,7 +74215,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01/Skirt7_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01/Skirt7_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74240,7 +74240,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74265,7 +74265,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74290,7 +74290,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74315,7 +74315,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06/Skirt8_07
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06/Skirt8_07
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74511,7 +74511,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Pelvis_L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Pelvis_L
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -74707,7 +74707,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Pelvis_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Pelvis_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -75515,7 +75515,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt
+    path: Armature/Root/Bip001/Bn_katana_hilt
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -75540,7 +75540,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt/Bn_katana_burst01
+    path: Armature/Root/Bip001/Bn_katana_hilt/Bn_katana_burst01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -75565,7 +75565,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt/Bn_katana_burst01/Bn_katana_burst02
+    path: Armature/Root/Bip001/Bn_katana_hilt/Bn_katana_burst01/Bn_katana_burst02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -75860,7 +75860,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET
+    path: Armature/Root/Bip001/Bn_PET
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -76596,7 +76596,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon
+    path: Armature/Root/Bip001/Bn_Weapon
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -76621,7 +76621,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardA_01
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardA_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -76646,7 +76646,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardA_01/Bn_scabbardA_02
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardA_01/Bn_scabbardA_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -76671,7 +76671,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -76696,7 +76696,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -76721,7 +76721,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02/Bn_scabbardB_03
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02/Bn_scabbardB_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -77493,7 +77493,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015
+    path: Armature/Root/Bip001/Bone015
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -77518,7 +77518,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01
+    path: Armature/Root/Bip001/Bone015/Furisode3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78398,7 +78398,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01/Furisode3_02
+    path: Armature/Root/Bip001/Bone015/Furisode3_01/Furisode3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78423,7 +78423,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01/Furisode3_02/Furisode3_03
+    path: Armature/Root/Bip001/Bone015/Furisode3_01/Furisode3_02/Furisode3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78535,7 +78535,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001
+    path: Armature/Root/Bip001
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78560,7 +78560,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis
+    path: Armature/Root/Bip001/Bip001 Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78585,7 +78585,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78610,7 +78610,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78635,7 +78635,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Calf Adv
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Calf Adv
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78660,7 +78660,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78685,7 +78685,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
       L Toe0
   - curve:
       serializedVersion: 2
@@ -78711,7 +78711,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 L Thigh/Thigh_fix03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Thigh_fix03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78736,7 +78736,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78761,7 +78761,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78786,7 +78786,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Calf Adv
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Calf Adv
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -78811,7 +78811,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79079,7 +79079,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/knee_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/knee_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79104,7 +79104,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Thigh_Twis
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Thigh_Twis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79129,7 +79129,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79154,7 +79154,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Thigh_fix04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79179,7 +79179,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79204,7 +79204,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79229,7 +79229,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79254,7 +79254,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle
   - curve:
       serializedVersion: 2
@@ -79280,7 +79280,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm
   - curve:
       serializedVersion: 2
@@ -79306,7 +79306,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm
   - curve:
       serializedVersion: 2
@@ -79332,7 +79332,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Forearm Adv
   - curve:
       serializedVersion: 2
@@ -79358,7 +79358,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Forearm Adv/Bip001_L_ForeTwist
   - curve:
       serializedVersion: 2
@@ -79384,7 +79384,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand
   - curve:
       serializedVersion: 2
@@ -79410,7 +79410,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0
   - curve:
       serializedVersion: 2
@@ -79436,7 +79436,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
       L Finger01
   - curve:
@@ -79463,7 +79463,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
       L Finger01/Bip001 L Finger02
   - curve:
@@ -79490,7 +79490,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2
   - curve:
       serializedVersion: 2
@@ -79516,7 +79516,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
       L Finger21
   - curve:
@@ -79543,7 +79543,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
       L Finger21/Bip001 L Finger22
   - curve:
@@ -79570,7 +79570,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger3
   - curve:
       serializedVersion: 2
@@ -79596,7 +79596,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4
   - curve:
       serializedVersion: 2
@@ -79622,7 +79622,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4/Bip001
       L Finger41
   - curve:
@@ -79649,7 +79649,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger4/Bip001
       L Finger41/Bip001 L Finger42
   - curve:
@@ -79676,7 +79676,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001_L_UpArmTwist01
   - curve:
       serializedVersion: 2
@@ -79702,7 +79702,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 L
       Clavicle/Bip001 L UpperArm/Bip001_L_UpArmTwist02
   - curve:
       serializedVersion: 2
@@ -79728,7 +79728,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -79753,7 +79753,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head
   - curve:
       serializedVersion: 2
@@ -79779,7 +79779,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear1_01
   - curve:
       serializedVersion: 2
@@ -79805,7 +79805,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear1_01/Ear1_02
   - curve:
       serializedVersion: 2
@@ -79831,7 +79831,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01
   - curve:
       serializedVersion: 2
@@ -79857,7 +79857,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01/Ear2_02
   - curve:
       serializedVersion: 2
@@ -79883,7 +79883,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Ear2_01/Ear2_02/Ear2_03
   - curve:
       serializedVersion: 2
@@ -79909,7 +79909,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Eye_L
   - curve:
       serializedVersion: 2
@@ -79935,7 +79935,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01
   - curve:
       serializedVersion: 2
@@ -79961,7 +79961,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01/HairB1_02
   - curve:
       serializedVersion: 2
@@ -79987,7 +79987,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB1_01/HairB1_02/HairB1_03
   - curve:
       serializedVersion: 2
@@ -80013,7 +80013,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01
   - curve:
       serializedVersion: 2
@@ -80039,7 +80039,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02
   - curve:
       serializedVersion: 2
@@ -80065,7 +80065,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03
   - curve:
       serializedVersion: 2
@@ -80091,7 +80091,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03/HairB2_04
   - curve:
       serializedVersion: 2
@@ -80117,7 +80117,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB2_01/HairB2_02/HairB2_03/HairB2_04/HairB2_05
   - curve:
       serializedVersion: 2
@@ -80143,7 +80143,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01
   - curve:
       serializedVersion: 2
@@ -80169,7 +80169,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01/HairB3_02
   - curve:
       serializedVersion: 2
@@ -80195,7 +80195,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairB3_01/HairB3_02/HairB3_03
   - curve:
       serializedVersion: 2
@@ -80221,7 +80221,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01
   - curve:
       serializedVersion: 2
@@ -80247,7 +80247,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01/HairF2_02
   - curve:
       serializedVersion: 2
@@ -80273,7 +80273,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF2_01/HairF2_02/HairF2_03
   - curve:
       serializedVersion: 2
@@ -80299,7 +80299,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF3_01
   - curve:
       serializedVersion: 2
@@ -80325,7 +80325,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF4_01
   - curve:
       serializedVersion: 2
@@ -80351,7 +80351,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairF4_01/HairF4_02
   - curve:
       serializedVersion: 2
@@ -80377,7 +80377,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS1_01
   - curve:
       serializedVersion: 2
@@ -80403,7 +80403,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01
   - curve:
       serializedVersion: 2
@@ -80429,7 +80429,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01/HairS2_02
   - curve:
       serializedVersion: 2
@@ -80455,7 +80455,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/HairS2_01/HairS2_02/HairS2_03
   - curve:
       serializedVersion: 2
@@ -80481,7 +80481,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Mouth_A
   - curve:
       serializedVersion: 2
@@ -80507,7 +80507,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 Neck/Bip001
       Head/Mouth_C
   - curve:
       serializedVersion: 2
@@ -80533,7 +80533,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle
   - curve:
       serializedVersion: 2
@@ -80559,7 +80559,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm
   - curve:
       serializedVersion: 2
@@ -80585,7 +80585,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm
   - curve:
       serializedVersion: 2
@@ -80611,7 +80611,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Forearm Adv
   - curve:
       serializedVersion: 2
@@ -80637,7 +80637,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Forearm Adv/Bip001_R_ForeTwist
   - curve:
       serializedVersion: 2
@@ -80663,7 +80663,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand
   - curve:
       serializedVersion: 2
@@ -80689,7 +80689,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0
   - curve:
       serializedVersion: 2
@@ -80715,7 +80715,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0/Bip001
       R Finger01
   - curve:
@@ -80742,7 +80742,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1
   - curve:
       serializedVersion: 2
@@ -80768,7 +80768,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1/Bip001
       R Finger11
   - curve:
@@ -80795,7 +80795,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2
   - curve:
       serializedVersion: 2
@@ -80821,7 +80821,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
       R Finger21
   - curve:
@@ -80848,7 +80848,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
       R Finger21/Bip001 R Finger22
   - curve:
@@ -80875,7 +80875,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3
   - curve:
       serializedVersion: 2
@@ -80901,7 +80901,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3/Bip001
       R Finger31
   - curve:
@@ -80928,7 +80928,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger3/Bip001
       R Finger31/Bip001 R Finger32
   - curve:
@@ -80955,7 +80955,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger4
   - curve:
       serializedVersion: 2
@@ -80981,7 +80981,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001_R_UpArmTwist01
   - curve:
       serializedVersion: 2
@@ -81007,7 +81007,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bip001_R_UpArmTwist02
   - curve:
       serializedVersion: 2
@@ -81033,7 +81033,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP
   - curve:
       serializedVersion: 2
@@ -81059,7 +81059,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01
   - curve:
       serializedVersion: 2
@@ -81085,7 +81085,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01/Furisode1_02
   - curve:
       serializedVersion: 2
@@ -81111,7 +81111,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode1_01/Furisode1_02/Furisode1_03
   - curve:
       serializedVersion: 2
@@ -81137,7 +81137,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode2_01
   - curve:
       serializedVersion: 2
@@ -81163,7 +81163,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001 R
       Clavicle/Bip001 R UpperArm/Bn_SleeveUP/Furisode2_01/Furisode2_02
   - curve:
       serializedVersion: 2
@@ -81189,7 +81189,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bn_Spine2FIX
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bn_Spine2FIX
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81214,7 +81214,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_L_B
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_L_B
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81239,7 +81239,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81264,7 +81264,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81289,7 +81289,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81314,7 +81314,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02/MaJia1_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R/MaJia1_01/MaJia1_02/MaJia1_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81339,7 +81339,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R_B
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Chest_R_B
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81364,7 +81364,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81389,7 +81389,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81414,7 +81414,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81439,7 +81439,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81464,7 +81464,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81489,7 +81489,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04/Furisode_B_05
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Furisode_B_01_ROOT/Furisode_B_01/Furisode_B_02/Furisode_B_03/Furisode_B_04/Furisode_B_05
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81514,7 +81514,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81539,7 +81539,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81564,7 +81564,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02/LD_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/LD_01/LD_02/LD_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81589,7 +81589,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81614,7 +81614,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81639,7 +81639,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02/MaJia3_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia3_01/MaJia3_02/MaJia3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81664,7 +81664,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81689,7 +81689,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01/MaJia4_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia4_01/MaJia4_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81714,7 +81714,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81739,7 +81739,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81764,7 +81764,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81789,7 +81789,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02/MaJia5_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/MaJia5_01_ROOT/MaJia5_01/MaJia5_02/MaJia5_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81814,7 +81814,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81839,7 +81839,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81864,7 +81864,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02/PDS_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/PDS_01/PDS_02/PDS_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81889,7 +81889,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81914,7 +81914,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81939,7 +81939,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02/Skirt1_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt1_01/Skirt1_02/Skirt1_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81964,7 +81964,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -81989,7 +81989,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82014,7 +82014,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82039,7 +82039,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03/Skirt2_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt2_01/Skirt2_02/Skirt2_03/Skirt2_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82064,7 +82064,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82089,7 +82089,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82114,7 +82114,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82139,7 +82139,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03/Skirt3_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt3_01/Skirt3_02/Skirt3_03/Skirt3_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82164,7 +82164,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt4_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt4_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82189,7 +82189,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82214,7 +82214,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82239,7 +82239,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82264,7 +82264,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03/Skirt5_04
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt5_01/Skirt5_02/Skirt5_03/Skirt5_04
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82289,7 +82289,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82314,7 +82314,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01/Skirt6_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt6_01/Skirt6_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82339,7 +82339,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82364,7 +82364,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01/Skirt7_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt7_01/Skirt7_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82389,7 +82389,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82414,7 +82414,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_02
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82439,7 +82439,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82464,7 +82464,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06/Skirt8_07
+    path: Armature/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Skirt8_01/Skirt8_06/Skirt8_07
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82489,7 +82489,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Pelvis_L
+    path: Armature/Root/Bip001/Bip001 Pelvis/Pelvis_L
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82514,7 +82514,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bip001 Pelvis/Pelvis_R
+    path: Armature/Root/Bip001/Bip001 Pelvis/Pelvis_R
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82539,7 +82539,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt
+    path: Armature/Root/Bip001/Bn_katana_hilt
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82564,7 +82564,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt/Bn_katana_burst01
+    path: Armature/Root/Bip001/Bn_katana_hilt/Bn_katana_burst01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82589,7 +82589,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_katana_hilt/Bn_katana_burst01/Bn_katana_burst02
+    path: Armature/Root/Bip001/Bn_katana_hilt/Bn_katana_burst01/Bn_katana_burst02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82614,7 +82614,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_PET
+    path: Armature/Root/Bip001/Bn_PET
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82639,7 +82639,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon
+    path: Armature/Root/Bip001/Bn_Weapon
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82664,7 +82664,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardA_01
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardA_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82689,7 +82689,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardA_01/Bn_scabbardA_02
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardA_01/Bn_scabbardA_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82714,7 +82714,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82739,7 +82739,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82764,7 +82764,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02/Bn_scabbardB_03
+    path: Armature/Root/Bip001/Bn_Weapon/Bn_scabbardB_01/Bn_scabbardB_02/Bn_scabbardB_03
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82789,7 +82789,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015
+    path: Armature/Root/Bip001/Bone015
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82814,7 +82814,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01
+    path: Armature/Root/Bip001/Bone015/Furisode3_01
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82839,7 +82839,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01/Furisode3_02
+    path: Armature/Root/Bip001/Bone015/Furisode3_01/Furisode3_02
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -82864,7 +82864,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Armature/Bip001/Bone015/Furisode3_01/Furisode3_02/Furisode3_03
+    path: Armature/Root/Bip001/Bone015/Furisode3_01/Furisode3_02/Furisode3_03
   - curve:
       serializedVersion: 2
       m_Curve:
