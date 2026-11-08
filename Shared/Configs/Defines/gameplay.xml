@@ -136,6 +136,29 @@
 
 <table name="TbColliderData" value="ColliderData" input="gameplay/collider.xlsx"/>
 
+<bean name="AoeData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="model" type="string" alias="模型"/>
+	<var name="collider" type="int" alias="碰撞盒"/>
+	<var name="duration" type="float" alias="持续"/>
+	<var name="tick_interval" type="float" alias="间隔"/>
+	<var name="events" type="list,AoeEventData" alias="事件负载"/>
+</bean>
+
+<bean name="AoeEventData">
+    <var name="event_type" type="AoeEvent" alias="事件"/>
+    <var name="payload_id" type="int#ref=Gameplay.TbPayloadData" alias="负载"/>
+</bean>
+
+<enum name="AoeEvent">
+    <var name="Create"  alias="创建"/>
+    <var name="Destroy" alias="销毁"/>
+    <var name="Enter"   alias="进入"/>
+    <var name="Leave"   alias="离开"/>
+    <var name="Tick"    alias="周期"/>
+</enum>
+
 <bean name="PayloadData">
 	<var name="id" type="int" alias="编号"/>
 	<var name="name" type="string" alias="名字"/>
