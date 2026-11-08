@@ -13,34 +13,35 @@ using Luban.SimpleJSON;
 
 namespace GameConf.Gameplay
 {
-public sealed partial class AddBuffData : Luban.BeanBase
+public sealed partial class BuffEvent : Gameplay.GameEvent
 {
-    public AddBuffData(JSONNode _buf) 
+    public BuffEvent(JSONNode _buf)  : base(_buf) 
     {
         { if(!_buf["buff_id"].IsNumber) { throw new SerializationException(); }  BuffId = _buf["buff_id"]; }
-        { if(!_buf["buff_stack"].IsNumber) { throw new SerializationException(); }  BuffStack = _buf["buff_stack"]; }
+        { if(!_buf["stack"].IsNumber) { throw new SerializationException(); }  Stack = _buf["stack"]; }
     }
 
-    public static AddBuffData DeserializeAddBuffData(JSONNode _buf)
+    public static BuffEvent DeserializeBuffEvent(JSONNode _buf)
     {
-        return new Gameplay.AddBuffData(_buf);
+        return new Gameplay.BuffEvent(_buf);
     }
 
     public readonly int BuffId;
-    public readonly int BuffStack;
+    public readonly int Stack;
    
-    public const int __ID__ = -899148138;
+    public const int __ID__ = -1396427713;
     public override int GetTypeId() => __ID__;
 
-    public  void ResolveRef(Tables tables)
+    public override void ResolveRef(Tables tables)
     {
+        base.ResolveRef(tables);
     }
 
     public override string ToString()
     {
         return "{ "
         + "buffId:" + BuffId + ","
-        + "buffStack:" + BuffStack + ","
+        + "stack:" + Stack + ","
         + "}";
     }
 }

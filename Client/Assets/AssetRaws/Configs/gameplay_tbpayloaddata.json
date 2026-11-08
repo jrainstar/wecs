@@ -3,15 +3,18 @@
     "id": 10001,
     "name": "基础伤害",
     "desc": "",
-    "damage": {
-      "type": 0,
-      "damage": 5,
-      "attack_type": 1,
-      "attack_rate": 0,
-      "defense_type": 0,
-      "defense_rate": 0,
-      "hit_count": 1,
-      "can_crit": true
-    }
+    "events": [
+      {
+        "$type": "DamageEvent",
+        "type": 0,
+        "damage": 5,
+        "attack_type": 1,
+        "attack_rate": 50,
+        "defense_type": 0,
+        "defense_rate": 0,
+        "hit_count": 1,
+        "can_crit": true
+      }
+    ]
   }
 ]

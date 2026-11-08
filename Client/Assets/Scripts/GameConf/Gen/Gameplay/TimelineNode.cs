@@ -18,7 +18,7 @@ public sealed partial class TimelineNode : Luban.BeanBase
     public TimelineNode(JSONNode _buf) 
     {
         { if(!_buf["Time"].IsNumber) { throw new SerializationException(); }  Time = _buf["Time"]; }
-        { if(!_buf["Event"].IsObject) { throw new SerializationException(); }  Event = global::GameConf.Gameplay.TimelineEvent.DeserializeTimelineEvent(_buf["Event"]);  }
+        { if(!_buf["Event"].IsObject) { throw new SerializationException(); }  Event = global::GameConf.Gameplay.GameEvent.DeserializeGameEvent(_buf["Event"]);  }
     }
 
     public static TimelineNode DeserializeTimelineNode(JSONNode _buf)
@@ -27,7 +27,7 @@ public sealed partial class TimelineNode : Luban.BeanBase
     }
 
     public readonly float Time;
-    public readonly Gameplay.TimelineEvent Event;
+    public readonly Gameplay.GameEvent Event;
    
     public const int __ID__ = -529998677;
     public override int GetTypeId() => __ID__;

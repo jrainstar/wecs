@@ -20,9 +20,7 @@ public sealed partial class PayloadData : Luban.BeanBase
         { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
         { if(!_buf["name"].IsString) { throw new SerializationException(); }  Name = _buf["name"]; }
         { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
-        { var _j = _buf["damage"]; if (_j.Tag != JSONNodeType.None && _j.Tag != JSONNodeType.NullValue) { { if(!_j.IsObject) { throw new SerializationException(); }  Damage = global::GameConf.Gameplay.DamageData.DeserializeDamageData(_j);  } } else { Damage = null; } }
-        { var _j = _buf["visual"]; if (_j.Tag != JSONNodeType.None && _j.Tag != JSONNodeType.NullValue) { { if(!_j.IsObject) { throw new SerializationException(); }  Visual = global::GameConf.Gameplay.VisualData.DeserializeVisualData(_j);  } } else { Visual = null; } }
-        { var _j = _buf["add_buff"]; if (_j.Tag != JSONNodeType.None && _j.Tag != JSONNodeType.NullValue) { { if(!_j.IsObject) { throw new SerializationException(); }  AddBuff = global::GameConf.Gameplay.AddBuffData.DeserializeAddBuffData(_j);  } } else { AddBuff = null; } }
+        { var __json0 = _buf["events"]; if(!__json0.IsArray) { throw new SerializationException(); } Events = new System.Collections.Generic.List<Gameplay.GameEvent>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { Gameplay.GameEvent __v0;  { if(!__e0.IsObject) { throw new SerializationException(); }  __v0 = global::GameConf.Gameplay.GameEvent.DeserializeGameEvent(__e0);  }  Events.Add(__v0); }   }
         { var _j = _buf["extra_data"]; if (_j.Tag != JSONNodeType.None && _j.Tag != JSONNodeType.NullValue) { { if(!_j.IsNumber) { throw new SerializationException(); }  ExtraData = _j; } } else { ExtraData = null; } }
         ExtraData_Ref = null;
     }
@@ -35,9 +33,7 @@ public sealed partial class PayloadData : Luban.BeanBase
     public readonly int Id;
     public readonly string Name;
     public readonly string Desc;
-    public readonly Gameplay.DamageData Damage;
-    public readonly Gameplay.VisualData Visual;
-    public readonly Gameplay.AddBuffData AddBuff;
+    public readonly System.Collections.Generic.List<Gameplay.GameEvent> Events;
     public readonly int? ExtraData;
     public Gameplay.PayloadData ExtraData_Ref;
    
@@ -46,9 +42,7 @@ public sealed partial class PayloadData : Luban.BeanBase
 
     public  void ResolveRef(Tables tables)
     {
-        Damage?.ResolveRef(tables);
-        Visual?.ResolveRef(tables);
-        AddBuff?.ResolveRef(tables);
+        foreach (var _e in Events) { _e?.ResolveRef(tables); }
         ExtraData_Ref = ExtraData!= null ? tables.TbPayloadData.GetOrDefault(ExtraData.Value) : null;
     }
 
@@ -58,9 +52,7 @@ public sealed partial class PayloadData : Luban.BeanBase
         + "id:" + Id + ","
         + "name:" + Name + ","
         + "desc:" + Desc + ","
-        + "damage:" + Damage + ","
-        + "visual:" + Visual + ","
-        + "addBuff:" + AddBuff + ","
+        + "events:" + Luban.StringUtil.CollectionToString(Events) + ","
         + "extraData:" + ExtraData + ","
         + "}";
     }

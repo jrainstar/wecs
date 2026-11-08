@@ -13,18 +13,21 @@ using Luban.SimpleJSON;
 
 namespace GameConf.Gameplay
 {
-public abstract partial class TimelineEvent : Luban.BeanBase
+public abstract partial class GameEvent : Luban.BeanBase
 {
-    public TimelineEvent(JSONNode _buf) 
+    public GameEvent(JSONNode _buf) 
     {
     }
 
-    public static TimelineEvent DeserializeTimelineEvent(JSONNode _buf)
+    public static GameEvent DeserializeGameEvent(JSONNode _buf)
     {
         switch ((string)_buf["$type"])
         {
             case "PrintEvent": return new Gameplay.PrintEvent(_buf);
             case "AnimationEvent": return new Gameplay.AnimationEvent(_buf);
+            case "DamageEvent": return new Gameplay.DamageEvent(_buf);
+            case "VisualEvent": return new Gameplay.VisualEvent(_buf);
+            case "BuffEvent": return new Gameplay.BuffEvent(_buf);
             default: throw new SerializationException();
         }
     }

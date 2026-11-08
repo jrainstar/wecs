@@ -134,7 +134,7 @@ namespace GameLogic.Gameplay.Logic
         /// 派发时间轴事件
         /// </summary>
         /// <param name="timelineevent">时间轴事件</param>
-        private void HandleEvent(TimelineEvent timelineevent)
+        private void HandleEvent(GameEvent timelineevent)
         {
             if (null == timelineevent) return;
             if (null == executordict) return;
@@ -146,7 +146,7 @@ namespace GameLogic.Gameplay.Logic
         {
             executordict = ObjectCache.Ensure<Dictionary<Type, Executor>>();
 
-            void Executor<E, T>() where E : TimelineEvent where T : Executor<E>, new()
+            void Executor<E, T>() where E : GameEvent where T : Executor<E>, new()
             {
                 var executor = ObjectCache.Ensure<T>().Load(stage);
                 executordict.Add(typeof(E), executor);

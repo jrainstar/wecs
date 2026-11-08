@@ -13,9 +13,9 @@ using Luban.SimpleJSON;
 
 namespace GameConf.Gameplay
 {
-public sealed partial class DamageData : Luban.BeanBase
+public sealed partial class DamageEvent : Gameplay.GameEvent
 {
-    public DamageData(JSONNode _buf) 
+    public DamageEvent(JSONNode _buf)  : base(_buf) 
     {
         { if(!_buf["type"].IsNumber) { throw new SerializationException(); }  Type = (Gameplay.DamageType)_buf["type"].AsInt; }
         { if(!_buf["damage"].IsNumber) { throw new SerializationException(); }  Damage = _buf["damage"]; }
@@ -27,9 +27,9 @@ public sealed partial class DamageData : Luban.BeanBase
         { if(!_buf["can_crit"].IsBoolean) { throw new SerializationException(); }  CanCrit = _buf["can_crit"]; }
     }
 
-    public static DamageData DeserializeDamageData(JSONNode _buf)
+    public static DamageEvent DeserializeDamageEvent(JSONNode _buf)
     {
-        return new Gameplay.DamageData(_buf);
+        return new Gameplay.DamageEvent(_buf);
     }
 
     public readonly Gameplay.DamageType Type;
@@ -47,11 +47,12 @@ public sealed partial class DamageData : Luban.BeanBase
     public readonly int HitCount;
     public readonly bool CanCrit;
    
-    public const int __ID__ = 1185652865;
+    public const int __ID__ = -1897931613;
     public override int GetTypeId() => __ID__;
 
-    public  void ResolveRef(Tables tables)
+    public override void ResolveRef(Tables tables)
     {
+        base.ResolveRef(tables);
     }
 
     public override string ToString()

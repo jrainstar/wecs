@@ -13,7 +13,7 @@ using Luban.SimpleJSON;
 
 namespace GameConf.Gameplay
 {
-public sealed partial class AnimationEvent : Gameplay.TimelineEvent
+public sealed partial class AnimationEvent : Gameplay.GameEvent
 {
     public AnimationEvent(JSONNode _buf)  : base(_buf) 
     {

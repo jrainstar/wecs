@@ -29,12 +29,12 @@ namespace GameLogic.Gameplay.Logic
             stage = null;
         }
 
-        public abstract void HandleEvent(TimelineEvent timelineevent);
+        public abstract void HandleEvent(GameEvent timelineevent);
     }
 
-    public abstract class Executor<T> : Executor where T : TimelineEvent
+    public abstract class Executor<T> : Executor where T : GameEvent
     {
-        public override void HandleEvent(TimelineEvent timelineevent)
+        public override void HandleEvent(GameEvent timelineevent)
         {
             var t = timelineevent as T;
             if (t == null)

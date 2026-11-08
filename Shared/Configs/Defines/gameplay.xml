@@ -77,10 +77,10 @@
 
 <bean name="TimelineNode">
 	<var name="Time" type="float"/>
-	<var name="Event" type="TimelineEvent"/>
+	<var name="Event" type="GameEvent"/>
 </bean>
 
-<bean name="TimelineEvent">
+<bean name="GameEvent">
 	<bean name="PrintEvent" alias="打印">
 		<var name="Type" type="byte" alias="级别"/>
 		<var name="Print" type="string" alias="日志打印"/>
@@ -91,6 +91,28 @@
 		<var name="Speed"   		type="float"  alias="动画速度"/>
 		<var name="CanMove"    		type="bool"   alias="锁住移动"/>
 		<var name="ApplyMotion"  	type="bool"   alias="动画位移"/>
+	</bean>
+	<bean name="DamageEvent" alias="伤害">
+		<var name="type"         	type="DamageType"  alias="伤害类型"/>
+		<var name="damage"       	type="int"         alias="基础伤害"/>
+		<var name="attack_type"  	type="ScalingType" alias="进攻加成类型" comment="取施法者身上的哪个属性做加成"/>
+		<var name="attack_rate"  	type="float"       alias="进攻加成系数"/>
+		<var name="defense_type" 	type="ScalingType" alias="防守加成类型" comment="取目标身上的哪个属性做加成"/>
+		<var name="defense_rate" 	type="float"       alias="防守加成系数"/>
+		<var name="hit_count"    	type="int"         alias="击中次数"/>
+		<var name="can_crit"     	type="bool"        alias="可暴击"/>
+	</bean>
+	<bean name="VisualEvent" alias="表现">
+		<var name="fx"           	type="string"      alias="特效"/>
+		<var name="sound"        	type="string"      alias="音效"/>
+		<var name="anchor"       	type="string"      alias="挂点骨骼"/>
+		<var name="follow"       	type="bool"        alias="是否跟随"/>
+		<var name="offset"       	type="(array#sep=|),float" alias="偏移"/>
+		<var name="scale"        	type="float"       alias="缩放"/>
+	</bean>
+	<bean name="BuffEvent" alias="BUFF">
+		<var name="buff_id"      	type="int"         alias="BUFF编号"/>
+		<var name="stack"        	type="int"         alias="层数"/>
 	</bean>
 </bean>
 
@@ -139,59 +161,38 @@
 <bean name="AoeData">
 	<var name="id" type="int" alias="编号"/>
 	<var name="name" type="string" alias="名字"/>
-	<var name="model" type="string" alias="模型"/>
-	<var name="collider" type="int" alias="碰撞盒"/>
-	<var name="duration" type="float" alias="持续"/>
-	<var name="tick_interval" type="float" alias="间隔"/>
-	<var name="events" type="list,AoeEventData" alias="事件负载"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="model" type="string" alias="资源"/>
+	<var name="collider" type="int#ref=Gameplay.TbColliderData" alias="碰撞"/>
+	<var name="tick_time" type="float" alias="间隔时间"/>
+	<var name="duration" type="float" alias="持续时间"/>
+	<var name="events" type="list,AoeTriggerData" alias="事件负载"/>
 </bean>
 
-<bean name="AoeEventData">
-    <var name="event_type" type="AoeEvent" alias="事件"/>
-    <var name="payload_id" type="int#ref=Gameplay.TbPayloadData" alias="负载"/>
+<table name="TbAoeData" value="AoeData" input="gameplay/aoe.xlsx"/>
+
+<bean name="AoeTriggerData">
+	<var name="trigger" type="AoeTrigger" alias="触发"/>
+	<var name="payload_id" type="int#ref=Gameplay.TbPayloadData" alias="负载"/>
 </bean>
 
-<enum name="AoeEvent">
-    <var name="Create"  alias="创建"/>
-    <var name="Destroy" alias="销毁"/>
-    <var name="Enter"   alias="进入"/>
-    <var name="Leave"   alias="离开"/>
-    <var name="Tick"    alias="周期"/>
+<enum name="AoeTrigger" comment="AOE 的触发时机">
+	<var name="Create"  alias="创建"/>
+	<var name="Destroy" alias="销毁"/>
+	<var name="Enter"   alias="进入"/>
+	<var name="Leave"   alias="离开"/>
+	<var name="Tick"    alias="周期"/>
 </enum>
 
 <bean name="PayloadData">
 	<var name="id" type="int" alias="编号"/>
 	<var name="name" type="string" alias="名字"/>
 	<var name="desc" type="string" alias="描述"/>
-	<var name="damage" type="DamageData?" alias="伤害数据"/>
-	<var name="visual" type="VisualData?" alias="表现数据"/>
-	<var name="add_buff" type="AddBuffData?" alias="增减BUFF"/>
+	<var name="events" type="list,GameEvent#sep=," alias="效果列表"/>
 	<var name="extra_data" type="int?#ref=Gameplay.TbPayloadData" alias="命中链"/>
 </bean>
 
 <table name="TbPayloadData" value="PayloadData" input="gameplay/payload.xlsx"/>
-
-<bean name="DamageData">
-	<var name="type" type="DamageType" alias="伤害类型"/>
-	<var name="damage" type="int" alias="基础伤害"/>
-	<var name="attack_type" type="ScalingType" alias="进攻加成类型" comment="取施法者身上的哪个属性做加成"/>
-	<var name="attack_rate" type="float" alias="进攻加成系数"/>
-	<var name="defense_type" type="ScalingType" alias="防守加成类型" comment="取目标身上的哪个属性做加成"/>
-	<var name="defense_rate" type="float" alias="防守加成系数"/>
-	<var name="hit_count" type="int" alias="击中次数"/>
-	<var name="can_crit" type="bool" alias="可暴击"/>
-</bean>
-
-<bean name="VisualData">
-	<var name="hit_fx" type="string" alias="特效"/>
-	<var name="hit_sound" type="string" alias="音效"/>
-	<var name="hit_point" type="int" alias="次数"/>
-</bean>
-
-<bean name="AddBuffData">
-	<var name="buff_id" type="int" alias="特效"/>
-	<var name="buff_stack" type="int" alias="音效"/>
-</bean>
 
 <enum name="DamageType">
 	<var name="Physical" alias="物理"/>
