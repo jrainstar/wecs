@@ -98,6 +98,19 @@ namespace GameLogic.Gameplay.View
         private float mixtime { get; set; }
 
         /// <summary>
+        /// 逻辑层这一帧决定要播的 playname 是否为前置混合动画 (一次性过渡片段)
+        /// 与 playname 一起生效, 由 OnChase 取到 playbeforemix
+        /// </summary>
+        private bool convbeforemix { get; set; }
+
+        /// <summary>
+        /// 当前正在播放的 playname 是否为前置混合动画
+        /// 过渡片段一律按一次性播放 (停在末帧), 不能跟随目标动画的循环标记取模,
+        /// 否则片段播到末帧会被拽回第 0 帧, 视觉上就是从过渡动作瞬移到目标动作
+        /// </summary>
+        private bool playbeforemix { get; set; }
+
+        /// <summary>
         /// 上一次 RIL 的逻辑层流逝时间 (毫秒)
         /// 用于检测逻辑时间倒退 (重播/回滚/循环回绕), 倒退时才重新对齐播放位置
         /// </summary>
@@ -132,6 +145,8 @@ namespace GameLogic.Gameplay.View
             lastplayname = null;
             playtime = 0;
             mixtime = 0;
+            convbeforemix = false;
+            playbeforemix = false;
             lastelapsed = 0;
             rootlockremaining = 0;
             rootlocked = false;
@@ -156,6 +171,8 @@ namespace GameLogic.Gameplay.View
             lastplayname = null;
             playtime = 0;
             mixtime = 0;
+            convbeforemix = false;
+            playbeforemix = false;
             lastelapsed = 0;
             rootlockremaining = 0;
             rootlocked = false;
@@ -196,6 +213,7 @@ namespace GameLogic.Gameplay.View
             }
 
             playname = curplayname;
+            convbeforemix = false;
             animloop = ril.animloop;
             animmotion = ril.animmotion;
             // 先取配置的默认混合时间, 动画自己配置了 (大于 0) 再覆盖
@@ -224,6 +242,7 @@ namespace GameLogic.Gameplay.View
             if (null != beforeAnimInfo && mixtime < beforeAnimInfo.duration)
             {
                 playname = beforeAnimInfo.name;
+                convbeforemix = true;
                 // 前置混合动画同样没配置时回落到默认混合时间
                 mixduration = beforeAnimInfo.mixduration > 0 ? beforeAnimInfo.mixduration : animcfg.defaultfadeduration;
             }
@@ -258,6 +277,7 @@ namespace GameLogic.Gameplay.View
             if (playname != lastplayname)
             {
                 lastplayname = playname;
+                playbeforemix = convbeforemix;
                 playtime = 0;
                 // 从带位移的动画切到不带位移的动画时, 继续锁到混合结束:
                 // 此时上一段动画还在淡出, 根骨骼还带着片段末尾的位移, 立刻解锁会看见
@@ -298,7 +318,11 @@ namespace GameLogic.Gameplay.View
             var duration = animstate.Length > 0 ? animstate.Length : tarduration;
             if (duration <= 0) return;
 
-            var time = animloop ? Mathf.Repeat(playtime, duration) : Mathf.Clamp(playtime, 0, duration);
+            // 前置混合动画是过渡片段, 一律按一次性播放:
+            // animloop 取自目标动画 (如待机 = 循环), 若跟着取模, 片段播到末帧只要还差一个
+            // 逻辑帧没切换到目标, 播放位置就会被拽回第 0 帧, 看到的是一次瞬移而不是混合
+            var loop = animloop && false == playbeforemix;
+            var time = loop ? Mathf.Repeat(playtime, duration) : Mathf.Clamp(playtime, 0, duration);
             animstate.Time = time;
         }
     }
