@@ -105,7 +105,7 @@
     "name": "砍一刀",
     "desc": "",
     "icon": "",
-    "max_time": 1,
+    "max_time": 0.5,
     "nodes": [
       {
         "Time": 0,
@@ -125,7 +125,7 @@
     "name": "砍一刀",
     "desc": "",
     "icon": "",
-    "max_time": 1,
+    "max_time": 0.5,
     "nodes": [
       {
         "Time": 0,
