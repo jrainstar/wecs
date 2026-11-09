@@ -114,6 +114,42 @@
 		<var name="buff_id"      	type="int"         alias="BUFF编号"/>
 		<var name="stack"        	type="int"         alias="层数"/>
 	</bean>
+	<bean name="EmitterEvent" alias="发射">
+		<var name="aoe"      	type="int#ref=Gameplay.TbAoeData" alias="AOE编号" comment="AOE 自身即飞行体，创建于轨道起点，销毁于轨道终点"/>
+		<var name="track"    	type="int#ref=Gameplay.TbEmitterTrackData" alias="发射轨道"/>
+		<var name="speed"    	type="int#ref=Gameplay.TbEmitterSpeedData" alias="速度曲线"/>
+		<var name="offset"   	type="(array#sep=|),float" alias="发射偏移" comment="相对施法者的出生点偏移 x|y|z"/>
+		<var name="delay"    	type="float"                alias="发射延迟" comment="动作对齐用，0 表示立即发射"/>
+	</bean>
+</bean>
+
+<enum name="EmitterTrackType" comment="发射物的飞行轨道类型，取值 1 起始，与 ColliderData.type 保持一致">
+	<var name="Line"      value="1" alias="直线"   comment="沿施法朝向直线飞行"/>
+	<var name="Homing"    value="2" alias="追踪"   comment="锁定最近敌人，实时修正朝向"/>
+	<var name="Orbit"     value="3" alias="环绕"   comment="以施法者为圆心做圆周飞行"/>
+	<var name="Boomerang" value="4" alias="回旋镖" comment="沿去程弧飞向最远点，再沿对称弧飞回起点，去回两段沿途都结算"/>
+</enum>
+
+<bean name="EmitterTrackData">
+	<var name="id"        	type="int"      alias="编号"/>
+	<var name="desc"      	type="string"   alias="描述"/>
+	<var name="type"      	type="EmitterTrackType"  alias="类型"/>
+	<var name="track_data"	type="(array#sep=|),float" alias="轨道参数" comment="按 type 取用：直线/追踪＝射程(0 不限)；环绕＝整圈弧长|圆心距|初始角；回旋镖＝到最远点距离|单侧弧半径(取 射程/2 为正圆环)"/>
+</bean>
+
+<table name="TbEmitterTrackData" value="EmitterTrackData" input="gameplay/emitter_track.xlsx"/>
+
+<bean name="EmitterSpeedData">
+	<var name="id"        	type="int"      alias="编号"/>
+	<var name="desc"      	type="string"   alias="描述"/>
+	<var name="keys"      	type="list,EmitterSpeedKey" alias="速度关键帧" comment="按 0~1 飞行进度取速度倍率，归一化后决定各段耗时，留空则匀速；总时长由 AoeData.duration 决定"/>
+</bean>
+
+<table name="TbEmitterSpeedData" value="EmitterSpeedData" input="gameplay/emitter_speed.xlsx"/>
+
+<bean name="EmitterSpeedKey">
+	<var name="progress" 	type="float"  alias="进度" comment="0~1 归一化飞行进度"/>
+	<var name="scale"    	type="float"  alias="倍率" comment="该进度处的速度倍率，最小按 0.1 生效"/>
 </bean>
 
 <bean name="TimelineGoTo">
@@ -165,7 +201,7 @@
 	<var name="model" type="string" alias="资源"/>
 	<var name="collider" type="int#ref=Gameplay.TbColliderData" alias="碰撞"/>
 	<var name="tick_time" type="float" alias="间隔时间"/>
-	<var name="duration" type="float" alias="持续时间"/>
+	<var name="duration" type="float" alias="存在时长" comment="AOE 的存在时间，也是飞行型 AOE 的轨道总时长；到点即销毁"/>
 	<var name="events" type="list,AoeTriggerData" alias="事件负载"/>
 </bean>
 
