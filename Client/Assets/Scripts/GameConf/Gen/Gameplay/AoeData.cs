@@ -40,6 +40,9 @@ public sealed partial class AoeData : Luban.BeanBase
     public readonly int Collider;
     public Gameplay.ColliderData Collider_Ref;
     public readonly float TickTime;
+    /// <summary>
+    /// AOE 的存在时间，也是飞行型 AOE 的轨道总时长；到点即销毁
+    /// </summary>
     public readonly float Duration;
     public readonly System.Collections.Generic.List<Gameplay.AoeTriggerData> Events;
    

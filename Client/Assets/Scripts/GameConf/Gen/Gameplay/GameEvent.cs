@@ -28,6 +28,7 @@ public abstract partial class GameEvent : Luban.BeanBase
             case "DamageEvent": return new Gameplay.DamageEvent(_buf);
             case "VisualEvent": return new Gameplay.VisualEvent(_buf);
             case "BuffEvent": return new Gameplay.BuffEvent(_buf);
+            case "EmitterEvent": return new Gameplay.EmitterEvent(_buf);
             default: throw new SerializationException();
         }
     }

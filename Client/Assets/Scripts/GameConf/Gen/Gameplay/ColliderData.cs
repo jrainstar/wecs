@@ -19,7 +19,7 @@ public sealed partial class ColliderData : Luban.BeanBase
     {
         { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
         { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
-        { if(!_buf["type"].IsNumber) { throw new SerializationException(); }  Type = _buf["type"]; }
+        { if(!_buf["type"].IsNumber) { throw new SerializationException(); }  Type = (Gameplay.ShapeType)_buf["type"].AsInt; }
         { var __json0 = _buf["offset"]; if(!__json0.IsArray) { throw new SerializationException(); } int _n0 = __json0.Count; Offset = new float[_n0]; int __index0=0; foreach(JSONNode __e0 in __json0.Children) { float __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Offset[__index0++] = __v0; }   }
         { var __json0 = _buf["shape_data"]; if(!__json0.IsArray) { throw new SerializationException(); } int _n0 = __json0.Count; ShapeData = new float[_n0]; int __index0=0; foreach(JSONNode __e0 in __json0.Children) { float __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  ShapeData[__index0++] = __v0; }   }
     }
@@ -31,7 +31,7 @@ public sealed partial class ColliderData : Luban.BeanBase
 
     public readonly int Id;
     public readonly string Desc;
-    public readonly int Type;
+    public readonly Gameplay.ShapeType Type;
     public readonly float[] Offset;
     public readonly float[] ShapeData;
    

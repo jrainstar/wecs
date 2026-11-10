@@ -19,6 +19,8 @@ public partial class Tables
     public Gameplay.TbRoleModel TbRoleModel {get; }
     public Gameplay.TbRoleSkill TbRoleSkill {get; }
     public Gameplay.TbTimelineData TbTimelineData {get; }
+    public Gameplay.TbEmitterTrackData TbEmitterTrackData {get; }
+    public Gameplay.TbEmitterSpeedData TbEmitterSpeedData {get; }
     public Gameplay.TbSkillData TbSkillData {get; }
     public Gameplay.TbColliderData TbColliderData {get; }
     public Gameplay.TbAoeData TbAoeData {get; }
@@ -32,6 +34,8 @@ public partial class Tables
         TbRoleModel = new Gameplay.TbRoleModel(loader("gameplay_tbrolemodel"));
         TbRoleSkill = new Gameplay.TbRoleSkill(loader("gameplay_tbroleskill"));
         TbTimelineData = new Gameplay.TbTimelineData(loader("gameplay_tbtimelinedata"));
+        TbEmitterTrackData = new Gameplay.TbEmitterTrackData(loader("gameplay_tbemittertrackdata"));
+        TbEmitterSpeedData = new Gameplay.TbEmitterSpeedData(loader("gameplay_tbemitterspeeddata"));
         TbSkillData = new Gameplay.TbSkillData(loader("gameplay_tbskilldata"));
         TbColliderData = new Gameplay.TbColliderData(loader("gameplay_tbcolliderdata"));
         TbAoeData = new Gameplay.TbAoeData(loader("gameplay_tbaoedata"));
@@ -47,6 +51,8 @@ public partial class Tables
         TbRoleModel.ResolveRef(this);
         TbRoleSkill.ResolveRef(this);
         TbTimelineData.ResolveRef(this);
+        TbEmitterTrackData.ResolveRef(this);
+        TbEmitterSpeedData.ResolveRef(this);
         TbSkillData.ResolveRef(this);
         TbColliderData.ResolveRef(this);
         TbAoeData.ResolveRef(this);

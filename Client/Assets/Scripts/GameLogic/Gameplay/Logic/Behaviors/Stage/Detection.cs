@@ -695,7 +695,7 @@ namespace GameLogic.Gameplay.Logic
             );
 
             // 质量由 Prefab 的 OnProcessing 决定 (角色 1, 墙体 -1), 配置表不参与
-            switch (collidercfg.Type)
+            switch ((byte)collidercfg.Type)
             {
                 case COLLISION_DEFINE.COLLIDER_BOX:
                     collider.shape = COLLISION_DEFINE.COLLIDER_BOX;
