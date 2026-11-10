@@ -22,6 +22,8 @@ namespace GameLogic.Gameplay.Logic
             typeof(Aoe),
             typeof(SkillLauncher),
             typeof(Facade),
+            // 特效计时, 必须在 RILSync 之前把本帧的 elapsed 同步给渲染层
+            typeof(Effect),
             typeof(RILSync),
         };
     }

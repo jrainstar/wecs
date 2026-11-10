@@ -110,12 +110,13 @@
 		<var name="can_crit"     	type="bool"        alias="可暴击"/>
 	</bean>
 	<bean name="VisualEvent" alias="表现">
-		<var name="fx"           	type="string"      alias="特效"/>
-		<var name="sound"        	type="string"      alias="音效"/>
+		<var name="fx"           	type="int"      alias="特效"/>
+		<var name="sound"        	type="int"      alias="音效"/>
 		<var name="anchor"       	type="string"      alias="挂点骨骼"/>
 		<var name="follow"       	type="bool"        alias="是否跟随"/>
 		<var name="offset"       	type="(array#sep=|),float" alias="偏移"/>
 		<var name="scale"        	type="float"       alias="缩放"/>
+		<var name="duration"     	type="float"       alias="特效时长" comment="存在时长，0 或留空使用默认时长"/>
 	</bean>
 	<bean name="BuffEvent" alias="BUFF">
 		<var name="buff_id"      	type="int"         alias="BUFF编号"/>
