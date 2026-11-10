@@ -62,15 +62,22 @@ namespace GameLogic.Gameplay.Common
         /// 玩家
         /// </summary>
         public const int LAYER_PLAYER = 4;
+        /// <summary>
+        /// AOE (只由 AOE 自身做重叠检测, 不参与其它单位的推挤/碰撞)
+        /// </summary>
+        public const int LAYER_AOE = 8;
 
         /// <summary>
         /// 物理层检测掩码
+        /// 注意 LAYER_AOE 只单向查询: AOE 能检测到默认层/玩家, 但默认层/玩家/地面的掩码里都不含 AOE,
+        /// 因此 AOE 不会被角色移动推挤, 也不会挡住角色
         /// </summary>
         private static Dictionary<int, int> maskdict = new()
         {
             { LAYER_DEFAULT, LAYER_DEFAULT | LAYER_GROUND | LAYER_PLAYER },
             { LAYER_GROUND , LAYER_DEFAULT | LAYER_PLAYER },
             { LAYER_PLAYER , LAYER_DEFAULT | LAYER_GROUND },
+            { LAYER_AOE , LAYER_DEFAULT | LAYER_PLAYER },
         };
 
         /// <summary>

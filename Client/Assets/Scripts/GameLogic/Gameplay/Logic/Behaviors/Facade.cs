@@ -14,6 +14,18 @@ namespace GameLogic.Gameplay.Logic
         public void SetModel(int model)
         {
             info.model = model;
+            info.modelres = null;
+        }
+
+        /// <summary>
+        /// 设置模型资源
+        /// 用于不走角色模型表的对象 (例如 AOE), 直接给资源名, 由渲染层的模型代理加载
+        /// </summary>
+        /// <param name="res">资源名</param>
+        public void SetModelRes(string res)
+        {
+            info.model = 0;
+            info.modelres = res;
         }
 
         /// <summary>

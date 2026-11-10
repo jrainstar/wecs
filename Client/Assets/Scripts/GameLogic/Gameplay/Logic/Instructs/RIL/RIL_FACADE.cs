@@ -13,15 +13,22 @@ namespace GameLogic.Gameplay.Logic
         /// 角色id
         /// </summary>
         public int model { get; set; }
+
+        /// <summary>
+        /// 模型资源名 (不走角色模型表, 例如 AOE), 为空时用 model 走角色模型表
+        /// </summary>
+        public string res { get; set; }
         
         protected override void OnReady()
         {
             model = 0;
+            res = null;
         }
 
         protected override void OnReset()
         {
             model = 0;
+            res = null;
         }
     }
 }

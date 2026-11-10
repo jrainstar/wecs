@@ -63,6 +63,13 @@
 	<var name="Spd" 	alias="速度" 		value="5" />
 </enum>
 
+<bean name="ResourceData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="path" type="string" alias="路径"/>
+</bean>
+
+<table name="TbResourceData" value="ResourceData" input="gameplay/resource.xlsx"/>
+
 <bean name="TimelineData">
 	<var name="id" type="int" alias="编号"/>
 	<var name="name" type="string" alias="名字"/>

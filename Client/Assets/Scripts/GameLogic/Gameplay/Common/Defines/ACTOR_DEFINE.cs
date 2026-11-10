@@ -38,5 +38,9 @@ namespace GameLogic.Gameplay.Common
         /// 墙体 (场景静态碰撞体)
         /// </summary>
         public const byte WALL = 7;
+        /// <summary>
+        /// AOE (发射物, 自身即飞行体)
+        /// </summary>
+        public const byte AOE = 8;
     }
 }

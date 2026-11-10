@@ -226,6 +226,7 @@ namespace GameLogic.Gameplay.Logic
             Prefab<WallPrefab, WallPrefabInfo>();
             Prefab<HeroPrefab, HeroPrefabInfo>();
             Prefab<SkillPrefab, SkillPrefabInfo>();
+            Prefab<AoePrefab, AoePrefabInfo>();
 
         }
 

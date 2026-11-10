@@ -31,6 +31,10 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         public string res { get; private set; }
         /// <summary>
+        /// 对象池的键, AOE 与角色模型的资源名可能重名, 用完整路径区分
+        /// </summary>
+        private string poolkey { get; set; }
+        /// <summary>
         /// 模型 GameObject
         /// </summary>
         public GameObject go { get; private set; }
@@ -39,6 +43,7 @@ namespace GameLogic.Gameplay.View
         {
             model = 0;
             res = null;
+            poolkey = null;
             go = null;
 
             // 模型定义变化时重新加载
@@ -50,6 +55,7 @@ namespace GameLogic.Gameplay.View
             RecycleModel();
             model = 0;
             res = null;
+            poolkey = null;
             go = null;
         }
 
@@ -73,7 +79,8 @@ namespace GameLogic.Gameplay.View
             // 模型挂载完成, 后续位置由节点代理驱动
             var node = world.GetAgent<NodeAgent>(actor);
             if (null == node || null == node.go) return false;
-            if (model <= 0 || null == go) return false;
+            if (model <= 0 && string.IsNullOrEmpty(res)) return false;
+            if (null == go) return false;
             if (go.transform.parent != node.go.transform) return false;
 
             return true;
@@ -84,15 +91,29 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         public void Load()
         {
-            if (false == world.rilbucket.SeekRIL<RIL_FACADE_MODEL>(actor, out var facademodel) || facademodel.model <= 0)
+            if (false == world.rilbucket.SeekRIL<RIL_FACADE_MODEL>(actor, out var facademodel))
             {
                 RecycleModel();
                 model = 0;
+                res = null;
 
                 return;
             }
 
-            if (model == facademodel.model && null != go) return;
+            // 模型有两种来源: 角色模型表的 model, 以及直接给资源名的 res (AOE 这类对象)
+            var hasrole = facademodel.model > 0;
+            var hasres = false == string.IsNullOrEmpty(facademodel.res);
+            if (false == hasrole && false == hasres)
+            {
+                RecycleModel();
+                model = 0;
+                res = null;
+
+                return;
+            }
+
+            // 模型定义没有变化, 直接复用 (角色模型走 model, 其余走资源名)
+            if (null != go && model == facademodel.model && (hasrole || res == facademodel.res)) return;
 
             // 节点代理不存在则先创建, 模型需要挂载到节点之下
             var node = world.EnsureAgent<NodeAgent>(actor);
@@ -102,14 +123,29 @@ namespace GameLogic.Gameplay.View
 
             RecycleModel();
 
-            if (false == world.engine.config.location.TbRoleData.TryGetValue(facademodel.model, out var roledata)) return;
-            if (false == world.engine.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var modeldata)) return;
+            var resname = facademodel.res;
+            var pool = Location.aoemodelpath + resname;
 
-            model = roledata.ModelId;
-            res = modeldata.Model;
+            if (hasrole)
+            {
+                if (false == world.engine.config.location.TbRoleData.TryGetValue(facademodel.model, out var roledata)) return;
+                if (false == world.engine.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var modeldata)) return;
 
-            go = ObjectPool.Get<GameObject>(res);
-            if (null == go) go = world.engine.gameres.location.LoadModelSync(res);
+                model = roledata.ModelId;
+                resname = modeldata.Model;
+                pool = resname;
+            }
+            else
+            {
+                model = 0;
+            }
+
+            res = resname;
+            poolkey = pool;
+
+            go = ObjectPool.Get<GameObject>(poolkey);
+            if (null == go) go = hasrole ? world.engine.gameres.location.LoadModelSync(resname) : world.engine.gameres.location.LoadAoeModelSync(resname);
+            if (null == go) return;
 
             go.transform.SetParent(node.go.transform, false);
             go.transform.localPosition = Vector3.zero;
@@ -127,8 +163,9 @@ namespace GameLogic.Gameplay.View
 
             go.transform.SetParent(modelpool.transform, false);
             go.SetActive(false);
-            ObjectPool.Set(go, res);
+            ObjectPool.Set(go, poolkey);
             go = null;
+            poolkey = null;
         }
     }
 }

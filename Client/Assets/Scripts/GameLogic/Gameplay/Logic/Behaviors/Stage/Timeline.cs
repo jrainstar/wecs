@@ -154,6 +154,7 @@ namespace GameLogic.Gameplay.Logic
 
             Executor<PrintEvent, PrintExecutor>();
             Executor<AnimationEvent, AnimationExecutor>();
+            Executor<EmitterEvent, EmitterExecutor>();
         }
 
         private void RecycleExecutors()
