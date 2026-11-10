@@ -18,7 +18,7 @@ public sealed partial class RoleModel : Luban.BeanBase
     public RoleModel(JSONNode _buf) 
     {
         { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
-        { if(!_buf["model"].IsString) { throw new SerializationException(); }  Model = _buf["model"]; }
+        { if(!_buf["model"].IsNumber) { throw new SerializationException(); }  Model = _buf["model"]; }
         { if(!_buf["animation"].IsString) { throw new SerializationException(); }  Animation = _buf["animation"]; }
     }
 
@@ -28,7 +28,7 @@ public sealed partial class RoleModel : Luban.BeanBase
     }
 
     public readonly int Id;
-    public readonly string Model;
+    public readonly int Model;
     public readonly string Animation;
    
     public const int __ID__ = -1109251445;

@@ -14,7 +14,7 @@ namespace GameLogic.Gameplay.Logic
             int hash = 17;
             hash = hash * 31 + info.actor.GetHashCode();
             hash = hash * 31 + info.model.GetHashCode();
-            hash = hash * 31 + (info.modelres != null ? info.modelres.GetHashCode() : 0);
+            hash = hash * 31 + info.resource.GetHashCode();
 
             return hash;
         }
@@ -22,7 +22,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnRIL(FacadeInfo info, RIL_FACADE_MODEL ril)
         {
             ril.model = info.model;
-            ril.res = info.modelres;
+            ril.resource = info.resource;
         }
     }
 }

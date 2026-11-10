@@ -1,4 +1,5 @@
 using GameFrame;
+using GameLogic.Gameplay.Common;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -51,10 +52,13 @@ namespace GameLogic
 
             var modelData = TableModule.Instance.Tables.TbRoleModel.Get(roleData.ModelId);
             if (modelData == null) return;
+            // 模型表里存的是资源编号, 实际加载用的是资源路径
+            if (false == ResourceUtil.TryGetPath(TableModule.Instance.Tables, modelData.Model, out var modelpath)) return;
 
             ReleaseModel();
 
-            m_RenderRole = ObjectPoolModule.Instance.GetGameObject(modelData.Model);
+            m_RenderRole = ObjectPoolModule.Instance.GetGameObject(modelpath);
+            if (null == m_RenderRole) return;
             m_RenderRole.layer = LayerMask.NameToLayer("UIModel");
             m_RenderRole.transform.position = m_RenderPos;
         }

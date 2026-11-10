@@ -25,10 +25,11 @@ namespace GameLogic.Gameplay.Logic
 
             if (false == Config(out var data)) return;
 
-            // 外观: AOE 的资源不走角色模型表, 直接把资源名交给渲染层的模型代理
-            if (false == string.IsNullOrEmpty(data.Model))
+            // 外观: AOE 的资源不走角色模型表, 直接把资源编号交给渲染层的模型代理,
+            // 由它按 TbResourceData 解析路径加载
+            if (data.Model > 0)
             {
-                stage.AddBehavior<Facade>(actor).SetModelRes(data.Model);
+                stage.AddBehavior<Facade>(actor).SetResource(data.Model);
             }
 
             // 碰撞盒: 只用于 AOE 自身的重叠检测 (触发 进入/离开/周期),

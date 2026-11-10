@@ -10,8 +10,8 @@ namespace GameLogic.Gameplay.View
         protected override void OnRIL(RIL_FACADE_MODEL ril)
         {
             // 如果没有模型定义, 则回收模型代理, 有则创建模型代理
-            // 模型有两种来源: 角色模型表的 model, 以及直接给资源名的 res (AOE 这类对象)
-            if (ril.model > 0 || false == string.IsNullOrEmpty(ril.res))
+            // 模型有两种来源: 角色 (model 为角色编号) 与 资源 (resource 为资源编号, 例如 AOE)
+            if (ril.model > 0 || ril.resource > 0)
             {
                 rilbucket.world.EnsureAgent<ModelAgent>(ril.actor);
             }

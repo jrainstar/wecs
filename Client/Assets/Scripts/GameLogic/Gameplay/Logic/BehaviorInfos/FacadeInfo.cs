@@ -13,9 +13,9 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public int model { get; set; }
         /// <summary>
-        /// 模型资源名 (不走角色模型表, 例如 AOE), 为空时用 model 走角色模型表
+        /// 资源编号 (TbResourceData), 不走角色模型表, 例如 AOE; 0 表示用 model 走角色模型表
         /// </summary>
-        public string modelres { get; set; }
+        public int resource { get; set; }
         /// <summary>
         /// 动画速度倍率, 0 为定格
         /// </summary>
@@ -46,7 +46,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnReady()
         {
             model = 0;
-            modelres = null;
+            resource = 0;
             animspeed = FP.One;
             animstate = 0;
             animname = null;
@@ -58,7 +58,7 @@ namespace GameLogic.Gameplay.Logic
         protected override void OnReset()
         {
             model = 0;
-            modelres = null;
+            resource = 0;
             animspeed = FP.One;
             animstate = 0;
             animname = null;
@@ -72,7 +72,7 @@ namespace GameLogic.Gameplay.Logic
             var clone = ObjectCache.Ensure<FacadeInfo>();
             clone.Ready(actor);
             clone.model = model;
-            clone.modelres = modelres;
+            clone.resource = resource;
             clone.animstate = animstate;
             clone.animname = animname;
             clone.animloop = animloop;

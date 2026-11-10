@@ -56,7 +56,11 @@ namespace GameLogic.Gameplay.View
         {
             var result = new ValueDropdownList<string>();
             if (false == EditorConfig.location.TbRoleModel.TryGetValue(model, out var rolemodel)) return result;
-            var go = EditorRes.LoadModel(rolemodel.Model);
+            if (false == ResourceUtil.TryGetPath(EditorConfig.location, rolemodel.Model, out var path)) return result;
+
+            var go = EditorRes.LoadModel(path);
+            if (null == go) return result;
+
             var animancer = go.GetComponent<NamedAnimancerComponent>();
             if (null == animancer)
             {

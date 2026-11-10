@@ -14,18 +14,19 @@ namespace GameLogic.Gameplay.Logic
         public void SetModel(int model)
         {
             info.model = model;
-            info.modelres = null;
+            info.resource = 0;
         }
 
         /// <summary>
-        /// 设置模型资源
-        /// 用于不走角色模型表的对象 (例如 AOE), 直接给资源名, 由渲染层的模型代理加载
+        /// 设置资源
+        /// 用于不走角色模型表的对象 (例如 AOE), 直接给资源编号 (TbResourceData),
+        /// 由渲染层的模型代理按资源路径加载
         /// </summary>
-        /// <param name="res">资源名</param>
-        public void SetModelRes(string res)
+        /// <param name="resource">资源编号</param>
+        public void SetResource(int resource)
         {
             info.model = 0;
-            info.modelres = res;
+            info.resource = resource;
         }
 
         /// <summary>

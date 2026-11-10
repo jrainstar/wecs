@@ -15,20 +15,20 @@ namespace GameLogic.Gameplay.Logic
         public int model { get; set; }
 
         /// <summary>
-        /// 模型资源名 (不走角色模型表, 例如 AOE), 为空时用 model 走角色模型表
+        /// 资源编号 (TbResourceData), 不走角色模型表, 例如 AOE; 0 表示用 model 走角色模型表
         /// </summary>
-        public string res { get; set; }
+        public int resource { get; set; }
         
         protected override void OnReady()
         {
             model = 0;
-            res = null;
+            resource = 0;
         }
 
         protected override void OnReset()
         {
             model = 0;
-            res = null;
+            resource = 0;
         }
     }
 }

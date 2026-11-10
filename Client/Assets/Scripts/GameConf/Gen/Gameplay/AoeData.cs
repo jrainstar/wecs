@@ -20,7 +20,7 @@ public sealed partial class AoeData : Luban.BeanBase
         { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
         { if(!_buf["name"].IsString) { throw new SerializationException(); }  Name = _buf["name"]; }
         { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
-        { if(!_buf["model"].IsString) { throw new SerializationException(); }  Model = _buf["model"]; }
+        { if(!_buf["model"].IsNumber) { throw new SerializationException(); }  Model = _buf["model"]; }
         { if(!_buf["collider"].IsNumber) { throw new SerializationException(); }  Collider = _buf["collider"]; }
         Collider_Ref = null;
         { if(!_buf["tick_time"].IsNumber) { throw new SerializationException(); }  TickTime = _buf["tick_time"]; }
@@ -36,7 +36,7 @@ public sealed partial class AoeData : Luban.BeanBase
     public readonly int Id;
     public readonly string Name;
     public readonly string Desc;
-    public readonly string Model;
+    public readonly int Model;
     public readonly int Collider;
     public Gameplay.ColliderData Collider_Ref;
     public readonly float TickTime;

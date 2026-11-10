@@ -12,7 +12,6 @@ namespace GameLogic.Gameplay.Common
     {
         public const string soundpath = "Assets/GameRes/Sound/";
         public const string modelpath = "Assets/AssetRaws/Prefabs/Role/";
-        public const string aoemodelpath = "Assets/AssetRaws/Prefabs/Aoe/";
         public const string animcfgpath = "Assets/AssetRaws/AnimationConfigs/";
         public const string animationkeyframes = "Assets/AssetRaws/AnimationKeyframes/";
         public const string scenedatas = "Assets/AssetRaws/SceneDatas/";
@@ -61,19 +60,6 @@ namespace GameLogic.Gameplay.Common
         public GameObject LoadModelSync(string res)
         {
             return GameObject.Instantiate(engine.gameres.LoadAssetSync<GameObject>(modelpath + res));
-        }
-
-        /// <summary>
-        /// 同步 AOE 模型加载预制体
-        /// </summary>
-        /// <param name="res">资源地址</param>
-        /// <returns>AOE 模型预制体, 资源不存在返回 null</returns>
-        public GameObject LoadAoeModelSync(string res)
-        {
-            var prefab = engine.gameres.LoadAssetSync<GameObject>(aoemodelpath + res);
-            if (null == prefab) return null;
-
-            return GameObject.Instantiate(prefab);
         }
 
         /// <summary>

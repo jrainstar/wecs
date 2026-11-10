@@ -1,6 +1,7 @@
 using DG.Tweening;
 using GameConf.Gameplay;
 using GameFrame;
+using GameLogic.Gameplay.Common;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -83,13 +84,17 @@ namespace GameLogic
         {
             var modelId = roleData.ModelId;
             var modelData = TableModule.Instance.Tables.TbRoleModel.Get(modelId);
+            if (null == modelData) return;
+            // 模型表里存的是资源编号, 实际加载用的是资源路径
+            if (false == ResourceUtil.TryGetPath(TableModule.Instance.Tables, modelData.Model, out var modelpath)) return;
 
             if (m_RenderRole != null)
             {
                 ObjectPoolModule.Instance.PushGameObject(m_RenderRole);
             }
 
-            m_RenderRole = ObjectPoolModule.Instance.GetGameObject(modelData.Model);
+            m_RenderRole = ObjectPoolModule.Instance.GetGameObject(modelpath);
+            if (null == m_RenderRole) return;
             m_RenderRole.layer = LayerMask.NameToLayer("UIModel");
             m_RenderRole.transform.position = m_RenderRolePos;
 

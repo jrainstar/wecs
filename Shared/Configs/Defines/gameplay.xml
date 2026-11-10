@@ -41,7 +41,7 @@
 
 <bean name="RoleModel">
 	<var name="id" type="int" alias="编号"/>
-	<var name="model" type="string" alias="模型"/>
+	<var name="model" type="int" alias="模型"/>
 	<var name="animation" type="string" alias="动画"/>
 </bean>
 
@@ -212,7 +212,7 @@
 	<var name="id" type="int" alias="编号"/>
 	<var name="name" type="string" alias="名字"/>
 	<var name="desc" type="string" alias="描述"/>
-	<var name="model" type="string" alias="资源"/>
+	<var name="model" type="int" alias="资源"/>
 	<var name="collider" type="int#ref=Gameplay.TbColliderData" alias="碰撞"/>
 	<var name="tick_time" type="float" alias="间隔时间"/>
 	<var name="duration" type="float" alias="存在时长" comment="AOE 的存在时间，也是飞行型 AOE 的轨道总时长；到点即销毁"/>

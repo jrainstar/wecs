@@ -1,12 +1,12 @@
 [
   {
     "id": 10001,
-    "model": "Chun",
+    "model": 10001,
     "animation": "10001"
   },
   {
     "id": 10002,
-    "model": "Ya",
+    "model": 10002,
     "animation": "10002"
   }
 ]
