@@ -9,11 +9,11 @@
   },
   {
     "id": 20001,
-    "path": "Assets/AssetRaws/Prefabs/Role/Chun.prefab"
+    "path": "Assets/AssetRaws/Prefabs/Effect/Effect_Magic_Circle_Blood.prefab"
   },
   {
     "id": 20002,
-    "path": "Assets/AssetRaws/Prefabs/Role/Ya.prefab"
+    "path": "Assets/AssetRaws/Prefabs/Effect/Effect_Magic_Circle_Electro.prefab"
   },
   {
     "id": 30001,
