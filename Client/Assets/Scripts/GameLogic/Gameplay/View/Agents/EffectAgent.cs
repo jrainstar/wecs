@@ -235,7 +235,7 @@ namespace GameLogic.Gameplay.View
             var controller = go.GetComponent<EffectController>();
             if (null == controller) controller = go.AddComponent<EffectController>();
             // 预制体上没有绑定粒子时运行时补一份, 保证 Simulate 能采样到
-            if (null == controller.pss || 0 == controller.pss.Length) controller.pss = go.GetComponentsInChildren<ParticleSystem>(true);
+            controller.EnsureParticles();
             controller.Reset();
 
             var offset = effect.offset.ToVector3();

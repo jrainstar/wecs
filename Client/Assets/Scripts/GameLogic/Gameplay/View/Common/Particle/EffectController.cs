@@ -16,7 +16,8 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 粒子系统集合
         /// </summary>
-        [HideInInspector] public ParticleSystem[] pss;
+        [SerializeField]
+        private ParticleSystem[] pss;
 
         /// <summary>
         /// 当前时间
@@ -46,12 +47,22 @@ namespace GameLogic.Gameplay.View
 #endif
 
         /// <summary>
+        /// 运行时兜底绑定子物体下所有粒子系统
+        /// 预制体上没有绑定粒子时由 EffectAgent 调用, 保证 Simulate 能采样到
+        /// </summary>
+        public void EnsureParticles()
+        {
+            if (null == pss || 0 == pss.Length) pss = GetComponentsInChildren<ParticleSystem>(true);
+        }
+
+        /// <summary>
         /// 特效采样
         /// </summary>
         /// <param name="time">时间</param>
         public void Simulate(float time)
         {
             this.time = time;
+            if (null == pss) return;
             // 粒子系统采样
             foreach (var ps in pss) if (ps.gameObject.activeInHierarchy) ps.Simulate(time, true, true);
         }
