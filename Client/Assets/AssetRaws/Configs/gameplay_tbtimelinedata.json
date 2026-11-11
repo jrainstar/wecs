@@ -160,5 +160,37 @@
         }
       }
     ]
+  },
+  {
+    "id": 100031,
+    "name": "原地AOE",
+    "desc": "施法者脚下生成法阵",
+    "icon": "",
+    "max_time": 0.5,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "PrintEvent",
+          "Type": 0,
+          "Print": "原地AOE"
+        }
+      },
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "EmitterEvent",
+          "aoe": 20001,
+          "track": 10001,
+          "speed": 10002,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "delay": 0
+        }
+      }
+    ]
   }
 ]

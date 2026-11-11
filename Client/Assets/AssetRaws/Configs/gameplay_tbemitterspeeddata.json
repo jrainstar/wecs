@@ -4,5 +4,14 @@
     "desc": "匀速",
     "type": 1,
     "speed_data": []
+  },
+  {
+    "id": 10002,
+    "desc": "静止",
+    "type": 1,
+    "speed_data": [
+      0,
+      0
+    ]
   }
 ]

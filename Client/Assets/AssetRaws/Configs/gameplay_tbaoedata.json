@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": 20001,
+    "name": "原地AOE",
+    "desc": "施法者脚下生成的法阵, 原地存在 duration 秒后消失",
+    "model": 20002,
+    "collider": 10004,
+    "tick_time": 0.5,
+    "duration": 5,
+    "events": []
+  }
+]

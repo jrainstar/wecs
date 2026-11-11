@@ -38,5 +38,13 @@
     "icon": "",
     "cooldown": 0,
     "timeline": 100022
+  },
+  {
+    "id": 100031,
+    "name": "原地AOE",
+    "desc": "施法者脚下生成法阵",
+    "icon": "",
+    "cooldown": 0,
+    "timeline": 100031
   }
 ]
