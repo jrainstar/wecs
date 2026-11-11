@@ -7,7 +7,7 @@ namespace GameLogic.Gameplay.Logic
     /// elapsed 不进哈希, 只有特效增删/参数变化才重发; 渲染层自己按渲染帧推进采样时间,
     /// 重发时用 RIL 里的 elapsed 做一次对齐 (回滚/重播时逻辑时间会倒退)
     /// </summary>
-    public class EffectTranslator : Translator<EffectInfo, RIL_FACADE_EFFECT>
+    public class FacadeEffectTranslator : Translator<EffectInfo, RIL_FACADE_EFFECT>
     {
         public override ushort id => RIL_DEFINE.FACADE_EFFECT;
 
@@ -22,12 +22,14 @@ namespace GameLogic.Gameplay.Logic
                 var data = kv.Value;
                 int effecthash = kv.Key.GetHashCode();
                 effecthash = effecthash * 31 + data.fx;
-                effecthash = effecthash * 31 + data.sound;
                 effecthash = effecthash * 31 + (data.anchor != null ? data.anchor.GetHashCode() : 0);
                 effecthash = effecthash * 31 + data.follow.GetHashCode();
                 effecthash = effecthash * 31 + data.offset.x.GetHashCode();
                 effecthash = effecthash * 31 + data.offset.y.GetHashCode();
                 effecthash = effecthash * 31 + data.offset.z.GetHashCode();
+                effecthash = effecthash * 31 + data.rotate.x.GetHashCode();
+                effecthash = effecthash * 31 + data.rotate.y.GetHashCode();
+                effecthash = effecthash * 31 + data.rotate.z.GetHashCode();
                 effecthash = effecthash * 31 + data.scale.GetHashCode();
                 effecthash = effecthash * 31 + data.duration.GetHashCode();
 
@@ -48,10 +50,10 @@ namespace GameLogic.Gameplay.Logic
                 var effect = RILCache.Ensure<RIL_EFFECT>();
                 effect.id = kv.Key;
                 effect.fx = data.fx;
-                effect.sound = data.sound;
                 effect.anchor = data.anchor;
                 effect.follow = data.follow;
                 effect.offset = data.offset;
+                effect.rotate = data.rotate;
                 effect.scale = data.scale;
                 effect.elapsed = data.elapsed;
                 effect.duration = data.duration;

@@ -109,12 +109,12 @@
 		<var name="hit_count"    	type="int"         alias="击中次数"/>
 		<var name="can_crit"     	type="bool"        alias="可暴击"/>
 	</bean>
-	<bean name="VisualEvent" alias="表现">
+	<bean name="EffectEvent" alias="特效">
 		<var name="fx"           	type="int"      alias="特效"/>
-		<var name="sound"        	type="int"      alias="音效"/>
 		<var name="anchor"       	type="string"      alias="挂点骨骼"/>
 		<var name="follow"       	type="bool"        alias="是否跟随"/>
 		<var name="offset"       	type="(array#sep=|),float" alias="偏移"/>
+		<var name="rotate"       	type="(array#sep=|),float" alias="旋转"/>
 		<var name="scale"        	type="float"       alias="缩放"/>
 		<var name="duration"     	type="float"       alias="特效时长" comment="存在时长，0 或留空使用默认时长"/>
 	</bean>

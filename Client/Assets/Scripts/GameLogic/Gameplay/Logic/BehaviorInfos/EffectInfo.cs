@@ -14,10 +14,6 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public int fx { get; set; }
         /// <summary>
-        /// 音效资源编号 (TbResourceData), 0 表示不播
-        /// </summary>
-        public int sound { get; set; }
-        /// <summary>
         /// 挂点骨骼, 空表示挂在单位根节点
         /// </summary>
         public string anchor { get; set; }
@@ -29,6 +25,10 @@ namespace GameLogic.Gameplay.Logic
         /// 相对挂点的偏移
         /// </summary>
         public FPVector3 offset { get; set; }
+        /// <summary>
+        /// 相对挂点的旋转 (欧拉角, 度)
+        /// </summary>
+        public FPVector3 rotate { get; set; }
         /// <summary>
         /// 缩放
         /// </summary>
@@ -48,10 +48,10 @@ namespace GameLogic.Gameplay.Logic
         public void Reset()
         {
             fx = 0;
-            sound = 0;
             anchor = null;
             follow = false;
             offset = FPVector3.Zero;
+            rotate = FPVector3.Zero;
             scale = FP.One;
             elapsed = FP.Zero;
             duration = FP.Zero;
@@ -64,10 +64,10 @@ namespace GameLogic.Gameplay.Logic
         public void Copy(EffectData data)
         {
             fx = data.fx;
-            sound = data.sound;
             anchor = data.anchor;
             follow = data.follow;
             offset = data.offset;
+            rotate = data.rotate;
             scale = data.scale;
             elapsed = data.elapsed;
             duration = data.duration;

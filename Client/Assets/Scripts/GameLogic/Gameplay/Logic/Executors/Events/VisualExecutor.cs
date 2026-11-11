@@ -9,9 +9,9 @@ namespace GameLogic.Gameplay.Logic
     /// 之后由 Effect 行为计时、由 RIL_FACADE_EFFECT 驱动渲染层的 EffectAgent 采样播放
     /// 执行器是无状态的单例, 宿主/施法者通过 Timeline.current 获取
     /// </summary>
-    public class VisualExecutor : Executor<VisualEvent>
+    public class VisualExecutor : Executor<EffectEvent>
     {
-        public override void HandleEvent(VisualEvent timelineevent)
+        public override void HandleEvent(EffectEvent timelineevent)
         {
             if (null == timelineevent) return;
 
@@ -28,10 +28,10 @@ namespace GameLogic.Gameplay.Logic
 
             effect.Play(
                 timelineevent.Fx,
-                timelineevent.Sound,
                 timelineevent.Anchor,
                 timelineevent.Follow,
                 Offset(timelineevent.Offset),
+                Rotate(timelineevent.Rotate),
                 (FP)timelineevent.Scale,
                 (FP)timelineevent.Duration);
         }
@@ -46,6 +46,18 @@ namespace GameLogic.Gameplay.Logic
             if (null == offset || offset.Length < 3) return FPVector3.Zero;
 
             return new FPVector3(offset[0], offset[1], offset[2]);
+        }
+
+        /// <summary>
+        /// 旋转 x|y|z (欧拉角, 度), 缺省为零
+        /// </summary>
+        /// <param name="rotate">配置的旋转</param>
+        /// <returns>旋转</returns>
+        private static FPVector3 Rotate(float[] rotate)
+        {
+            if (null == rotate || rotate.Length < 3) return FPVector3.Zero;
+
+            return new FPVector3(rotate[0], rotate[1], rotate[2]);
         }
     }
 }

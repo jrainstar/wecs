@@ -13,33 +13,36 @@ using Luban.SimpleJSON;
 
 namespace GameConf.Gameplay
 {
-public sealed partial class VisualEvent : Gameplay.GameEvent
+public sealed partial class EffectEvent : Gameplay.GameEvent
 {
-    public VisualEvent(JSONNode _buf)  : base(_buf) 
+    public EffectEvent(JSONNode _buf)  : base(_buf) 
     {
         { if(!_buf["fx"].IsNumber) { throw new SerializationException(); }  Fx = _buf["fx"]; }
-        { if(!_buf["sound"].IsNumber) { throw new SerializationException(); }  Sound = _buf["sound"]; }
         { if(!_buf["anchor"].IsString) { throw new SerializationException(); }  Anchor = _buf["anchor"]; }
         { if(!_buf["follow"].IsBoolean) { throw new SerializationException(); }  Follow = _buf["follow"]; }
         { var __json0 = _buf["offset"]; if(!__json0.IsArray) { throw new SerializationException(); } int _n0 = __json0.Count; Offset = new float[_n0]; int __index0=0; foreach(JSONNode __e0 in __json0.Children) { float __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Offset[__index0++] = __v0; }   }
+        { var __json0 = _buf["rotate"]; if(!__json0.IsArray) { throw new SerializationException(); } int _n0 = __json0.Count; Rotate = new float[_n0]; int __index0=0; foreach(JSONNode __e0 in __json0.Children) { float __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Rotate[__index0++] = __v0; }   }
         { if(!_buf["scale"].IsNumber) { throw new SerializationException(); }  Scale = _buf["scale"]; }
         { if(!_buf["duration"].IsNumber) { throw new SerializationException(); }  Duration = _buf["duration"]; }
     }
 
-    public static VisualEvent DeserializeVisualEvent(JSONNode _buf)
+    public static EffectEvent DeserializeEffectEvent(JSONNode _buf)
     {
-        return new Gameplay.VisualEvent(_buf);
+        return new Gameplay.EffectEvent(_buf);
     }
 
     public readonly int Fx;
-    public readonly int Sound;
     public readonly string Anchor;
     public readonly bool Follow;
     public readonly float[] Offset;
+    public readonly float[] Rotate;
     public readonly float Scale;
+    /// <summary>
+    /// 存在时长，0 或留空使用默认时长
+    /// </summary>
     public readonly float Duration;
-  
-    public const int __ID__ = 251566962;
+   
+    public const int __ID__ = -1059507263;
     public override int GetTypeId() => __ID__;
 
     public override void ResolveRef(Tables tables)
@@ -51,10 +54,10 @@ public sealed partial class VisualEvent : Gameplay.GameEvent
     {
         return "{ "
         + "fx:" + Fx + ","
-        + "sound:" + Sound + ","
         + "anchor:" + Anchor + ","
         + "follow:" + Follow + ","
         + "offset:" + Luban.StringUtil.CollectionToString(Offset) + ","
+        + "rotate:" + Luban.StringUtil.CollectionToString(Rotate) + ","
         + "scale:" + Scale + ","
         + "duration:" + Duration + ","
         + "}";

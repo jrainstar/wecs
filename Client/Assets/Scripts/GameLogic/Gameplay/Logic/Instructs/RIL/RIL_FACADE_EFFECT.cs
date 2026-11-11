@@ -14,13 +14,9 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public uint id { get; set; }
         /// <summary>
-        /// 特效资源编号 (TbResourceData), 0 表示只有音效
+        /// 特效资源编号 (TbResourceData)
         /// </summary>
         public int fx { get; set; }
-        /// <summary>
-        /// 音效资源编号 (TbResourceData), 0 表示不播
-        /// </summary>
-        public int sound { get; set; }
         /// <summary>
         /// 挂点骨骼
         /// </summary>
@@ -33,6 +29,10 @@ namespace GameLogic.Gameplay.Logic
         /// 相对挂点的偏移
         /// </summary>
         public FPVector3 offset { get; set; }
+        /// <summary>
+        /// 相对挂点的旋转 (欧拉角, 度)
+        /// </summary>
+        public FPVector3 rotate { get; set; }
         /// <summary>
         /// 缩放
         /// </summary>
@@ -53,10 +53,10 @@ namespace GameLogic.Gameplay.Logic
         {
             id = 0;
             fx = 0;
-            sound = 0;
             anchor = null;
             follow = false;
             offset = FPVector3.Zero;
+            rotate = FPVector3.Zero;
             scale = FP.One;
             elapsed = FP.Zero;
             duration = FP.Zero;

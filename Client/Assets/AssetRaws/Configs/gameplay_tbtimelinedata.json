@@ -137,6 +137,27 @@
           "CanMove": false,
           "ApplyMotion": true
         }
+      },
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "EffectEvent",
+          "fx": 30001,
+          "anchor": "Center",
+          "follow": true,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "rotate": [
+            0,
+            150,
+            0
+          ],
+          "scale": 1,
+          "duration": 2
+        }
       }
     ]
   }

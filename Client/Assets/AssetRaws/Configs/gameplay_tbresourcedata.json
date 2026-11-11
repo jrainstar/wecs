@@ -14,5 +14,9 @@
   {
     "id": 20002,
     "path": "Assets/AssetRaws/Prefabs/Role/Ya.prefab"
+  },
+  {
+    "id": 30001,
+    "path": "Assets/AssetRaws/Prefabs/Effect/Effect_Sword_Slash_1.prefab"
   }
 ]

@@ -8,7 +8,6 @@ namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// 特效节点, 一个逻辑特效对应一个节点
-    /// fx 为 0 时节点只承载音效, 没有 GameObject
     /// </summary>
     public class EffectNode
     {
@@ -202,9 +201,6 @@ namespace GameLogic.Gameplay.View
             node.lastelapsed = node.elapsed;
             node.duration = effect.duration.AsFloat();
 
-            // 音效只在特效创建时播一次
-            PlaySound(effect.sound);
-
             if (effect.fx > 0) LoadEffect(node, effect);
 
             return node;
@@ -239,19 +235,20 @@ namespace GameLogic.Gameplay.View
             controller.Reset();
 
             var offset = effect.offset.ToVector3();
+            var rotate = Quaternion.Euler(effect.rotate.ToVector3());
             if (effect.follow)
             {
-                // 跟随: 挂成骨骼的子节点, 位置/旋转由骨骼带动
+                // 跟随: 挂成骨骼的子节点, 位置/旋转由骨骼带动, rotate 为相对骨骼的局部旋转
                 go.transform.SetParent(anchor, false);
                 go.transform.localPosition = offset;
-                go.transform.localRotation = Quaternion.identity;
+                go.transform.localRotation = rotate;
             }
             else
             {
-                // 不跟随: 只取创建瞬间挂点的世界位置, 之后留在原地
+                // 不跟随: 只取创建瞬间挂点的世界位置, 之后留在原地, rotate 叠加在挂点朝向上
                 go.transform.SetParent(world.root.transform, true);
                 go.transform.position = anchor.TransformPoint(offset);
-                go.transform.rotation = anchor.rotation;
+                go.transform.rotation = anchor.rotation * rotate;
             }
             go.transform.localScale = Vector3.one * effect.scale.AsFloat();
             go.SetActive(true);
@@ -299,26 +296,6 @@ namespace GameLogic.Gameplay.View
 
             node.Reset();
             ObjectPool.Set(node);
-        }
-
-        /// <summary>
-        /// 播发音效
-        /// </summary>
-        /// <param name="sound">音效资源编号</param>
-        private void PlaySound(int sound)
-        {
-            if (sound <= 0) return;
-            if (null == world.engine || null == world.engine.config) return;
-            if (false == ResourceUtil.TryGetPath(world.engine.config.location, sound, out var path))
-            {
-                Debug.LogWarning($"VisualEvent: sound {sound} is not exist.");
-                return;
-            }
-
-            var module = SoundModule.Instance;
-            if (null == module) return;
-
-            module.PlaySound(path);
         }
 
         /// <summary>

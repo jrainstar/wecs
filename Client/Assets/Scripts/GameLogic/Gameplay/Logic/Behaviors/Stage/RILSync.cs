@@ -53,7 +53,7 @@ namespace GameLogic.Gameplay.Logic
             Translator<StateMachineTranslator, StateMachineInfo>();
             Translator<FacadeModelTranslator, FacadeInfo>();
             Translator<FacadeAnimationTranslator, FacadeInfo>();
-            Translator<EffectTranslator, EffectInfo>();
+            Translator<FacadeEffectTranslator, EffectInfo>();
         }
         private void Translator<T, E>() where T : Translator, new() where E : BehaviorInfo
         {
