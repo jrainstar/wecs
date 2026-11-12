@@ -46,7 +46,7 @@ namespace GameLogic
 
         private void InitHero()
         {
-            m_RoleDatas = TableModule.Instance.Tables.TbRoleData.DataList.ToList();
+            m_RoleDatas = ConfigManager.Instance.Tables.TbRoleData.DataList.ToList();
 
             if (m_RoleDatas == null || m_RoleDatas.Count == 0)
             {

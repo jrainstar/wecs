@@ -83,10 +83,10 @@ namespace GameLogic
         public void SetData(RoleData roleData)
         {
             var modelId = roleData.ModelId;
-            var modelData = TableModule.Instance.Tables.TbRoleModel.Get(modelId);
+            var modelData = ConfigManager.Instance.Tables.TbRoleModel.Get(modelId);
             if (null == modelData) return;
             // 模型表里存的是资源编号, 实际加载用的是资源路径
-            if (false == ResourceUtil.TryGetPath(TableModule.Instance.Tables, modelData.Model, out var modelpath)) return;
+            if (false == ResourceUtil.TryGetPath(ConfigManager.Instance.Tables, modelData.Model, out var modelpath)) return;
 
             if (m_RenderRole != null)
             {

@@ -40,7 +40,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
-            location = TableModule.Instance.Tables;
+            location = ConfigManager.Instance.Tables;
         }
 #endif
     }

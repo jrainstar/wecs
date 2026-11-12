@@ -42,18 +42,18 @@ namespace GameLogic
             if (cid == 0)
             {
                 // 先取第一个~（后续可改为默认角色配置）
-                var allData = TableModule.Instance.Tables.TbRoleData.DataList;
+                var allData = ConfigManager.Instance.Tables.TbRoleData.DataList;
                 if (allData == null || allData.Count == 0) return;
                 cid = allData[0].Id;
             }
 
-            var roleData = TableModule.Instance.Tables.TbRoleData.Get(cid);
+            var roleData = ConfigManager.Instance.Tables.TbRoleData.Get(cid);
             if (roleData == null) return;
 
-            var modelData = TableModule.Instance.Tables.TbRoleModel.Get(roleData.ModelId);
+            var modelData = ConfigManager.Instance.Tables.TbRoleModel.Get(roleData.ModelId);
             if (modelData == null) return;
             // 模型表里存的是资源编号, 实际加载用的是资源路径
-            if (false == ResourceUtil.TryGetPath(TableModule.Instance.Tables, modelData.Model, out var modelpath)) return;
+            if (false == ResourceUtil.TryGetPath(ConfigManager.Instance.Tables, modelData.Model, out var modelpath)) return;
 
             ReleaseModel();
 
