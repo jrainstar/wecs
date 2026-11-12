@@ -13,12 +13,6 @@ namespace GameFrame
 
         public bool IsLoading => m_IsLoading;
 
-        protected override void DynamicAwake()
-        {
-            base.DynamicAwake();
-            transform.parent = GameModules.Instance.transform;
-        }
-
         public async UniTask LoadSceneAsync(string sceneName)
         {
             if (m_IsLoading) return;

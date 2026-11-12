@@ -10,12 +10,6 @@ namespace GameFrame
     {
         private readonly EventPool m_EventPool = new();
 
-        protected override void DynamicAwake()
-        {
-            base.DynamicAwake();
-            transform.parent = GameModules.Instance.transform;
-        }
-
         public bool Check(uint id, Action<object> handler)
         {
             return m_EventPool.Check(id, handler);

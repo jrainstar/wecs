@@ -41,10 +41,9 @@ namespace GameFrame
 
                         if (m_Instance == null)
                         {
-                            GameObject singletonObject = new GameObject();
+                            GameObject singletonObject = new GameObject(typeof(T).Name);
                             m_Instance = singletonObject.AddComponent<T>();
                             m_Instance.DynamicAwake();
-                            singletonObject.name = typeof(T).Name;
                             // 可选：让单例对象在场景切换时不被销毁
                             //DontDestroyOnLoad(singletonObject);
                         }
@@ -55,10 +54,22 @@ namespace GameFrame
             }
         }
 
+        /// <summary>
+        /// 动态创建时的初始化（仅 Instance 自动创建时调用），默认挂到 GameModules 节点下。
+        /// </summary>
         protected virtual void DynamicAwake()
         {
-            var module = new GameObject(typeof(T).Name);
-            module.transform.parent = GameModules.Instance.transform;
+            // GameModules 自身的挂点就是自己，避免把自己 parent 给自己
+            if (this is GameModules)
+            {
+                return;
+            }
+
+            GameModules modules = GameModules.Instance;
+            if (modules != null)
+            {
+                transform.SetParent(modules.transform, false);
+            }
         }
 
         protected override void Awake()

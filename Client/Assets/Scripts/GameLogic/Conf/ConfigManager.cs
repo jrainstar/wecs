@@ -30,12 +30,6 @@ namespace GameLogic
             }
         }
 
-        protected override void DynamicAwake()
-        {
-            base.DynamicAwake();
-            transform.parent = GameModules.Instance.transform;
-        }
-
         /// <summary>
         /// 加载配置。
         /// </summary>
