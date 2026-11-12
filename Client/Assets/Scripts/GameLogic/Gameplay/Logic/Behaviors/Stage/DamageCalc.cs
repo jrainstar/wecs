@@ -25,13 +25,31 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>本次命中伤害, 配置为空返回 0</returns>
         public FP Calc(DamageEvent e, ulong caster, ulong target)
         {
+            return Calc(e, caster, target, out _);
+        }
+
+        /// <summary>
+        /// 计算单次命中的伤害, 同时回传是否暴击 (跳字要用)
+        /// </summary>
+        /// <param name="e">伤害配置</param>
+        /// <param name="caster">施法者</param>
+        /// <param name="target">目标</param>
+        /// <param name="crit">是否暴击</param>
+        /// <returns>本次命中伤害, 配置为空返回 0</returns>
+        public FP Calc(DamageEvent e, ulong caster, ulong target, out bool crit)
+        {
+            crit = false;
             if (null == e) return FP.Zero;
 
             // 基础伤害: 固定值 + 施法者加成属性 * 加成系数
             var value = (FP)e.Damage + Scale(caster, e.AttackType) * ((FP)e.AttackRate / (FP)DAMAGE_DEFINE.RATE);
 
             // 暴击
-            if (e.CanCrit && Crit(caster)) value *= (FP)DAMAGE_DEFINE.CRIT_DAMAGE;
+            if (e.CanCrit && Crit(caster))
+            {
+                crit = true;
+                value *= (FP)DAMAGE_DEFINE.CRIT_DAMAGE;
+            }
 
             // 减伤, 真实伤害无视防御
             if (DamageType.True != e.Type)
@@ -60,7 +78,12 @@ namespace GameLogic.Gameplay.Logic
             // 多段命中, 每段单独判定暴击
             var hits = e.HitCount > 0 ? e.HitCount : 1;
             var total = FP.Zero;
-            for (int i = 0; i < hits; i++) total += Calc(e, caster, target);
+            var crit = false;
+            for (int i = 0; i < hits; i++)
+            {
+                total += Calc(e, caster, target, out var result);
+                crit |= result;
+            }
             if (total <= FP.Zero) return FP.Zero;
 
             // 当前生命是状态值, 直接写基础值, 不走修正
@@ -70,6 +93,15 @@ namespace GameLogic.Gameplay.Logic
             if (maxhp > FP.Zero && hp > maxhp) hp = maxhp;
 
             calc.SetBase(ATTRIBUTE_DEFINE.HP, hp);
+
+            // 伤害跳字: 走一次性 RIL 事件, 渲染层只做表现, 不影响逻辑与回滚
+            var message = RILCache.Ensure<RIL_EVENT_DAMAGE>();
+            message.from = caster;
+            message.to = target;
+            message.crit = crit;
+            message.damage = total.AsInt();
+
+            stage.rilsync.Send(message);
 
             return total;
         }

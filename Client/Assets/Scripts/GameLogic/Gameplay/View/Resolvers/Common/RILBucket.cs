@@ -116,6 +116,7 @@ namespace GameLogic.Gameplay.View
                 salutedict.Add(id, salute);
             }
 
+            Salute<DamageSalute>(RIL_DEFINE.EVENT_DAMAGE);
         }
 
         /// <summary>

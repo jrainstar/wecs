@@ -88,7 +88,7 @@ namespace GameLogic.Gameplay.Logic
 
             while (eventqueue.TryDequeue(out var e))
             {
-                ObjectCache.Set(e);
+                RILCache.Set(e);
             }
             eventqueue.Clear();
 
@@ -268,7 +268,8 @@ namespace GameLogic.Gameplay.Logic
             while (eventqueue.TryDequeue(out var e))
             {
                 var clone = e.Clone(RILCache.Ensure(e.GetType()) as IRIL_EVENT);
-                ObjectCache.Set(e);
+                // 原对象是从 RILCache 取的, 必须还回 RILCache, 否则每帧都新建
+                RILCache.Set(e);
 
                 stage.onevent?.Invoke(clone);
             }
