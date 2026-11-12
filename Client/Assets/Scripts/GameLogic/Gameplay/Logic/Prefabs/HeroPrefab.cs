@@ -1,7 +1,4 @@
-using Codice.CM.Common;
 using GameLogic.Gameplay.Common;
-using System.Collections.Generic;
-using UnityEditorInternal;
 
 namespace GameLogic.Gameplay.Logic
 {
@@ -31,6 +28,11 @@ namespace GameLogic.Gameplay.Logic
         {
             stage.AddBehavior<StateMachine>(actor);
             stage.AddBehavior<Movement>(actor);
+
+            // 数值计算, 角色的属性都由它统一算
+            // 基础值/修正暂时还没有数据源 (等接 RoleData 与 BUFF), 先挂上空的信息占位,
+            // 其它行为现在就可以按 AttributeCalc.Get(ATTRIBUTE_DEFINE.XXX) 的接口取值
+            stage.AddBehavior<AttributeCalc>(actor);
 
             // 技能学习, 按英雄 ID 从 TbRoleSkill 读取该角色的技能列表并逐个载入
             var launcher = stage.AddBehavior<SkillLauncher>(actor);
