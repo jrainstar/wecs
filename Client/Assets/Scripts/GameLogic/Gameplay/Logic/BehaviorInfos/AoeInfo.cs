@@ -1,4 +1,5 @@
 using GameLogic.Gameplay.Common;
+using System.Collections.Generic;
 
 namespace GameLogic.Gameplay.Logic
 {
@@ -67,29 +68,35 @@ namespace GameLogic.Gameplay.Logic
         /// 是否已释放, 延迟结束才挂上外观与碰撞盒
         /// </summary>
         public bool released { get; set; }
+        /// <summary>
+        /// 配置了哪些触发时机 (AoeTrigger 位掩码)
+        /// 用来决定要不要做每帧重叠检测, 纯表现 AOE 保持为 0, 不产生任何检测开销
+        /// </summary>
+        public ushort triggers { get; set; }
+        /// <summary>
+        /// 周期触发累计时间
+        /// </summary>
+        public FP tickelapsed { get; set; }
+        /// <summary>
+        /// 上一帧的重叠目标, 用于判定进入/离开
+        /// </summary>
+        public List<ulong> overlaps { get; set; }
 
         protected override void OnReady()
         {
-            OnReset();
+            Reset();
+            overlaps = ObjectCache.Ensure<List<ulong>>();
         }
 
         protected override void OnReset()
         {
-            id = 0;
-            caster = 0;
-            track = 0;
-            speed = 0;
-            delay = FP.Zero;
-            duration = FP.Zero;
-            elapsed = FP.Zero;
-            distance = FP.Zero;
-            origin = FPVector3.zero;
-            center = FPVector3.zero;
-            forward = FPVector3.forward;
-            right = FPVector3.right;
-            direction = FPVector3.forward;
-            target = 0;
-            released = false;
+            Reset();
+            if (null != overlaps)
+            {
+                overlaps.Clear();
+                ObjectCache.Set(overlaps);
+                overlaps = null;
+            }
         }
 
         protected override BehaviorInfo OnClone()
@@ -112,8 +119,39 @@ namespace GameLogic.Gameplay.Logic
             clone.direction = direction;
             clone.target = target;
             clone.released = released;
+            clone.triggers = triggers;
+            clone.tickelapsed = tickelapsed;
+
+            if (null != overlaps && null != clone.overlaps)
+            {
+                foreach (var id in overlaps) clone.overlaps.Add(id);
+            }
 
             return clone;
+        }
+
+        /// <summary>
+        /// 重置标量字段
+        /// </summary>
+        private void Reset()
+        {
+            id = 0;
+            caster = 0;
+            track = 0;
+            speed = 0;
+            delay = FP.Zero;
+            duration = FP.Zero;
+            elapsed = FP.Zero;
+            distance = FP.Zero;
+            origin = FPVector3.zero;
+            center = FPVector3.zero;
+            forward = FPVector3.forward;
+            right = FPVector3.right;
+            direction = FPVector3.forward;
+            target = 0;
+            released = false;
+            triggers = 0;
+            tickelapsed = FP.Zero;
         }
     }
 }

@@ -1,5 +1,6 @@
 using GameConf.Gameplay;
 using GameLogic.Gameplay.Common;
+using System.Collections.Generic;
 
 namespace GameLogic.Gameplay.Logic
 {
@@ -41,13 +42,16 @@ namespace GameLogic.Gameplay.Logic
                 collider.layer = COLLISION_DEFINE.LAYER_AOE;
                 collider.mass = -FP.One;
             }
+
+            // 创建触发: 出生时对范围内的单位结算一次
+            Trigger(aoe, data, AoeTrigger.Create);
         }
 
         protected override void OnTick(FP tick)
         {
             base.OnTick(tick);
 
-            if (false == Config(out _))
+            if (false == Config(out var data))
             {
                 // 配置不存在 (漏配/配置热更), 直接销毁, 不留下空转的 Actor
                 stage.RmvActor(actor);
@@ -80,9 +84,14 @@ namespace GameLogic.Gameplay.Logic
             QueryTrack(aoe.track, out var track);
             Apply(aoe, track, spatial, step);
 
+            // 先移动再结算, 保证触发用的是本帧位置
+            Triggers(aoe, data, tick);
+
             // 到达存在时长即销毁, 也就是轨道终点
             if (aoe.duration > FP.Zero && aoe.elapsed >= aoe.duration)
             {
+                // 销毁触发: AOE 消失前最后结算一次
+                Trigger(aoe, data, AoeTrigger.Destroy);
                 stage.RmvActor(actor);
             }
         }
@@ -122,6 +131,173 @@ namespace GameLogic.Gameplay.Logic
             if (motion.sqrmagnitude > FPMath.Epsilon) aoe.direction = motion.normalized;
 
             spatial.euler = FPVector3.up * (FPMath.Atan2(aoe.direction.x, aoe.direction.z) * FPMath.Rad2Deg);
+        }
+
+        /// <summary>
+        /// 结算需要持续跟踪的触发: 进入 / 离开 / 周期
+        /// 每帧只做一次重叠检测, 三种触发共用同一份结果
+        /// </summary>
+        /// <param name="aoe">AOE 信息</param>
+        /// <param name="data">AOE 配置</param>
+        /// <param name="tick">步长</param>
+        private void Triggers(AoeInfo aoe, AoeData data, FP tick)
+        {
+            var enter = Has(aoe, AoeTrigger.Enter);
+            var leave = Has(aoe, AoeTrigger.Leave);
+            var period = Has(aoe, AoeTrigger.Tick);
+            // 只配了创建/销毁的 AOE 每帧不做检测, 纯表现 AOE 完全零开销
+            if (false == enter && false == leave && false == period) return;
+
+            List<ulong> currents = Collect(aoe);
+            if (null == currents) return;
+
+            if (enter)
+            {
+                foreach (var target in currents)
+                {
+                    if (aoe.overlaps.Contains(target)) continue;
+
+                    Fire(aoe, data, AoeTrigger.Enter, target);
+                }
+            }
+
+            if (leave)
+            {
+                foreach (var target in aoe.overlaps)
+                {
+                    if (currents.Contains(target)) continue;
+
+                    Fire(aoe, data, AoeTrigger.Leave, target);
+                }
+            }
+
+            if (period) Period(aoe, data, tick, currents);
+
+            // 记录本帧重叠, 供下一帧比较
+            aoe.overlaps.Clear();
+            foreach (var target in currents) aoe.overlaps.Add(target);
+
+            currents.Clear();
+            ObjectCache.Set(currents);
+        }
+
+        /// <summary>
+        /// 周期触发
+        /// 到点只补一次, 卡帧时不连续爆发多段
+        /// </summary>
+        /// <param name="aoe">AOE 信息</param>
+        /// <param name="data">AOE 配置</param>
+        /// <param name="tick">步长</param>
+        /// <param name="targets">当前重叠目标</param>
+        private void Period(AoeInfo aoe, AoeData data, FP tick, List<ulong> targets)
+        {
+            var period = (FP)data.TickTime;
+            if (period < FP.Zero) period = FP.Zero;
+
+            aoe.tickelapsed += tick;
+            if (aoe.tickelapsed < period) return;
+
+            aoe.tickelapsed -= period;
+            if (aoe.tickelapsed < FP.Zero) aoe.tickelapsed = FP.Zero;
+
+            foreach (var target in targets) Fire(aoe, data, AoeTrigger.Tick, target);
+        }
+
+        /// <summary>
+        /// 一次性触发: 立即结算当前范围内的所有目标
+        /// </summary>
+        /// <param name="aoe">AOE 信息</param>
+        /// <param name="data">AOE 配置</param>
+        /// <param name="trigger">触发时机</param>
+        private void Trigger(AoeInfo aoe, AoeData data, AoeTrigger trigger)
+        {
+            if (false == Has(aoe, trigger)) return;
+
+            List<ulong> targets = Collect(aoe);
+            if (null == targets)
+            {
+                // 没有碰撞盒就没有作用范围, 只派发一次无目标负载, 让表现类效果照常执行
+                Fire(aoe, data, trigger, 0);
+                return;
+            }
+
+            foreach (var target in targets) Fire(aoe, data, trigger, target);
+
+            targets.Clear();
+            ObjectCache.Set(targets);
+        }
+
+        /// <summary>
+        /// 收集当前与 AOE 重叠的目标
+        /// </summary>
+        /// <param name="aoe">AOE 信息</param>
+        /// <returns>目标集合, 用完必须清空并归还对象池; 没有碰撞盒时返回 null</returns>
+        private List<ulong> Collect(AoeInfo aoe)
+        {
+            if (false == stage.SeekBehaviorInfo(actor, out ColliderInfo collider)) return null;
+
+            var targets = ObjectCache.Ensure<List<ulong>>();
+
+            var hit = stage.detection.Overlap(collider);
+            if (false == hit.hit || null == hit.colliders) return targets;
+
+            foreach (var c in hit.colliders)
+            {
+                if (Skip(aoe, c.actor)) continue;
+
+                targets.Add(c.actor);
+            }
+
+            return targets;
+        }
+
+        /// <summary>
+        /// 是否跳过该目标: 自身与施法者不参与结算
+        /// </summary>
+        /// <param name="aoe">AOE 信息</param>
+        /// <param name="target">目标</param>
+        /// <returns>YES/NO</returns>
+        private bool Skip(AoeInfo aoe, ulong target)
+        {
+            if (0 == target) return true;
+            if (target == actor) return true;
+            if (0 != aoe.caster && target == aoe.caster) return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// 派发指定触发时机的负载
+        /// </summary>
+        /// <param name="aoe">AOE 信息</param>
+        /// <param name="data">AOE 配置</param>
+        /// <param name="trigger">触发时机</param>
+        /// <param name="target">目标, 0 表示没有目标</param>
+        private void Fire(AoeInfo aoe, AoeData data, AoeTrigger trigger, ulong target)
+        {
+            if (null == data.Events) return;
+
+            foreach (var e in data.Events)
+            {
+                if (null == e) continue;
+                if (e.Trigger != trigger) continue;
+                if (0 >= e.PayloadId) continue;
+
+                stage.payload.Play(e.PayloadId, aoe.caster, target);
+            }
+        }
+
+        /// <summary>
+        /// 是否配置了指定触发时机
+        /// </summary>
+        /// <param name="aoe">AOE 信息</param>
+        /// <param name="trigger">触发时机</param>
+        /// <returns>YES/NO</returns>
+        private static bool Has(AoeInfo aoe, AoeTrigger trigger)
+        {
+            if (null == aoe) return false;
+
+            return 0 != (aoe.triggers & (1 << (int)trigger));
         }
 
         /// <summary>

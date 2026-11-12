@@ -40,6 +40,10 @@ namespace GameConf.Gameplay
         /// 移动速度
         /// </summary>
         MoveSpeed = 5,
+        /// <summary>
+        /// 防御
+        /// </summary>
+        Def = 6,
     }
 
 } 

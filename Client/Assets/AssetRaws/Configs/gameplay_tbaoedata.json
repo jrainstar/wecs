@@ -7,7 +7,12 @@
     "collider": 10004,
     "tick_time": 0.5,
     "duration": 5,
-    "events": []
+    "events": [
+      {
+        "trigger": 4,
+        "payload_id": 10001
+      }
+    ]
   },
   {
     "id": 20002,
@@ -17,6 +22,11 @@
     "collider": 10005,
     "tick_time": 1,
     "duration": 2.5,
-    "events": []
+    "events": [
+      {
+        "trigger": 2,
+        "payload_id": 10001
+      }
+    ]
   }
 ]

@@ -113,6 +113,16 @@ namespace GameLogic.Gameplay.Logic
         public Timeline timeline => GetBehavior<Timeline>(sa, true);
 
         /// <summary>
+        /// 伤害计算
+        /// </summary>
+        public DamageCalc damage => GetBehavior<DamageCalc>(sa, true);
+
+        /// <summary>
+        /// 配置负载派发
+        /// </summary>
+        public Payload payload => GetBehavior<Payload>(sa, true);
+
+        /// <summary>
         /// 渲染指令同步
         /// </summary>
         public RILSync rilsync => GetBehavior<RILSync>(sa, true);
@@ -206,6 +216,8 @@ namespace GameLogic.Gameplay.Logic
             AddBehavior<Random>(sa).Initialze(data.seed);
             AddBehavior<Detection>(sa);
             AddBehavior<Timeline>(sa);
+            AddBehavior<DamageCalc>(sa);
+            AddBehavior<Payload>(sa);
 
             AddBehavior<RILSync>(sa);
 

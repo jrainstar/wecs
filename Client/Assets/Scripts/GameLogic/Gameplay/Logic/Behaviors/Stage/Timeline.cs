@@ -101,7 +101,7 @@ namespace GameLogic.Gameplay.Logic
                 if (finish ? time > end : time >= end) continue;
                 // 执行器无状态, 事件作用于哪条时间轴通过 current 传递
                 current = timelineinfo;
-                HandleEvent(node.Event);
+                HandleEvent(node.Event, timelineinfo.caster, 0);
                 current = null;
             }
 
@@ -134,12 +134,14 @@ namespace GameLogic.Gameplay.Logic
         /// 派发时间轴事件
         /// </summary>
         /// <param name="timelineevent">时间轴事件</param>
-        private void HandleEvent(GameEvent timelineevent)
+        /// <param name="caster">施法者</param>
+        /// <param name="target">目标, 0 表示没有目标</param>
+        private void HandleEvent(GameEvent timelineevent, ulong caster, ulong target)
         {
             if (null == timelineevent) return;
             if (null == executordict) return;
             if (false == executordict.TryGetValue(timelineevent.GetType(), out var executor)) return;
-            executor.HandleEvent(timelineevent);
+            executor.HandleEvent(timelineevent, caster, target);
         }
 
         private void EnsureExecutors()

@@ -217,7 +217,7 @@
 	<var name="collider" type="int#ref=Gameplay.TbColliderData" alias="碰撞"/>
 	<var name="tick_time" type="float" alias="间隔时间"/>
 	<var name="duration" type="float" alias="存在时长" comment="AOE 的存在时间，也是飞行型 AOE 的轨道总时长；到点即销毁"/>
-	<var name="events" type="list,AoeTriggerData" alias="事件负载"/>
+	<var name="events" type="list,AoeTriggerData#sep=," alias="事件负载"/>
 </bean>
 
 <table name="TbAoeData" value="AoeData" input="gameplay/aoe.xlsx"/>
@@ -258,6 +258,7 @@
 	<var name="CurHp" alias="当前生命"/>
 	<var name="LostHp" alias="已损生命"/>
 	<var name="MoveSpeed" alias="移动速度"/>
+	<var name="Def" alias="防御"/>
 </enum>
 
 <bean name="MoudleData">

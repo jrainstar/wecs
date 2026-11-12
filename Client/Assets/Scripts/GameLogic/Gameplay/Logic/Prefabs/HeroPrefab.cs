@@ -26,13 +26,27 @@ namespace GameLogic.Gameplay.Logic
 
         protected override void OnProcessing(ulong actor, HeroPrefabInfo info)
         {
+            // 角色配置, 属性与碰撞盒都从这里取; 后面还要用, 只查一次
+            var hasrole = stage.cfg.location.TbRoleData.TryGetValue(info.hero, out var roledata);
+
             stage.AddBehavior<StateMachine>(actor);
             stage.AddBehavior<Movement>(actor);
 
             // 数值计算, 角色的属性都由它统一算
-            // 基础值/修正暂时还没有数据源 (等接 RoleData 与 BUFF), 先挂上空的信息占位,
-            // 其它行为现在就可以按 AttributeCalc.Get(ATTRIBUTE_DEFINE.XXX) 的接口取值
-            stage.AddBehavior<AttributeCalc>(actor);
+            // 表格里的数值直接作为基础值, 单位换算 (crit 是百分点, spd 是评分) 交给使用方解释;
+            // 之后接 BUFF/装备时只需要往 AttributeCalc 上加修正, 这里不用再改
+            var calc = stage.AddBehavior<AttributeCalc>(actor);
+            if (hasrole)
+            {
+                // 当前生命与最大生命同源, 之后掉血只改 HP
+                calc.SetBase(ATTRIBUTE_DEFINE.MAXHP, roledata.Hp);
+                calc.SetBase(ATTRIBUTE_DEFINE.HP, roledata.Hp);
+                calc.SetBase(ATTRIBUTE_DEFINE.ATTACK, roledata.Atk);
+                calc.SetBase(ATTRIBUTE_DEFINE.DEFENSE, roledata.Def);
+                calc.SetBase(ATTRIBUTE_DEFINE.MOVESPEED, roledata.Spd);
+                calc.SetBase(ATTRIBUTE_DEFINE.CRIT, roledata.Crit);
+                calc.SetBase(ATTRIBUTE_DEFINE.LUCK, roledata.Luck);
+            }
 
             // 技能学习, 按英雄 ID 从 TbRoleSkill 读取该角色的技能列表并逐个载入
             var launcher = stage.AddBehavior<SkillLauncher>(actor);
@@ -54,7 +68,7 @@ namespace GameLogic.Gameplay.Logic
 
             // 碰撞盒, 按英雄的角色配置载入; 同时用于检测与移动推挤
             var collider = stage.AddBehaviorInfo<ColliderInfo>(actor);
-            if (stage.cfg.location.TbRoleData.TryGetValue(info.hero, out var roledata))
+            if (hasrole)
             {
                 stage.detection.SetColliderInfo(collider, roledata.Collider);
             }

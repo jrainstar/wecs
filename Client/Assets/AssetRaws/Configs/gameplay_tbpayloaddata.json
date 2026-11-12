@@ -10,8 +10,8 @@
         "damage": 5,
         "attack_type": 1,
         "attack_rate": 50,
-        "defense_type": 0,
-        "defense_rate": 0,
+        "defense_type": 6,
+        "defense_rate": 100,
         "hit_count": 1,
         "can_crit": true
       }
