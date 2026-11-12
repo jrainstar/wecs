@@ -8,5 +8,15 @@
     "tick_time": 0.5,
     "duration": 5,
     "events": []
+  },
+  {
+    "id": 20002,
+    "name": "前进AOE",
+    "desc": "沿施法者朝向直线飞行, 飞行 duration 秒后消失",
+    "model": 20001,
+    "collider": 10005,
+    "tick_time": 1,
+    "duration": 2.5,
+    "events": []
   }
 ]

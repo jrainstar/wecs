@@ -190,6 +190,21 @@
           ],
           "delay": 0
         }
+      },
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "EmitterEvent",
+          "aoe": 20002,
+          "track": 10001,
+          "speed": 10001,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "delay": 0
+        }
       }
     ]
   }
