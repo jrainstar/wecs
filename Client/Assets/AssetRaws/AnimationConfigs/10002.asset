@@ -19,6 +19,8 @@ MonoBehaviour:
     name: Ani_Idle
   - state: 4
     name: Ani_Run
+  - state: 8
+    name: Ani_Hit_L_Front
   animationmixs:
   - name: Ani_Idle
     mixduration: 0.2

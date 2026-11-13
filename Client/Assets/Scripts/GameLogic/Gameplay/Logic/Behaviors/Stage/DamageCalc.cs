@@ -94,6 +94,13 @@ namespace GameLogic.Gameplay.Logic
 
             calc.SetBase(ATTRIBUTE_DEFINE.HP, hp);
 
+            // 受击反应: 目标进入受击状态并僵直 (打断技能/禁止移动与释放),
+            // 僵直时长由 DAMAGE_DEFINE.HIT_STUN 统一控制, 持续受击会刷新
+            if (stage.SeekBehavior(target, out StateMachine machine))
+            {
+                machine.Hit((FP)DAMAGE_DEFINE.HIT_STUN);
+            }
+
             // 伤害跳字: 走一次性 RIL 事件, 渲染层只做表现, 不影响逻辑与回滚
             var message = RILCache.Ensure<RIL_EVENT_DAMAGE>();
             message.from = caster;

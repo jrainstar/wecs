@@ -24,5 +24,11 @@ namespace GameLogic.Gameplay.Common
         /// 表格里百分比 (0~100) 换算成系数时的分母
         /// </summary>
         public const float RATE = 100f;
+        /// <summary>
+        /// 受击僵直时长 (秒)
+        /// 伤害结算后目标进入受击状态, 僵直期间不能移动/释放技能,
+        /// 期间再次受击会刷新该时长
+        /// </summary>
+        public const float HIT_STUN = 1f;
     }
 }

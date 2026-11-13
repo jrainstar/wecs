@@ -26,6 +26,35 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
+        /// 受击
+        /// 强制进入受击状态并僵直一段时间, 期间 PASSES 限制不能移动/释放技能;
+        /// 僵直结束自动中断状态, 由 Movement 在帧末切回待机/移动
+        /// </summary>
+        /// <param name="stun">僵直时长</param>
+        public void Hit(FP stun)
+        {
+            // 死亡后不再受击
+            if (STATE_DEFINE.DEATH == info.current) return;
+
+            // 打断正在释放的技能 (含技能时间轴表现), 否则技能会继续播完, 受击动作被压住
+            if (stage.SeekBehavior(actor, out SkillLauncher launcher)) launcher.Break();
+
+            ChangeState(STATE_DEFINE.BEHIT);
+
+            // 时间轴显式指定的动画 (AnimationExecutor 写的 animname) 会让 ChangeState 跳过动画切换,
+            // 受击动作优先级最高, 这里强制切到受击动画, 同时清掉时间轴留下的动画名
+            if (stage.SeekBehavior(actor, out Facade facade))
+            {
+                facade.SetAnimation(STATE_DEFINE.BEHIT);
+                // 受击动画只播一次, 播完停在末帧, 剩余僵直时间不再重复播放
+                facade.SetAnimationLoop(false);
+            }
+
+            // 僵直计时, 到点自动中断; 持续受击会不断刷新这个时长
+            Break(stun);
+        }
+
+        /// <summary>
         /// 尝试切换状态
         /// </summary>
         /// <param name="state">状态</param>

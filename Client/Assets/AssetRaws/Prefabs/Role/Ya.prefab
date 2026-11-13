@@ -5035,6 +5035,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: e1224d91254fd8c4b9899593633e2453, type: 2}
   - {fileID: 7400000, guid: d29e1db749202bd47b302814083c95d5, type: 2}
   - {fileID: 7400000, guid: 3c726315d92e445439af8ccbbe598579, type: 2}
+  - {fileID: 7400000, guid: ca4538ae6147944629432dc82b88ea49, type: 2}
   _RootBone: {fileID: -4166477018917084323}
   _DefaultLockRoot: 0
 --- !u!1 &939689466627408884

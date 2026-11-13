@@ -15,6 +15,9 @@ namespace GameLogic.Gameplay.Logic
         public static List<Type> TICK_TYPE_LIST { get; private set; } = new()
         {            
             typeof(Gamepad),
+            // 状态机只做僵直计时 (延迟中断), 必须排在 Movement 之前:
+            // 僵直结束的当帧就能被 Movement 接管, 少一帧输入延迟
+            typeof(StateMachine),
             typeof(Detection),
             typeof(Movement),
             typeof(Timeline),
