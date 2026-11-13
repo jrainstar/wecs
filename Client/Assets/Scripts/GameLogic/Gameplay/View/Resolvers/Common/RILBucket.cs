@@ -134,6 +134,7 @@ namespace GameLogic.Gameplay.View
             }
             
             Enchant<NodeBinder>(RIL_DEFINE.SPATIAL);
+            Enchant<AttributeBinder>(RIL_DEFINE.ATTRIBUTE);
             Enchant<ModelBinder>(RIL_DEFINE.FACADE_MODEL);
             Enchant<AnimationBinder>(RIL_DEFINE.FACADE_ANIMATION);
             Enchant<EffectBinder>(RIL_DEFINE.FACADE_EFFECT);

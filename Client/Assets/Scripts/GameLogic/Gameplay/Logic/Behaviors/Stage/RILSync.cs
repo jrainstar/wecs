@@ -51,6 +51,7 @@ namespace GameLogic.Gameplay.Logic
             Translator<SpatialTranslator, SpatialInfo>();
             Translator<ActorTranslator, StageInfo>();
             Translator<StateMachineTranslator, StateMachineInfo>();
+            Translator<AttributeTranslator, AttributeCalcInfo>();
             Translator<FacadeModelTranslator, FacadeInfo>();
             Translator<FacadeAnimationTranslator, FacadeInfo>();
             Translator<FacadeEffectTranslator, EffectInfo>();
