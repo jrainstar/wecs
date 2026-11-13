@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 代理赋能, 根据状态信息, 添加 Agent/移除 Agent
     /// </summary>
-    public abstract class AgentEnchant : Comp
+    public abstract class AgentBinder : Comp
     {
         /// <summary>
         /// 数据状态桶
@@ -18,7 +18,7 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         /// <param name="rilbucket">数据状态桶</param>
         /// <returns>代理赋能</returns>
-        public AgentEnchant Initialize(RILBucket rilbucket)
+        public AgentBinder Initialize(RILBucket rilbucket)
         {
             this.rilbucket = rilbucket;
 
@@ -56,7 +56,7 @@ namespace GameLogic.Gameplay.View
     /// 代理赋能, 根据状态信息, 添加 Agent/移除 Agent, 进行业务
     /// </summary>
     /// <typeparam name="T">数据状态类型</typeparam>
-    public abstract class AgentEnchant<T> : AgentEnchant where T : IRIL
+    public abstract class AgentBinder<T> : AgentBinder where T : IRIL
     {
         /// <summary>
         /// 处理数据状态

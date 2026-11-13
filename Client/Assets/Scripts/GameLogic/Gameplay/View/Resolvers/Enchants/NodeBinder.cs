@@ -5,7 +5,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 节点代理赋能, 有空间状态时创建节点代理
     /// </summary>
-    public class NodeEnchant : AgentEnchant<RIL_SPATIAL>
+    public class NodeBinder : AgentBinder<RIL_SPATIAL>
     {
         protected override void OnRIL(RIL_SPATIAL ril)
         {

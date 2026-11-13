@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// RIL 合并器
     /// </summary>
-    public abstract class RILCross : Comp
+    public abstract class RILMerger : Comp
     {
         /// <summary>
         /// 数据状态桶
@@ -18,7 +18,7 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         /// <param name="rilbucket">数据状态桶</param>
         /// <returns>RIL 合并器</returns>
-        public RILCross Initialize(RILBucket rilbucket)
+        public RILMerger Initialize(RILBucket rilbucket)
         {
             this.rilbucket = rilbucket;
 
@@ -51,7 +51,7 @@ namespace GameLogic.Gameplay.View
     /// </summary>
     /// <typeparam name="T">数据状态类型</typeparam>
     /// <typeparam name="E">差异的数据状态类型</typeparam>
-    public abstract class RILCross<T, E> : RILCross where T : IRIL where E : IRIL_DIFF
+    public abstract class RILMerger<T, E> : RILMerger where T : IRIL where E : IRIL_DIFF
     {
         /// <summary>
         /// 合并移除的数据状态

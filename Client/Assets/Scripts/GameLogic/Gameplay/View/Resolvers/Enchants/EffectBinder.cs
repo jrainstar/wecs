@@ -5,7 +5,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 特效代理赋能
     /// </summary>
-    public class EffectEnchant : AgentEnchant<RIL_FACADE_EFFECT>
+    public class EffectBinder : AgentBinder<RIL_FACADE_EFFECT>
     {
         protected override void OnRIL(RIL_FACADE_EFFECT ril)
         {

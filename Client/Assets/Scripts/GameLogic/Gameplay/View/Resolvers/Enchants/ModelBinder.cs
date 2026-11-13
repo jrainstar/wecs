@@ -5,7 +5,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 模型代理的赋能
     /// </summary>
-    public class ModelEnchant : AgentEnchant<RIL_FACADE_MODEL>
+    public class ModelBinder : AgentBinder<RIL_FACADE_MODEL>
     {
         protected override void OnRIL(RIL_FACADE_MODEL ril)
         {

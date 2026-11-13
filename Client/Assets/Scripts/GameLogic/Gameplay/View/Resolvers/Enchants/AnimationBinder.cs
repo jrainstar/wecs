@@ -7,7 +7,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 动画代理赋能
     /// </summary>
-    public class AnimationEnchant : AgentEnchant<RIL_FACADE_ANIMATION>
+    public class AnimationBinder : AgentBinder<RIL_FACADE_ANIMATION>
     {
         protected override void OnRIL(RIL_FACADE_ANIMATION ril)
         {

@@ -29,15 +29,15 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// RIL 合并器集合
         /// </summary>
-        private Dictionary<ushort, RILCross> crossdict { get; set; }
+        private Dictionary<ushort, RILMerger> crossdict { get; set; }
         /// <summary>
         /// RILSalute 集合
         /// </summary>
-        private Dictionary<ushort, RILSalute> salutedict { get; set; }
+        private Dictionary<ushort, RILEventHandler> salutedict { get; set; }
         /// <summary>
         /// Agent 赋能集合
         /// </summary>
-        private Dictionary<ushort, List<AgentEnchant>> enchantdict { get; set; }
+        private Dictionary<ushort, List<AgentBinder>> enchantdict { get; set; }
 
         protected override void OnCreate()
         {
@@ -91,15 +91,15 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private void Cross()
         {
-            crossdict = ObjectPool.Ensure<Dictionary<ushort, RILCross>>();
-            void Cross<T>(ushort id) where T : RILCross, new()
+            crossdict = ObjectPool.Ensure<Dictionary<ushort, RILMerger>>();
+            void Cross<T>(ushort id) where T : RILMerger, new()
             {
                 var cross = AddComp<T>().Initialize(this);
                 cross.Create();
                 crossdict.Add(id, cross);
             }
             
-            Cross<ActorCross>(RIL_DEFINE.ACTOR);
+            Cross<ActorMerger>(RIL_DEFINE.ACTOR);
 
         }
 
@@ -108,8 +108,8 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private void Salutes()
         {
-            salutedict = ObjectPool.Ensure<Dictionary<ushort, RILSalute>>();
-            void Salute<T>(ushort id) where T : RILSalute, new()
+            salutedict = ObjectPool.Ensure<Dictionary<ushort, RILEventHandler>>();
+            void Salute<T>(ushort id) where T : RILEventHandler, new()
             {
                 var salute = AddComp<T>().Initialize(this);
                 salute.Create();
@@ -124,19 +124,19 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private void Enchants()
         {
-            enchantdict = ObjectPool.Ensure<Dictionary<ushort, List<AgentEnchant>>>();
-            void Enchant<T>(ushort id) where T : AgentEnchant, new()
+            enchantdict = ObjectPool.Ensure<Dictionary<ushort, List<AgentBinder>>>();
+            void Enchant<T>(ushort id) where T : AgentBinder, new()
             {
                 var enchant = AddComp<T>().Initialize(this);
                 enchant.Create();
-                if (false == enchantdict.TryGetValue(id, out var list)) enchantdict.Add(id, list = ObjectPool.Ensure<List<AgentEnchant>>());
+                if (false == enchantdict.TryGetValue(id, out var list)) enchantdict.Add(id, list = ObjectPool.Ensure<List<AgentBinder>>());
                 list.Add(enchant);
             }
             
-            Enchant<NodeEnchant>(RIL_DEFINE.SPATIAL);
-            Enchant<ModelEnchant>(RIL_DEFINE.FACADE_MODEL);
-            Enchant<AnimationEnchant>(RIL_DEFINE.FACADE_ANIMATION);
-            Enchant<EffectEnchant>(RIL_DEFINE.FACADE_EFFECT);
+            Enchant<NodeBinder>(RIL_DEFINE.SPATIAL);
+            Enchant<ModelBinder>(RIL_DEFINE.FACADE_MODEL);
+            Enchant<AnimationBinder>(RIL_DEFINE.FACADE_ANIMATION);
+            Enchant<EffectBinder>(RIL_DEFINE.FACADE_EFFECT);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace GameLogic.Gameplay.View
         /// <param name="e">RIL 事件</param>
         public void SetEvent(IRIL_EVENT e)
         {
-            if (salutedict.TryGetValue(e.id, out var salute)) salute.Salute(e);
+            if (salutedict.TryGetValue(e.id, out var salute)) salute.Handle(e);
             e.Reset();
             RILCache.Set(e);
         }

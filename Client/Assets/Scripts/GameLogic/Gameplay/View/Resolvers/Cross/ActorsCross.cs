@@ -5,7 +5,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 渲染指令/单位合并器
     /// </summary>
-    public class ActorCross : RILCross<RIL_ACTOR, RIL_DIFF_ACTOR>
+    public class ActorMerger : RILMerger<RIL_ACTOR, RIL_DIFF_ACTOR>
     {
         protected override void OnHasDel(RIL_ACTOR ril, RIL_DIFF_ACTOR diff)
         {

@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// RIL 事件处理器
     /// </summary>
-    public abstract class RILSalute : Comp
+    public abstract class RILEventHandler : Comp
     {
         /// <summary>
         /// 数据状态桶
@@ -18,7 +18,7 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         /// <param name="rilbucket">数据状态桶</param>
         /// <returns>RIL 事件处理器</returns>
-        public RILSalute Initialize(RILBucket rilbucket)
+        public RILEventHandler Initialize(RILBucket rilbucket)
         {
             this.rilbucket = rilbucket;
 
@@ -29,7 +29,7 @@ namespace GameLogic.Gameplay.View
         /// 处理 RIL 事件
         /// </summary>
         /// <param name="e">RIL 事件</param>
-        public virtual void Salute(IRIL_EVENT e)
+        public virtual void Handle(IRIL_EVENT e)
         {
         }
     }
@@ -38,15 +38,15 @@ namespace GameLogic.Gameplay.View
     /// RIL 事件处理器
     /// </summary>
     /// <typeparam name="T">RIL_EVENT 类型</typeparam>
-    public abstract class RILSalute<T> : RILSalute where T : IRIL_EVENT
+    public abstract class RILEventHandler<T> : RILEventHandler where T : IRIL_EVENT
     {
         /// <summary>
         /// 处理 RIL 事件
         /// </summary>
         /// <param name="e">RIL 事件</param>
-        public override void Salute(IRIL_EVENT e)
+        public override void Handle(IRIL_EVENT e)
         {
-            base.Salute(e);
+            base.Handle(e);
             OnSalute(e as T);
         }
 
