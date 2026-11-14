@@ -21,6 +21,8 @@ namespace GameLogic.Gameplay.Logic
             typeof(Detection),
             typeof(Movement),
             typeof(Timeline),
+            // 定时器排在 Timeline 之后: 定时任务本帧触发的效果 (AOE/技能) 当帧就能被驱动
+            typeof(Timer),
             // AOE 必须排在 Timeline 之后: 时间轴本帧发射的 AOE 当帧就能被驱动
             typeof(Aoe),
             typeof(SkillLauncher),

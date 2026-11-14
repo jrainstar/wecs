@@ -108,9 +108,14 @@ namespace GameLogic.Gameplay.Logic
         public Random random => GetBehavior<Random>(sa, true);
 
         /// <summary>
-        /// 随机数
+        /// 时间轴
         /// </summary>
         public Timeline timeline => GetBehavior<Timeline>(sa, true);
+
+        /// <summary>
+        /// 定时器
+        /// </summary>
+        public Timer timer => GetBehavior<Timer>(sa, true);
 
         /// <summary>
         /// 伤害计算
@@ -216,6 +221,7 @@ namespace GameLogic.Gameplay.Logic
             AddBehavior<Random>(sa).Initialze(data.seed);
             AddBehavior<Detection>(sa);
             AddBehavior<Timeline>(sa);
+            AddBehavior<Timer>(sa);
             AddBehavior<DamageCalc>(sa);
             AddBehavior<Payload>(sa);
 
