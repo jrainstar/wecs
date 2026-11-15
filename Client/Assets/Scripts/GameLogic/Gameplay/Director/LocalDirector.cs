@@ -1,5 +1,6 @@
 using GameLogic.Gameplay.Common;
 using GameLogic.Gameplay.Logic;
+using GameLogic.Gameplay.Replay;
 using GameLogic.Gameplay.View;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,22 @@ namespace GameLogic.Gameplay.Director
         /// 时间缩放
         /// </summary>
         public float timescale => stage.timescale.AsFloat();
+        /// <summary>
+        /// 当前逻辑帧号
+        /// </summary>
+        public uint frame => null != stage ? stage.frame : 0;
+        /// <summary>
+        /// 是否录像回放中 (回放时不下发本地输入)
+        /// </summary>
+        public bool replaying => null != player;
+        /// <summary>
+        /// 录像录制器, 为空表示不录像
+        /// </summary>
+        public ReplayRecorder recorder { get; set; }
+        /// <summary>
+        /// 录像播放器, 不为空表示回放模式, 玩家无法操控
+        /// </summary>
+        public ReplayPlayer player { get; set; }
         /// <summary>
         /// 逻辑场景
         /// </summary>
@@ -161,8 +178,17 @@ namespace GameLogic.Gameplay.Director
             //    ObjectPool.Set(command);
             //}
 
-            // 同步本地输入到逻辑层
-            SyncInput();
+            // 录像回放: 输入来自录像, 不读取本地设备, 玩家无法操控
+            if (null != player)
+            {
+                // 录像已播完时不推进逻辑帧, 交给上层结算
+                if (false == player.Sync(stage.frame, stage)) return;
+            }
+            else
+            {
+                // 同步本地输入到逻辑层 (同时录像)
+                SyncInput();
+            }
 
             stage.Step();
 
@@ -171,6 +197,7 @@ namespace GameLogic.Gameplay.Director
         /// <summary>
         /// 同步本地输入到逻辑层
         /// 按 INPUT_DEFINE.SYNC_INPUTS 登记的类型批量采集并下发, 新增按键无需改动此处
+        /// 同时把下发的世界方向登记到录像, 保证回放时与录制时完全一致
         /// </summary>
         private void SyncInput()
         {
@@ -181,7 +208,9 @@ namespace GameLogic.Gameplay.Director
             for (int i = 0; i < inputs.Length; i++)
             {
                 var value = input.GetInput(inputs[i]);
-                stage.SetInput(world.selfseat, inputs[i], value.press, ToWorldDire(value.dire));
+                var dire = ToWorldDire(value.dire);
+                stage.SetInput(world.selfseat, inputs[i], value.press, dire);
+                if (null != recorder) recorder.Record(stage.frame, inputs[i], value.press, dire);
             }
         }
 
