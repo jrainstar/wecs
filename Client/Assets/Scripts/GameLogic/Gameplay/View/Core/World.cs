@@ -1,6 +1,5 @@
 using GameLogic.Gameplay.Common;
 using GameLogic.Gameplay.Logic;
-using GameLogic.Gameplay.View;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +7,11 @@ using UnityEngine;
 namespace GameLogic.Gameplay.View
 {
     /// <summary>
-    /// 世界/渲染, 负责容纳所有的渲染层的单位
+    /// 世界/根组件, 全局唯一
+    /// 持有全局服务 (配置/资源/输入/时钟) 以及渲染层的所有单位
+    /// 全局服务只在创建时初始化一次, 每局战斗通过 Begin/End 切换战斗内容
     /// </summary>
-    public sealed class World : Comp
+    public sealed class World : Node
     {
         /// <summary>
         /// 世界根节点
@@ -44,14 +45,29 @@ namespace GameLogic.Gameplay.View
         }
 
         /// <summary>
-        /// 事件订阅派发者
+        /// 配置
         /// </summary>
-        public EventorKit eventor { get; private set; }
+        public ConfigKit config { get; private set; }
 
         /// <summary>
-        /// Ticker/时间驱动器
+        /// 资源
+        /// </summary>
+        public GameResKit gameres { get; private set; }
+
+        /// <summary>
+        /// 随机器
+        /// </summary>
+        public RandomKit random { get; private set; }
+
+        /// <summary>
+        /// Ticker/时间驱动器, 同时是全局事件派发者 (ticker.eventor)
         /// </summary>
         public TickerKit ticker { get; private set; }
+
+        /// <summary>
+        /// U3D/输入
+        /// </summary>
+        public U3DKit u3dkit { get; private set; }
 
         /// <summary>
         /// 桶
@@ -64,6 +80,12 @@ namespace GameLogic.Gameplay.View
         public Eyes eyes { get; private set; }
 
         /// <summary>
+        /// 是否驱动渲染, 由导演在每个逻辑帧同步
+        /// 未驱动时 Agent 不做追帧 (暂停/回滚期间画面保持不动)
+        /// </summary>
+        public bool rendering { get; set; }
+
+        /// <summary>
         /// Agent 集合
         /// </summary>
         private Dictionary<ulong, Dictionary<Type, Agent>> agentdict { get; set; }
@@ -74,9 +96,23 @@ namespace GameLogic.Gameplay.View
         private List<Agent> snapshotagents { get; set; }
 
         /// <summary>
+        /// 创建世界, 全局唯一, 只需要创建一次
+        /// </summary>
+        /// <returns>世界</returns>
+        public static World CreateWorld()
+        {
+            World world = new();
+            world.world = world;
+            world.parent = world;
+            world.Create();
+
+            return world;
+        }
+
+        /// <summary>
         /// 绑定节点
         /// </summary>
-        public void BindRoot()
+        private void BindRoot()
         {
             root = new GameObject("World");
             root.transform.localPosition = Vector3.zero;
@@ -88,17 +124,29 @@ namespace GameLogic.Gameplay.View
             BindRoot();
 
             base.OnCreate();
-            eventor = AddComp<EventorKit>();
-            eventor.Create();
 
-            ticker = AddComp<TickerKit>();
+            // 资源要先于配置创建 (WebGL 下配置需要走资源异步加载)
+            gameres = AddNode<GameResKit>();
+            gameres.Create();
+
+            config = AddNode<ConfigKit>();
+            config.Create();
+
+            random = AddNode<RandomKit>();
+            random.Initial(19491001);
+            random.Create();
+
+            ticker = AddNode<TickerKit>();
             ticker.Create();
 
-            rilbucket = AddComp<RILBucket>().Initialize(this);
+            u3dkit = AddNode<U3DKit>();
+            u3dkit.Create();
+
+            rilbucket = AddNode<RILBucket>();
             rilbucket.Create();
 
-            eyes = AddComp<Eyes>();
-            eyes.Initialize(this).Create();
+            eyes = AddNode<Eyes>();
+            eyes.Create();
 
             Batches();
 
@@ -112,8 +160,45 @@ namespace GameLogic.Gameplay.View
         {
             base.OnDestroy();
             ticker.eventor.UnListen<TickEvent>(OnTick);
+            ClearAgents();
+        }
 
-            // 回收所有 Agents
+        /// <summary>
+        /// 创建批处理
+        /// </summary>
+        private void Batches()
+        {
+
+        }
+
+        /// <summary>
+        /// 开始一局, 先清理上一局残留的渲染单位与状态
+        /// </summary>
+        /// <param name="selfseat">我的座位号</param>
+        /// <returns>世界</returns>
+        public World Begin(ulong selfseat)
+        {
+            End();
+            this.selfseat = selfseat;
+
+            return this;
+        }
+
+        /// <summary>
+        /// 结束一局, 回收本局的所有渲染单位与状态
+        /// </summary>
+        public void End()
+        {
+            rilbucket.LossAllRIL();
+            ClearAgents();
+            rendering = false;
+        }
+
+        /// <summary>
+        /// 回收所有的 Agent
+        /// </summary>
+        private void ClearAgents()
+        {
             foreach (var kv in agentdict)
             {
                 foreach (var agent in kv.Value)
@@ -126,30 +211,8 @@ namespace GameLogic.Gameplay.View
                 ObjectPool.Set(kv.Value);
             }
             agentdict.Clear();
-            ObjectPool.Set(agentdict);
 
             snapshotagents.Clear();
-            ObjectPool.Set(snapshotagents);
-        }
-
-        /// <summary>
-        /// 初始化世界
-        /// </summary>
-        /// <param name="selfseat">我的座位号</param>
-        /// <returns>世界</returns>
-        public World Initialize(ulong selfseat)
-        {
-            this.selfseat = selfseat;
-
-            return this;
-        }
-
-        /// <summary>
-        /// 创建批处理
-        /// </summary>
-        private void Batches()
-        {
-
         }
 
         /// <summary>
@@ -291,6 +354,9 @@ namespace GameLogic.Gameplay.View
 
         private void OnTick(TickEvent e)
         {
+            // 未驱动渲染时 (暂停/回滚) 不做追帧
+            if (false == rendering) return;
+
             // 执行过程中, 可能会触发修改 agentdict, 导致错误
             var agents = ObjectPool.Ensure<List<(Agent agents, float timescale)>>();
             foreach (var kv in agentdict)

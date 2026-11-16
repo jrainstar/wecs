@@ -192,14 +192,14 @@ namespace GameLogic.Gameplay.View
             if (false == world.rilbucket.SeekRIL(ril.actor, out RIL_FACADE_MODEL facademodel)) return;
             if (0 >= facademodel.model) return;
 
-            if (false == world.engine.config.location.TbRoleData.TryGetValue(facademodel.model, out var roledata)) return;
-            if (false == world.engine.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var rolemodel)) return;
+            if (false == world.config.location.TbRoleData.TryGetValue(facademodel.model, out var roledata)) return;
+            if (false == world.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var rolemodel)) return;
 
             if (string.IsNullOrEmpty(cfgname) || false == rolemodel.Animation.Equals(cfgname))
             {
                 cfgname = rolemodel.Animation;
                 if (null != animcfg) GameObject.Destroy(animcfg);
-                animcfg = world.engine.gameres.location.LoadAnimationConfigSync(cfgname);
+                animcfg = world.gameres.location.LoadAnimationConfigSync(cfgname);
             }
 
             var animname = ril.animname;

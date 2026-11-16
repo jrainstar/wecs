@@ -122,12 +122,12 @@ namespace GameLogic.Gameplay.View
             var node = world.EnsureAgent<NodeAgent>(actor);
             if (null == node || null == node.go) return;
 
-            if (null == world.engine.config) return;
+            if (null == world.config) return;
 
             RecycleModel();
 
             // 角色走 角色 -> 角色模型 -> 资源 的查表链, 资源直接按编号取路径
-            var tables = world.engine.config.location;
+            var tables = world.config.location;
             string path;
             if (hasrole)
             {

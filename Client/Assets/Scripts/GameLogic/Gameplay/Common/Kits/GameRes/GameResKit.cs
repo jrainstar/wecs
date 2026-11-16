@@ -8,7 +8,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// GameRes 资源加载组件
     /// </summary>
-    public class GameResKit : Comp
+    public class GameResKit : Node
     {
         /// <summary>
         /// 资源加载定位器，具体的加载在这里实现
@@ -18,7 +18,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
-            location = AddComp<Location>();
+            location = AddNode<Location>();
             location.Create();
         }
 

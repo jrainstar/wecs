@@ -13,12 +13,12 @@ description: WECS-BATTLE 客户端 Gameplay 模块（Assets/Scripts/GameLogic/Ga
 
 | 关注点 | 文件 |
 |---|---|
-| 引擎根组件 | `Common/Core/Engine.cs`（`config` / `gameres` / `eventor` / `random` / `ticker` / `u3dkit`） |
-| 组件基类 | `Common/Core/Comp.cs`（`AddComp<T>` / `GetComp<T>` / `Create` / `Destroy`） |
+| 根组件 | `View/Core/World.cs`（全局唯一，`config` / `gameres` / `random` / `ticker` / `u3dkit` / `rilbucket` / `eyes`，`CreateWorld()` / `Begin()` / `End()`） |
+| 节点基类 | `Common/Core/Node.cs`（`world` 根引用 / `AddNode<T>` / `GetNode<T>` / `RmvNode` / `Create` / `Destroy`） |
 | 事件派发 | `Common/Kits/EventorKit.cs`（`Listen` / `UnListen` / `Tell`） |
 | 帧驱动 | `Common/Kits/TickerKit.cs`（`TickEvent`/`LateTickEvent` 渲染帧，`FixedTickEvent`/`FixedLateTickEvent` 逻辑帧，`Timing` 计时器） |
 | 配置表 | `Common/Kits/ConfigKit.cs`（`location.Tables`，`Float2Int=1000` / `Int2Float=0.001`）、`Logic/Behaviors/Stage/Config.cs`（`stage.cfg.location`） |
-| Unity 工具 | `Common/Kits/U3DKit.cs`（`GetNode` / `SeekNode`） |
+| Unity 工具 | `Common/Kits/U3DKit.cs`（`GetEntity` / `SeekEntity`，注意与逻辑层的 `Node` 区分） |
 | 输入 | `Common/Kits/U3DKit/InputKit.cs` + `Common/Kits/U3DKit/Input/Keyboard.cs` |
 | 资源 | `Common/Kits/GameRes/GameResKit.cs` + `Common/Kits/GameRes/Location.cs`（各类路径常量 + `LoadModelSync` / `LoadAnimationConfigSync`）、`Common/Kits/ResourceUtil.cs` |
 | 随机器 | `Common/Kits/RandomKit.cs` |
@@ -74,15 +74,17 @@ description: WECS-BATTLE 客户端 Gameplay 模块（Assets/Scripts/GameLogic/Ga
 ## 三层架构
 
 ```
-Engine (Common)
- ├─ ticker  → TickEvent(渲染帧) / FixedTickEvent(逻辑帧)
+World (View, 全局唯一根组件)
+ ├─ ticker  → TickEvent(渲染帧) / FixedTickEvent(逻辑帧)，ticker.eventor 即全局事件总线
  ├─ config  → ConfigKit.location.Tables（Luban 配置表）
- └─ u3dkit.input (InputKit) ← Keyboard
+ ├─ u3dkit.input (InputKit) ← Keyboard
+ └─ rilbucket / eyes / agentdict（渲染层内容，每局 Begin/End 清空）
         │
 Director (BaseDirector / LocalDirector)
  ├─ 逻辑：Stage.Step()             ← FixedTickEvent → OnStep
  ├─ 渲染：world.rilbucket.SetRIL() ← TickEvent → OnTick
  ├─ 桥接：stage.onril / ondiff / onevent → 三个队列 → World
+ ├─ 开关：world.rendering（未驱动时 World 不追帧）
  └─ 镜头：world.eyes.yaw 把摇杆方向转世界方向
         │
 Logic (Stage)                        View (World)
@@ -237,7 +239,9 @@ Executor<PrintEvent, PrintExecutor>();
 
 ### 渲染层要点
 
-- `World : Comp`：`root`（GameObject 容器）、`eventor`、`ticker`、`rilbucket`、`eyes`、`selfseat`、`self`（座位→Actor）、`SwitchSeat`；`OnTick` 遍历 `agentdict` 驱动 `Chase`。**遍历期间禁止增删 Agent**，实现方式是把 `(agent, timescale)` 先收集到临时列表。
+- `World : Node`（全局唯一根节点，`World.CreateWorld()` 创建一次）：`root`（GameObject 容器）、`config`、`gameres`、`random`、`ticker`、`u3dkit`、`rilbucket`、`eyes`、`selfseat`、`self`（座位→Actor）、`SwitchSeat`、`rendering`（追帧开关）；`OnTick` 遍历 `agentdict` 驱动 `Chase`。**遍历期间禁止增删 Agent**，实现方式是把 `(agent, timescale)` 先收集到临时列表。
+- `Node.world` 就是根引用（原 `Comp.engine`），`AddNode` 会自动透传；每局通过 `world.Begin(seat)` / `world.End()` 切换与回收战斗内容，导演不再持有/创建 World。
+- 命名约定：逻辑层的 `Node` 是对象树节点（`World` / `XxxKit` / `RILBucket` / `AgentBinder` 等）；Unity 的 GameObject 一律叫“实体”，对应 `U3DKit.GetEntity` / `SeekEntity`。
 - Agent 增删统一走 `World.EnsureAgent<T>(actor)` / `GetAgent<T>` / `GetAgents(actor)` / `RmvAgent(actor|agent)`；Binder 只负责在 RIL 到来时决定创建还是回收。
 - `Agent` 生命周期：`Ready(actor, world)` → `OnReady` → `Flash`；`Reset` → `OnReset`；`Chase(tick, timescale)` → `OnChase` + `OnArrived`。
   - `Ready` 里会自动 `Flash()`，`Reset` 里会回收所有 `Invoker`，`OnReset` 不要再遍历 `rilactions`。
@@ -252,7 +256,7 @@ Executor<PrintEvent, PrintExecutor>();
 
 ### 镜头 Eyes
 
-`View/Cameras/Eyes.cs`，`World` 创建时 `AddComp<Eyes>().Initialize(this).Create()`。
+`View/Cameras/Eyes.cs`，`World` 创建时 `AddNode<Eyes>().Create()`。
 
 - 使用 **CinemachineFreeLook + CinemachineCameraOffset**，代码动态创建 `CMFreeLock` GameObject，不用 InputAction 资产。
 - 输入：内部私有 `AxisInput : AxisState.IInputAxisProvider` 直接把 `Keyboard`（鼠标 `look` / `wheel`）喂给 CM 的 `m_XAxis`(0) / `m_YAxis`(1) / 推拉(2)。
@@ -302,5 +306,5 @@ Stage → Gamepad.SetInput → GamepadInfo.inputdict → Behavior 里 gamepad.Ge
 - 命名遗留（文件夹未跟着改名）：`View/Resolvers/Enchants/` 里的类都叫 `XxxBinder`，`Cross/` 里是 `ActorMerger`，`Salutes/` 里是 `XxxSalute`；`RILBucket` 的注册方法名仍是 `Cross()` / `Salutes()` / `Enchants()`，字典字段仍是 `crossdict` / `salutedict` / `enchantdict`。
 - `HeroPrefab.cs` 里仍有一条注释写着旧名 `ModelEnchant`，实际类是 `ModelBinder`，不要被误导。
 - `Common/MathF/` 下的 `*Lut.cs` 是大型查表文件，禁止读取或检索。
-- `Logic/Behaviors/Stage/Config.cs` 的 `OnAssemble` 直接赋 `ConfigManager.Instance.Tables`；WebGL 下 `ConfigKit.OnCreate` 走异步字节加载分支。排查配置为空时先看 `Engine.config`。
+- `Logic/Behaviors/Stage/Config.cs` 的 `OnAssemble` 直接赋 `ConfigManager.Instance.Tables`；WebGL 下 `ConfigKit.OnCreate` 走异步字节加载分支。排查配置为空时先看 `world.config`。
 - `View/Core/Batch.cs` 整文件被注释，`World.Batches()` 为空方法，属于预留位。

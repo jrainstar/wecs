@@ -2,6 +2,7 @@ using GameLogic.Gameplay.Common;
 using GameLogic.Gameplay.Director;
 using GameLogic.Gameplay.Logic;
 using GameLogic.Gameplay.Replay;
+using GameLogic.Gameplay.View;
 using GameLogic.Gameplay.X;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class WECS_0 : MonoBehaviour
 {
-    public Engine engine { get; private set; }
+    public World world { get; private set; }
     public LocalDirector director { get; private set; }
 
     [Tooltip("场景碰撞数据名称, 对应 Assets/AssetRaws/SceneDatas/{name}.json")]
@@ -56,7 +57,7 @@ public class WECS_0 : MonoBehaviour
 
     void Start()
     {
-        engine = Engine.CreateEngine();
+        world = World.CreateWorld();
 
         ui = new WECS_0UI();
         ui.onlaunch = Launch;
@@ -73,7 +74,7 @@ public class WECS_0 : MonoBehaviour
     {
         // 渲染帧驱动, 同时必须驱动 FixedTick, 否则 FixedTickEvent 永远不会派发,
         // BaseDirector.OnFixedTick -> OnStep -> Stage.Step 也就永远不会执行
-        engine.ticker.Tick(Time.deltaTime);
+        world.ticker.Tick(Time.deltaTime);
 
         // 录像播完, 自动结算退出
         if (null != player && player.finished)
@@ -94,7 +95,7 @@ public class WECS_0 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        engine.ticker.FixedTick(Time.fixedDeltaTime);
+        world.ticker.FixedTick(Time.fixedDeltaTime);
     }
 
     /// <summary>
@@ -257,7 +258,7 @@ public class WECS_0 : MonoBehaviour
         Time.fixedDeltaTime = GAME_DEFINE.LOGIC_TICK.AsFloat();
 
         var local = new LocalDirector();
-        local.engine = engine;
+        local.world = world;
         local.recorder = recorder;
         local.player = player;
         local.Create();
@@ -277,10 +278,9 @@ public class WECS_0 : MonoBehaviour
     {
         if (null == director) return;
 
-        var root = director.world?.root;
+        // World 是全局唯一的, 只销毁导演, 世界本身留着给下一局复用
         director.StopGame();
         director.Destroy();
-        if (null != root) Destroy(root);
 
         director = null;
     }
@@ -333,7 +333,7 @@ public class WECS_0 : MonoBehaviour
     {
         if (string.IsNullOrEmpty(name)) return default;
 
-        TextAsset sceneasset = engine.gameres.LoadAssetSync<TextAsset>(Location.scenedatas + name);
+        TextAsset sceneasset = world.gameres.LoadAssetSync<TextAsset>(Location.scenedatas + name);
         if (null != sceneasset) return SceneData.FromJson(sceneasset);
 
         Debug.LogWarning($"[WECS_0] 场景数据加载失败: {Location.scenedatas + name}");

@@ -703,8 +703,8 @@ spatial.position = ...; spatial.euler = ...; spatial.scale = ...;</code></pre>
 <li>
   <span class="title">逻辑帧驱动</span>
   <span class="meta">WECS_0.Update</span>
-  <pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/Test/WECS_0.cs</span><code>engine.ticker.Tick(Time.deltaTime);
-engine.ticker.FixedTick(Time.fixedDeltaTime);   <span class="c">// 必须有，否则 FixedTickEvent 不派发</span></code></pre>
+  <pre><span class="fname">Assets/Scripts/GameLogic/Gameplay/X/WECS_0.cs</span><code>world.ticker.Tick(Time.deltaTime);
+world.ticker.FixedTick(Time.fixedDeltaTime);   <span class="c">// 必须有，否则 FixedTickEvent 不派发</span></code></pre>
   <p><code>TickerComp.FixedTick</code> 按固定步长派发 <code>FixedTickEvent</code> → <code>BaseDirector.OnFixedTick</code> → <code>LocalDirector.OnStep</code> → <code>Stage.Step()</code>：</p>
   <ul>
     <li><code>frame++</code></li>
@@ -784,7 +784,7 @@ world.ticker.Tick(e.tick);      <span class="c">// 驱动 Agent 的 Chase</span>
 <tr><td><code>NullReferenceException</code> 在 <code>Stage.xxx</code></td><td><code>Stage.Behaviors()</code> 是否漏挂对应 Behavior</td></tr>
 <tr><td>完全没有 Agent / Node</td><td><code>World.OnCreate</code> 是否 <code>AddComp&lt;RILBucket&gt;()</code>、<code>rilbucket.Create()</code></td></tr>
 <tr><td>有 Node 没模型</td><td><code>FacadeInfo.model</code> 是否 &gt; 0；<code>RILBucket.Enchants()</code> 是否注册 <code>ModelEnchant</code></td></tr>
-<tr><td>逻辑帧不推进</td><td><code>Update</code> 里是否调了 <code>engine.ticker.FixedTick</code>；<code>TICK_DEFINE.TICK_TYPE_LIST</code> 是否登记</td></tr>
+<tr><td>逻辑帧不推进</td><td><code>Update</code> 里是否调了 <code>world.ticker.FixedTick</code>；<code>TICK_DEFINE.TICK_TYPE_LIST</code> 是否登记</td></tr>
 <tr><td>位置变了但画面不动</td><td>Agent 是否停在 <code>Arrived</code>；<code>SpatialTranslator</code> 的 hash 是否覆盖了变更字段</td></tr>
 <tr><td>新 Behavior 不生效</td><td>是否登记进 <code>TICK_TYPE_LIST</code>；Info 是否在 <code>ManualTranslators()</code> 里注册了 Translator</td></tr>
 <tr><td>对象在别处不消失</td><td>是否漏 <code>RIL_LOSS</code>（<code>BehaviorInfo</code> 移除由 <code>SendLossRIL</code> 自动处理，手写的缓存除外）</td></tr>

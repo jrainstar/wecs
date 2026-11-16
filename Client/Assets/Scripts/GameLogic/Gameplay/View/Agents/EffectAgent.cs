@@ -213,8 +213,8 @@ namespace GameLogic.Gameplay.View
         /// <param name="effect">特效渲染数据</param>
         private void LoadEffect(EffectNode node, RIL_EFFECT effect)
         {
-            if (null == world.engine || null == world.engine.config) return;
-            if (false == ResourceUtil.TryGetPath(world.engine.config.location, effect.fx, out var path))
+            if (null == world || null == world.config) return;
+            if (false == ResourceUtil.TryGetPath(world.config.location, effect.fx, out var path))
             {
                 Debug.LogWarning($"VisualEvent: fx {effect.fx} is not exist.");
                 return;

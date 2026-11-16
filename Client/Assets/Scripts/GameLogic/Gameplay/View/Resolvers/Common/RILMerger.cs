@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// RIL 合并器
     /// </summary>
-    public abstract class RILMerger : Comp
+    public abstract class RILMerger : Node
     {
         /// <summary>
         /// 数据状态桶

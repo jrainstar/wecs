@@ -7,7 +7,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 眼睛/镜头
     /// </summary>
-    public class Eyes : Comp
+    public class Eyes : Node
     {
         /// <summary>
         /// 视角灵敏度 (鼠标像素增量 -> CM 轴值, 太小会觉得转不动)
@@ -30,10 +30,6 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private const float ZOOM_MAX = 0f;
 
-        /// <summary>
-        /// 世界
-        /// </summary>
-        private World world { get; set; }
         /// <summary>
         /// 相机
         /// </summary>
@@ -91,7 +87,7 @@ namespace GameLogic.Gameplay.View
             cmoff = cmgo.AddComponent<CinemachineCameraOffset>();
 
             // CM 输入: 用纯代码实现的轴输入适配器替换 InputAction 配置方案
-            input = new AxisInput(engine.u3dkit.input.keyboard);
+            input = new AxisInput(world.u3dkit.input.keyboard);
             if (null != input) input.enabled = true;
             cm.m_XAxis.SetInputAxisProvider(0, input);
             cm.m_YAxis.SetInputAxisProvider(1, input);
@@ -122,13 +118,6 @@ namespace GameLogic.Gameplay.View
             GameObject.Destroy(cmgo);
         }
 
-        public Eyes Initialize(World world)
-        {
-            this.world = world;
-
-            return this;
-        }
-
         private void OnTick(TickEvent e)
         {
             // 根据鼠标锁定状态来锁定镜头输入 (未锁定时仍允许旋转, 方便调试)
@@ -136,7 +125,13 @@ namespace GameLogic.Gameplay.View
 
             // LookAt 自己
             var node = world.GetAgent<NodeAgent>(world.self);
-            if (null == node) return;
+            if (null == node)
+            {
+                // 本局未开始或已结束 (例如跨局复用的 World), 断开跟随, 避免指向被回收的节点
+                cm.Follow = null;
+                cm.LookAt = null;
+                return;
+            }
             cm.Follow = node.go.transform;
             cm.LookAt = node.go.transform;
 
@@ -151,7 +146,7 @@ namespace GameLogic.Gameplay.View
         private void Zoom(float tick)
         {
             // 直接读设备的滚轮增量, 每帧累加后立刻消耗, 保证不依赖是否锁定鼠标
-            wheel += engine.u3dkit.input.keyboard.wheel.y;
+            wheel += world.u3dkit.input.keyboard.wheel.y;
             if (0 == wheel) return;
 
             // 属性返回的是值副本, 不能直接改字段, 取出后再写回

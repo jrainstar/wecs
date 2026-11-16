@@ -7,7 +7,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// Unity3D 工具组件
     /// </summary>
-    public class U3DKit : Comp
+    public class U3DKit : Node
     {
         public InputKit input { get; private set; }
 
@@ -15,7 +15,7 @@ namespace GameLogic.Gameplay.Common
         {
             base.OnCreate();
 
-            input = AddComp<InputKit>();
+            input = AddNode<InputKit>();
             input.Create();
         }
 
@@ -25,12 +25,12 @@ namespace GameLogic.Gameplay.Common
         }
 
         /// <summary>
-        /// 获取 Unity3D 节点/组件
+        /// 获取 Unity3D 实体/组件
         /// </summary>
         /// <typeparam name="T">Unity 的类型，GameObject 或 Component</typeparam>
-        /// <param name="go">节点</param>
+        /// <param name="go">实体</param>
         /// <returns>GameObject/Component</returns>
-        public T GetNode<T>(GameObject go) where T : UnityEngine.Object
+        public T GetEntity<T>(GameObject go) where T : UnityEngine.Object
         {
             if (go is T) return go as T;
 
@@ -38,43 +38,43 @@ namespace GameLogic.Gameplay.Common
         }
 
         /// <summary>
-        /// 精准查找 Unity3D 节点/组件
+        /// 精准查找 Unity3D 实体/组件
         /// </summary>
         /// <typeparam name="T">Unity 的类型，GameObject 或 Component</typeparam>
-        /// <param name="go">根节点</param>
-        /// <param name="path">节点路径</param>
+        /// <param name="go">根实体</param>
+        /// <param name="path">实体路径</param>
         /// <returns>GameObject/Component</returns>
-        public T GetNode<T>(GameObject go, string path) where T : UnityEngine.Object
+        public T GetEntity<T>(GameObject go, string path) where T : UnityEngine.Object
         {
-            var node = go.transform.Find(path)?.gameObject;
+            var entity = go.transform.Find(path)?.gameObject;
 
-            if (null == node) return null;
+            if (null == entity) return null;
 
-            if (node is T) return node as T;
+            if (entity is T) return entity as T;
 
-            return node.GetComponent<T>();
+            return entity.GetComponent<T>();
         }
 
         /// <summary>
-        /// 模糊查找 Unity3D 节点/组件
+        /// 模糊查找 Unity3D 实体/组件
         /// </summary>
         /// <typeparam name="T">Unity 的类型，GameObject 或 Component</typeparam>
-        /// <param name="go">预制体根节点</param>
-        /// <param name="nodeName">匹配节点名</param>
+        /// <param name="go">预制体根实体</param>
+        /// <param name="entityName">匹配实体名</param>
         /// <returns>GameObject/Component</returns>
-        public T SeekNode<T>(GameObject go, string nodeName) where T : UnityEngine.Object
+        public T SeekEntity<T>(GameObject go, string entityName) where T : UnityEngine.Object
         {
             for (int i = 0; i < go.transform.childCount; i++)
             {
-                var node = go.transform.GetChild(i).gameObject;
-                if (node.name.Equals(nodeName))
+                var entity = go.transform.GetChild(i).gameObject;
+                if (entity.name.Equals(entityName))
                 {
-                    if (node is T) return node as T;
+                    if (entity is T) return entity as T;
 
-                    return node.GetComponent<T>();
+                    return entity.GetComponent<T>();
                 }
 
-                var child = SeekNode<T>(node, nodeName);
+                var child = SeekEntity<T>(entity, entityName);
                 if (null == child) continue;
 
                 if (child is T) return child;

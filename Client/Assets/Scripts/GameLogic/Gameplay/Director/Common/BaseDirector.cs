@@ -10,7 +10,7 @@ namespace GameLogic.Gameplay.Director
     /// 导演, 负责指挥游戏的运行, 包括创建游戏, 销毁游戏, 开始游戏, 暂停游戏, 恢复游戏, 停止游戏等操作
     /// 驱动渲染层 World, 渲染状态的接收以及传入 World
     /// </summary>
-    public abstract class BaseDirector : Comp
+    public abstract class BaseDirector : Node
     {
         /// <summary>
         /// 是否渲染 (驱动 World)
@@ -20,10 +20,6 @@ namespace GameLogic.Gameplay.Director
         /// 游戏数据
         /// </summary>
         protected BuildData data { get; private set; }
-        /// <summary>
-        /// 世界
-        /// </summary>
-        public World world { get; protected set; }
         /// <summary>
         /// 是否多线程
         /// </summary>
@@ -36,6 +32,10 @@ namespace GameLogic.Gameplay.Director
         /// 逻辑 Step 耗时
         /// </summary>
         public int stepms { get; private set; }
+        /// <summary>
+        /// 是否已经创建了游戏
+        /// </summary>
+        private bool created { get; set; }
 
         /// <summary>
         /// 创建游戏
@@ -45,14 +45,16 @@ namespace GameLogic.Gameplay.Director
         {
             this.data = data;
             this.multithread = multithread;
-            world = AddComp<World>().Initialize(data.seat);
-            world.Create();
+            // 世界是全局唯一的根, 这里只切换本局的战斗内容
+            world.Begin(data.seat);
             OnCreateGame();
+            created = true;
+            world.rendering = rendering;
 
-            engine.ticker.eventor.Listen<TickEvent>(OnTick);
+            world.ticker.eventor.Listen<TickEvent>(OnTick);
             if (false == multithread)
             {
-                engine.ticker.eventor.Listen<FixedTickEvent>(OnFixedTick);
+                world.ticker.eventor.Listen<FixedTickEvent>(OnFixedTick);
                 return;
             }
             thread = new Thread(() =>
@@ -78,26 +80,37 @@ namespace GameLogic.Gameplay.Director
         /// </summary>
         public void DestroyGame()
         {
-            engine.ticker.eventor.UnListen<TickEvent>(OnTick);
+            if (false == created) return;
+            created = false;
+
+            world.ticker.eventor.UnListen<TickEvent>(OnTick);
             if (false == multithread)
             {
-                engine.ticker.eventor.UnListen<FixedTickEvent>(OnFixedTick);
+                world.ticker.eventor.UnListen<FixedTickEvent>(OnFixedTick);
             }
-            else
+            else if (null != thread)
             {
                 try
                 {
                     thread.Abort();
-                    thread = null;
                 }
                 catch (Exception e)
                 {
                     // ignored
                 }
+
+                thread = null;
             }
 
             OnDestroyGame();
-            world.Destroy();
+            world.End();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            // 组件被直接销毁时也要把本局收干净
+            DestroyGame();
         }
 
         /// <summary>
@@ -106,6 +119,7 @@ namespace GameLogic.Gameplay.Director
         public void StartGame()
         {
             OnStartGame();
+            world.rendering = rendering;
         }
 
         /// <summary>
@@ -114,6 +128,7 @@ namespace GameLogic.Gameplay.Director
         public void PauseGame()
         {
             OnPauseGame();
+            world.rendering = rendering;
         }
 
         /// <summary>
@@ -122,6 +137,7 @@ namespace GameLogic.Gameplay.Director
         public void ResumeGame()
         {
             OnResumeGame();
+            world.rendering = rendering;
         }
 
         /// <summary>
@@ -130,6 +146,7 @@ namespace GameLogic.Gameplay.Director
         public void StopGame()
         {
             OnStopGame();
+            world.rendering = rendering;
         }
 
         /// <summary>
@@ -146,19 +163,23 @@ namespace GameLogic.Gameplay.Director
         public void Restore()
         {
             OnRestore();
+            world.rendering = rendering;
         }
 
         protected void OnTick(TickEvent e)
         {
+            // 导演的监听晚于 World 注册, 这里同步开关后 World 本帧就能拿到最新值
+            world.rendering = rendering;
             if (false == rendering) return;
             OnTick();
-            world.ticker.Tick(e.tick);
         }
 
         protected void OnFixedTick(FixedTickEvent e)
         {
             stepms = (int)(e.tick * 1000);
             OnStep();
+            // 逻辑帧结束时同步渲染开关, 本帧后续的渲染 Tick 才能拿到最新值
+            world.rendering = rendering;
         }
 
         /// <summary>

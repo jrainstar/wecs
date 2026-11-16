@@ -82,7 +82,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// Ticker, 逻辑层 Tick 驱动组件
     /// </summary>
-    public class TickerKit : Comp
+    public class TickerKit : Node
     {
         /// <summary>
         /// 事件订阅/派发者
@@ -97,7 +97,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
-            eventor = AddComp<EventorKit>();
+            eventor = AddNode<EventorKit>();
             eventor.Create();
         }
 

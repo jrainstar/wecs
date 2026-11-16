@@ -7,7 +7,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// 游戏配置
     /// </summary>
-    public class ConfigKit : Comp
+    public class ConfigKit : Node
     {
         /// <summary>
         /// 配置表定位器
@@ -31,7 +31,7 @@ namespace GameLogic.Gameplay.Common
             base.OnCreate();
             foreach (string cfgname in Tables.tables)
             {
-                var bytes = await engine.gameres.location.LoadConfigAsync(cfgname);
+                var bytes = await world.gameres.location.LoadConfigAsync(cfgname);
                 cfgbytes.Add(cfgname, bytes);
             }
             location = new Tables((cfgName) => new ByteBuf(cfgbytes.GetValueOrDefault(cfgName)));

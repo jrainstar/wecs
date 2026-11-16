@@ -20,8 +20,8 @@ namespace GameLogic.Gameplay.View
 
             // 如果模型定义没有动画配置, 则回收动画代理
 
-            if (false == engine.config.location.TbRoleData.TryGetValue(facademodel.model, out var roledata)) return;
-            if (false == engine.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var rolemodel)) return;
+            if (false == world.config.location.TbRoleData.TryGetValue(facademodel.model, out var roledata)) return;
+            if (false == world.config.location.TbRoleModel.TryGetValue(roledata.ModelId, out var rolemodel)) return;
 
             if (string.IsNullOrEmpty(rolemodel.Animation))
             {

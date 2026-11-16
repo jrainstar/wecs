@@ -18,7 +18,7 @@ namespace GameLogic.Gameplay.View
     /// 4. 文本只在生成时写一次, 位移/缩放/淡出不改文本内容, 不会反复触发 TMP 重建;
     /// 5. 数字走缓存字符串, 连 string 分配也省掉.
     /// </summary>
-    public class DamageSalute : RILEventHandler<RIL_EVENT_DAMAGE>
+    public class DamageHandler : RILEventHandler<RIL_EVENT_DAMAGE>
     {
         /// <summary>
         /// 同时在场的跳字上限, 也是预热数量
@@ -102,10 +102,6 @@ namespace GameLogic.Gameplay.View
             public float alpha;
         }
 
-        /// <summary>
-        /// 世界
-        /// </summary>
-        private World world => rilbucket.world;
         /// <summary>
         /// 字体, 所有跳字共用
         /// </summary>

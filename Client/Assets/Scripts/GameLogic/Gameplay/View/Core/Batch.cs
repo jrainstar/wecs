@@ -7,7 +7,7 @@
 //    /// <summary>
 //    /// 批处理
 //    /// </summary>
-//    public abstract class Batch : Comp
+//    public abstract class Batch : Node
 //    {
 //        /// <summary>
 //        /// 世界

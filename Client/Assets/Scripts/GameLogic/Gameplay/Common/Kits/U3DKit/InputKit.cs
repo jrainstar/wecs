@@ -8,7 +8,7 @@ namespace GameLogic.Gameplay.Common
     /// 输入系统, 负责把键盘/鼠标设备(Keyboard)的状态采集为逻辑层可用的输入数据
     /// 自身创建并持有 Keyboard, 每个 Tick 刷新一次 inputdict / cmddict
     /// </summary>
-    public class InputKit : Comp
+    public class InputKit : Node
     {
         /// <summary>
         /// 键盘/鼠标设备
@@ -32,7 +32,7 @@ namespace GameLogic.Gameplay.Common
         {
             base.OnCreate();
 
-            keyboard = AddComp<Keyboard>();
+            keyboard = AddNode<Keyboard>();
             keyboard.Create();
 
             inputdict = ObjectPool.Ensure<Dictionary<ushort, (bool press, IntVector2 dire)>>();
@@ -40,13 +40,13 @@ namespace GameLogic.Gameplay.Common
             cmdqueue = ObjectPool.Ensure<Queue<Command>>();
 
             Bind();
-            engine.ticker.eventor.Listen<TickEvent>(OnTick);
+            world.ticker.eventor.Listen<TickEvent>(OnTick);
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            engine.ticker.eventor.UnListen<TickEvent>(OnTick);
+            world.ticker.eventor.UnListen<TickEvent>(OnTick);
 
             inputdict.Clear();
             ObjectPool.Set(inputdict);

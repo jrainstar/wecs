@@ -5,7 +5,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// 随机器
     /// </summary>
-    public class RandomKit : Comp
+    public class RandomKit : Node
     {
         /// <summary>
         /// 浮点数转整型的乘法系数（1000 表示 1）

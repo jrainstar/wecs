@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// 键盘/鼠标设备, 只负责向 InputKit 提供设备的原始状态, 自身不做任何缓冲与派发
     /// </summary>
-    public class Keyboard : Comp
+    public class Keyboard : Node
     {
         /// <summary>
         /// 键盘设备

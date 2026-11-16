@@ -8,7 +8,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// 资源加载定位器，加载框架包装定位资源地址
     /// </summary>
-    public class Location : Comp
+    public class Location : Node
     {
         public const string soundpath = "Assets/GameRes/Sound/";
         public const string modelpath = "Assets/AssetRaws/Prefabs/Role/";
@@ -29,7 +29,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>音效预制体</returns>
         public async UniTask<GameObject> LoadSoundAsync(string res)
         {
-            return GameObject.Instantiate(await engine.gameres.LoadAssetAsync<GameObject>(soundpath + res));
+            return GameObject.Instantiate(await world.gameres.LoadAssetAsync<GameObject>(soundpath + res));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>音效预制体</returns>
         public GameObject LoadSoundSync(string res)
         {
-            return GameObject.Instantiate(engine.gameres.LoadAssetSync<GameObject>(soundpath + res));
+            return GameObject.Instantiate(world.gameres.LoadAssetSync<GameObject>(soundpath + res));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Model 预制体</returns>
         public async UniTask<GameObject> LoadModelAsync(string res)
         {
-            return GameObject.Instantiate(await engine.gameres.LoadAssetAsync<GameObject>(modelpath + res));
+            return GameObject.Instantiate(await world.gameres.LoadAssetAsync<GameObject>(modelpath + res));
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Model 预制体</returns>
         public GameObject LoadModelSync(string res)
         {
-            return GameObject.Instantiate(engine.gameres.LoadAssetSync<GameObject>(modelpath + res));
+            return GameObject.Instantiate(world.gameres.LoadAssetSync<GameObject>(modelpath + res));
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>AnimationConfig</returns>
         public async Task<AnimationConfig> LoadAnimationConfigAsync(string res)
         {
-            return await engine.gameres.LoadAssetAsync<AnimationConfig>(animcfgpath + res);
+            return await world.gameres.LoadAssetAsync<AnimationConfig>(animcfgpath + res);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>AnimationConfig</returns>
         public AnimationConfig LoadAnimationConfigSync(string res)
         {
-            return engine.gameres.LoadAssetSync<AnimationConfig>(animcfgpath + res);
+            return world.gameres.LoadAssetSync<AnimationConfig>(animcfgpath + res);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Effect 预制体</returns>
         public async UniTask<GameObject> LoadEffectAsync(string res)
         {
-            return GameObject.Instantiate(await engine.gameres.LoadAssetAsync<GameObject>(effectpath + res));
+            return GameObject.Instantiate(await world.gameres.LoadAssetAsync<GameObject>(effectpath + res));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Effect 预制体</returns>
         public GameObject LoadEffectSync(string res)
         {
-            return GameObject.Instantiate(engine.gameres.LoadAssetSync<GameObject>(effectpath + res));
+            return GameObject.Instantiate(world.gameres.LoadAssetSync<GameObject>(effectpath + res));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>UIEffect 预制体</returns>
         public GameObject LoadUIEffectSync(string res)
         {
-            return GameObject.Instantiate(engine.gameres.LoadAssetSync<GameObject>(uieffectpath + res));
+            return GameObject.Instantiate(world.gameres.LoadAssetSync<GameObject>(uieffectpath + res));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Sprite 精灵</returns>
         public async UniTask<Sprite> LoadSpriteAsync(string res)
         {
-            return await engine.gameres.LoadAssetAsync<Sprite>(spritespath + res);
+            return await world.gameres.LoadAssetAsync<Sprite>(spritespath + res);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>Sprite 精灵</returns>
         public Sprite LoadSpriteSync(string res)
         {
-            return engine.gameres.LoadAssetSync<Sprite>(spritespath + res);
+            return world.gameres.LoadAssetSync<Sprite>(spritespath + res);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>RawBytes</returns>
         public byte[] LoadConfigSync(string res)
         {
-            return engine.gameres.LoadRawFileSync(configpath + res);
+            return world.gameres.LoadRawFileSync(configpath + res);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>RawBytes</returns>
         public async UniTask<byte[]> LoadConfigAsync(string res)
         {
-            return await engine.gameres.LoadRawFileAsync(configpath + res);
+            return await world.gameres.LoadRawFileAsync(configpath + res);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>RawBytes</returns>
         public byte[] LoadPipelineSync(string res)
         {
-            return engine.gameres.LoadRawFileSync(pipelinepath + res);
+            return world.gameres.LoadRawFileSync(pipelinepath + res);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace GameLogic.Gameplay.Common
         /// <returns>RawBytes</returns>
         public async UniTask<byte[]> LoadPipelineAsync(string res)
         {
-            return await engine.gameres.LoadRawFileAsync(pipelinepath + res);
+            return await world.gameres.LoadRawFileAsync(pipelinepath + res);
         }
     }
 }

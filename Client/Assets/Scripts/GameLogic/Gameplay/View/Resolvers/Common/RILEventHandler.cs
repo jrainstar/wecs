@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// RIL 事件处理器
     /// </summary>
-    public abstract class RILEventHandler : Comp
+    public abstract class RILEventHandler : Node
     {
         /// <summary>
         /// 数据状态桶

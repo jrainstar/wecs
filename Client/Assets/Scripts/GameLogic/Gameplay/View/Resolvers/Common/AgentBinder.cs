@@ -6,7 +6,7 @@ namespace GameLogic.Gameplay.View
     /// <summary>
     /// 代理赋能, 根据状态信息, 添加 Agent/移除 Agent
     /// </summary>
-    public abstract class AgentBinder : Comp
+    public abstract class AgentBinder : Node
     {
         /// <summary>
         /// 数据状态桶
