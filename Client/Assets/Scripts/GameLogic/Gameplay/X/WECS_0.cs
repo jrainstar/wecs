@@ -42,9 +42,17 @@ public class WECS_0 : MonoBehaviour
     /// </summary>
     private WECS_0UI ui { get; set; }
     /// <summary>
-    /// 战斗信息刷新计时
+    /// 是否已有快照
     /// </summary>
-    private float infotimer { get; set; }
+    private bool hassnapshot { get; set; }
+    /// <summary>
+    /// 快照所在的逻辑帧
+    /// </summary>
+    private uint snapshotframe { get; set; }
+    /// <summary>
+    /// 上一次刷新战斗信息时的帧号
+    /// </summary>
+    private uint infoframe { get; set; } = uint.MaxValue;
 
     void Start()
     {
@@ -54,6 +62,8 @@ public class WECS_0 : MonoBehaviour
         ui.onlaunch = Launch;
         ui.onreplay = LaunchReplay;
         ui.onsettle = Settle;
+        ui.onsnapshot = TakeSnapshot;
+        ui.onrestore = RestoreSnapshot;
         ui.Build();
         ui.ShowLaunch();
     }
@@ -74,18 +84,68 @@ public class WECS_0 : MonoBehaviour
 
         if (null == director) return;
 
-        infotimer += Time.deltaTime;
-        if (infotimer < 0.25f) return;
+        // 帧号变化时才刷新界面 (逻辑帧 25/s), 顺带避免每渲染帧生成字符串
+        var frame = null != player ? (uint)player.playedframes : director.frame;
+        if (frame == infoframe) return;
 
-        infotimer = 0;
-        ui.SetBattleInfo(null != player
-            ? $"录像回放  房间号: {room}  帧: {player.playedframes} / {player.lastframe}"
-            : $"战斗中  房间号: {room}  帧: {director.frame}");
+        infoframe = frame;
+        RefreshBattleInfo();
     }
 
     private void FixedUpdate()
     {
         engine.ticker.FixedTick(Time.fixedDeltaTime);
+    }
+
+    /// <summary>
+    /// 刷新战斗界面信息 (房间号 / 当前帧 / 快照帧)
+    /// </summary>
+    private void RefreshBattleInfo()
+    {
+        if (null == director) return;
+
+        if (null != player)
+        {
+            ui.SetBattleInfo($"录像回放  房间号: {room}  帧: {player.playedframes} / {player.lastframe}");
+            return;
+        }
+
+        var info = $"战斗中  房间号: {room}  帧: {director.frame}";
+        if (hassnapshot) info += $"  快照: 第 {snapshotframe} 帧";
+
+        ui.SetBattleInfo(info);
+    }
+
+    /// <summary>
+    /// 快照当前逻辑状态
+    /// </summary>
+    private void TakeSnapshot()
+    {
+        if (null == director || null != player) return;
+
+        director.Snapshot();
+        hassnapshot = true;
+        snapshotframe = director.frame;
+
+        ui.SetSnapshotButtons(true, true);
+        infoframe = uint.MaxValue;
+        Debug.Log($"[WECS_0] 快照完成, 帧 {snapshotframe}");
+    }
+
+    /// <summary>
+    /// 恢复到快照
+    /// </summary>
+    private void RestoreSnapshot()
+    {
+        if (null == director || null != player || false == hassnapshot) return;
+
+        // 快照恢复后逻辑会从该帧重新推演, 录像从该帧开始重新录制
+        if (null != recorder) recorder.Truncate(snapshotframe);
+
+        director.Restore();
+        // 恢复在下一个逻辑帧才真正执行, 强制下一帧刷新显示
+        infoframe = uint.MaxValue;
+        Debug.Log($"[WECS_0] 恢复快照, 回到帧 {snapshotframe}");
     }
 
     /// <summary>
@@ -205,7 +265,9 @@ public class WECS_0 : MonoBehaviour
         local.StartGame();
 
         director = local;
-        infotimer = 0;
+        hassnapshot = false;
+        snapshotframe = 0;
+        infoframe = uint.MaxValue;
     }
 
     /// <summary>

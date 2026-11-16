@@ -25,6 +25,14 @@ namespace GameLogic.Gameplay.X
         /// 点击"结算退出"
         /// </summary>
         public Action onsettle;
+        /// <summary>
+        /// 点击"快照"
+        /// </summary>
+        public Action onsnapshot;
+        /// <summary>
+        /// 点击"恢复快照"
+        /// </summary>
+        public Action onrestore;
 
         /// <summary>
         /// 参考分辨率
@@ -42,6 +50,8 @@ namespace GameLogic.Gameplay.X
         private Text tiptext;
         private InputField roominput;
         private Text battletext;
+        private Button snapshotbutton;
+        private Button restorebutton;
 
         /// <summary>
         /// 内置字体 (Unity 2022.2 之后 Arial.ttf 已更名为 LegacyRuntime.ttf)
@@ -106,6 +116,19 @@ namespace GameLogic.Gameplay.X
             launchpanel.SetActive(false);
             battlepanel.SetActive(true);
             battletext.text = replay ? $"录像回放  房间号: {room}" : $"战斗中  房间号: {room}";
+            // 回放中不允许快照/恢复, 恢复需要先有快照
+            SetSnapshotButtons(false == replay, false);
+        }
+
+        /// <summary>
+        /// 设置快照按钮是否可用
+        /// </summary>
+        /// <param name="cansnapshot">能否快照</param>
+        /// <param name="canrestore">能否恢复快照</param>
+        public void SetSnapshotButtons(bool cansnapshot, bool canrestore)
+        {
+            if (null != snapshotbutton) snapshotbutton.interactable = cansnapshot;
+            if (null != restorebutton) restorebutton.interactable = canrestore;
         }
 
         /// <summary>
@@ -166,6 +189,8 @@ namespace GameLogic.Gameplay.X
 
             var righttop = new Vector2(1, 1);
             var topright = new Vector2(1, 1);
+            snapshotbutton = MakeButton(panel, "BtnSnapshot", "快照", righttop, topright, new Vector2(-500, -24), new Vector2(200, 80), () => onsnapshot?.Invoke());
+            restorebutton = MakeButton(panel, "BtnRestore", "恢复快照", righttop, topright, new Vector2(-280, -24), new Vector2(200, 80), () => onrestore?.Invoke());
             MakeButton(panel, "BtnSettle", "结算退出", righttop, topright, new Vector2(-30, -24), new Vector2(220, 80), () => onsettle?.Invoke());
         }
 

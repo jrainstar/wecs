@@ -61,6 +61,20 @@ namespace GameLogic.Gameplay.Replay
         }
 
         /// <summary>
+        /// 丢弃指定帧及之后的录制
+        /// 快照恢复后逻辑会从该帧重新推演, 之后会重新录制, 保证录像与最终对局一致
+        /// </summary>
+        /// <param name="fromframe">起始帧号 (含)</param>
+        public void Truncate(uint fromframe)
+        {
+            for (int i = frames.Count - 1; i >= 0; i--)
+            {
+                if (frames[i].frame < fromframe) break;
+                frames.RemoveAt(i);
+            }
+        }
+
+        /// <summary>
         /// 把录像写入文件
         /// </summary>
         /// <param name="room">房间号</param>
