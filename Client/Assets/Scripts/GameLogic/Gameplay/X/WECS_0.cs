@@ -333,10 +333,10 @@ public class WECS_0 : MonoBehaviour
     {
         if (string.IsNullOrEmpty(name)) return default;
 
-        TextAsset sceneasset = world.gameres.LoadAssetSync<TextAsset>(Location.scenedatas + name);
+        TextAsset sceneasset = world.gameres.LoadAssetSync<TextAsset>(LocationNode.scenedatas + name);
         if (null != sceneasset) return SceneData.FromJson(sceneasset);
 
-        Debug.LogWarning($"[WECS_0] 场景数据加载失败: {Location.scenedatas + name}");
+        Debug.LogWarning($"[WECS_0] 场景数据加载失败: {LocationNode.scenedatas + name}");
         return default;
     }
 }

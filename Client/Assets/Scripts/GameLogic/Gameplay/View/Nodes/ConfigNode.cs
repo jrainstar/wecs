@@ -1,13 +1,14 @@
 using GameConf;
 using GameFrame;
 using Luban;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// 游戏配置
     /// </summary>
-    public class ConfigKit : Node
+    public class ConfigNode : Node
     {
         /// <summary>
         /// 配置表定位器

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// 随机器
     /// </summary>
-    public class RandomKit : Node
+    public class RandomNode : Node
     {
         /// <summary>
         /// 浮点数转整型的乘法系数（1000 表示 1）

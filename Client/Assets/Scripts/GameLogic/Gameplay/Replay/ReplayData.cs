@@ -78,7 +78,7 @@ namespace GameLogic.Gameplay.Replay
         /// </summary>
         public int seed;
         /// <summary>
-        /// 场景碰撞数据名称 (Location.scenedatas 下的资源名)
+        /// 场景碰撞数据名称 (LocationNode.scenedatas 下的资源名)
         /// </summary>
         public string scenedata;
         /// <summary>

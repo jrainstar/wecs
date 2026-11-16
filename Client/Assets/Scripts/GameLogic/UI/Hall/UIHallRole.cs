@@ -1,5 +1,6 @@
 using GameFrame;
 using GameLogic.Gameplay.Common;
+using GameLogic.Gameplay.View;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

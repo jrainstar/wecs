@@ -2,23 +2,24 @@ using Cysharp.Threading.Tasks;
 using GameFrame;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// GameRes 资源加载组件
     /// </summary>
-    public class GameResKit : Node
+    public class GameResNode : Node
     {
         /// <summary>
         /// 资源加载定位器，具体的加载在这里实现
         /// </summary>
-        public Location location { get; private set; }
+        public LocationNode location { get; private set; }
 
         protected override void OnCreate()
         {
             base.OnCreate();
-            location = AddNode<Location>();
+            location = AddNode<LocationNode>();
             location.Create();
         }
 

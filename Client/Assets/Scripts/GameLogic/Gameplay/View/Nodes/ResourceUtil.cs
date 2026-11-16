@@ -1,6 +1,7 @@
 using GameConf;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// 资源定位工具

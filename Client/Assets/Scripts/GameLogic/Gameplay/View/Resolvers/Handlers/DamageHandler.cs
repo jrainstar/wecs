@@ -326,7 +326,7 @@ namespace GameLogic.Gameplay.View
         /// <returns>世界坐标</returns>
         private Vector3 Position(ulong actor)
         {
-            var node = world.GetAgent<NodeAgent>(actor);
+            var node = world.GetAgent<EntityAgent>(actor);
             var origin = null != node && null != node.go ? node.go.transform.position : Vector3.zero;
 
             origin.y += OFFSET_Y;

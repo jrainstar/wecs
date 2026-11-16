@@ -222,7 +222,7 @@ namespace GameLogic.Gameplay.View
             var animinfo = animcfg.GetAnimationMixInfo(animname);
             if (null != animinfo && animinfo.mixduration > 0) mixduration = animinfo.mixduration;
 
-            animspeed = ril.animspeed * ConfigKit.Int2Float;
+            animspeed = ril.animspeed * ConfigNode.Int2Float;
 
             // 播放位置只在以下情况对齐逻辑层的 animelapsed:
             // 1. 动画切换 (SetAnimation 会把 animelapsed 归零)
@@ -231,7 +231,7 @@ namespace GameLogic.Gameplay.View
             // 渲染帧之间由 OnChase 按 tick * timescale * animspeed 自主插值推进
             if (switched || ril.animelapsed < lastelapsed)
             {
-                playtime = ril.animelapsed * ConfigKit.Int2Float;
+                playtime = ril.animelapsed * ConfigNode.Int2Float;
                 // 前置混合动画从这里开始计时, 之后只由 OnChase 推进, 不随播放位置归零
                 mixtime = playtime;
             }

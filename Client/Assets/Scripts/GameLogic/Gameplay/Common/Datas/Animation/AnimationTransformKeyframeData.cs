@@ -1,4 +1,5 @@
 using GameFrame;
+using GameLogic.Gameplay.View;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -444,7 +445,7 @@ namespace GameLogic.Gameplay.Common
             if (string.IsNullOrEmpty(name)) return null;
             if (cache.TryGetValue(name, out var data)) return data;
 
-            var asset = ResourceModule.Instance.LoadAssetSync<TextAsset>(Location.animationkeyframes + name);
+            var asset = ResourceModule.Instance.LoadAssetSync<TextAsset>(LocationNode.animationkeyframes + name);
             data = asset != null ? AnimationKeyframeClipData.FromJson(asset.text) : null;
             cache.Add(name, data);
 

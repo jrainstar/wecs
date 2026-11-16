@@ -1,10 +1,9 @@
-using GameLogic.Gameplay.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// 节点, 对象树的通用基类

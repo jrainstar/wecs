@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
-    /// 键盘/鼠标设备, 只负责向 InputKit 提供设备的原始状态, 自身不做任何缓冲与派发
+    /// 键盘/鼠标设备, 只负责向 InputNode 提供设备的原始状态, 自身不做任何缓冲与派发
     /// </summary>
-    public class Keyboard : Node
+    public class KeyboardNode : Node
     {
         /// <summary>
         /// 键盘设备

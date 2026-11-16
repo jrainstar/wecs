@@ -31,7 +31,7 @@ namespace GameLogic.Gameplay.Logic
     /// <summary>
     /// 定时器行为 (Stage 级)
     /// 由逻辑帧驱动, 使用 FP 计时, 跟随 Stage 的时间缩放; Stage 暂停/停止时不推进
-    /// 与 TickerKit.Timing 的区别: 后者跑在渲染帧上, 与逻辑帧无关, 不参与回滚
+    /// 与 TickerNode.Timing 的区别: 后者跑在渲染帧上, 与逻辑帧无关, 不参与回滚
     ///
     /// 快照/回放:
     ///   定时任务以纯数据 (TimerInfo.tasks) 的形式挂在 Stage 上, 随 StageInfo 一起 Clone,

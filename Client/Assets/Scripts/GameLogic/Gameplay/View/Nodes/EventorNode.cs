@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// 事件接口
@@ -11,7 +12,7 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// 事件订阅派发者
     /// </summary>
-    public class EventorKit : Node
+    public class EventorNode : Node
     {
         /// <summary>
         /// 事件的集合

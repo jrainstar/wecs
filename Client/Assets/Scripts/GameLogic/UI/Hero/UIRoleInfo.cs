@@ -2,6 +2,7 @@ using DG.Tweening;
 using GameConf.Gameplay;
 using GameFrame;
 using GameLogic.Gameplay.Common;
+using GameLogic.Gameplay.View;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;

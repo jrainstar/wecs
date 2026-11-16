@@ -307,7 +307,7 @@ namespace GameLogic.Gameplay.View
         /// <returns>挂点 Transform</returns>
         private UnityEngine.Transform FindAnchor(ulong actor, string anchor)
         {
-            var node = world.GetAgent<NodeAgent>(actor);
+            var node = world.GetAgent<EntityAgent>(actor);
             if (null == node || null == node.go) return null;
 
             var root = node.go.transform;

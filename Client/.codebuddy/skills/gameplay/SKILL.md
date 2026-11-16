@@ -1,6 +1,6 @@
 ---
 name: gameplay
-description: WECS-BATTLE 客户端 Gameplay 模块（Assets/Scripts/GameLogic/Gameplay）的架构导航与开发规范。当任务涉及 Stage 逻辑层、Behavior/BehaviorInfo、Timeline 时间轴、Executor 指令执行器、Payload 负载、Aoe/Effect/Detection/DamageCalc/AttributeCalc、RIL 渲染指令、Translator 翻译器、View 层 World/RILBucket/Agent/Binder/Merger/Eyes 镜头、Director 导演、InputKit 输入、FP 定点数，或在该模块内新增/修改功能时使用本技能，避免全仓库检索。
+description: WECS-BATTLE 客户端 Gameplay 模块（Assets/Scripts/GameLogic/Gameplay）的架构导航与开发规范。当任务涉及 Stage 逻辑层、Behavior/BehaviorInfo、Timeline 时间轴、Executor 指令执行器、Payload 负载、Aoe/Effect/Detection/DamageCalc/AttributeCalc、RIL 渲染指令、Translator 翻译器、View 层 World/RILBucket/Agent/Binder/Merger/Eyes 镜头、Director 导演、InputNode 输入、FP 定点数，或在该模块内新增/修改功能时使用本技能，避免全仓库检索。
 ---
 
 # Gameplay 模块指南
@@ -13,15 +13,7 @@ description: WECS-BATTLE 客户端 Gameplay 模块（Assets/Scripts/GameLogic/Ga
 
 | 关注点 | 文件 |
 |---|---|
-| 根组件 | `View/Core/World.cs`（全局唯一，`config` / `gameres` / `random` / `ticker` / `u3dkit` / `rilbucket` / `eyes`，`CreateWorld()` / `Begin()` / `End()`） |
-| 节点基类 | `Common/Core/Node.cs`（`world` 根引用 / `AddNode<T>` / `GetNode<T>` / `RmvNode` / `Create` / `Destroy`） |
-| 事件派发 | `Common/Kits/EventorKit.cs`（`Listen` / `UnListen` / `Tell`） |
-| 帧驱动 | `Common/Kits/TickerKit.cs`（`TickEvent`/`LateTickEvent` 渲染帧，`FixedTickEvent`/`FixedLateTickEvent` 逻辑帧，`Timing` 计时器） |
-| 配置表 | `Common/Kits/ConfigKit.cs`（`location.Tables`，`Float2Int=1000` / `Int2Float=0.001`）、`Logic/Behaviors/Stage/Config.cs`（`stage.cfg.location`） |
-| Unity 工具 | `Common/Kits/U3DKit.cs`（`GetEntity` / `SeekEntity`，注意与逻辑层的 `Node` 区分） |
-| 输入 | `Common/Kits/U3DKit/InputKit.cs` + `Common/Kits/U3DKit/Input/Keyboard.cs` |
-| 资源 | `Common/Kits/GameRes/GameResKit.cs` + `Common/Kits/GameRes/Location.cs`（各类路径常量 + `LoadModelSync` / `LoadAnimationConfigSync`）、`Common/Kits/ResourceUtil.cs` |
-| 随机器 | `Common/Kits/RandomKit.cs` |
+| 根组件 | `View/Core/World.cs`（全局唯一，`config` / `gameres` / `random` / `ticker` / `input` / `rilbucket` / `eyes`，`CreateWorld()` / `Begin()` / `End()`） |
 | 对象池 | `Common/ObjectCache.cs`（纯 C# 对象，`Ensure<T>` / `Set`）、`Common/ObjectPool.cs`（含 GameObject，`Get<T>(key)` / `Set(obj,key)`） |
 | RIL 对象池 | `Common/RILCache.cs` |
 | 全部常量 | `Common/Defines/`（`RIL_DEFINE` `INPUT_DEFINE` `TAG_DEFINE` `ACTOR_DEFINE` `CAPACITY_DEFINE` `STATE_DEFINE` `ANIM_DEFINE` `ATTRIBUTE_DEFINE` `COLLISION_DEFINE` `DAMAGE_DEFINE` `EMITTER_DEFINE` `SKILL_DEFINE` `GAME_DEFINE`） |
@@ -58,11 +50,17 @@ description: WECS-BATTLE 客户端 Gameplay 模块（Assets/Scripts/GameLogic/Ga
 | 关注点 | 文件 |
 |---|---|
 | 导演 | `Director/Common/BaseDirector.cs`、`Director/LocalDirector.cs` |
+| 节点基类 | `View/Core/Node.cs`（`world` 根引用 / `AddNode<T>` / `GetNode<T>` / `RmvNode` / `Create` / `Destroy`） |
+| 全局节点 | `View/Nodes/`（`ConfigNode` `EventorNode` `TickerNode` `RandomNode` `GameResNode` `LocationNode` `InputNode` `KeyboardNode` `ResourceUtil`），均为 `World` 的直接子节点 |
+| 帧驱动 | `View/Nodes/TickerNode.cs`（`TickEvent`/`LateTickEvent` 渲染帧，`FixedTickEvent`/`FixedLateTickEvent` 逻辑帧，`Timing` 计时器） |
+| 配置表 | `View/Nodes/ConfigNode.cs`（`location.Tables`，`Float2Int=1000` / `Int2Float=0.001`）、`Logic/Behaviors/Stage/Config.cs`（`stage.cfg.location`） |
+| 输入 | `View/Nodes/InputNode.cs` + `View/Nodes/KeyboardNode.cs`（`world.input` 直接挂在 World 上，不再有 U3D 包装层） |
+| 资源 | `View/Nodes/GameResNode.cs` + `View/Nodes/LocationNode.cs`（各类路径常量 + `LoadModelSync` / `LoadAnimationConfigSync`）、`View/Nodes/ResourceUtil.cs` |
 | 渲染容器 | `View/Core/World.cs`、`View/Core/Agent.cs` |
 | 状态桶 | `View/Resolvers/Common/RILBucket.cs` |
-| Agent 绑定（Binder） | `View/Resolvers/Common/AgentBinder.cs` + `View/Resolvers/Enchants/`（`NodeBinder` `ModelBinder` `AnimationBinder` `EffectBinder`） |
-| RIL 合并器 | `View/Resolvers/Common/RILMerger.cs` + `View/Resolvers/Cross/ActorsCross.cs`（`ActorMerger`） |
-| RIL 事件处理器 | `View/Resolvers/Common/RILEventHandler.cs` + `View/Resolvers/Salutes/DamageSalute.cs` |
+| Agent 绑定（Binder） | `View/Resolvers/Common/AgentBinder.cs` + `View/Resolvers/Binders/`（`NodeBinder` `ModelBinder` `AnimationBinder` `EffectBinder` `AttributeBinder`） |
+| RIL 合并器 | `View/Resolvers/Common/RILMerger.cs` + `View/Resolvers/Mergers/ActorMerger.cs` |
+| RIL 事件处理器 | `View/Resolvers/Common/RILEventHandler.cs` + `View/Resolvers/Handlers/DamageHandler.cs` |
 | 代理实现 | `View/Agents/`（`NodeAgent.cs` `ModelAgent.cs` `AnimationAgent.cs` `EffectAgent.cs`） |
 | 特效播放 | `View/Common/Particle/EffectController.cs` |
 | **镜头** | `View/Cameras/Eyes.cs` |
@@ -74,10 +72,10 @@ description: WECS-BATTLE 客户端 Gameplay 模块（Assets/Scripts/GameLogic/Ga
 ## 三层架构
 
 ```
-World (View, 全局唯一根组件)
+World (View, 全局唯一根节点)
  ├─ ticker  → TickEvent(渲染帧) / FixedTickEvent(逻辑帧)，ticker.eventor 即全局事件总线
- ├─ config  → ConfigKit.location.Tables（Luban 配置表）
- ├─ u3dkit.input (InputKit) ← Keyboard
+ ├─ config  → ConfigNode.location.Tables（Luban 配置表）
+ ├─ input (InputNode) → keyboard (KeyboardNode) ← 设备
  └─ rilbucket / eyes / agentdict（渲染层内容，每局 Begin/End 清空）
         │
 Director (BaseDirector / LocalDirector)
@@ -212,9 +210,9 @@ Executor<PrintEvent, PrintExecutor>();
 3. `Logic/BehaviorInfos/XXXInfo.cs` 实现 `BehaviorInfo`（`OnReady` / `OnReset` / `OnClone`）。
 4. `Logic/Translators/XXXTranslator.cs` 继承 `Translator<XXXInfo, RIL_XXX>`，实现 `id`、`OnCalcHashCode`、`OnRIL`；`protected override bool once => true` 表示只发一次。
 5. 在 `RILSync.ManualTranslators()` 里 `Translator<XXXTranslator, XXXInfo>()`。
-6. 若为状态型 RIL：`View/Resolvers/Enchants/XXXBinder.cs` 继承 `AgentBinder<RIL_XXX>`，实现 `OnRIL` / `OnLossRIL`（内部一般 `world.EnsureAgent<XXXAgent>` / `RmvAgent`）；在 `RILBucket.Enchants()` 里 `Enchant<XXXBinder>(RIL_DEFINE.XXX)`（同 id 可注册多个）。
-7. 若为增量型：`View/Resolvers/Cross/XXXMerger.cs` 继承 `RILMerger<RIL_XXX, RIL_DIFF_XXX>`，实现 `OnHasNew` / `OnHasDel`；在 `RILBucket.Cross()` 里 `Cross<XXXMerger>(RIL_DEFINE.XXX)`。`IRIL_DIFF` 必须是纯值类型。
-8. 若为事件型：`View/Resolvers/Salutes/XXXSalute.cs` 继承 `RILEventHandler<RIL_EVENT_XXX>`，实现 `OnSalute`；在 `RILBucket.Salutes()` 里 `Salute<XXXSalute>(RIL_DEFINE.EVENT_XXX)`。
+6. 若为状态型 RIL：`View/Resolvers/Binders/XXXBinder.cs` 继承 `AgentBinder<RIL_XXX>`，实现 `OnRIL` / `OnLossRIL`（内部一般 `world.EnsureAgent<XXXAgent>` / `RmvAgent`）；在 `RILBucket.Enchants()` 里 `Enchant<XXXBinder>(RIL_DEFINE.XXX)`（同 id 可注册多个）。
+7. 若为增量型：`View/Resolvers/Mergers/XXXMerger.cs` 继承 `RILMerger<RIL_XXX, RIL_DIFF_XXX>`，实现 `OnHasNew` / `OnHasDel`；在 `RILBucket.Cross()` 里 `Cross<XXXMerger>(RIL_DEFINE.XXX)`。`IRIL_DIFF` 必须是纯值类型。
+8. 若为事件型：`View/Resolvers/Handlers/XXXHandler.cs` 继承 `RILEventHandler<RIL_EVENT_XXX>`，实现 `OnSalute`；在 `RILBucket.Salutes()` 里 `Salute<XXXHandler>(RIL_DEFINE.EVENT_XXX)`。
 9. 需要渲染载体时：`View/Agents/XXXAgent.cs` 继承 `Agent`，`OnReady` 里 `WatchRIL<RIL_XXX>`，用 `world.rilbucket.SeekRIL<RIL_XXX>(actor, out var ril)` 读当前值。
 
 **现有 RIL 一览**（`Logic/Instructs/RIL/`）：
@@ -235,13 +233,13 @@ Executor<PrintEvent, PrintExecutor>();
 | 11 `FACADE_ANIMATION` | `RIL_FACADE_ANIMATION` | `FacadeAnimationTranslator` | `AnimationBinder` → `AnimationAgent` |
 | 12 `FACADE_EFFECT` | `RIL_FACADE_EFFECT` | `FacadeEffectTranslator` | `EffectBinder` → `EffectAgent` |
 
-事件（`Logic/Instructs/RIL/EVENT/`）：`RIL_EVENT_DAMAGE`(1)（`DamageSalute` 跳字）/ `RIL_EVENT_CURE`(2)（无处理器），`RIL_DEFINE.EVENT_*` 定义；增量（`Logic/Instructs/RIL/DIFF/`）：`RIL_DIFF_ACTOR`。
+事件（`Logic/Instructs/RIL/EVENT/`）：`RIL_EVENT_DAMAGE`(1)（`DamageHandler` 跳字）/ `RIL_EVENT_CURE`(2)（无处理器），`RIL_DEFINE.EVENT_*` 定义；增量（`Logic/Instructs/RIL/DIFF/`）：`RIL_DIFF_ACTOR`。
 
 ### 渲染层要点
 
-- `World : Node`（全局唯一根节点，`World.CreateWorld()` 创建一次）：`root`（GameObject 容器）、`config`、`gameres`、`random`、`ticker`、`u3dkit`、`rilbucket`、`eyes`、`selfseat`、`self`（座位→Actor）、`SwitchSeat`、`rendering`（追帧开关）；`OnTick` 遍历 `agentdict` 驱动 `Chase`。**遍历期间禁止增删 Agent**，实现方式是把 `(agent, timescale)` 先收集到临时列表。
+- `World : Node`（全局唯一根节点，`World.CreateWorld()` 创建一次）：`root`（GameObject 容器）、`config`、`gameres`、`random`、`ticker`、`input`、`rilbucket`、`eyes`、`selfseat`、`self`（座位→Actor）、`SwitchSeat`、`rendering`（追帧开关）；`OnTick` 遍历 `agentdict` 驱动 `Chase`。**遍历期间禁止增删 Agent**，实现方式是把 `(agent, timescale)` 先收集到临时列表。
 - `Node.world` 就是根引用（原 `Comp.engine`），`AddNode` 会自动透传；每局通过 `world.Begin(seat)` / `world.End()` 切换与回收战斗内容，导演不再持有/创建 World。
-- 命名约定：逻辑层的 `Node` 是对象树节点（`World` / `XxxKit` / `RILBucket` / `AgentBinder` 等）；Unity 的 GameObject 一律叫“实体”，对应 `U3DKit.GetEntity` / `SeekEntity`。
+- 命名约定：`Node` 是对象树节点（`World` / `XxxNode` / `RILBucket` / `AgentBinder` 等），`Node` 及其子类统一放在 `View/Core`、`View/Nodes` 下；Unity 的 GameObject 一律叫“实体”。
 - Agent 增删统一走 `World.EnsureAgent<T>(actor)` / `GetAgent<T>` / `GetAgents(actor)` / `RmvAgent(actor|agent)`；Binder 只负责在 RIL 到来时决定创建还是回收。
 - `Agent` 生命周期：`Ready(actor, world)` → `OnReady` → `Flash`；`Reset` → `OnReset`；`Chase(tick, timescale)` → `OnChase` + `OnArrived`。
   - `Ready` 里会自动 `Flash()`，`Reset` 里会回收所有 `Invoker`，`OnReset` 不要再遍历 `rilactions`。
@@ -270,7 +268,7 @@ Executor<PrintEvent, PrintExecutor>();
 ```
 Keyboard (UnityEngine.InputSystem, 每帧读设备)
    ↓ joystick / look / wheel / GetKey
-InputKit.Bind() 注册 输入类型 → 读取器；OnTick(TickEvent) 刷新 inputdict
+InputNode.Bind() 注册 输入类型 → 读取器；OnTick(TickEvent) 刷新 inputdict
    ↓ GetInput(INPUT_DEFINE.XXX) → (bool press, IntVector2 dire)
 LocalDirector.SyncInput (FixedTickEvent) → ToWorldDire(eyes.yaw)
    ↓ INPUT_DEFINE.SYNC_INPUTS 批量 stage.SetInput(world.selfseat, type, press, dire)
@@ -278,8 +276,8 @@ Seat 座位 → ActorID
 Stage → Gamepad.SetInput → GamepadInfo.inputdict → Behavior 里 gamepad.GetInput
 ```
 
-- `InputKit` 用 `TickEvent` 刷新，`LocalDirector.OnStep` 用 `FixedTickEvent` 取用，天然是"取最新值"语义。
-- 新增按键：`INPUT_DEFINE` 加常量 → `InputKit.Bind()` 加读取器 → 需要同步到逻辑层的加入 `INPUT_DEFINE.SYNC_INPUTS` → 逻辑行为里 `gamepad.GetInput(INPUT_DEFINE.XXX)`。
+- `InputNode` 用 `TickEvent` 刷新，`LocalDirector.OnStep` 用 `FixedTickEvent` 取用，天然是"取最新值"语义。
+- 新增按键：`INPUT_DEFINE` 加常量 → `InputNode.Bind()` 加读取器 → 需要同步到逻辑层的加入 `INPUT_DEFINE.SYNC_INPUTS` → 逻辑行为里 `gamepad.GetInput(INPUT_DEFINE.XXX)`。
 - 技能按键不在 `SYNC_INPUTS` 里单独处理，而是通过 `SKILL_DEFINE.SLOT_INPUTS` 映射到槽位，由 `SkillLauncher` 轮询。
 - `Gamepad.SetInput` 通过"上一帧 press 且本次未 press"推导 `release`；`OnEndTick` 统一清 `release`。
 - `Keyboard` 类名与 `UnityEngine.InputSystem.Keyboard` 冲突，内部一律使用全限定名。
@@ -294,17 +292,17 @@ Stage → Gamepad.SetInput → GamepadInfo.inputdict → Behavior 里 gamepad.Ge
 
 ## 常见坑
 
-- 逻辑层 `Movement` 只在 `joystick.press` 为 true 时移动；`press` 由 `dire != Vector2.zero` 推导。全程不动先查 `InputKit.inputdict` 是否有值，再查 `stage.SetInput` 的座位号是否为 `world.selfseat`（不是 `stage.sa`）。
+- 逻辑层 `Movement` 只在 `joystick.press` 为 true 时移动；`press` 由 `dire != Vector2.zero` 推导。全程不动先查 `InputNode.inputdict` 是否有值，再查 `stage.SetInput` 的座位号是否为 `world.selfseat`（不是 `stage.sa`）。
 - `Stage.SetInput(seat, ...)` 与 `Stage.SeekBehavior` 用 ActorID；座位号需经 `Seat` 映射到 ActorID。
 - `RILSync` 的哈希缓存 `Query(actor, id)` 返回 -1 表示未发送过；修改 `BehaviorInfo` 字段后自然触发重发，不需要手动 `Send`。`RILSync.Send(IRIL_DIFF)` 已标记 `[Obsolete]`，增量统一走 `Stage.Diff`。
 - `Stage.Diff(IRIL_DIFF)` 在 `frame <= 1` 时直接丢弃——初始化帧的增量不会到达渲染层。
 - 渲染层只在 `rendering == true`（`stage.state == StageState.Ticking` 且不在恢复中）时被驱动，逻辑暂停时画面不更新。
 - `TICK_DEFINE.TICK_TYPE_LIST` 顺序见上（`Gamepad → Detection → Movement → Timeline → Aoe → SkillLauncher → Facade → Effect → RILSync`）。`Timeline` 已登记，新增会逐帧驱动的行为必须补进去。
 - `Timeline.Play` 不会打断已存在的时间轴；同帧内刚播完（已 `RmvBehaviorInfo` 但未 `Recycle`）的也视为存在，需等下一帧。
-- `FP` 与 `float` 互转：`fp.AsFloat()` / `(FP)someInt` / `(FP)someFloat`，常量 `FP.One` / `FP.Zero`；`IntVector` 与 `FPVector` 换算是 `* ConfigKit.Float2Int`（1000 倍），逻辑层转渲染用 `* stage.cfg.fp2int`。
+- `FP` 与 `float` 互转：`fp.AsFloat()` / `(FP)someInt` / `(FP)someFloat`，常量 `FP.One` / `FP.Zero`；`IntVector` 与 `FPVector` 换算是 `* ConfigNode.Float2Int`（1000 倍），逻辑层转渲染用 `* stage.cfg.fp2int`。
 - `ModelAgent` 在 `facademodel.model > 0` **或** `facademodel.resource > 0` 时创建（`ModelBinder`）；`HeroPrefab` 里 `facade.SetModel(info.hero)` 的 hero ID 必须 > 0，AOE 走 `facade.SetResource(...)`。
-- 命名遗留（文件夹未跟着改名）：`View/Resolvers/Enchants/` 里的类都叫 `XxxBinder`，`Cross/` 里是 `ActorMerger`，`Salutes/` 里是 `XxxSalute`；`RILBucket` 的注册方法名仍是 `Cross()` / `Salutes()` / `Enchants()`，字典字段仍是 `crossdict` / `salutedict` / `enchantdict`。
+- 命名遗留：`View/Resolvers/` 下的文件夹已按类型改名（`Binders/` `Mergers/` `Handlers/`），但 `RILBucket` 的注册方法名仍是 `Cross()` / `Salutes()` / `Enchants()`，字典字段仍是 `crossdict` / `salutedict` / `enchantdict`。
 - `HeroPrefab.cs` 里仍有一条注释写着旧名 `ModelEnchant`，实际类是 `ModelBinder`，不要被误导。
 - `Common/MathF/` 下的 `*Lut.cs` 是大型查表文件，禁止读取或检索。
-- `Logic/Behaviors/Stage/Config.cs` 的 `OnAssemble` 直接赋 `ConfigManager.Instance.Tables`；WebGL 下 `ConfigKit.OnCreate` 走异步字节加载分支。排查配置为空时先看 `world.config`。
+- `Logic/Behaviors/Stage/Config.cs` 的 `OnAssemble` 直接赋 `ConfigManager.Instance.Tables`；WebGL 下 `ConfigNode.OnCreate` 走异步字节加载分支。排查配置为空时先看 `world.config`。
 - `View/Core/Batch.cs` 整文件被注释，`World.Batches()` 为空方法，属于预留位。

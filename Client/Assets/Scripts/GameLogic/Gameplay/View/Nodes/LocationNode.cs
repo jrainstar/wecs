@@ -1,14 +1,14 @@
 using Cysharp.Threading.Tasks;
-using GameLogic.Gameplay.View;
 using System.Threading.Tasks;
 using UnityEngine;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// 资源加载定位器，加载框架包装定位资源地址
     /// </summary>
-    public class Location : Node
+    public class LocationNode : Node
     {
         public const string soundpath = "Assets/GameRes/Sound/";
         public const string modelpath = "Assets/AssetRaws/Prefabs/Role/";

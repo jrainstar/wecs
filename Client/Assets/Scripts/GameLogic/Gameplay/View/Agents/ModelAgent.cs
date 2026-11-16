@@ -78,7 +78,7 @@ namespace GameLogic.Gameplay.View
         protected override bool OnArrived()
         {
             // 模型挂载完成, 后续位置由节点代理驱动
-            var node = world.GetAgent<NodeAgent>(actor);
+            var node = world.GetAgent<EntityAgent>(actor);
             if (null == node || null == node.go) return false;
             if (model <= 0 && resource <= 0) return false;
             if (null == go) return false;
@@ -119,7 +119,7 @@ namespace GameLogic.Gameplay.View
             if (null != go && model == facademodel.model && resource == facademodel.resource) return;
 
             // 节点代理不存在则先创建, 模型需要挂载到节点之下
-            var node = world.EnsureAgent<NodeAgent>(actor);
+            var node = world.EnsureAgent<EntityAgent>(actor);
             if (null == node || null == node.go) return;
 
             if (null == world.config) return;

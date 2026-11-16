@@ -29,7 +29,7 @@ namespace GameLogic.Gameplay.View
         /// <returns>AnimationConfig</returns>
         public static AnimationConfig LoadAnimationConfig(string res)
         {
-            return ScriptableObject.Instantiate(AssetDatabase.LoadAssetAtPath<AnimationConfig>(Location.animcfgpath + res + ".asset"));
+            return ScriptableObject.Instantiate(AssetDatabase.LoadAssetAtPath<AnimationConfig>(LocationNode.animcfgpath + res + ".asset"));
         }
     }
 }

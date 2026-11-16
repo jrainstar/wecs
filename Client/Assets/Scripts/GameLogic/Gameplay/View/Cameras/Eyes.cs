@@ -87,7 +87,7 @@ namespace GameLogic.Gameplay.View
             cmoff = cmgo.AddComponent<CinemachineCameraOffset>();
 
             // CM 输入: 用纯代码实现的轴输入适配器替换 InputAction 配置方案
-            input = new AxisInput(world.u3dkit.input.keyboard);
+            input = new AxisInput(world.input.keyboard);
             if (null != input) input.enabled = true;
             cm.m_XAxis.SetInputAxisProvider(0, input);
             cm.m_YAxis.SetInputAxisProvider(1, input);
@@ -124,7 +124,7 @@ namespace GameLogic.Gameplay.View
             // input.enabled = CursorLockMode.Locked == Cursor.lockState;
 
             // LookAt 自己
-            var node = world.GetAgent<NodeAgent>(world.self);
+            var node = world.GetAgent<EntityAgent>(world.self);
             if (null == node)
             {
                 // 本局未开始或已结束 (例如跨局复用的 World), 断开跟随, 避免指向被回收的节点
@@ -146,7 +146,7 @@ namespace GameLogic.Gameplay.View
         private void Zoom(float tick)
         {
             // 直接读设备的滚轮增量, 每帧累加后立刻消耗, 保证不依赖是否锁定鼠标
-            wheel += world.u3dkit.input.keyboard.wheel.y;
+            wheel += world.input.keyboard.wheel.y;
             if (0 == wheel) return;
 
             // 属性返回的是值副本, 不能直接改字段, 取出后再写回
@@ -189,9 +189,9 @@ namespace GameLogic.Gameplay.View
             /// <summary>
             /// 键盘/鼠标设备
             /// </summary>
-            private readonly Keyboard keyboard;
+            private readonly KeyboardNode keyboard;
 
-            public AxisInput(Keyboard keyboard)
+            public AxisInput(KeyboardNode keyboard)
             {
                 this.keyboard = keyboard;
             }

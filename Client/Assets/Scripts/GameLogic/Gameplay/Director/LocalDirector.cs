@@ -201,7 +201,7 @@ namespace GameLogic.Gameplay.Director
         /// </summary>
         private void SyncInput()
         {
-            var input = world.u3dkit.input;
+            var input = world.input;
             if (null == input) return;
 
             var inputs = INPUT_DEFINE.SYNC_INPUTS;

@@ -9,7 +9,7 @@ namespace GameLogic.Gameplay.View
     {
         protected override void OnRIL(RIL_SPATIAL ril)
         {
-            rilbucket.world.EnsureAgent<NodeAgent>(ril.actor);
+            rilbucket.world.EnsureAgent<EntityAgent>(ril.actor);
         }
     }
 }

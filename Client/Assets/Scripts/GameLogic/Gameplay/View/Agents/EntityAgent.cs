@@ -8,7 +8,7 @@ namespace GameLogic.Gameplay.View
     /// 节点代理, 负责把逻辑层的空间状态同步到 GameObject 的 Transform
     /// 逻辑帧 (25fps) 与渲染帧 (60fps) 不对等, 逐帧阻尼追赶以避免位移一卡一卡
     /// </summary>
-    public class NodeAgent : Agent
+    public class EntityAgent : Agent
     {
         /// <summary>
         /// 追踪速度, 越大越贴近逻辑帧(越小越平滑但延迟越大)

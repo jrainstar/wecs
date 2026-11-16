@@ -47,27 +47,27 @@ namespace GameLogic.Gameplay.View
         /// <summary>
         /// 配置
         /// </summary>
-        public ConfigKit config { get; private set; }
+        public ConfigNode config { get; private set; }
 
         /// <summary>
         /// 资源
         /// </summary>
-        public GameResKit gameres { get; private set; }
+        public GameResNode gameres { get; private set; }
 
         /// <summary>
         /// 随机器
         /// </summary>
-        public RandomKit random { get; private set; }
+        public RandomNode random { get; private set; }
 
         /// <summary>
         /// Ticker/时间驱动器, 同时是全局事件派发者 (ticker.eventor)
         /// </summary>
-        public TickerKit ticker { get; private set; }
+        public TickerNode ticker { get; private set; }
 
         /// <summary>
-        /// U3D/输入
+        /// 输入
         /// </summary>
-        public U3DKit u3dkit { get; private set; }
+        public InputNode input { get; private set; }
 
         /// <summary>
         /// 桶
@@ -126,21 +126,21 @@ namespace GameLogic.Gameplay.View
             base.OnCreate();
 
             // 资源要先于配置创建 (WebGL 下配置需要走资源异步加载)
-            gameres = AddNode<GameResKit>();
+            gameres = AddNode<GameResNode>();
             gameres.Create();
 
-            config = AddNode<ConfigKit>();
+            config = AddNode<ConfigNode>();
             config.Create();
 
-            random = AddNode<RandomKit>();
+            random = AddNode<RandomNode>();
             random.Initial(19491001);
             random.Create();
 
-            ticker = AddNode<TickerKit>();
+            ticker = AddNode<TickerNode>();
             ticker.Create();
 
-            u3dkit = AddNode<U3DKit>();
-            u3dkit.Create();
+            input = AddNode<InputNode>();
+            input.Create();
 
             rilbucket = AddNode<RILBucket>();
             rilbucket.Create();
@@ -362,7 +362,7 @@ namespace GameLogic.Gameplay.View
             foreach (var kv in agentdict)
             {
                 float timescale = 1f;
-                if (rilbucket.SeekRIL<RIL_TICKER>(kv.Key, out var ril)) timescale = ril.timescale * ConfigKit.Int2Float;
+                if (rilbucket.SeekRIL<RIL_TICKER>(kv.Key, out var ril)) timescale = ril.timescale * ConfigNode.Int2Float;
                 foreach (var agent in kv.Value.Values)
                 {
                     if (ChaseStatus.Arrived == agent.status) continue;

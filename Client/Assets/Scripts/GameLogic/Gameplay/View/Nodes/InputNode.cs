@@ -1,19 +1,20 @@
 using GameLogic.Gameplay.Logic;
 using System.Collections.Generic;
 using UnityEngine;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
-    /// 输入系统, 负责把键盘/鼠标设备(Keyboard)的状态采集为逻辑层可用的输入数据
-    /// 自身创建并持有 Keyboard, 每个 Tick 刷新一次 inputdict / cmddict
+    /// 输入系统, 负责把键盘/鼠标设备(KeyboardNode)的状态采集为逻辑层可用的输入数据
+    /// 自身创建并持有 KeyboardNode, 每个 Tick 刷新一次 inputdict / cmddict
     /// </summary>
-    public class InputKit : Node
+    public class InputNode : Node
     {
         /// <summary>
         /// 键盘/鼠标设备
         /// </summary>
-        public Keyboard keyboard { get; private set; }
+        public KeyboardNode keyboard { get; private set; }
 
         /// <summary>
         /// 输入数据集合
@@ -32,7 +33,7 @@ namespace GameLogic.Gameplay.Common
         {
             base.OnCreate();
 
-            keyboard = AddNode<Keyboard>();
+            keyboard = AddNode<KeyboardNode>();
             keyboard.Create();
 
             inputdict = ObjectPool.Ensure<Dictionary<ushort, (bool press, IntVector2 dire)>>();
@@ -162,7 +163,7 @@ namespace GameLogic.Gameplay.Common
             foreach (var kv in keydict)
             {
                 var dire = kv.Value.Invoke();
-                SetInput(kv.Key, Vector2.zero != dire, new IntVector2((int)(dire.x * ConfigKit.Float2Int), (int)(dire.y * ConfigKit.Float2Int)));
+                SetInput(kv.Key, Vector2.zero != dire, new IntVector2((int)(dire.x * ConfigNode.Float2Int), (int)(dire.y * ConfigNode.Float2Int)));
             }
         }
     }

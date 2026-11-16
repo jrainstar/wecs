@@ -109,7 +109,7 @@ namespace GameLogic.Gameplay.View
         {
             if (null == rt) return false;
 
-            var node = world.GetAgent<NodeAgent>(actor);
+            var node = world.GetAgent<EntityAgent>(actor);
             if (null == node || null == node.go) return false;
 
             rt.position = node.go.transform.position + Vector3.up * OFFSET_Y;

@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using GameLogic.Gameplay.Common;
 
-namespace GameLogic.Gameplay.Common
+namespace GameLogic.Gameplay.View
 {
     /// <summary>
     /// Tick 事件
@@ -82,12 +83,12 @@ namespace GameLogic.Gameplay.Common
     /// <summary>
     /// Ticker, 逻辑层 Tick 驱动组件
     /// </summary>
-    public class TickerKit : Node
+    public class TickerNode : Node
     {
         /// <summary>
         /// 事件订阅/派发者
         /// </summary>
-        public EventorKit eventor { get; set; }
+        public EventorNode eventor { get; set; }
 
         /// <summary>
         /// 时间缩放
@@ -97,7 +98,7 @@ namespace GameLogic.Gameplay.Common
         protected override void OnCreate()
         {
             base.OnCreate();
-            eventor = AddNode<EventorKit>();
+            eventor = AddNode<EventorNode>();
             eventor.Create();
         }
 
