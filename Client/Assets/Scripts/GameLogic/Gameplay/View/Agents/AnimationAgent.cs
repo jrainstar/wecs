@@ -1,4 +1,5 @@
 ﻿using Animancer;
+using GameFrame;
 using GameLogic.Gameplay.Common;
 using GameLogic.Gameplay.Logic;
 using UnityEngine;
@@ -199,7 +200,7 @@ namespace GameLogic.Gameplay.View
             {
                 cfgname = rolemodel.Animation;
                 if (null != animcfg) GameObject.Destroy(animcfg);
-                animcfg = world.gameres.location.LoadAnimationConfigSync(cfgname);
+                animcfg = ResourceModule.Instance.LoadAssetSync<AnimationConfig>(ResourceUtil.animcfgpath + cfgname);
             }
 
             var animname = ril.animname;

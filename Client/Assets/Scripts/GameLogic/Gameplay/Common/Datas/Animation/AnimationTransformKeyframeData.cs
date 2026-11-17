@@ -445,7 +445,7 @@ namespace GameLogic.Gameplay.Common
             if (string.IsNullOrEmpty(name)) return null;
             if (cache.TryGetValue(name, out var data)) return data;
 
-            var asset = ResourceModule.Instance.LoadAssetSync<TextAsset>(LocationNode.animationkeyframes + name);
+            var asset = ResourceModule.Instance.LoadAssetSync<TextAsset>(ResourceUtil.animationkeyframes + name);
             data = asset != null ? AnimationKeyframeClipData.FromJson(asset.text) : null;
             cache.Add(name, data);
 

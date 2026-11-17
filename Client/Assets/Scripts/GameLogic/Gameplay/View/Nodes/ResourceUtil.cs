@@ -11,6 +11,23 @@ namespace GameLogic.Gameplay.View
     public static class ResourceUtil
     {
         /// <summary>
+        /// 动画配置资源目录
+        /// </summary>
+        public const string animcfgpath = "Assets/AssetRaws/AnimationConfigs/";
+        /// <summary>
+        /// 动画关键帧数据目录
+        /// </summary>
+        public const string animationkeyframes = "Assets/AssetRaws/AnimationKeyframes/";
+        /// <summary>
+        /// 场景碰撞数据目录
+        /// </summary>
+        public const string scenedatas = "Assets/AssetRaws/SceneDatas/";
+        /// <summary>
+        /// 配置表原始数据目录
+        /// </summary>
+        public const string configpath = "Assets/GameRes/Raw/Configs/";
+
+        /// <summary>
         /// 按资源编号取资源路径
         /// </summary>
         /// <param name="tables">配置表</param>

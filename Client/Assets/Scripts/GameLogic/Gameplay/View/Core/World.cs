@@ -50,11 +50,6 @@ namespace GameLogic.Gameplay.View
         public ConfigNode config { get; private set; }
 
         /// <summary>
-        /// 资源
-        /// </summary>
-        public GameResNode gameres { get; private set; }
-
-        /// <summary>
         /// 随机器
         /// </summary>
         public RandomNode random { get; private set; }
@@ -124,10 +119,6 @@ namespace GameLogic.Gameplay.View
             BindRoot();
 
             base.OnCreate();
-
-            // 资源要先于配置创建 (WebGL 下配置需要走资源异步加载)
-            gameres = AddNode<GameResNode>();
-            gameres.Create();
 
             config = AddNode<ConfigNode>();
             config.Create();

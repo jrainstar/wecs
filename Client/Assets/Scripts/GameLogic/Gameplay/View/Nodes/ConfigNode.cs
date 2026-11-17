@@ -2,6 +2,8 @@ using GameConf;
 using GameFrame;
 using Luban;
 using GameLogic.Gameplay.Common;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameLogic.Gameplay.View
 {
@@ -32,8 +34,8 @@ namespace GameLogic.Gameplay.View
             base.OnCreate();
             foreach (string cfgname in Tables.tables)
             {
-                var bytes = await world.gameres.location.LoadConfigAsync(cfgname);
-                cfgbytes.Add(cfgname, bytes);
+                var asset = await ResourceModule.Instance.LoadAssetAsync<TextAsset>(ResourceUtil.configpath + cfgname);
+                cfgbytes.Add(cfgname, asset?.bytes);
             }
             location = new Tables((cfgName) => new ByteBuf(cfgbytes.GetValueOrDefault(cfgName)));
         }
