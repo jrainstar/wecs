@@ -165,6 +165,8 @@ namespace GameLogic.Gameplay.Director
             {
                 stage.Restore();
                 restoreing = false;
+                // 逻辑已回到快照帧, 位置整体瞬移, 碰撞盒可视化直接贴合, 避免滑过去
+                if (null != colliderdrawer) colliderdrawer.Flash();
 
                 return;
             }

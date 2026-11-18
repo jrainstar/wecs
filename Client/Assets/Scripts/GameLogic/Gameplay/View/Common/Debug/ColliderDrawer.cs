@@ -96,6 +96,22 @@ namespace GameLogic.Gameplay.View
         }
 
         /// <summary>
+        /// 闪现: 所有图元下一帧直接贴合目标位置, 不做插值。
+        /// 快照恢复等位置整体瞬移的场合调用, 否则图元会从瞬移前的位置滑过去。
+        /// </summary>
+        public void Flash()
+        {
+            m_Frame = uint.MaxValue;
+
+            for (int shape = 1; shape < SHAPE_COUNT; shape++)
+            {
+                List<Visual> pool = m_Pools[shape];
+                if (null == pool) continue;
+                for (int i = 0; i < pool.Count; i++) pool[i].snapped = false;
+            }
+        }
+
+        /// <summary>
         /// 创建并绑定
         /// </summary>
         /// <param name="stage">逻辑场景</param>
