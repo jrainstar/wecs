@@ -43,7 +43,10 @@ namespace GameLogic.Gameplay.View
         private uint m_Frame = uint.MaxValue;
 
         private readonly List<Visual>[] m_Pools = new List<Visual>[SHAPE_COUNT];
-        private readonly int[] m_Used = new int[SHAPE_COUNT];
+        /// <summary>本逻辑帧的分配游标, 从前往后找本帧还未被占用的实例</summary>
+        private readonly int[] m_Cursor = new int[SHAPE_COUNT];
+        /// <summary>ActorID -> 实例, 用于让同一个碰撞盒固定使用同一个实例</summary>
+        private readonly Dictionary<ulong, Visual>[] m_Owners = new Dictionary<ulong, Visual>[SHAPE_COUNT];
         private readonly Material[] m_Materials = new Material[SHAPE_COUNT];
 
         /// <summary>单个可视化实例, 胶囊需要三个图元, 其余只用到 body</summary>
@@ -59,6 +62,10 @@ namespace GameLogic.Gameplay.View
             public Quaternion targetRotation;
             /// <summary>是否已完成首次定位, 未经定位的实例直接贴合, 避免从上一个位置飞过来</summary>
             public bool snapped;
+            /// <summary>当前占用该实例的 ActorID, 0 表示空闲; 换主时直接瞬移</summary>
+            public ulong owner;
+            /// <summary>本逻辑帧是否被占用</summary>
+            public bool used;
         }
 
         /// <summary>
@@ -132,10 +139,11 @@ namespace GameLogic.Gameplay.View
                 List<Visual> pool = m_Pools[shape];
                 if (null == pool) continue;
 
-                int used = m_Used[shape];
-                for (int i = 0; i < used; i++)
+                for (int i = 0; i < pool.Count; i++)
                 {
                     Visual visual = pool[i];
+                    if (false == visual.used) continue;
+
                     Transform visualTransform = visual.gameObject.transform;
 
                     if (false == visual.snapped)
@@ -165,7 +173,14 @@ namespace GameLogic.Gameplay.View
         /// </summary>
         private void Rebuild()
         {
-            for (int i = 0; i < SHAPE_COUNT; i++) m_Used[i] = 0;
+            // 重置本帧占用标记与分配游标
+            for (int i = 0; i < SHAPE_COUNT; i++)
+            {
+                m_Cursor[i] = 0;
+                List<Visual> pool = m_Pools[i];
+                if (null == pool) continue;
+                for (int j = 0; j < pool.Count; j++) pool[j].used = false;
+            }
 
             if (false == m_Stage.SeekBehaviorInfos(out List<ColliderInfo> colliders))
             {
@@ -183,7 +198,7 @@ namespace GameLogic.Gameplay.View
 
                 if (false == m_Stage.SeekBehaviorInfo(collider.actor, out SpatialInfo spatial)) continue;
 
-                Visual visual = Rent(shape);
+                Visual visual = Rent(shape, collider.actor);
                 Apply(visual, collider, spatial);
             }
 
@@ -261,9 +276,12 @@ namespace GameLogic.Gameplay.View
         }
 
         /// <summary>
-        /// 取一个可视实例, 优先复用, 数量不足时才新建
+        /// 取一个可视实例。同一个 Actor 固定沿用上一帧的实例, 这样某个碰撞盒消失、
+        /// 列表顺位前移时不会把它的实例交给后面的碰撞盒; 真正发生换主时才瞬移, 不做插值。
         /// </summary>
-        private Visual Rent(int shape)
+        /// <param name="shape">几何体类型</param>
+        /// <param name="owner">占用者 ActorID</param>
+        private Visual Rent(int shape, ulong owner)
         {
             List<Visual> pool = m_Pools[shape];
             if (null == pool)
@@ -272,24 +290,45 @@ namespace GameLogic.Gameplay.View
                 m_Pools[shape] = pool;
             }
 
-            int used = m_Used[shape];
-            if (used < pool.Count)
+            Dictionary<ulong, Visual> owners = m_Owners[shape];
+            if (null == owners)
             {
-                Visual reused = pool[used];
-                m_Used[shape] = used + 1;
-                if (false == reused.gameObject.activeSelf)
-                {
-                    // 重新启用时位置可能已经变远, 直接贴合而不是插值飞过去
-                    reused.snapped = false;
-                    reused.gameObject.SetActive(true);
-                }
-                return reused;
+                owners = new Dictionary<ulong, Visual>(8);
+                m_Owners[shape] = owners;
             }
 
-            Visual created = Create(shape);
-            pool.Add(created);
-            m_Used[shape] = used + 1;
-            return created;
+            // 沿用自己上一帧的实例, 位置保持连续
+            if (owners.TryGetValue(owner, out Visual visual) && false == visual.used)
+            {
+                visual.used = true;
+                return visual;
+            }
+
+            // 否则复用一个本帧空闲的实例, 数量不足时才新建
+            int index = m_Cursor[shape];
+            while (index < pool.Count && pool[index].used) index++;
+
+            if (index < pool.Count)
+            {
+                visual = pool[index];
+            }
+            else
+            {
+                visual = Create(shape);
+                pool.Add(visual);
+            }
+
+            m_Cursor[shape] = index + 1;
+
+            // 换主: 上一帧可能属于别的碰撞盒, 位置可能已经变远, 直接贴合而不是插值滑过去
+            if (0 != visual.owner) owners.Remove(visual.owner);
+            visual.owner = owner;
+            owners[owner] = visual;
+            visual.used = true;
+            visual.snapped = false;
+            if (false == visual.gameObject.activeSelf) visual.gameObject.SetActive(true);
+
+            return visual;
         }
 
         /// <summary>
@@ -443,9 +482,21 @@ namespace GameLogic.Gameplay.View
                 List<Visual> pool = m_Pools[shape];
                 if (null == pool) continue;
 
-                for (int i = m_Used[shape]; i < pool.Count; i++)
+                Dictionary<ulong, Visual> owners = m_Owners[shape];
+
+                for (int i = 0; i < pool.Count; i++)
                 {
-                    GameObject go = pool[i].gameObject;
+                    Visual visual = pool[i];
+                    if (visual.used) continue;
+
+                    // 释放主人占用, 避免同一 Actor 下次出现时误认为实例还在原位
+                    if (0 != visual.owner)
+                    {
+                        if (null != owners) owners.Remove(visual.owner);
+                        visual.owner = 0;
+                    }
+
+                    GameObject go = visual.gameObject;
                     if (null != go && go.activeSelf) go.SetActive(false);
                 }
             }
@@ -459,9 +510,15 @@ namespace GameLogic.Gameplay.View
                 if (null == pool) continue;
                 for (int i = 0; i < pool.Count; i++)
                 {
-                    GameObject go = pool[i].gameObject;
+                    Visual visual = pool[i];
+                    visual.used = false;
+                    visual.owner = 0;
+                    GameObject go = visual.gameObject;
                     if (null != go && go.activeSelf) go.SetActive(false);
                 }
+
+                Dictionary<ulong, Visual> owners = m_Owners[shape];
+                if (null != owners) owners.Clear();
             }
         }
 
@@ -476,6 +533,9 @@ namespace GameLogic.Gameplay.View
 
                 List<Visual> pool = m_Pools[shape];
                 if (null != pool) pool.Clear();
+
+                Dictionary<ulong, Visual> owners = m_Owners[shape];
+                if (null != owners) owners.Clear();
             }
             m_Root = null;
             m_Stage = null;
