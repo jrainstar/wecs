@@ -122,6 +122,63 @@ namespace GameLogic.Gameplay.Director
         {
             restoreing = true;
             world.rilbucket.LossAllRIL();
+            ClearQueues();
+            world.Restore();
+        }
+
+        /// <summary>
+        /// 录像回拖/跳转
+        /// 逻辑从开局快照(帧 0)重新推演到目标帧, 快进期间不产生渲染表现,
+        /// 到最后再按当前逻辑状态全量重推一次渲染指令
+        /// 只能在录像回放 (player 不为空) 且已拍摄开局快照时使用
+        /// </summary>
+        /// <param name="targetframe">目标帧号</param>
+        /// <returns>是否成功</returns>
+        public bool Seek(uint targetframe)
+        {
+            if (null == stage || null == player) return false;
+            if (StageState.Ticking != stage.state) return false;
+            if (false == stage.hassnapshot) return false;
+
+            // 回滚到开局快照: 清渲染层状态与队列, 再恢复 World / Stage
+            world.rilbucket.LossAllRIL();
+            ClearQueues();
+            world.Restore();
+            stage.Restore();
+
+            // 快照不在目标帧之前, 无法再往回拖
+            if (stage.frame > targetframe) return false;
+
+            player.Seek(stage.frame);
+
+            // 快进: 只推进逻辑, 期间产生的渲染指令全部丢弃
+            int drain = 0;
+            while (stage.frame < targetframe)
+            {
+                if (false == player.Sync(stage.frame, stage)) break;
+                stage.Step();
+
+                if (++drain < 25) continue;
+                drain = 0;
+                ClearQueues();
+            }
+
+            // 按当前逻辑状态全量重推渲染指令
+            ClearQueues();
+            stage.rilsync.ClearHashCode();
+            stage.rilsync.Translate();
+
+            // 位置整体瞬移, 碰撞盒可视化直接贴合, 避免滑过去
+            if (null != colliderdrawer) colliderdrawer.Flash();
+
+            return true;
+        }
+
+        /// <summary>
+        /// 清空渲染指令队列 (回滚/快进时丢弃已经过期的渲染指令)
+        /// </summary>
+        private void ClearQueues()
+        {
             lock (@lock)
             {
                 while (rilqueue.TryDequeue(out var ril))
@@ -142,8 +199,6 @@ namespace GameLogic.Gameplay.Director
                     RILCache.Set(e);
                 }
             }
-
-            world.Restore();
         }
 
         protected override void OnTick()

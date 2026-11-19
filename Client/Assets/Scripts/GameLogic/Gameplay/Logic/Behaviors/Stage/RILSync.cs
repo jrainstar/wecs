@@ -146,6 +146,19 @@ namespace GameLogic.Gameplay.Logic
         }
 
         /// <summary>
+        /// 清空渲染指令的哈希值缓存
+        /// 清空后下一次 Translate 会全量重推所有渲染指令
+        /// 用于录像回拖: 快进期间产生的渲染指令被丢弃, 需要按当前状态重建渲染层
+        /// </summary>
+        public void ClearHashCode()
+        {
+            lock (@lock)
+            {
+                hashcodedict.Clear();
+            }
+        }
+
+        /// <summary>
         /// 查询渲染指令的哈希值
         /// </summary>
         /// <param name="actor">ActorID</param>

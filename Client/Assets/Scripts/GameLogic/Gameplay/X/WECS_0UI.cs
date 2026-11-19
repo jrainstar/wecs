@@ -33,6 +33,10 @@ namespace GameLogic.Gameplay.X
         /// 点击"恢复快照"
         /// </summary>
         public Action onrestore;
+        /// <summary>
+        /// 录像回拖/跳转 (拖动进度条结束), 参数为目标帧
+        /// </summary>
+        public Action<uint> onseek;
 
         /// <summary>
         /// 参考分辨率
@@ -52,6 +56,21 @@ namespace GameLogic.Gameplay.X
         private Text battletext;
         private Button snapshotbutton;
         private Button restorebutton;
+        private GameObject replayprogress;
+        private Slider progressbar;
+        private Text progresstext;
+        /// <summary>
+        /// 录像总帧数 (进度条最大值)
+        /// </summary>
+        private uint progresstotal;
+        /// <summary>
+        /// 是否正在拖动进度条
+        /// </summary>
+        private bool dragging;
+        /// <summary>
+        /// 上一次提交的跳转帧
+        /// </summary>
+        private uint lastseek = uint.MaxValue;
 
         /// <summary>
         /// 内置字体 (Unity 2022.2 之后 Arial.ttf 已更名为 LegacyRuntime.ttf)
@@ -118,6 +137,31 @@ namespace GameLogic.Gameplay.X
             battletext.text = replay ? $"录像回放  房间号: {room}" : $"战斗中  房间号: {room}";
             // 回放中不允许快照/恢复, 恢复需要先有快照
             SetSnapshotButtons(false == replay, false);
+            // 进度条只在回放时显示 (可拖动回拖)
+            dragging = false;
+            lastseek = uint.MaxValue;
+            if (null != replayprogress) replayprogress.SetActive(replay);
+        }
+
+        /// <summary>
+        /// 刷新录像播放进度
+        /// </summary>
+        /// <param name="played">已播放帧数</param>
+        /// <param name="total">总帧数</param>
+        public void SetReplayProgress(int played, uint total)
+        {
+            progresstotal = total;
+            if (null == progressbar) return;
+            // 拖动中不被播放进度覆盖
+            if (dragging) return;
+
+            var denominator = total > 0 ? total : 1;
+            var normalized = Mathf.Clamp01((float)played / denominator);
+            progressbar.SetValueWithoutNotify(normalized);
+            // 播放推进后, 允许再次跳转到同一帧
+            lastseek = uint.MaxValue;
+
+            if (null != progresstext) progresstext.text = FormatProgress(played, total, normalized);
         }
 
         /// <summary>
@@ -192,6 +236,95 @@ namespace GameLogic.Gameplay.X
             snapshotbutton = MakeButton(panel, "BtnSnapshot", "快照", righttop, topright, new Vector2(-500, -24), new Vector2(200, 80), () => onsnapshot?.Invoke());
             restorebutton = MakeButton(panel, "BtnRestore", "恢复快照", righttop, topright, new Vector2(-280, -24), new Vector2(200, 80), () => onrestore?.Invoke());
             MakeButton(panel, "BtnSettle", "结算退出", righttop, topright, new Vector2(-30, -24), new Vector2(220, 80), () => onsettle?.Invoke());
+
+            BuildReplayProgress(panel);
+        }
+
+        /// <summary>
+        /// 创建录像播放进度条 (底部居中, 只在回放时显示)
+        /// </summary>
+        private void BuildReplayProgress(Transform parent)
+        {
+            var bottomcenter = new Vector2(0.5f, 0f);
+
+            var root = Node(parent, "ReplayProgress", bottomcenter, bottomcenter, new Vector2(0, 70), new Vector2(1200, 60));
+            replayprogress = root.gameObject;
+
+            var track = Node(root, "Bar", bottomcenter, bottomcenter, new Vector2(0, 0), new Vector2(1200, 22));
+            var trackimage = track.gameObject.AddComponent<Image>();
+            trackimage.color = new Color(1f, 1f, 1f, 0.18f);
+
+            var slider = track.gameObject.AddComponent<Slider>();
+            slider.transition = Selectable.Transition.None;
+            slider.interactable = true;
+            slider.direction = Slider.Direction.LeftToRight;
+            slider.targetGraphic = trackimage;
+            slider.minValue = 0f;
+            slider.maxValue = 1f;
+            slider.onValueChanged.AddListener(OnSliderValueChanged);
+
+            var fillarea = Stretch(track, "Fill Area");
+            var fillrt = Stretch(fillarea, "Fill");
+            // 初始进度为 0: 手动把填充宽度压成 0, 避免 Slider 因值未变化而不刷新
+            fillrt.anchorMin = new Vector2(0f, 0f);
+            fillrt.anchorMax = new Vector2(0f, 1f);
+            fillrt.anchoredPosition = Vector2.zero;
+            fillrt.sizeDelta = Vector2.zero;
+
+            var fillimage = fillrt.gameObject.AddComponent<Image>();
+            fillimage.color = new Color(0.25f, 0.6f, 1f, 1f);
+            slider.fillRect = fillrt;
+            slider.value = 0f;
+            progressbar = slider;
+
+            // 拖动结束后才提交跳转, 拖动过程中只预览帧数
+            var trigger = track.gameObject.AddComponent<EventTrigger>();
+            void Bind(EventTriggerType type, UnityEngine.Events.UnityAction<BaseEventData> action)
+            {
+                var entry = new EventTrigger.Entry { eventID = type };
+                entry.callback.AddListener(action);
+                trigger.triggers.Add(entry);
+            }
+
+            Bind(EventTriggerType.BeginDrag, _ => dragging = true);
+            Bind(EventTriggerType.EndDrag, _ => OnSeekCommit());
+            Bind(EventTriggerType.PointerUp, _ => { if (false == dragging) OnSeekCommit(); });
+
+            progresstext = Label(root, "Progress", string.Empty, 26, new Color(0.85f, 0.92f, 1f), bottomcenter, bottomcenter, new Vector2(0, 30), new Vector2(1200, 40));
+        }
+
+        /// <summary>
+        /// 拖动进度条时刷新预览帧数
+        /// </summary>
+        private void OnSliderValueChanged(float value)
+        {
+            if (null == progresstext) return;
+
+            var frame = Mathf.RoundToInt(Mathf.Clamp01(value) * progresstotal);
+            progresstext.text = FormatProgress(frame, progresstotal, value);
+        }
+
+        /// <summary>
+        /// 提交跳转
+        /// </summary>
+        private void OnSeekCommit()
+        {
+            dragging = false;
+            if (null == progressbar) return;
+
+            var frame = (uint)Mathf.RoundToInt(Mathf.Clamp01(progressbar.value) * progresstotal);
+            if (frame == lastseek) return;
+
+            lastseek = frame;
+            onseek?.Invoke(frame);
+        }
+
+        /// <summary>
+        /// 进度文本
+        /// </summary>
+        private static string FormatProgress(int frame, uint total, float normalized)
+        {
+            return $"帧 {frame} / {total}  {Mathf.RoundToInt(Mathf.Clamp01(normalized) * 100f)}%";
         }
 
         /// <summary>

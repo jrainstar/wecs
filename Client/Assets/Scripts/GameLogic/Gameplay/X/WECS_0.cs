@@ -66,6 +66,7 @@ public class WECS_0 : MonoBehaviour
         ui.onsettle = Settle;
         ui.onsnapshot = TakeSnapshot;
         ui.onrestore = RestoreSnapshot;
+        ui.onseek = SeekReplay;
         ui.Build();
         ui.ShowLaunch();
     }
@@ -109,6 +110,7 @@ public class WECS_0 : MonoBehaviour
         if (null != player)
         {
             ui.SetBattleInfo($"录像回放  房间号: {room}  帧: {player.playedframes} / {player.lastframe}");
+            ui.SetReplayProgress(player.playedframes, player.lastframe);
             return;
         }
 
@@ -201,7 +203,31 @@ public class WECS_0 : MonoBehaviour
         player = new ReplayPlayer(replay);
 
         StartBattle(data);
+        // 记录开局快照, 进度条回拖时从该帧重新推演
+        director.Snapshot();
         ui.ShowBattle(room, true);
+    }
+
+    /// <summary>
+    /// 录像回拖: 跳转到指定帧重放
+    /// </summary>
+    /// <param name="frame">目标帧号</param>
+    private void SeekReplay(uint frame)
+    {
+        if (null == director || null == player) return;
+
+        if (frame > player.lastframe) frame = player.lastframe;
+
+        if (false == director.Seek(frame))
+        {
+            Debug.LogWarning($"[WECS_0] 录像跳转到帧 {frame} 失败");
+            // 跳转失败时按实际进度回填进度条
+            infoframe = uint.MaxValue;
+            return;
+        }
+
+        infoframe = uint.MaxValue;
+        Debug.Log($"[WECS_0] 录像跳转到帧 {director.frame}");
     }
 
     /// <summary>

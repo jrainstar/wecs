@@ -45,6 +45,22 @@ namespace GameLogic.Gameplay.Replay
         }
 
         /// <summary>
+        /// 移动播放游标到指定帧
+        /// 只调整游标, 逻辑状态需要由 LocalDirector 回滚后重推
+        /// </summary>
+        /// <param name="frame">目标帧号</param>
+        public void Seek(uint frame)
+        {
+            finished = false;
+            cursor = 0;
+
+            var frames = replay.frames;
+            if (null == frames) return;
+
+            while (cursor < frames.Length && frames[cursor].frame < frame) cursor++;
+        }
+
+        /// <summary>
         /// 下发该逻辑帧的输入
         /// </summary>
         /// <param name="frame">逻辑帧号 (Stage.Step 之前)</param>
