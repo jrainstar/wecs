@@ -158,6 +158,7 @@ namespace GameLogic.Gameplay.Logic
             Executor<AnimationEvent, AnimationExecutor>();
             Executor<EmitterEvent, EmitterExecutor>();
             Executor<EffectEvent, VisualExecutor>();
+            Executor<BuffEvent, BuffExecutor>();
         }
 
         private void RecycleExecutors()

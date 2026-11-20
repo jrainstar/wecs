@@ -1,0 +1,13 @@
+[
+  {
+    "id": 10001,
+    "name": "流血",
+    "desc": "",
+    "icon": "",
+    "duration": 0,
+    "tick_time": 0,
+    "max_stack": 0,
+    "stack_policy": 0,
+    "events": []
+  }
+]

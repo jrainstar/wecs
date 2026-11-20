@@ -78,6 +78,7 @@ namespace GameLogic.Gameplay.Logic
             }
 
             Executor<DamageEvent, DamageExecutor>();
+            Executor<BuffEvent, BuffExecutor>();
         }
 
         private void RecycleExecutors()

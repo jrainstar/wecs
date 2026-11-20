@@ -26,6 +26,7 @@ public partial class Tables
     public Gameplay.TbColliderData TbColliderData {get; }
     public Gameplay.TbAoeData TbAoeData {get; }
     public Gameplay.TbPayloadData TbPayloadData {get; }
+    public Gameplay.TbBuffData TbBuffData {get; }
     public Gameplay.TbMoudleData TbMoudleData {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
@@ -42,6 +43,7 @@ public partial class Tables
         TbColliderData = new Gameplay.TbColliderData(loader("gameplay_tbcolliderdata"));
         TbAoeData = new Gameplay.TbAoeData(loader("gameplay_tbaoedata"));
         TbPayloadData = new Gameplay.TbPayloadData(loader("gameplay_tbpayloaddata"));
+        TbBuffData = new Gameplay.TbBuffData(loader("gameplay_tbbuffdata"));
         TbMoudleData = new Gameplay.TbMoudleData(loader("gameplay_tbmoudledata"));
         ResolveRef();
     }
@@ -60,6 +62,7 @@ public partial class Tables
         TbColliderData.ResolveRef(this);
         TbAoeData.ResolveRef(this);
         TbPayloadData.ResolveRef(this);
+        TbBuffData.ResolveRef(this);
         TbMoudleData.ResolveRef(this);
     }
 }

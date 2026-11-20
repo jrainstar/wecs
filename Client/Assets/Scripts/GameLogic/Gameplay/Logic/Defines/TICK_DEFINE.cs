@@ -25,6 +25,8 @@ namespace GameLogic.Gameplay.Logic
             typeof(Timer),
             // AOE 必须排在 Timeline 之后: 时间轴本帧发射的 AOE 当帧就能被驱动
             typeof(Aoe),
+            // BUFF 排在 AOE 之后: AOE 命中本帧施加的 BUFF 当帧就能触发创建 / 周期结算
+            typeof(Buff),
             typeof(SkillLauncher),
             typeof(Facade),
             // 特效计时, 必须在 RILSync 之前把本帧的 elapsed 同步给渲染层
