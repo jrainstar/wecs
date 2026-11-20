@@ -245,6 +245,38 @@
 
 <table name="TbPayloadData" value="PayloadData" input="gameplay/payload.xlsx"/>
 
+<bean name="BuffData">
+	<var name="id" type="int" alias="编号"/>
+	<var name="name" type="string" alias="名字"/>
+	<var name="desc" type="string" alias="描述"/>
+	<var name="icon" type="string" alias="图标"/>
+	<var name="duration" type="float" alias="存在时长" comment="BUFF 的持续时间，到点即移除；小于等于 0 表示永久"/>
+	<var name="tick_time" type="float" alias="间隔时间" comment="周期触发的间隔，未配置周期触发时忽略"/>
+	<var name="max_stack" type="int" alias="最大层数"/>
+	<var name="stack_policy" type="BuffStackPolicy" alias="叠层策略"/>
+	<var name="events" type="list,BuffTriggerData#sep=," alias="事件负载"/>
+</bean>
+
+<table name="TbBuffData" value="BuffData" input="gameplay/buff.xlsx"/>
+
+<bean name="BuffTriggerData">
+	<var name="trigger" type="BuffTrigger" alias="触发"/>
+	<var name="payload_id" type="int#ref=Gameplay.TbPayloadData" alias="负载"/>
+</bean>
+
+<enum name="BuffTrigger" comment="BUFF 的触发时机，写法与 AoeTrigger 保持一致">
+	<var name="Create"  alias="创建"/>
+	<var name="Destroy" alias="销毁"/>
+	<var name="Tick"    alias="周期"/>
+	<var name="Stack"   alias="叠层"/>
+</enum>
+
+<enum name="BuffStackPolicy" comment="重复施加同一个 BUFF 时的处理策略">
+	<var name="Refresh"     alias="刷新" comment="重置持续时间，层数不变"/>
+	<var name="Stack"       alias="叠加" comment="层数 +1，不超过最大层数"/>
+	<var name="Independent" alias="独立" comment="每层单独计算持续时间"/>
+</enum>
+
 <enum name="DamageType">
 	<var name="Physical" alias="物理"/>
 	<var name="Magical" alias="法术"/>
