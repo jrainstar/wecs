@@ -134,6 +134,47 @@
           "Name": "Ani_Attack_01",
           "Loop": false,
           "Speed": 1,
+          "CanMove": true,
+          "ApplyMotion": true
+        }
+      },
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "EffectEvent",
+          "fx": 30001,
+          "anchor": "Center",
+          "follow": true,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "rotate": [
+            0,
+            150,
+            0
+          ],
+          "scale": 1,
+          "duration": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": 100023,
+    "name": "砍一刀",
+    "desc": "",
+    "icon": "",
+    "max_time": 0.5,
+    "nodes": [
+      {
+        "Time": 0,
+        "Event": {
+          "$type": "AnimationEvent",
+          "Name": "Ani_Attack_02",
+          "Loop": false,
+          "Speed": 1,
           "CanMove": false,
           "ApplyMotion": true
         }
