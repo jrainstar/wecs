@@ -18,5 +18,13 @@
   {
     "id": 30001,
     "path": "Assets/AssetRaws/Prefabs/Effect/Effect_Sword_Slash_1.prefab"
+  },
+  {
+    "id": 30002,
+    "path": "Assets/AssetRaws/Prefabs/Effect/Effect_Sword_Slash_2.prefab"
+  },
+  {
+    "id": 30003,
+    "path": "Assets/AssetRaws/Prefabs/Effect/Effect_Sword_Slash_3.prefab"
   }
 ]

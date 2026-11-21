@@ -254,6 +254,8 @@
 	<var name="tick_time" type="float" alias="间隔时间" comment="周期触发的间隔，未配置周期触发时忽略"/>
 	<var name="max_stack" type="int" alias="最大层数"/>
 	<var name="stack_policy" type="BuffStackPolicy" alias="叠层策略"/>
+	<var name="skill" type="int" alias="接续技能" comment="持有此 BUFF 时可接续释放的技能, 0 表示不提供接续"/>
+	<var name="source" type="int" alias="前置技能" comment="槽位上装的是该技能时才允许接续; 用技能 ID 匹配而不是槽位序号, 技能换槽位后依然有效; 0 表示任意槽位"/>
 	<var name="events" type="list,BuffTriggerData#sep=," alias="事件负载"/>
 </bean>
 

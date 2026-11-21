@@ -79,6 +79,18 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>技能 Actor, 配置不存在或已卸载时返回 0</returns>
         public ulong Load(uint skill)
         {
+            return Load(skill, true);
+        }
+
+        /// <summary>
+        /// 载入技能
+        /// 连招的接续技能不占槽位: 只登记到已载入列表, 由窗口 BUFF 触发释放
+        /// </summary>
+        /// <param name="skill">技能 ID</param>
+        /// <param name="occupy">是否占用空闲槽位</param>
+        /// <returns>技能 Actor, 配置不存在或已卸载时返回 0</returns>
+        private ulong Load(uint skill, bool occupy)
+        {
             if (0 == skill) return 0;
             if (false == stage.cache.Valid(actor)) return 0;
             // 已载入, 直接复用 (含同帧内刚卸载尚未回收的)
@@ -94,7 +106,7 @@ namespace GameLogic.Gameplay.Logic
             info.loadedskilldict.Add(skill, skillactor);
             info.loadedskills.Add(skill);
             // 自动占位, 顺序即槽位顺序
-            Slot(skill);
+            if (occupy) Slot(skill);
 
             return skillactor;
         }
@@ -183,7 +195,7 @@ namespace GameLogic.Gameplay.Logic
         /// <returns>YES/NO 是否成功释放</returns>
         public bool Launch(uint skill)
         {
-            if (LAUNCH_RESULT.OK != CanLaunch(skill, out var skillinfo, out var skilldata)) return false;
+            if (LAUNCH_RESULT.OK != CanLaunch(skill, out _, out var skilldata)) return false;
 
             // 切换到技能状态, 切换失败 (例如死亡/受击中) 则不能释放
             if (stage.SeekBehavior(actor, out StateMachine machine))
@@ -199,9 +211,6 @@ namespace GameLogic.Gameplay.Logic
                 return false;
             }
 
-            // 进入冷却
-            skillinfo.cooldown = (FP)skilldata.Cooldown;
-
             info.skill = skill;
             info.casting = true;
             info.timeline = 0;
@@ -216,6 +225,10 @@ namespace GameLogic.Gameplay.Logic
                 }
             }
 
+            // 没有时间轴的技能没有"播完"这个时机, 直接进入冷却;
+            // 有时间轴的等播完再进 (见 IsCasting), 也就是执行结束才进 CD
+            if (0 == info.timeline) Cooldown(skill);
+
             return true;
         }
 
@@ -226,6 +239,9 @@ namespace GameLogic.Gameplay.Logic
         {
             if (false == info.casting) return;
             if (stage.SeekBehaviorInfo(info.timeline, out TimelineInfo timelineinfo)) stage.RmvBehaviorInfo(timelineinfo);
+
+            // 中断同样算这次执行结束, 正常进入冷却
+            Cooldown(info.skill);
 
             info.skill = 0;
             info.timeline = 0;
@@ -242,10 +258,20 @@ namespace GameLogic.Gameplay.Logic
         /// 新增技能只要 Load 到槽位即可, 不需要再为每个技能新增代码
         /// 注意: 按键判定用的是 press (按住), 释放中 CanLaunch 会拦下重入,
         /// 因此同一次长按只会在一次释放内生效; 如需要"按一次放一次", 应改用按下沿 (wasPressedThisFrame)
+        /// 连招窗口例外: 必须重新按下才接续, 一直按着不放不会自动接下一段
         /// </summary>
         private void LaunchCheck()
         {
             if (false == stage.SeekBehavior(actor, out Gamepad gamepad)) return;
+
+            // 先整轮刷新按住状态, 后续中途释放成功 return 也不会漏记其它槽位
+            var previous = info.pressed;
+            ushort pressed = 0;
+            for (int i = 0; i < SKILL_DEFINE.SLOT_COUNT; i++)
+            {
+                if (gamepad.GetInput(SKILL_DEFINE.SLOT_INPUTS[i]).press) pressed |= (ushort)(1 << i);
+            }
+            info.pressed = pressed;
 
             for (int i = 0; i < SKILL_DEFINE.SLOT_COUNT; i++)
             {
@@ -254,6 +280,18 @@ namespace GameLogic.Gameplay.Logic
 
                 var input = gamepad.GetInput(SKILL_DEFINE.SLOT_INPUTS[i]);
                 if (false == input.press) continue;
+
+                // 连招窗口: 上一帧也按着说明是按住不放, 不算"再次使用"
+                var held = 0 != (previous & (1 << i));
+                if (false == held && Chain(skill, out var chain, out var buffid))
+                {
+                    if (Launch(chain))
+                    {
+                        // 接续成功, 关掉窗口, 避免窗口期内重复接续
+                        RemoveBuff(buffid);
+                        return;
+                    }
+                }
 
                 if (Launch(skill)) return;
             }
@@ -271,6 +309,9 @@ namespace GameLogic.Gameplay.Logic
             // 有时间轴: TimelineInfo 被移除说明时间轴已播完, 技能释放结束
             if (stage.SeekBehaviorInfo<TimelineInfo>(info.timeline, out _)) return true;
 
+            // 时间轴播完说明本次执行结束, 此时才进入冷却
+            Cooldown(info.skill);
+
             info.skill = 0;
             info.timeline = 0;
             info.casting = false;
@@ -280,6 +321,60 @@ namespace GameLogic.Gameplay.Logic
             if (stage.SeekBehavior(actor, out StateMachine machine)) machine.RefreshAnimation();
 
             return false;
+        }
+
+        /// <summary>
+        /// 技能执行结束, 进入冷却
+        /// 冷却从执行结束开始算, 而不是从按下的瞬间, 保证"执行完才进 CD"
+        /// </summary>
+        /// <param name="skill">技能 ID</param>
+        private void Cooldown(uint skill)
+        {
+            if (0 == skill) return;
+            if (false == info.loadedskilldict.TryGetValue(skill, out var skillactor)) return;
+            if (false == stage.SeekBehaviorInfo(skillactor, out SkillInfo skillinfo)) return;
+            if (false == stage.cfg.location.TbSkillData.TryGetValue((int)skill, out var skilldata)) return;
+
+            skillinfo.cooldown = (FP)skilldata.Cooldown;
+        }
+
+        /// <summary>
+        /// 取连招窗口上的接续技能
+        /// 窗口由 BUFF 承载, 配置里指定"前置技能 → 接续技能";
+        /// 按槽位上的技能 ID 匹配, 槽位随装配顺序变化时依然有效;
+        /// 接续技能不占槽位, 首次触发时按需载入
+        /// </summary>
+        /// <param name="source">槽位上当前装的技能 ID</param>
+        /// <param name="skill">接续技能 ID</param>
+        /// <param name="buffid">提供窗口的 BUFF ID</param>
+        /// <returns>YES/NO</returns>
+        private bool Chain(uint source, out uint skill, out int buffid)
+        {
+            skill = 0;
+            buffid = 0;
+
+            if (false == stage.SeekBehavior(actor, out Buff buff)) return false;
+
+            var chain = buff.Chain(source, out buffid);
+            if (0 == chain) return false;
+            if (false == stage.cfg.location.TbSkillData.TryGetValue((int)chain, out _)) return false;
+            if (0 == Load(chain, false)) return false;
+
+            skill = chain;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 移除连招窗口
+        /// </summary>
+        /// <param name="buffid">BUFF ID</param>
+        private void RemoveBuff(int buffid)
+        {
+            if (0 == buffid) return;
+            if (false == stage.SeekBehavior(actor, out Buff buff)) return;
+
+            buff.Remove(buffid);
         }
 
         /// <summary>

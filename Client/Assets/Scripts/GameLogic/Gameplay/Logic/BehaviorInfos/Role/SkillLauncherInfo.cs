@@ -39,12 +39,18 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public uint[] slots { get; set; }
 
+        /// <summary>
+        /// 上一帧的按键按住状态 (位掩码, 下标即槽位)
+        /// 连招窗口需要区分"再次按下"与"一直按着", 摇杆输入只有 press 语义, 这里自己记一帧
+        /// </summary>
+        public ushort pressed { get; set; }
 
         protected override void OnReady()
         {
             skill = 0;
             timeline = 0;
             casting = false;
+            pressed = 0;
             loadedskills = ObjectCache.Ensure<List<uint>>();
             loadedskilldict = ObjectCache.Ensure<Dictionary<uint, ulong>>();
             slots = new uint[SKILL_DEFINE.SLOT_COUNT];
@@ -55,6 +61,7 @@ namespace GameLogic.Gameplay.Logic
             skill = 0;
             timeline = 0;
             casting = false;
+            pressed = 0;
             loadedskills.Clear();
             ObjectCache.Set(loadedskills);
             loadedskilldict.Clear();
@@ -69,6 +76,7 @@ namespace GameLogic.Gameplay.Logic
             clone.skill = skill;
             clone.casting = casting;
             clone.timeline = timeline;
+            clone.pressed = pressed;
             clone.loadedskills.AddRange(loadedskills);
             foreach (var kv in loadedskilldict) clone.loadedskilldict.Add(kv.Key, kv.Value);
             System.Array.Copy(slots, clone.slots, slots.Length);

@@ -185,6 +185,37 @@ namespace GameLogic.Gameplay.Logic
             return null != slot && null != slot.layers ? slot.layers.Count : 0;
         }
 
+        /// <summary>
+        /// 查询可以接续的技能
+        /// 连招窗口这类 BUFF 在配置里指定"前置技能 → 接续技能";
+        /// 用技能 ID 匹配而不是槽位序号, 技能换到别的槽位后依然有效;
+        /// 多个窗口同时存在时取最先施加的那个
+        /// </summary>
+        /// <param name="source">槽位上当前装的技能 ID</param>
+        /// <param name="buffid">提供接续的 BUFF 配置 ID</param>
+        /// <returns>接续技能 ID, 没有窗口返回 0</returns>
+        public uint Chain(uint source, out int buffid)
+        {
+            buffid = 0;
+
+            var buffinfo = info;
+            if (null == buffinfo || null == buffinfo.slots) return 0;
+
+            foreach (var slotinfo in buffinfo.slots)
+            {
+                if (null == slotinfo) continue;
+                if (false == Config(slotinfo.id, out var data)) continue;
+                if (0 >= data.Skill) continue;
+                // 0 表示任意槽位, 否则只对装着前置技能的槽位生效
+                if (0 != data.Source && (uint)data.Source != source) continue;
+
+                buffid = slotinfo.id;
+                return (uint)data.Skill;
+            }
+
+            return 0;
+        }
+
         protected override void OnTick(FP tick)
         {
             var buffinfo = info;

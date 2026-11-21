@@ -25,6 +25,8 @@ public sealed partial class BuffData : Luban.BeanBase
         { if(!_buf["tick_time"].IsNumber) { throw new SerializationException(); }  TickTime = _buf["tick_time"]; }
         { if(!_buf["max_stack"].IsNumber) { throw new SerializationException(); }  MaxStack = _buf["max_stack"]; }
         { if(!_buf["stack_policy"].IsNumber) { throw new SerializationException(); }  StackPolicy = (Gameplay.BuffStackPolicy)_buf["stack_policy"].AsInt; }
+        { if(!_buf["skill"].IsNumber) { throw new SerializationException(); }  Skill = _buf["skill"]; }
+        { if(!_buf["source"].IsNumber) { throw new SerializationException(); }  Source = _buf["source"]; }
         { var __json0 = _buf["events"]; if(!__json0.IsArray) { throw new SerializationException(); } Events = new System.Collections.Generic.List<Gameplay.BuffTriggerData>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { Gameplay.BuffTriggerData __v0;  { if(!__e0.IsObject) { throw new SerializationException(); }  __v0 = global::GameConf.Gameplay.BuffTriggerData.DeserializeBuffTriggerData(__e0);  }  Events.Add(__v0); }   }
     }
 
@@ -47,6 +49,14 @@ public sealed partial class BuffData : Luban.BeanBase
     public readonly float TickTime;
     public readonly int MaxStack;
     public readonly Gameplay.BuffStackPolicy StackPolicy;
+    /// <summary>
+    /// 持有此 BUFF 时可接续释放的技能, 0 表示不提供接续
+    /// </summary>
+    public readonly int Skill;
+    /// <summary>
+    /// 槽位上装的是该技能时才允许接续; 用技能 ID 匹配而不是槽位序号, 技能换槽位后依然有效; 0 表示任意槽位
+    /// </summary>
+    public readonly int Source;
     public readonly System.Collections.Generic.List<Gameplay.BuffTriggerData> Events;
    
     public const int __ID__ = -45095579;
@@ -68,6 +78,8 @@ public sealed partial class BuffData : Luban.BeanBase
         + "tickTime:" + TickTime + ","
         + "maxStack:" + MaxStack + ","
         + "stackPolicy:" + StackPolicy + ","
+        + "skill:" + Skill + ","
+        + "source:" + Source + ","
         + "events:" + Luban.StringUtil.CollectionToString(Events) + ","
         + "}";
     }

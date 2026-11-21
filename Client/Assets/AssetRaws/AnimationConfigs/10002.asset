@@ -22,6 +22,13 @@ MonoBehaviour:
   - state: 8
     name: Ani_Hit_L_Front
   animationmixs:
+  - name: Ani_Run
+    mixduration: 0.2
+    mixanimations:
+    - prename: Ani_Idle
+      name: Ani_Run_Start
+      duration: 1.483
+      mixduration: 0.1
   - name: Ani_Idle
     mixduration: 0.2
     mixanimations:
@@ -33,10 +40,11 @@ MonoBehaviour:
       name: Ani_Attack_01_End
       duration: 3.317
       mixduration: 0.1
-  - name: Ani_Run
-    mixduration: 0.2
-    mixanimations:
-    - prename: Ani_Idle
-      name: Ani_Run_Start
-      duration: 1.483
+    - prename: Ani_Attack_02
+      name: Ani_Attack_02_End
+      duration: 3.483
+      mixduration: 0.1
+    - prename: Ani_Attack_03
+      name: Ani_Attack_03_End
+      duration: 3.233
       mixduration: 0.1

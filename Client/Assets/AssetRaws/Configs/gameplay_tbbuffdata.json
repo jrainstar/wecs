@@ -8,6 +8,21 @@
     "tick_time": 0,
     "max_stack": 0,
     "stack_policy": 0,
+    "skill": 0,
+    "source": 0,
+    "events": []
+  },
+  {
+    "id": 10002,
+    "name": "连招窗口",
+    "desc": "100022 结束后 1 秒内再次按下该槽位, 接续释放 100023",
+    "icon": "",
+    "duration": 1,
+    "tick_time": 0,
+    "max_stack": 1,
+    "stack_policy": 0,
+    "skill": 100023,
+    "source": 100022,
     "events": []
   }
 ]

@@ -158,6 +158,14 @@
           "scale": 1,
           "duration": 2
         }
+      },
+      {
+        "Time": 0.5,
+        "Event": {
+          "$type": "BuffEvent",
+          "buff_id": 10002,
+          "stack": 1
+        }
       }
     ]
   },
@@ -183,7 +191,7 @@
         "Time": 0,
         "Event": {
           "$type": "EffectEvent",
-          "fx": 30001,
+          "fx": 30003,
           "anchor": "Center",
           "follow": true,
           "offset": [
@@ -193,7 +201,7 @@
           ],
           "rotate": [
             0,
-            150,
+            0,
             0
           ],
           "scale": 1,
