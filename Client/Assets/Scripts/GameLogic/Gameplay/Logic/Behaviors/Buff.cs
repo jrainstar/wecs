@@ -216,6 +216,43 @@ namespace GameLogic.Gameplay.Logic
             return 0;
         }
 
+        /// <summary>
+        /// 查询连招窗口
+        /// 返回窗口剩余时长, 并回传 BUFF 配置 ID 与总时长; 没有窗口时返回 0
+        /// 多个层时取剩余最长的一层, 与 Expire 的"层各自计时"保持一致
+        /// </summary>
+        /// <param name="buffid">提供窗口的 BUFF 配置 ID</param>
+        /// <param name="duration">窗口总时长</param>
+        /// <returns>剩余时长, 没有窗口返回 0</returns>
+        public FP Window(out int buffid, out FP duration)
+        {
+            buffid = 0;
+            duration = FP.Zero;
+
+            var buffinfo = info;
+            if (null == buffinfo || null == buffinfo.slots) return FP.Zero;
+
+            foreach (var slotinfo in buffinfo.slots)
+            {
+                if (null == slotinfo) continue;
+                if (false == Config(slotinfo.id, out var data)) continue;
+                if (0 >= data.Skill) continue;
+
+                buffid = slotinfo.id;
+                duration = slotinfo.duration;
+
+                var layers = slotinfo.layers;
+                if (null == layers || 0 == layers.Count) return FP.Zero;
+
+                var remaining = FP.Zero;
+                foreach (var layer in layers) if (layer > remaining) remaining = layer;
+
+                return remaining;
+            }
+
+            return FP.Zero;
+        }
+
         protected override void OnTick(FP tick)
         {
             var buffinfo = info;

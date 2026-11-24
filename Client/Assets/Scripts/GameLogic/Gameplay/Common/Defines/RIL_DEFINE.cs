@@ -75,5 +75,9 @@ namespace GameLogic.Gameplay.Common
         /// FACADE_EFFECT 外观特效指令
         /// </summary>
         public const ushort FACADE_EFFECT = 12;
+        /// <summary>
+        /// SKILL 技能面板指令 (冷却 / 连招窗口 / 时间轴进度)
+        /// </summary>
+        public const ushort SKILL = 13;
     }
 }

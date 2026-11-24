@@ -68,6 +68,8 @@ namespace GameLogic.Gameplay.Logic
             }
             // 释放中的技能, 时间轴播完即视为释放结束
             IsCasting();
+            // 连招窗口结束后, 补上延后的冷却
+            PendingCooldown();
         }
 
         /// <summary>
@@ -140,6 +142,8 @@ namespace GameLogic.Gameplay.Logic
 
             info.loadedskilldict.Remove(skill);
             info.loadedskills.Remove(skill);
+            // 延后的冷却随技能一起作废
+            if (info.pendingcooldown == skill) info.pendingcooldown = 0;
             // 释放占用的槽位
             for (int i = 0; i < info.slots.Length; i++)
             {
@@ -293,6 +297,9 @@ namespace GameLogic.Gameplay.Logic
                     }
                 }
 
+                // 窗口还在时冷却被延后, 前置技能不能再放一次, 否则按住不放会在窗口期刷技能
+                if (HasChain(skill)) continue;
+
                 if (Launch(skill)) return;
             }
         }
@@ -325,17 +332,52 @@ namespace GameLogic.Gameplay.Logic
 
         /// <summary>
         /// 技能执行结束, 进入冷却
-        /// 冷却从执行结束开始算, 而不是从按下的瞬间, 保证"执行完才进 CD"
+        /// 冷却从执行结束开始算, 而不是从按下的瞬间, 保证"执行完才进 CD";
+        /// 若此刻还有该技能的连招窗口, 则延后到窗口结束再进 CD (窗口期间不进入冷却)
         /// </summary>
         /// <param name="skill">技能 ID</param>
-        private void Cooldown(uint skill)
+        /// <param name="force">强制进 CD, 忽略连招窗口 (窗口结束后补 CD 时使用)</param>
+        private void Cooldown(uint skill, bool force = false)
         {
             if (0 == skill) return;
+            if (false == force && HasChain(skill))
+            {
+                // 窗口期间不进入 CD, 先记下, 等窗口结束再补
+                info.pendingcooldown = skill;
+                return;
+            }
             if (false == info.loadedskilldict.TryGetValue(skill, out var skillactor)) return;
             if (false == stage.SeekBehaviorInfo(skillactor, out SkillInfo skillinfo)) return;
             if (false == stage.cfg.location.TbSkillData.TryGetValue((int)skill, out var skilldata)) return;
 
             skillinfo.cooldown = (FP)skilldata.Cooldown;
+        }
+
+        /// <summary>
+        /// 补上延后的冷却
+        /// 连招窗口还在就继续等待; 窗口被接续消耗或自然到期后, 才真正进入冷却
+        /// </summary>
+        private void PendingCooldown()
+        {
+            var pending = info.pendingcooldown;
+            if (0 == pending) return;
+            if (HasChain(pending)) return;
+
+            info.pendingcooldown = 0;
+            Cooldown(pending, true);
+        }
+
+        /// <summary>
+        /// 该技能当前是否有连招窗口
+        /// </summary>
+        /// <param name="skill">技能 ID</param>
+        /// <returns>YES/NO</returns>
+        private bool HasChain(uint skill)
+        {
+            if (0 == skill) return false;
+            if (false == stage.SeekBehavior(actor, out Buff buff)) return false;
+
+            return 0 != buff.Chain(skill, out _);
         }
 
         /// <summary>

@@ -45,12 +45,19 @@ namespace GameLogic.Gameplay.Logic
         /// </summary>
         public ushort pressed { get; set; }
 
+        /// <summary>
+        /// 等待进冷却的技能 ID
+        /// 技能执行结束时若还在连招窗口内, 冷却延后, 窗口结束再补上
+        /// </summary>
+        public uint pendingcooldown { get; set; }
+
         protected override void OnReady()
         {
             skill = 0;
             timeline = 0;
             casting = false;
             pressed = 0;
+            pendingcooldown = 0;
             loadedskills = ObjectCache.Ensure<List<uint>>();
             loadedskilldict = ObjectCache.Ensure<Dictionary<uint, ulong>>();
             slots = new uint[SKILL_DEFINE.SLOT_COUNT];
@@ -62,6 +69,7 @@ namespace GameLogic.Gameplay.Logic
             timeline = 0;
             casting = false;
             pressed = 0;
+            pendingcooldown = 0;
             loadedskills.Clear();
             ObjectCache.Set(loadedskills);
             loadedskilldict.Clear();
@@ -77,6 +85,7 @@ namespace GameLogic.Gameplay.Logic
             clone.casting = casting;
             clone.timeline = timeline;
             clone.pressed = pressed;
+            clone.pendingcooldown = pendingcooldown;
             clone.loadedskills.AddRange(loadedskills);
             foreach (var kv in loadedskilldict) clone.loadedskilldict.Add(kv.Key, kv.Value);
             System.Array.Copy(slots, clone.slots, slots.Length);

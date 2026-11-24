@@ -75,6 +75,11 @@ namespace GameLogic.Gameplay.View
         public Eyes eyes { get; private set; }
 
         /// <summary>
+        /// 技能面板 HUD
+        /// </summary>
+        public SkillHudNode skillhud { get; private set; }
+
+        /// <summary>
         /// 是否驱动渲染, 由导演在每个逻辑帧同步
         /// 未驱动时 Agent 不做追帧 (暂停/回滚期间画面保持不动)
         /// </summary>
@@ -138,6 +143,9 @@ namespace GameLogic.Gameplay.View
 
             eyes = AddNode<Eyes>();
             eyes.Create();
+
+            skillhud = AddNode<SkillHudNode>();
+            skillhud.Create();
 
             Batches();
 
